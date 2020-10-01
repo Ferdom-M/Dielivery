@@ -25,7 +25,7 @@ class prueba extends Phaser.Scene {
 
         var logo = this.physics.add.image(0.5, 0.5, 'logo').setScale(0.1);
 
-        logo.setVelocity(200, 400);
+        logo.setVelocity(500, 100);
         logo.setBounce(1, 1);
         logo.setCollideWorldBounds(true);
 
