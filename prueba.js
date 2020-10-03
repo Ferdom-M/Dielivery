@@ -1,18 +1,33 @@
+var debug = false;
+
 var cursors;
 // Clase jugador, aquí guardaremos el inventario, puntuacion, etc
 class Jugador {
-    constructor(sprite, muerte, puntuacion) {
+    constructor(sprite, puntuacion, inventario) {
         this.sprite = sprite;
         this.puntuacion = puntuacion;
+        this.inventario = inventario;
     }
 }
+
+class Objeto {
+	constructor(tipo, peso, puntuacion){
+		this.tipo = tipo; // String
+		this.peso = peso; 
+		this.puntuacion = puntuacion;
+	}
+}
+
+var limInventario = 6;
 
 // Por si acaso acabamos metiendo multi local, se hará con un array del tamaño de numJugadores
 var numJugadores = 1;
 var jugadores = new Array(numJugadores);
+
 for (var i = 0; i < numJugadores; i++) {
     jugadores[i] = new Jugador;
     jugadores[i].puntuacion = 0;
+	jugadores[i].inventario = new Array(limInventario);
 }
 
 class prueba extends Phaser.Scene {
@@ -33,6 +48,7 @@ class prueba extends Phaser.Scene {
     create ()
     {
         this.add.image(640, 360, 'sky').setScale(2,2);
+		this.add.image(-100, 704, 'red');
 
         var particles = this.add.particles('red');
 
@@ -59,6 +75,7 @@ class prueba extends Phaser.Scene {
             {
                 left: Phaser.Input.Keyboard.KeyCodes.A,
                 right: Phaser.Input.Keyboard.KeyCodes.D,
+				action: Phaser.Input.Keyboard.KeyCodes.SPACE,
 				fullscreen: Phaser.Input.Keyboard.KeyCodes.F
             });
         
@@ -72,22 +89,45 @@ class prueba extends Phaser.Scene {
             }
         }, this);
 		
-		// Al pulsar izq o dcha se sube o baja vel
-		cursors.left.on('down', function () {
-            jugadores[0].sprite.body.velocity.x = -320;
+		/*
+		cursors.action.on('down', function () {
+            if (jugadores[0].sprite.) {
+                this.scale.stopFullscreen();
+            }
+            else {
+                this.scale.startFullscreen();
+            }
         }, this);
-		cursors.right.on('down', function () {
-            jugadores[0].sprite.body.velocity.x = 320;
-        }, this);
+		*/
 		
-        // Cámara
-        this.playerCamera = this.cameras.main;
-        this.playerCamera.startFollow(jugadores[0].sprite);
+		// Cámara un jugador
+		var camJugador1 = this.cameras.main;
+		camJugador1.startFollow(jugadores[0].sprite);
+		
+        // Cámara dos jugadores
+		/*
+		this.cameras.resize(640, 720);
+		var camJugador2 = this.cameras.add(640, 0, 640, 720, false, "jugador2");
+		
+        camJugador1.startFollow(jugadores[0].sprite);
+        camJugador2.startFollow(logo);
+		*/
+		
+		if(debug){
+			
+		}
     }
 
+		
+	
 
     update(){
-		if (!cursors.left.isDown && !cursors.right.isDown) { // Si no se pulsa nada se desacelera hasta parar
+		if (cursors.left.isDown) {
+            jugadores[0].sprite.body.velocity.x = -320;
+        }
+        else if (cursors.right.isDown) {
+            jugadores[0].sprite.body.velocity.x = 320;
+        } else{
 			if (jugadores[0].sprite.body.velocity.x > 20) {
 				jugadores[0].sprite.setAccelerationX(-800);
 			} else if (jugadores[0].sprite.body.velocity.x < -20) {
