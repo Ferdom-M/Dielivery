@@ -1,4 +1,4 @@
-var debug = false;
+var debug = true;
 
 var cursors;
 // Clase jugador, aquí guardaremos el inventario, puntuacion, etc
@@ -42,12 +42,30 @@ class prueba extends Phaser.Scene {
         this.load.image('logo', 'assets/logo.png');
         this.load.image('red', 'assets/cuadrencio.png');
         this.load.image('gato', 'assets/bolita.jpg');
+		this.load.image("tiles", "assets/tilesheet.png");
+		this.load.tilemapTiledJSON("map", "assets/map.json");
 
     }
 
     create ()
     {
-        this.add.image(640, 360, 'sky').setScale(2,2);
+		const map = this.make.tilemap({ key: "map" });
+		// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
+		// Phaser's cache (i.e. the name you used in preload)
+		const tileset = map.addTilesetImage("tilesheet", "tiles");
+		// Parameters: layer name (or index) from Tiled, tileset, x, y
+		const worldLayer = map.createStaticLayer("Capa de patrones 1", tileset, 0, 0);
+		worldLayer.setCollisionByProperty({ collides: true });
+		
+		if(debug){
+			const debugGraphics = this.add.graphics().setAlpha(0.75);
+			worldLayer.renderDebug(debugGraphics, {
+			  tileColor: null, // Color of non-colliding tiles
+			  collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+			  faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+			});
+
+		}
 		this.add.image(-100, 704, 'red');
 
         var particles = this.add.particles('red');
@@ -62,7 +80,7 @@ class prueba extends Phaser.Scene {
 		
         jugadores[0].sprite = this.physics.add.sprite(0.5, 0.5, 'gato').setScale(0.1);
         jugadores[0].sprite.setCollideWorldBounds(true);
-
+		this.physics.add.collider(jugadores[0].sprite, worldLayer);
 
         logo.setVelocity(500, 100);
         logo.setBounce(1, 1);
