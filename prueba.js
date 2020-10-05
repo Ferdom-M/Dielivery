@@ -1,15 +1,24 @@
 var debug = true;
 
+var velJugador = 240;
+var aceleracion = 0.4
+var friccion = 0.2
+
+var map;
+var suelo;
+var tileSize = 32;
+
 var cursors;
+
 // Clase jugador, aquí guardaremos el inventario, puntuacion, etc
 class Jugador {
-    constructor(sprite, puntuacion, inventario) {
-        this.sprite = sprite;
-        this.puntuacion = puntuacion;
-        this.inventario = inventario;
+    constructor(limInventario) {
+        this.puntuacion = 0;
+        this.inventario = new Array(limInventario);
+		this.saltando = false;
+		this.dir = 0;
     }
 }
-
 class Objeto {
 	constructor(tipo, peso, puntuacion){
 		this.tipo = tipo; // String
@@ -17,17 +26,12 @@ class Objeto {
 		this.puntuacion = puntuacion;
 	}
 }
-
-var limInventario = 6;
-
 // Por si acaso acabamos metiendo multi local, se hará con un array del tamaño de numJugadores
 var numJugadores = 1;
 var jugadores = new Array(numJugadores);
-
+var limInventario = 6;
 for (var i = 0; i < numJugadores; i++) {
-    jugadores[i] = new Jugador;
-    jugadores[i].puntuacion = 0;
-	jugadores[i].inventario = new Array(limInventario);
+    jugadores[i] = new Jugador(limInventario);
 }
 
 class prueba extends Phaser.Scene {
@@ -41,7 +45,6 @@ class prueba extends Phaser.Scene {
         this.load.image('sky', 'assets/sky.jpeg');
         this.load.image('logo', 'assets/logo.png');
         this.load.image('red', 'assets/cuadrencio.png');
-        this.load.image('gato', 'assets/bolita.jpg');
 		this.load.image("tiles", "assets/tilesheet.png");
 		this.load.tilemapTiledJSON("map", "assets/map.json");
 
@@ -49,111 +52,139 @@ class prueba extends Phaser.Scene {
 
     create ()
     {
-		const map = this.make.tilemap({ key: "map" });
-		// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
-		// Phaser's cache (i.e. the name you used in preload)
-		const tileset = map.addTilesetImage("tilesheet", "tiles");
-		// Parameters: layer name (or index) from Tiled, tileset, x, y
-		const worldLayer = map.createStaticLayer("Capa de patrones 1", tileset, 0, 0);
-		worldLayer.setCollisionByProperty({ collides: true });
+		GenerarMundo(this);
+		GenerarJugador(this);
+		GenerarCamara(this);
+		
+		InicializarCursores(this);
+		
 		
 		if(debug){
 			const debugGraphics = this.add.graphics().setAlpha(0.75);
-			worldLayer.renderDebug(debugGraphics, {
+			suelo.renderDebug(debugGraphics, {
 			  tileColor: null, // Color of non-colliding tiles
 			  collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
 			  faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
 			});
-
-		}
-		this.add.image(-100, 704, 'red');
-
-        var particles = this.add.particles('red');
-
-        var emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 1, end: 0 },
-            blendMode: 'ADD'
-        });
-
-        var logo = this.physics.add.image(0.5, 0.5, 'logo').setScale(0.1);
-		
-        jugadores[0].sprite = this.physics.add.sprite(0.5, 0.5, 'gato').setScale(0.1);
-        jugadores[0].sprite.setCollideWorldBounds(true);
-		this.physics.add.collider(jugadores[0].sprite, worldLayer);
-
-        logo.setVelocity(500, 100);
-        logo.setBounce(1, 1);
-        logo.setCollideWorldBounds(true);
-
-        emitter.startFollow(logo);
-		
-		// Guardar cursores
-		cursors = this.input.keyboard.addKeys(
-            {
-                left: Phaser.Input.Keyboard.KeyCodes.A,
-                right: Phaser.Input.Keyboard.KeyCodes.D,
-				action: Phaser.Input.Keyboard.KeyCodes.SPACE,
-				fullscreen: Phaser.Input.Keyboard.KeyCodes.F
-            });
-        
-		// Al pulsar F se hace un evento
-        cursors.fullscreen.on('down', function () {
-            if (this.scale.isFullscreen) {
-                this.scale.stopFullscreen();
-            }
-            else {
-                this.scale.startFullscreen();
-            }
-        }, this);
-		
-		/*
-		cursors.action.on('down', function () {
-            if (jugadores[0].sprite.) {
-                this.scale.stopFullscreen();
-            }
-            else {
-                this.scale.startFullscreen();
-            }
-        }, this);
-		*/
-		
-		// Cámara un jugador
-		var camJugador1 = this.cameras.main;
-		camJugador1.startFollow(jugadores[0].sprite);
-		
-        // Cámara dos jugadores
-		/*
-		this.cameras.resize(640, 720);
-		var camJugador2 = this.cameras.add(640, 0, 640, 720, false, "jugador2");
-		
-        camJugador1.startFollow(jugadores[0].sprite);
-        camJugador2.startFollow(logo);
-		*/
-		
-		if(debug){
-			
 		}
     }
 
-		
+    update(time, delta){
+		ProcesarMovimiento(delta);
+		SubirEscalon(delta);
+    }
+}
+
+function GenerarMundo(that){
+	map = that.make.tilemap({ key: "map" });
+	// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
+	// Phaser's cache (i.e. the name you used in preload)
+	const tileset = map.addTilesetImage("tilesheet", "tiles");
+	// Parameters: layer name (or index) from Tiled, tileset, x, y
+	suelo = map.createStaticLayer("suelo", tileset, 0, 0);
+	suelo.setCollisionByProperty({ collides: true });
+}
 	
+function GenerarJugador(that){
+	jugadores[0].sprite = that.physics.add.sprite(0.5, 0.5, 'red');
+	jugadores[0].sprite.setMaxVelocity(velJugador);
+	jugadores[0].sprite.setCollideWorldBounds(true);
+	that.physics.add.collider(jugadores[0].sprite, suelo);
+}
 
-    update(){
-		if (cursors.left.isDown) {
-            jugadores[0].sprite.body.velocity.x = -320;
-        }
-        else if (cursors.right.isDown) {
-            jugadores[0].sprite.body.velocity.x = 320;
-        } else{
-			if (jugadores[0].sprite.body.velocity.x > 20) {
-				jugadores[0].sprite.setAccelerationX(-800);
-			} else if (jugadores[0].sprite.body.velocity.x < -20) {
-				jugadores[0].sprite.setAccelerationX(800);
-			} else {
-				jugadores[0].sprite.setAccelerationX(0);
-				jugadores[0].sprite.body.velocity.x = 0;
-			}
+function GenerarCamara(that){
+	// Cámara un jugador
+	var camJugador1 = that.cameras.main;
+	camJugador1.startFollow(jugadores[0].sprite);
+	
+	// Cámara dos jugadores
+	/*
+	that.cameras.resize(640, 720);
+	var camJugador2 = that.cameras.add(640, 0, 640, 720, false, "jugador2");
+	
+	camJugador1.startFollow(jugadores[0].sprite);
+	camJugador2.startFollow(logo);
+	*/
+}
+
+function InicializarCursores(that){
+	// Guardar cursores
+	cursors = that.input.keyboard.addKeys(
+		{
+			left: Phaser.Input.Keyboard.KeyCodes.A,
+			right: Phaser.Input.Keyboard.KeyCodes.D,
+			action: Phaser.Input.Keyboard.KeyCodes.SPACE,
+			fullscreen: Phaser.Input.Keyboard.KeyCodes.F
+		});
+	
+	// Al pulsar F se hace un evento
+	cursors.fullscreen.on('down', function () {
+		if (that.scale.isFullscreen) {
+			that.scale.stopFullscreen();
 		}
-    }
+		else {
+			that.scale.startFullscreen();
+		}
+	}, that);
+	
+	cursors.left.on('down', function () {
+		jugadores[0].dir = -1;
+	}, that);
+	cursors.right.on('down', function () {
+		jugadores[0].dir = 1;
+	}, that);
+	cursors.left.on('up', function () {
+		jugadores[0].dir = 0;
+	}, that);
+	
+	cursors.right.on('up', function () {
+		jugadores[0].dir = 0;
+	}, that);
+	
+	/*
+	cursors.action.on('down', function () {
+		if (jugadores[0].sprite.) {
+			that.scale.stopFullscreen();
+		}
+		else {
+			that.scale.startFullscreen();
+		}
+	}, that);
+	*/
+}
+
+function ProcesarMovimiento(delta){
+	if(jugadores[0].sprite.body.blocked.down){
+			jugadores[0].saltando = false;
+		}
+		if(jugadores[0].dir != 0){
+			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dir * velJugador, aceleracion);
+		}else{
+			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccion);
+		}
+}
+
+function SubirEscalon(delta){
+	if(jugadores[0].sprite.body.blocked.left){
+		// El bloque de arriba a la izq está libre
+		// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
+		if((!map.getTileAtWorldXY(jugadores[0].sprite.x-tileSize,jugadores[0].sprite.y-tileSize,tileSize,tileSize,suelo)&&
+			!map.getTileAtWorldXY(jugadores[0].sprite.x,jugadores[0].sprite.y-tileSize,tileSize,tileSize,suelo)) || 
+			jugadores[0].saltando){
+			Salto();
+		}
+	}
+	if(jugadores[0].sprite.body.blocked.right){
+		if((!map.getTileAtWorldXY(jugadores[0].sprite.x+tileSize, jugadores[0].sprite.y-tileSize, tileSize, tileSize, suelo)&&
+			!map.getTileAtWorldXY(jugadores[0].sprite.x, jugadores[0].sprite.y-tileSize, tileSize, tileSize, suelo)) || 
+			jugadores[0].saltando){
+			Salto();
+		}
+	}
+}
+
+function Salto(){
+	jugadores[0].sprite.body.velocity.y = -150;
+	jugadores[0].sprite.body.velocity.x = velJugador/4;
+	jugadores[0].saltando = true;
 }
