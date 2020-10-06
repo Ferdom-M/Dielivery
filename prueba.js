@@ -167,12 +167,15 @@ function InicializarCursores(that){
 function ProcesarMovimiento(delta){
 	if(jugadores[0].sprite.body.blocked.down){
 		jugadores[0].saltando = false;
+		if(jugadores[0].dir != 0){
+			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dir * velJugador, aceleracion);
+		}else{
+			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccion);
+		}
+	}else if(!jugadores[0].saltando){
+		jugadores[0].sprite.body.velocity.x = 0;
 	}
-	if(jugadores[0].dir != 0){
-		jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dir * velJugador, aceleracion);
-	}else{
-		jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccion);
-	}
+	
 }
 
 function SubirEscalon(delta){
@@ -195,7 +198,7 @@ function SubirEscalon(delta){
 }
 
 function Salto(){
-	jugadores[0].sprite.body.velocity.y = -200;
-	jugadores[0].sprite.body.velocity.x = velJugador/4;
+	jugadores[0].sprite.body.velocity.y = -220;
+	jugadores[0].sprite.body.velocity.x = velJugador/4  * jugadores[0].dir;
 	jugadores[0].saltando = true;
 }
