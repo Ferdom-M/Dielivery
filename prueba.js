@@ -1,6 +1,6 @@
-var debug = true;
+var debug = false;
 
-var velJugador = 240;
+var velJugador = 360;
 var aceleracion = 0.4
 var friccion = 0.2
 
@@ -19,6 +19,7 @@ class Jugador {
 		this.dir = 0;
     }
 }
+
 class Objeto {
 	constructor(tipo, peso, puntuacion){
 		this.tipo = tipo; // String
@@ -26,6 +27,7 @@ class Objeto {
 		this.puntuacion = puntuacion;
 	}
 }
+
 // Por si acaso acabamos metiendo multi local, se hará con un array del tamaño de numJugadores
 var numJugadores = 1;
 var jugadores = new Array(numJugadores);
@@ -44,7 +46,7 @@ class prueba extends Phaser.Scene {
     {
         this.load.image('sky', 'assets/sky.jpeg');
         this.load.image('logo', 'assets/logo.png');
-        this.load.image('red', 'assets/cuadrencio.png');
+        this.load.image('vicente', 'assets/Sprites Personajes/boceto prueba dielivery.png');
 		this.load.image("tiles", "assets/tilesheet.png");
 		this.load.tilemapTiledJSON("map", "assets/map.json");
 
@@ -72,6 +74,7 @@ class prueba extends Phaser.Scene {
     update(time, delta){
 		ProcesarMovimiento(delta);
 		SubirEscalon(delta);
+		
     }
 }
 
@@ -86,7 +89,7 @@ function GenerarMundo(that){
 }
 	
 function GenerarJugador(that){
-	jugadores[0].sprite = that.physics.add.sprite(0.5, 0.5, 'red');
+	jugadores[0].sprite = that.physics.add.sprite(50, 518, 'vicente');
 	jugadores[0].sprite.setMaxVelocity(velJugador);
 	jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
@@ -134,11 +137,19 @@ function InicializarCursores(that){
 		jugadores[0].dir = 1;
 	}, that);
 	cursors.left.on('up', function () {
-		jugadores[0].dir = 0;
+		if(cursors.right.isUp){
+			jugadores[0].dir = 0;
+		}else{
+			jugadores[0].dir = 1;
+		}
 	}, that);
 	
 	cursors.right.on('up', function () {
-		jugadores[0].dir = 0;
+		if(cursors.left.isUp){
+			jugadores[0].dir = 0;
+		}else{
+			jugadores[0].dir = -1
+		}
 	}, that);
 	
 	/*
@@ -155,13 +166,13 @@ function InicializarCursores(that){
 
 function ProcesarMovimiento(delta){
 	if(jugadores[0].sprite.body.blocked.down){
-			jugadores[0].saltando = false;
-		}
-		if(jugadores[0].dir != 0){
-			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dir * velJugador, aceleracion);
-		}else{
-			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccion);
-		}
+		jugadores[0].saltando = false;
+	}
+	if(jugadores[0].dir != 0){
+		jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dir * velJugador, aceleracion);
+	}else{
+		jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccion);
+	}
 }
 
 function SubirEscalon(delta){
@@ -184,7 +195,7 @@ function SubirEscalon(delta){
 }
 
 function Salto(){
-	jugadores[0].sprite.body.velocity.y = -150;
+	jugadores[0].sprite.body.velocity.y = -200;
 	jugadores[0].sprite.body.velocity.x = velJugador/4;
 	jugadores[0].saltando = true;
 }
