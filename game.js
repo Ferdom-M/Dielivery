@@ -8,6 +8,9 @@ var config = {
         width: 1280,
         height: 720
     },
+	input: {
+		gamepad: true
+	},
     physics: {
         default: 'arcade',
         arcade: {
