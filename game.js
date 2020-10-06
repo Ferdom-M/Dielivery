@@ -16,7 +16,7 @@ var config = {
         }
     },
     scene: [prueba],
-    antialias: true
+    antialias: false
 };
 
 var game = new Phaser.Game(config);

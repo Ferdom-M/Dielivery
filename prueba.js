@@ -2,7 +2,7 @@ var debug = false;
 
 var velJugador = 360;
 var aceleracion = 0.4
-var friccion = 0.2
+var friccion = 0.15;
 
 var map;
 var suelo;
@@ -47,8 +47,8 @@ class prueba extends Phaser.Scene {
         this.load.image('sky', 'assets/sky.jpeg');
         this.load.image('logo', 'assets/logo.png');
         this.load.image('vicente', 'assets/Sprites Personajes/boceto prueba dielivery.png');
-		this.load.image("tiles", "assets/tilesheet.png");
-		this.load.tilemapTiledJSON("map", "assets/map.json");
+		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet_tiles_extruded.png");
+		this.load.tilemapTiledJSON("map", "assets/Mapas/mapa_fixed.json");
 
     }
 
@@ -75,6 +75,7 @@ class prueba extends Phaser.Scene {
 		ProcesarMovimiento(delta);
 		SubirEscalon(delta);
 		
+		//ActualizarCamara(delta, this);
     }
 }
 
@@ -82,22 +83,24 @@ function GenerarMundo(that){
 	map = that.make.tilemap({ key: "map" });
 	// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
 	// Phaser's cache (i.e. the name you used in preload)
-	const tileset = map.addTilesetImage("tilesheet", "tiles");
+	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 64, 64, 1, 12);
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
-	suelo = map.createStaticLayer("suelo", tileset, 0, 0);
+	fondo = map.createStaticLayer("Fondo", tileset, 0, 0).setScale(0.5);
+	suelo = map.createStaticLayer("Suelo", tileset, 0, 0).setScale(0.5);
 	suelo.setCollisionByProperty({ collides: true });
 }
 	
 function GenerarJugador(that){
-	jugadores[0].sprite = that.physics.add.sprite(50, 518, 'vicente');
+	jugadores[0].sprite = that.physics.add.sprite(200, 200, 'vicente');
 	jugadores[0].sprite.setMaxVelocity(velJugador);
-	jugadores[0].sprite.setCollideWorldBounds(true);
+	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
 }
 
 function GenerarCamara(that){
 	// Cámara un jugador
 	var camJugador1 = that.cameras.main;
+	//that.cameraDolly = new Phaser.Geom.Point(jugadores[0].sprite.x, jugadores[0].sprite.y);
 	camJugador1.startFollow(jugadores[0].sprite);
 	
 	// Cámara dos jugadores
@@ -182,22 +185,28 @@ function SubirEscalon(delta){
 	if(jugadores[0].sprite.body.blocked.left){
 		// El bloque de arriba a la izq está libre
 		// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
-		if((!map.getTileAtWorldXY(jugadores[0].sprite.x-tileSize,jugadores[0].sprite.y-tileSize,tileSize,tileSize,suelo)&&
-			!map.getTileAtWorldXY(jugadores[0].sprite.x,jugadores[0].sprite.y-tileSize,tileSize,tileSize,suelo)) || 
+		if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x-tileSize, jugadores[0].sprite.y-tileSize)&&
+			!suelo.getTileAtWorldXY(jugadores[0].sprite.x,jugadores[0].sprite.y-tileSize)) || 
 			jugadores[0].saltando){
 			Salto();
 		}
 	}
 	if(jugadores[0].sprite.body.blocked.right){
-		if((!map.getTileAtWorldXY(jugadores[0].sprite.x+tileSize, jugadores[0].sprite.y-tileSize, tileSize, tileSize, suelo)&&
-			!map.getTileAtWorldXY(jugadores[0].sprite.x, jugadores[0].sprite.y-tileSize, tileSize, tileSize, suelo)) || 
+		if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x+tileSize, jugadores[0].sprite.y-tileSize)&&
+			!suelo.getTileAtWorldXY(jugadores[0].sprite.x, jugadores[0].sprite.y-tileSize)) || 
 			jugadores[0].saltando){
 			Salto();
 		}
 	}
 }
+
 function Salto(){
 	jugadores[0].sprite.body.velocity.y = -220;
 	jugadores[0].sprite.body.velocity.x = velJugador/4  * jugadores[0].dir;
 	jugadores[0].saltando = true;
+}
+
+function ActualizarCamara(delta, that){
+	that.cameraDolly.x = Math.round(jugadores[0].sprite.x);
+    that.cameraDolly.y = Math.round(jugadores[0].sprite.y);
 }
