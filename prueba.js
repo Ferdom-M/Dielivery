@@ -196,7 +196,6 @@ function SubirEscalon(delta){
 		}
 	}
 }
-
 function Salto(){
 	jugadores[0].sprite.body.velocity.y = -220;
 	jugadores[0].sprite.body.velocity.x = velJugador/4  * jugadores[0].dir;
