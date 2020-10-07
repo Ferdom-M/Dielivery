@@ -145,7 +145,7 @@ function GenerarMundo(that){
 	
 function GenerarJugador(that){
 	jugadores[0].sprite = that.physics.add.sprite(200, 200, 'vicente');
-	jugadores[0].sprite.setMaxVelocity(velJugador, 2000); // x, y
+	jugadores[0].sprite.setMaxVelocity(velJugador, 1100); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
 }
@@ -285,6 +285,7 @@ function AccionSalto(delta, enSuelo){
 			}
 			else if (jugadores[0].dashDisponible){
 				jugadores[0].dashDisponible = false
+				console.log("salto aereo");
 				jugadores[0].sprite.body.velocity.y = velSalto
 			}
 		}
@@ -304,6 +305,7 @@ function AccionDash(delta){
 	jugadores[0].dashing = true
 	jugadores[0].dashDisponible = false
 	
+	console.log("dash");
 	dashVelocity = velDash * jugadores[0].ultimaDirX;
 
 }
