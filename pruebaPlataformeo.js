@@ -8,7 +8,8 @@ var aceleracion = 0.4;
 var friccionSuelo = 0.1;
 var friccionAerea = 0.2;
 var tiempoJumpsquat = 66.6;
-var tiempoSaltoEnPared = 350
+var tiempoSaltoEnPared = 350;
+var tiempoDash = 100;
 var velSaltoPared = 500;
 var velSalto = -700;
 var velDash = 960;
@@ -31,7 +32,7 @@ class Jugador {
 		this.jumpsquat = false;
 		this.dash = false;
 		this.dashing = false;
-		this.dashVelocity = (0,0);
+		this.dashVelocity = 0;
 		this.dashDisponible = false;
 		this.saltoEnParedDisponible = false;
 		this.saltandoEnPared = false;
@@ -40,6 +41,7 @@ class Jugador {
 		this.contadorJumpsquat = 0.0;
 		this.deslizandoPared = false;
 		this.contadorSaltoEnPared = 0.0;
+		this.contadorDash = 0.0;
     }
 }
 
@@ -109,8 +111,14 @@ class prueba extends Phaser.Scene {
 			jugadores[0].deslizandoPared = false;
 			jugadores[0].saltandoEnPared = false;
 			jugadores[0].saltando = false;
+			jugadores[0].dashing = false;
 		}
-		ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha);
+		
+		if(!jugadores[0].dashing){
+			ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha);
+		}else{
+			ProcesarDash(delta, enSuelo);
+		}
 		
 		if (jugadores[0].jumpsquat && enSuelo || 
 		    !enSuelo && jugadores[0].dashDisponible || 
@@ -119,9 +127,11 @@ class prueba extends Phaser.Scene {
 				AccionSalto(delta, enSuelo); 
 		}
 		
+		
 		if (jugadores[0].dash && jugadores[0].dashDisponible && !jugadores[0].saltandoEnPared && !enSuelo){
 			AccionDash(delta);
 		}
+		
 		
 		
 		
@@ -145,7 +155,7 @@ function GenerarMundo(that){
 	
 function GenerarJugador(that){
 	jugadores[0].sprite = that.physics.add.sprite(200, 200, 'vicente');
-	jugadores[0].sprite.setMaxVelocity(velJugador, 1100); // x, y
+	jugadores[0].sprite.setMaxVelocity(velDash, 1100); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
 }
@@ -306,7 +316,7 @@ function AccionDash(delta){
 	jugadores[0].dashDisponible = false
 	
 	console.log("dash");
-	dashVelocity = velDash * jugadores[0].ultimaDirX;
+	jugadores[0].dashVelocity = velDash * jugadores[0].ultimaDirX;
 
 }
 
@@ -338,6 +348,22 @@ function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha){
 			jugadores[0].deslizandoPared = false;
 			jugadores[0].sprite.body.setAllowGravity(true);
 		}
+	}
+}
+
+function ProcesarDash(delta, enSuelo, that){
+	if(!enSuelo){
+		jugadores[0].sprite.body.velocity.y = 0;
+		jugadores[0].sprite.body.velocity.x = jugadores[0].dashVelocity;
+		jugadores[0].contadorDash += delta;
+		jugadores[0].sprite.body.setAllowGravity(false);
+		
+	}
+	if(jugadores[0].contadorDash > tiempoDash){
+		jugadores[0].dashing = false;
+		jugadores[0].dashVelocity = 0;
+		jugadores[0].contadorDash = 0;
+		jugadores[0].sprite.body.setAllowGravity(true);
 	}
 }
 
