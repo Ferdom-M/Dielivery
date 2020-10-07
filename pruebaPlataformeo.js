@@ -1,10 +1,14 @@
-var debug = false;
+var debug = true;
 
+var gravedad = 1800;
 var velJugador = 360;
 var velEscalon = -220;
+var velDeslizandoPared = 300;
 var aceleracion = 0.4;
-var friccion = 0.15;
+var friccionSuelo = 0.1;
+var friccionAerea = 0.2;
 var tiempoJumpsquat = 66.6;
+var tiempoSaltoEnPared = 350
 var velSaltoPared = 500;
 var velSalto = -700;
 var velDash = 960;
@@ -92,30 +96,37 @@ class prueba extends Phaser.Scene {
     }
 
     update(time, delta){
-		if (jugadores[0].subiendoEscalon && jugadores[0].sprite.body.blocked.down || jugadores[0].saltando && jugadores[0].sprite.body.blocked.down){
+		// Comprobamos una sola vez si tocamos suelo o paredes
+		let enSuelo = jugadores[0].sprite.body.blocked.down;
+		let enParedIzq = jugadores[0].sprite.body.blocked.left;
+		let enParedDcha = jugadores[0].sprite.body.blocked.right;
+		
+		// Al volver al suelo reiniciamos valores
+		if (enSuelo){
+			jugadores[0].dashDisponible = true;
+			jugadores[0].saltoEnParedDisponible = true;
 			jugadores[0].subiendoEscalon = false;
 			jugadores[0].deslizandoPared = false;
 			jugadores[0].saltandoEnPared = false;
 			jugadores[0].saltando = false;
-
+		}
+		ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha);
+		
+		if (jugadores[0].jumpsquat && enSuelo || 
+		    !enSuelo && jugadores[0].dashDisponible || 
+			!enSuelo && jugadores[0].saltoEnParedDisponible || 
+			jugadores[0].empezandoSalto){
+				AccionSalto(delta, enSuelo); 
 		}
 		
-		if (jugadores[0].jumpsquat && jugadores[0].sprite.body.blocked.down || 
-		    !jugadores[0].sprite.body.blocked.down && jugadores[0].dashDisponible || 
-			!jugadores[0].sprite.body.blocked.down && jugadores[0].saltoEnParedDisponible || 
-			jugadores[0].empezandoSalto){
-				AccionSalto(delta);
-				
-		}
-		if (jugadores[0].dash && jugadores[0].dashDisponible && !jugadores[0].saltandoEnPared && !jugadores[0].sprite.body.blocked.down){
-			
+		if (jugadores[0].dash && jugadores[0].dashDisponible && !jugadores[0].saltandoEnPared && !enSuelo){
 			AccionDash(delta);
 		}
 		
-		ProcesarMovimiento(delta);
 		
 		
-		SubirEscalon(delta);
+		
+		SubirEscalon(delta, enParedIzq, enParedDcha);
 		
 		//ActualizarCamara(delta, this);
     }
@@ -249,7 +260,7 @@ function InicializarCursores(that){
 	*/
 }
 
-function AccionSalto(delta){
+function AccionSalto(delta, enSuelo){
 	if (jugadores[0].contadorJumpsquat == 0 && jugadores[0].jumpsquat){
 		jugadores[0].empezandoSalto = true;
 	}
@@ -261,16 +272,16 @@ function AccionSalto(delta){
 		jugadores[0].empezandoSalto = false;
 		jugadores[0].contadorJumpsquat = 0.0;
 		jugadores[0].saltando = true;
-		if (!jugadores[0].sprite.body.blocked.down){
+		if (!enSuelo){
 			
 			if (jugadores[0].deslizandoPared && jugadores[0].saltoEnParedDisponible){
 				
-				jugadores[0].sprite.velocity.x = -velSaltoPared * jugadores[0].dirX;
+				jugadores[0].sprite.body.velocity.x = -velSaltoPared * jugadores[0].dirX;
 				jugadores[0].deslizandoPared = false;
 				jugadores[0].saltoEnParedDisponible = false;
 				jugadores[0].saltandoEnPared = true;
 				jugadores[0].contadorSaltoEnPared = 0.0;
-				jugadores[0].sprite.body.velocity.y = jump_speed
+				jugadores[0].sprite.body.velocity.y = velSalto
 			}
 			else if (jugadores[0].dashDisponible){
 				jugadores[0].dashDisponible = false
@@ -290,7 +301,6 @@ function AccionSalto(delta){
 }
 
 function AccionDash(delta){
-	console.log("a");
 	jugadores[0].dashing = true
 	jugadores[0].dashDisponible = false
 	
@@ -298,21 +308,39 @@ function AccionDash(delta){
 
 }
 
-function ProcesarMovimiento(delta){
-	if(jugadores[0].dirX != 0){
-		jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dirX * velJugador, aceleracion);
+function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha){
+	if(!jugadores[0].saltandoEnPared){
+		if(jugadores[0].dirX != 0){
+			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dirX * velJugador, aceleracion);
+		}else{
+			if(enSuelo){
+				jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccionSuelo);
+			}else{
+				jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccionAerea);
+			}
+		}
 	}else{
-		jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccion);
+		jugadores[0].contadorSaltoEnPared += delta;
+		if(jugadores[0].contadorSaltoEnPared > tiempoSaltoEnPared){
+			jugadores[0].saltandoEnPared = false;
+			jugadores[0].saltoEnParedDisponible = true;
+		}
 	}
-	if(jugadores[0].sprite.body.blocked.down){
-		jugadores[0].dashDisponible = true;
-		jugadores[0].saltoEnParedDisponible = true;
+	if (!enSuelo){
+		if (enParedIzq || enParedDcha){
+			jugadores[0].deslizandoPared = true;
+			console.log(jugadores[0].sprite.body.gravity.y);
+			jugadores[0].sprite.body.setAllowGravity(false);
+			jugadores[0].sprite.body.velocity.y = velDeslizandoPared;
+		}else{
+			jugadores[0].deslizandoPared = false;
+			jugadores[0].sprite.body.setAllowGravity(true);
+		}
 	}
-	
 }
 
-function SubirEscalon(delta){
-	if(jugadores[0].sprite.body.blocked.left){
+function SubirEscalon(delta, enParedIzq, enParedDcha){
+	if(enParedIzq){
 		// El bloque de arriba a la izq está libre
 		// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
 		if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x-tileSize, jugadores[0].sprite.y-tileSize)&&
@@ -326,7 +354,7 @@ function SubirEscalon(delta){
 	}else{
 		jugadores[0].subiendoEscalon = false;
 	}
-	if(jugadores[0].sprite.body.blocked.right){
+	if(enParedDcha){
 		if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x+tileSize, jugadores[0].sprite.y-tileSize)&&
 			!suelo.getTileAtWorldXY(jugadores[0].sprite.x, jugadores[0].sprite.y-tileSize)) ||
 			
@@ -336,7 +364,7 @@ function SubirEscalon(delta){
 			jugadores[0].subiendoEscalon = true;
 		}
 	}else{
-		jugadores[0].subiendoEscalon = true;
+		jugadores[0].subiendoEscalon = false;
 	}
 }
 
