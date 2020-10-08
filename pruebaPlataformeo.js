@@ -18,6 +18,7 @@ var map;
 var suelo;
 var tileSize = 64;
 
+
 var cursors;
 
 // Clase jugador, aquí guardaremos el inventario, puntuacion, etc
@@ -37,6 +38,7 @@ class Jugador {
 		this.saltoEnParedDisponible = false;
 		this.saltandoEnPared = false;
 		this.saltando = false;
+		this.enEscalera = false;
 		this.empezandoSalto = false;
 		this.contadorJumpsquat = 0.0;
 		this.deslizandoPared = false;
@@ -73,6 +75,7 @@ class prueba extends Phaser.Scene {
         this.load.image('logo', 'assets/logo.png');
         this.load.image('vicente', 'assets/Sprites Personajes/boceto prueba dielivery.png');
 		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet_tiles_extruded.png");
+		this.load.image("escalera", "assets/ladder.png");
 		this.load.tilemapTiledJSON("map", "assets/Mapas/mapa_fixed.json");
 
     }
@@ -82,6 +85,7 @@ class prueba extends Phaser.Scene {
 		GenerarMundo(this);
 		GenerarJugador(this);
 		GenerarCamara(this);
+		GenerarEscalera(this);
 		
 		InicializarCursores(this);
 		
@@ -103,6 +107,8 @@ class prueba extends Phaser.Scene {
 		let enParedIzq = jugadores[0].sprite.body.blocked.left;
 		let enParedDcha = jugadores[0].sprite.body.blocked.right;
 		
+		jugadores[0].enEscalera = this.physics.overlap(jugadores[0].sprite, grupoEscaleras);
+
 		// Al volver al suelo reiniciamos valores
 		if (enSuelo){
 			jugadores[0].dashDisponible = true;
@@ -115,7 +121,7 @@ class prueba extends Phaser.Scene {
 		}
 		
 		if(!jugadores[0].dashing){
-			ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha);
+			ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, this);
 		}else{
 			ProcesarDash(delta, enSuelo);
 		}
@@ -134,9 +140,15 @@ class prueba extends Phaser.Scene {
 		
 		
 		
+		/*if (Escalera())
+    	{
+        	if(cursors.up.isDown){
+				jugadores[0].sprite.body.velocity.y = -velJugador;
+			}
+    	}*/
 		
 		
-		SubirEscalon(delta, enParedIzq, enParedDcha);
+		//SubirEscalon(delta, enParedIzq, enParedDcha);
 		
 		//ActualizarCamara(delta, this);
     }
@@ -158,6 +170,12 @@ function GenerarJugador(that){
 	jugadores[0].sprite.setMaxVelocity(velDash, 1100); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
+}
+
+function GenerarEscalera(that){
+	grupoEscaleras = that.physics.add.staticGroup();
+	grupoEscaleras.create(450, 250, 'escalera');
+	that.physics.add.overlap(jugadores[0].sprite, grupoEscaleras);
 }
 
 function GenerarCamara(that){
@@ -226,6 +244,11 @@ function InicializarCursores(that){
 	cursors.up.on('down', function () {
 		jugadores[0].dirY = -1;
 	}, that);
+	/*cursors.up.on('pressed', function () {
+		if(Escalera()){
+			jugadores[0].sprite.body.velocity.y = -velSalto;
+		}
+	}, that);*/
 	cursors.up.on('up', function () {
 		if(cursors.left.isUp){
 			jugadores[0].dirY = 0;
@@ -320,7 +343,20 @@ function AccionDash(delta){
 
 }
 
-function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha){
+function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, that){
+	//console.log(jugadores[0].sprite.body.velocity.y);
+	if(jugadores[0].enEscalera){
+		enParedIzq = false;
+		enParedDcha = false;
+		console.log(enParedDcha || enParedIzq);
+		jugadores[0].sprite.body.setAllowGravity(false);
+		if(jugadores[0].dirY != 0){
+			jugadores[0].sprite.body.velocity.y = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.y, jugadores[0].dirY * velJugador, aceleracion);
+			
+		}else{
+			jugadores[0].sprite.body.velocity.y = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.y, 0, friccionAerea);
+		}
+	}
 	if(!jugadores[0].saltandoEnPared){
 		if(jugadores[0].dirX != 0){
 			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dirX * velJugador, aceleracion);
@@ -341,10 +377,10 @@ function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha){
 	if (!enSuelo){
 		if (enParedIzq || enParedDcha){
 			jugadores[0].deslizandoPared = true;
-			console.log(jugadores[0].sprite.body.gravity.y);
 			jugadores[0].sprite.body.setAllowGravity(false);
 			jugadores[0].sprite.body.velocity.y = velDeslizandoPared;
-		}else{
+		}
+		else if(!jugadores[0].enEscalera){
 			jugadores[0].deslizandoPared = false;
 			jugadores[0].sprite.body.setAllowGravity(true);
 		}
@@ -367,7 +403,7 @@ function ProcesarDash(delta, enSuelo, that){
 	}
 }
 
-function SubirEscalon(delta, enParedIzq, enParedDcha){
+/*function SubirEscalon(delta, enParedIzq, enParedDcha){
 	if(enParedIzq){
 		// El bloque de arriba a la izq está libre
 		// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
@@ -394,9 +430,29 @@ function SubirEscalon(delta, enParedIzq, enParedDcha){
 	}else{
 		jugadores[0].subiendoEscalon = false;
 	}
-}
+}*/
 
 function ActualizarCamara(delta, that){
 	that.cameraDolly.x = Math.round(jugadores[0].sprite.x);
     that.cameraDolly.y = Math.round(jugadores[0].sprite.y);
 }
+
+/*function Escalera(jugador, ladder){
+
+	jugadores[0].enEscalera = true;
+	/*var escalera = false;
+	console.log("compruebo " + escalera);
+	grupoEscaleras.children.iterate(function(item){
+		if(!item.body.wasTouching.none){
+			console.log("toco " + item);
+			escalera = true;
+		}
+	})
+	console.log("he tocado " + escalera);
+	return escalera;*/
+	/*if(jugadores[0].dirY != 0){
+		jugador.body.setAllowGravity(false);
+		jugador.body.velocity.y = Phaser.Math.Linear(jugador.body.velocity.y, jugadores[0].dirY * velJugador, aceleracion);
+		
+	}
+}*/
