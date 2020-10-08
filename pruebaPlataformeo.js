@@ -365,6 +365,7 @@ function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, that){
 		}
 	}else{
 		jugadores[0].contadorSaltoEnPared += delta;
+		// Si tocamos una pared reiniciamos el contador de salto en pared para poder saltar y deslizarnos de forma normal
 		if(jugadores[0].contadorSaltoEnPared > tiempoSaltoEnPared || enParedIzq || enParedDcha){
 			jugadores[0].saltandoEnPared = false;
 			jugadores[0].saltoEnParedDisponible = true;
@@ -372,7 +373,6 @@ function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, that){
 	}
 	if (!enSuelo){
 		if (enParedIzq || enParedDcha){
-			// Si tocamos una pared reiniciamos el contador de salto en pared para poder saltar y deslizarnos de forma normal
 			jugadores[0].deslizandoPared = true;
 			
 			jugadores[0].sprite.body.setAllowGravity(false);
