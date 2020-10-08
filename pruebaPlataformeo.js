@@ -83,9 +83,10 @@ class prueba extends Phaser.Scene {
     create ()
     {
 		GenerarMundo(this);
+		GenerarEscalera(this);
 		GenerarJugador(this);
 		GenerarCamara(this);
-		GenerarEscalera(this);
+		
 		
 		InicializarCursores(this);
 		
@@ -148,7 +149,7 @@ class prueba extends Phaser.Scene {
     	}*/
 		
 		
-		//SubirEscalon(delta, enParedIzq, enParedDcha);
+		SubirEscalon(delta, enParedIzq, enParedDcha);
 		
 		//ActualizarCamara(delta, this);
     }
@@ -165,6 +166,11 @@ function GenerarMundo(that){
 	suelo.setCollisionByProperty({ collides: true });
 }
 	
+function GenerarEscalera(that){
+	grupoEscaleras = that.physics.add.staticGroup();
+	grupoEscaleras.create(450, 250, 'escalera');
+}
+
 function GenerarJugador(that){
 	jugadores[0].sprite = that.physics.add.sprite(200, 200, 'vicente');
 	jugadores[0].sprite.setMaxVelocity(velDash, 1100); // x, y
@@ -172,11 +178,6 @@ function GenerarJugador(that){
 	that.physics.add.collider(jugadores[0].sprite, suelo);
 }
 
-function GenerarEscalera(that){
-	grupoEscaleras = that.physics.add.staticGroup();
-	grupoEscaleras.create(450, 250, 'escalera');
-	that.physics.add.overlap(jugadores[0].sprite, grupoEscaleras);
-}
 
 function GenerarCamara(that){
 	// Cámara un jugador
@@ -244,11 +245,7 @@ function InicializarCursores(that){
 	cursors.up.on('down', function () {
 		jugadores[0].dirY = -1;
 	}, that);
-	/*cursors.up.on('pressed', function () {
-		if(Escalera()){
-			jugadores[0].sprite.body.velocity.y = -velSalto;
-		}
-	}, that);*/
+
 	cursors.up.on('up', function () {
 		if(cursors.left.isUp){
 			jugadores[0].dirY = 0;
@@ -318,7 +315,6 @@ function AccionSalto(delta, enSuelo){
 			}
 			else if (jugadores[0].dashDisponible){
 				jugadores[0].dashDisponible = false
-				console.log("salto aereo");
 				jugadores[0].sprite.body.velocity.y = velSalto
 			}
 		}
@@ -338,7 +334,6 @@ function AccionDash(delta){
 	jugadores[0].dashing = true
 	jugadores[0].dashDisponible = false
 	
-	console.log("dash");
 	jugadores[0].dashVelocity = velDash * jugadores[0].ultimaDirX;
 
 }
@@ -346,9 +341,10 @@ function AccionDash(delta){
 function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, that){
 	//console.log(jugadores[0].sprite.body.velocity.y);
 	if(jugadores[0].enEscalera){
+		// Como tal no hace falta ya porque no cuenta la escalera como pared por quitar el add overlap
+		// Pero mejor ponerlo en false por si se da el caso de que hay una escalera al lado de una pared
 		enParedIzq = false;
 		enParedDcha = false;
-		console.log(enParedDcha || enParedIzq);
 		jugadores[0].sprite.body.setAllowGravity(false);
 		if(jugadores[0].dirY != 0){
 			jugadores[0].sprite.body.velocity.y = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.y, jugadores[0].dirY * velJugador, aceleracion);
@@ -369,14 +365,16 @@ function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, that){
 		}
 	}else{
 		jugadores[0].contadorSaltoEnPared += delta;
-		if(jugadores[0].contadorSaltoEnPared > tiempoSaltoEnPared){
+		if(jugadores[0].contadorSaltoEnPared > tiempoSaltoEnPared || enParedIzq || enParedDcha){
 			jugadores[0].saltandoEnPared = false;
 			jugadores[0].saltoEnParedDisponible = true;
 		}
 	}
 	if (!enSuelo){
 		if (enParedIzq || enParedDcha){
+			// Si tocamos una pared reiniciamos el contador de salto en pared para poder saltar y deslizarnos de forma normal
 			jugadores[0].deslizandoPared = true;
+			
 			jugadores[0].sprite.body.setAllowGravity(false);
 			jugadores[0].sprite.body.velocity.y = velDeslizandoPared;
 		}
@@ -403,56 +401,38 @@ function ProcesarDash(delta, enSuelo, that){
 	}
 }
 
-/*function SubirEscalon(delta, enParedIzq, enParedDcha){
-	if(enParedIzq){
-		// El bloque de arriba a la izq está libre
-		// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
-		if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x-tileSize, jugadores[0].sprite.y-tileSize)&&
-			!suelo.getTileAtWorldXY(jugadores[0].sprite.x,jugadores[0].sprite.y-tileSize)) || 
-			jugadores[0].subiendoEscalon){
+function SubirEscalon(delta, enParedIzq, enParedDcha){
+	if(!jugadores[0].enEscalera){
+		if(enParedIzq){
+			// El bloque de arriba a la izq está libre
+			// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
+			if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x-tileSize, jugadores[0].sprite.y-tileSize)&&
+				!suelo.getTileAtWorldXY(jugadores[0].sprite.x,jugadores[0].sprite.y-tileSize)) || 
+				jugadores[0].subiendoEscalon){
+					
+				jugadores[0].sprite.body.velocity.y = velEscalon;
+				jugadores[0].sprite.body.velocity.x = velJugador/4  * jugadores[0].dirX;
+				jugadores[0].subiendoEscalon = true;
+			}
+		}else{
+			jugadores[0].subiendoEscalon = false;
+		}
+		if(enParedDcha){
+			if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x+tileSize, jugadores[0].sprite.y-tileSize)&&
+				!suelo.getTileAtWorldXY(jugadores[0].sprite.x, jugadores[0].sprite.y-tileSize)) ||
 				
-			jugadores[0].sprite.body.velocity.y = velEscalon;
-			jugadores[0].sprite.body.velocity.x = velJugador/4  * jugadores[0].dirX;
-			jugadores[0].subiendoEscalon = true;
+				jugadores[0].subiendoEscalon){
+				jugadores[0].sprite.body.velocity.y = velEscalon;
+				jugadores[0].sprite.body.velocity.x = velJugador/4  * jugadores[0].dirX;
+				jugadores[0].subiendoEscalon = true;
+			}
+		}else{
+			jugadores[0].subiendoEscalon = false;
 		}
-	}else{
-		jugadores[0].subiendoEscalon = false;
 	}
-	if(enParedDcha){
-		if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x+tileSize, jugadores[0].sprite.y-tileSize)&&
-			!suelo.getTileAtWorldXY(jugadores[0].sprite.x, jugadores[0].sprite.y-tileSize)) ||
-			
-			jugadores[0].subiendoEscalon){
-			jugadores[0].sprite.body.velocity.y = velEscalon;
-			jugadores[0].sprite.body.velocity.x = velJugador/4  * jugadores[0].dirX;
-			jugadores[0].subiendoEscalon = true;
-		}
-	}else{
-		jugadores[0].subiendoEscalon = false;
-	}
-}*/
+}
 
 function ActualizarCamara(delta, that){
 	that.cameraDolly.x = Math.round(jugadores[0].sprite.x);
     that.cameraDolly.y = Math.round(jugadores[0].sprite.y);
 }
-
-/*function Escalera(jugador, ladder){
-
-	jugadores[0].enEscalera = true;
-	/*var escalera = false;
-	console.log("compruebo " + escalera);
-	grupoEscaleras.children.iterate(function(item){
-		if(!item.body.wasTouching.none){
-			console.log("toco " + item);
-			escalera = true;
-		}
-	})
-	console.log("he tocado " + escalera);
-	return escalera;*/
-	/*if(jugadores[0].dirY != 0){
-		jugador.body.setAllowGravity(false);
-		jugador.body.velocity.y = Phaser.Math.Linear(jugador.body.velocity.y, jugadores[0].dirY * velJugador, aceleracion);
-		
-	}
-}*/

@@ -16,7 +16,9 @@ class Jugador {
         this.puntuacion = 0;
         this.inventario = new Array(limInventario);
 		this.saltando = false;
-		this.dir = 0;
+		this.enEscalera = false;
+		this.dirX = 0;
+		this.dirY = 0;
     }
 }
 
@@ -55,6 +57,7 @@ class prueba extends Phaser.Scene {
     create ()
     {
 		GenerarMundo(this);
+		GenerarEscalera(this);
 		GenerarJugador(this);
 		GenerarCamara(this);
 		
@@ -72,8 +75,14 @@ class prueba extends Phaser.Scene {
     }
 
     update(time, delta){
-		ProcesarMovimiento(delta);
-		SubirEscalon(delta);
+		let enSuelo = jugadores[0].sprite.body.blocked.down;
+		let enParedIzq = jugadores[0].sprite.body.blocked.left;
+		let enParedDcha = jugadores[0].sprite.body.blocked.right;
+		
+		jugadores[0].enEscalera = this.physics.overlap(jugadores[0].sprite, grupoEscaleras);
+		
+		ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha);
+		SubirEscalon(delta, enParedIzq, enParedDcha);
 		
 		//ActualizarCamara(delta, this);
     }
@@ -90,9 +99,14 @@ function GenerarMundo(that){
 	suelo.setCollisionByProperty({ collides: true });
 }
 	
+function GenerarEscalera(that){
+	grupoEscaleras = that.physics.add.staticGroup();
+	grupoEscaleras.create(450, 250, 'escalera');
+}
+
 function GenerarJugador(that){
 	jugadores[0].sprite = that.physics.add.sprite(200, 200, 'vicente');
-	jugadores[0].sprite.setMaxVelocity(velJugador);
+	jugadores[0].sprite.setMaxVelocity(velJugador, 1100);
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
 }
@@ -119,6 +133,8 @@ function InicializarCursores(that){
 		{
 			left: Phaser.Input.Keyboard.KeyCodes.A,
 			right: Phaser.Input.Keyboard.KeyCodes.D,
+			up: Phaser.Input.Keyboard.KeyCodes.W,
+			down: Phaser.Input.Keyboard.KeyCodes.S,
 			action: Phaser.Input.Keyboard.KeyCodes.SPACE,
 			fullscreen: Phaser.Input.Keyboard.KeyCodes.F
 		});
@@ -155,6 +171,27 @@ function InicializarCursores(that){
 		}
 	}, that);
 	
+	cursors.up.on('down', function () {
+		jugadores[0].dirY = -1;
+	}, that);
+	cursors.up.on('up', function () {
+		if(cursors.left.isUp){
+			jugadores[0].dirY = 0;
+		}else{
+			jugadores[0].dirY = 1
+		}
+	}, that);
+	
+	cursors.down.on('down', function () {
+		jugadores[0].dirY = 1;
+	}, that);
+	cursors.down.on('up', function () {
+		if(cursors.left.isUp){
+			jugadores[0].dirY = 0;
+		}else{
+			jugadores[0].dirY = -1
+		}
+	}, that);
 	/*
 	cursors.action.on('down', function () {
 		if (jugadores[0].sprite.) {
@@ -167,8 +204,22 @@ function InicializarCursores(that){
 	*/
 }
 
-function ProcesarMovimiento(delta){
-	if(jugadores[0].sprite.body.blocked.down){
+function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha){
+	if(jugadores[0].enEscalera){
+		jugadores[0].sprite.body.setAllowGravity(false);
+		enParedIzq = false;
+		enParedDcha = false;
+		if(jugadores[0].dirY != 0){
+			jugadores[0].sprite.body.velocity.y = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.y, jugadores[0].dirY * velJugador, aceleracion);
+			
+		}else{
+			jugadores[0].sprite.body.velocity.y = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.y, 0, friccionAerea);
+		}
+	}else{
+		jugadores[0].sprite.body.setAllowGravity(false);
+	}
+	
+	if(enSuelo){
 		jugadores[0].saltando = false;
 		if(jugadores[0].dir != 0){
 			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dir * velJugador, aceleracion);
@@ -181,8 +232,8 @@ function ProcesarMovimiento(delta){
 	
 }
 
-function SubirEscalon(delta){
-	if(jugadores[0].sprite.body.blocked.left){
+function SubirEscalon(delta, enParedIzq, enParedDcha){
+	if(enParedIzq){
 		// El bloque de arriba a la izq está libre
 		// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
 		if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x-tileSize, jugadores[0].sprite.y-tileSize)&&
@@ -191,7 +242,7 @@ function SubirEscalon(delta){
 			Salto();
 		}
 	}
-	if(jugadores[0].sprite.body.blocked.right){
+	if(enParedDcha){
 		if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x+tileSize, jugadores[0].sprite.y-tileSize)&&
 			!suelo.getTileAtWorldXY(jugadores[0].sprite.x, jugadores[0].sprite.y-tileSize)) || 
 			jugadores[0].saltando){
