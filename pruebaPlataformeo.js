@@ -29,7 +29,7 @@ class Jugador {
 		this.subiendoEscalon = false;
 		this.dirX = 0;
 		this.dirY = 0;
-		this.ultimaDirX = 1;
+		this.ultimaDirX = 0;
 		this.jumpsquat = false;
 		this.dash = false;
 		this.dashing = false;
@@ -77,6 +77,8 @@ class prueba extends Phaser.Scene {
 		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet_tiles_extruded.png");
 		this.load.image("escalera", "assets/ladder.png");
 		this.load.tilemapTiledJSON("map", "assets/Mapas/mapa_fixed.json");
+		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
 
     }
 
@@ -86,6 +88,7 @@ class prueba extends Phaser.Scene {
 		GenerarEscalera(this);
 		GenerarJugador(this);
 		GenerarCamara(this);
+		
 		
 		
 		InicializarCursores(this);
@@ -109,7 +112,7 @@ class prueba extends Phaser.Scene {
 		let enParedDcha = jugadores[0].sprite.body.blocked.right;
 		
 		jugadores[0].enEscalera = this.physics.overlap(jugadores[0].sprite, grupoEscaleras);
-
+		console.log("ultima dir:" + jugadores[0].ultimaDirX);
 		// Al volver al suelo reiniciamos valores
 		if (enSuelo){
 			jugadores[0].dashDisponible = true;
@@ -172,10 +175,25 @@ function GenerarEscalera(that){
 }
 
 function GenerarJugador(that){
-	jugadores[0].sprite = that.physics.add.sprite(200, 200, 'vicente');
+	jugadores[0].sprite = that.physics.add.sprite(200, 200, 'anim_andar', 0);
 	jugadores[0].sprite.setMaxVelocity(velDash, 1100); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
+	
+	that.anims.create({
+		key: 'andar',
+		frames: that.anims.generateFrameNames('anim_andar', {start: 1, end: 3}),
+		frameRate: 8,
+		repeat: -1
+	});
+
+	that.anims.create({
+		key: 'saltar',
+		frames: that.anims.generateFrameNames('anim_saltar', {start: 1, end: 4}),
+		frameRate: 6,
+		//repeat: 1
+	});
+	
 }
 
 
@@ -219,10 +237,17 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.left.on('down', function () {
+		jugadores[0].sprite.anims.play("andar", true);
+		if(jugadores[0].ultimaDirX == 1){
+			console.log("if left");
+			jugadores[0].sprite.resetFlip();
+		}
 		jugadores[0].dirX = -1;
 		jugadores[0].ultimaDirX = -1;
+		
 	}, that);
 	cursors.left.on('up', function () {
+		jugadores[0].sprite.anims.stop("andar");
 		if(cursors.right.isUp){
 			jugadores[0].dirX = 0;
 		}else{
@@ -231,10 +256,16 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.right.on('down', function () {
+		jugadores[0].sprite.anims.play("andar", true);
+		if(jugadores[0].ultimaDirX != 1){
+			console.log("if right");
+			jugadores[0].sprite.flipX = true;
+		}
 		jugadores[0].dirX = 1;
 		jugadores[0].ultimaDirX = 1;
 	}, that);
 	cursors.right.on('up', function () {
+		jugadores[0].sprite.anims.stop("andar");
 		if(cursors.left.isUp){
 			jugadores[0].dirX = 0;
 		}else{
@@ -266,6 +297,8 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.jump.on('down', function () {
+		jugadores[0].sprite.anims.stop("andar");
+		jugadores[0].sprite.anims.play("saltar");
 		jugadores[0].jumpsquat = true;
 	}, that);
 	cursors.jump.on('up', function () {
@@ -348,7 +381,6 @@ function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, that){
 		jugadores[0].sprite.body.setAllowGravity(false);
 		if(jugadores[0].dirY != 0){
 			jugadores[0].sprite.body.velocity.y = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.y, jugadores[0].dirY * velJugador, aceleracion);
-			
 		}else{
 			jugadores[0].sprite.body.velocity.y = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.y, 0, friccionAerea);
 		}
