@@ -51,8 +51,17 @@
          "tilewidth":64
         }, 
         {
+         "columns":27,
          "firstgid":541,
-         "source":"spritesheet_tiles.tsx"
+         "image":"C:\/Users\/angel\/OneDrive\/Documentos\/Dielivery\/assets\/Mapas\/Spritesheets\/spritesheet_tiles_extruded.png",
+         "imageheight":1510,
+         "imagewidth":2042,
+         "margin":1,
+         "name":"spritesheet_tiles",
+         "spacing":12,
+         "tilecount":540,
+         "tileheight":64,
+         "tilewidth":64
         }],
  "tilewidth":64,
  "type":"map",
