@@ -30,8 +30,10 @@ class prueba extends Phaser.Scene {
 		this.load.image("escalera", "assets/ladder.png");
 		this.load.tilemapTiledJSON("map", "assets/Mapas/mapa_fixed.json");
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
-
+		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_CaidaSalto', 'assets/Sprites Personajes/Spritesheet Caida Salto.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_AterrizajeSalto', 'assets/Sprites Personajes/Spritesheet Aterrizaje Salto.png', {frameWidth: 32, frameHeight: 64});
     }
 
     create ()
@@ -146,12 +148,26 @@ function GenerarJugador(that){
 	});
 
 	that.anims.create({
-		key: 'saltar',
-		frames: that.anims.generateFrameNames('anim_saltar', {start: 1, end: 4}),
-		frameRate: 6,
-		//repeat: 1
+		key: 'inicioSalto',
+		frames: that.anims.generateFrameNames('anim_InicioSalto', {start: 0, end: 1}),
+		frameRate: 8,
+		repeat: 0
+	});
+
+	that.anims.create({
+		key: 'caidaSalto',
+		frames: that.anims.generateFrameNames('anim_CaidaSalto', {start: 0, end: 1}),
+		frameRate: 4,
+		repeat: 0
 	});
 	
+	that.anims.create({
+		key: 'aterrizajeSalto',
+		frames: that.anims.generateFrameNames('anim_AterrizajeSalto', {start: 0, end: 1}),
+		frameRate: 4,
+		repeat: 0
+	});
+
 }
 
 
@@ -255,8 +271,7 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.jump.on('down', function () {
-		jugadores[0].sprite.anims.stop("andar");
-		jugadores[0].sprite.anims.play("saltar");
+		jugadores[0].sprite.anims.play("inicioSalto");
 		jugadores[0].jumpsquat = true;
 	}, that);
 	cursors.jump.on('up', function () {
