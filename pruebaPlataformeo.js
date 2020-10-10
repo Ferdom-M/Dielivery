@@ -292,7 +292,13 @@ function RecogerObjeto(delta, that){
 		}
 	}
 }
+
 function RecogerFlorAmarilla(){
 	console.log(florAmarilla.tipo);
-	jugadores[0].numObjetos = jugadores[0].inventario.push(florAmarilla);
+	if(jugadores[0].numObjetos < limInventario){
+		jugadores[0].inventario[jugadores[0].numObjetos] = florAmarilla;
+		jugadores[0].numObjetos += 1;
+	}
 }
+
+//var timerRecogerObjeto = scene.time.delayedCall(1000, callback, args, RecogerObjeto);
