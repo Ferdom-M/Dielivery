@@ -22,14 +22,6 @@ class Jugador {
     }
 }
 
-class Objeto {
-	constructor(tipo, peso, puntuacion){
-		this.tipo = tipo; // String
-		this.peso = peso; 
-		this.puntuacion = puntuacion;
-	}
-}
-
 // Por si acaso acabamos metiendo multi local, se hará con un array del tamaño de numJugadores
 var numJugadores = 1;
 var jugadores = new Array(numJugadores);

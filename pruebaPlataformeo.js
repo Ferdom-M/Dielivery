@@ -1,64 +1,16 @@
 var debug = true;
 
-var gravedad = 1800;
-var velJugador = 360;
-var velEscalon = -220;
-var velDeslizandoPared = 300;
-var aceleracion = 0.4;
-var friccionSuelo = 0.1;
-var friccionAerea = 0.2;
-var tiempoJumpsquat = 66.6;
-var tiempoSaltoEnPared = 350;
-var tiempoDash = 100;
-var velSaltoPared = 500;
-var velSalto = -700;
-var velDash = 960;
-
 var map;
 var suelo;
 var tileSize = 64;
 
-
 var cursors;
-
-// Clase jugador, aquí guardaremos el inventario, puntuacion, etc
-class Jugador {
-    constructor(limInventario) {
-        this.puntuacion = 0;
-        this.inventario = new Array(limInventario);
-		this.subiendoEscalon = false;
-		this.dirX = 0;
-		this.dirY = 0;
-		this.ultimaDirX = 0;
-		this.jumpsquat = false;
-		this.dash = false;
-		this.dashing = false;
-		this.dashVelocity = 0;
-		this.dashDisponible = false;
-		this.saltoEnParedDisponible = false;
-		this.saltandoEnPared = false;
-		this.saltando = false;
-		this.enEscalera = false;
-		this.empezandoSalto = false;
-		this.contadorJumpsquat = 0.0;
-		this.deslizandoPared = false;
-		this.contadorSaltoEnPared = 0.0;
-		this.contadorDash = 0.0;
-    }
-}
-
-class Objeto {
-	constructor(tipo, peso, puntuacion){
-		this.tipo = tipo; // String
-		this.peso = peso; 
-		this.puntuacion = puntuacion;
-	}
-}
 
 // Por si acaso acabamos metiendo multi local, se hará con un array del tamaño de numJugadores
 var numJugadores = 1;
 var jugadores = new Array(numJugadores);
 var limInventario = 6;
+
 for (var i = 0; i < numJugadores; i++) {
     jugadores[i] = new Jugador(limInventario);
 }
@@ -86,6 +38,7 @@ class prueba extends Phaser.Scene {
     {
 		GenerarMundo(this);
 		GenerarEscalera(this);
+		GenerarRecogidas(this);
 		GenerarJugador(this);
 		GenerarCamara(this);
 		
@@ -112,7 +65,6 @@ class prueba extends Phaser.Scene {
 		let enParedDcha = jugadores[0].sprite.body.blocked.right;
 		
 		jugadores[0].enEscalera = this.physics.overlap(jugadores[0].sprite, grupoEscaleras);
-		console.log("ultima dir:" + jugadores[0].ultimaDirX);
 		// Al volver al suelo reiniciamos valores
 		if (enSuelo){
 			jugadores[0].dashDisponible = true;
@@ -150,7 +102,7 @@ class prueba extends Phaser.Scene {
 				jugadores[0].sprite.body.velocity.y = -velJugador;
 			}
     	}*/
-		
+		RecogerObjeto(delta, this);
 		
 		SubirEscalon(delta, enParedIzq, enParedDcha);
 		
@@ -174,11 +126,17 @@ function GenerarEscalera(that){
 	grupoEscaleras.create(450, 250, 'escalera');
 }
 
+function GenerarRecogidas(that){
+	floresAmarillas = that.physics.add.staticGroup();
+	floresAmarillas.create(450, 850, 'escalera');
+}
+
 function GenerarJugador(that){
 	jugadores[0].sprite = that.physics.add.sprite(200, 200, 'anim_andar', 0);
 	jugadores[0].sprite.setMaxVelocity(velDash, 1100); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
+	
 	
 	that.anims.create({
 		key: 'andar',
@@ -223,6 +181,8 @@ function InicializarCursores(that){
 			down: Phaser.Input.Keyboard.KeyCodes.S,
 			jump: Phaser.Input.Keyboard.KeyCodes.SPACE,
 			dash: Phaser.Input.Keyboard.KeyCodes.CTRL,
+			accion: Phaser.Input.Keyboard.KeyCodes.E,
+			inventario: Phaser.Input.Keyboard.KeyCodes.Q,
 			fullscreen: Phaser.Input.Keyboard.KeyCodes.F
 		});
 	
@@ -239,7 +199,6 @@ function InicializarCursores(that){
 	cursors.left.on('down', function () {
 		jugadores[0].sprite.anims.play("andar", true);
 		if(jugadores[0].ultimaDirX == 1){
-			console.log("if left");
 			jugadores[0].sprite.resetFlip();
 		}
 		jugadores[0].dirX = -1;
@@ -258,7 +217,6 @@ function InicializarCursores(that){
 	cursors.right.on('down', function () {
 		jugadores[0].sprite.anims.play("andar", true);
 		if(jugadores[0].ultimaDirX != 1){
-			console.log("if right");
 			jugadores[0].sprite.flipX = true;
 		}
 		jugadores[0].dirX = 1;
@@ -311,160 +269,30 @@ function InicializarCursores(that){
 	cursors.dash.on('up', function () {
 		jugadores[0].dash = false;
 	}, that);
-	/*
-	cursors.action.on('down', function () {
-		if (jugadores[0].sprite.) {
-			that.scale.stopFullscreen();
-		}
-		else {
-			that.scale.startFullscreen();
+	
+	cursors.inventario.on('down', function () {
+		console.log("En el inventario tengo: ");
+		// Aqui falla y dice que inventario is undefined y no tengo ni puta idea de por que
+		for(var i = 0; i < jugadores[0].numObjetos; i++){
+			console.log((i + 1) + jugadores[0].inventario[i].tipo);
 		}
 	}, that);
-	*/
-}
-
-function AccionSalto(delta, enSuelo){
-	if (jugadores[0].contadorJumpsquat == 0 && jugadores[0].jumpsquat){
-		jugadores[0].empezandoSalto = true;
-	}
-		
-	if (jugadores[0].empezandoSalto){
-		jugadores[0].contadorJumpsquat += delta;
-	}
-	if (jugadores[0].contadorJumpsquat > tiempoJumpsquat){
-		jugadores[0].empezandoSalto = false;
-		jugadores[0].contadorJumpsquat = 0.0;
-		jugadores[0].saltando = true;
-		if (!enSuelo){
-			
-			if (jugadores[0].deslizandoPared && jugadores[0].saltoEnParedDisponible){
-				
-				jugadores[0].sprite.body.velocity.x = -velSaltoPared * jugadores[0].dirX;
-				jugadores[0].deslizandoPared = false;
-				jugadores[0].saltoEnParedDisponible = false;
-				jugadores[0].saltandoEnPared = true;
-				jugadores[0].contadorSaltoEnPared = 0.0;
-				jugadores[0].sprite.body.velocity.y = velSalto
-			}
-			else if (jugadores[0].dashDisponible){
-				jugadores[0].dashDisponible = false
-				jugadores[0].sprite.body.velocity.y = velSalto
-			}
-		}
-		else{
-			if (jugadores[0].jumpsquat){
-				jugadores[0].sprite.body.velocity.y = velSalto;
-				jugadores[0].jumpsquat = false;
-			}else{
-				jugadores[0].sprite.body.velocity.y = velSalto / 1.2;
-			}
-
-		}
-	}
-}
-
-function AccionDash(delta){
-	jugadores[0].dashing = true
-	jugadores[0].dashDisponible = false
 	
-	jugadores[0].dashVelocity = velDash * jugadores[0].ultimaDirX;
-
-}
-
-function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, that){
-	//console.log(jugadores[0].sprite.body.velocity.y);
-	if(jugadores[0].enEscalera){
-		// Como tal no hace falta ya porque no cuenta la escalera como pared por quitar el add overlap
-		// Pero mejor ponerlo en false por si se da el caso de que hay una escalera al lado de una pared
-		enParedIzq = false;
-		enParedDcha = false;
-		jugadores[0].sprite.body.setAllowGravity(false);
-		if(jugadores[0].dirY != 0){
-			jugadores[0].sprite.body.velocity.y = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.y, jugadores[0].dirY * velJugador, aceleracion);
-		}else{
-			jugadores[0].sprite.body.velocity.y = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.y, 0, friccionAerea);
-		}
-	}
-	if(!jugadores[0].saltandoEnPared){
-		if(jugadores[0].dirX != 0){
-			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dirX * velJugador, aceleracion);
-		}else{
-			if(enSuelo){
-				jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccionSuelo);
-			}else{
-				jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccionAerea);
-			}
-		}
-	}else{
-		jugadores[0].contadorSaltoEnPared += delta;
-		// Si tocamos una pared reiniciamos el contador de salto en pared para poder saltar y deslizarnos de forma normal
-		if(jugadores[0].contadorSaltoEnPared > tiempoSaltoEnPared || enParedIzq || enParedDcha){
-			jugadores[0].saltandoEnPared = false;
-			jugadores[0].saltoEnParedDisponible = true;
-		}
-	}
-	if (!enSuelo){
-		if (enParedIzq || enParedDcha){
-			jugadores[0].deslizandoPared = true;
-			
-			jugadores[0].sprite.body.setAllowGravity(false);
-			jugadores[0].sprite.body.velocity.y = velDeslizandoPared;
-		}
-		else if(!jugadores[0].enEscalera){
-			jugadores[0].deslizandoPared = false;
-			jugadores[0].sprite.body.setAllowGravity(true);
-		}
-	}
-}
-
-function ProcesarDash(delta, enSuelo, that){
-	if(!enSuelo){
-		jugadores[0].sprite.body.velocity.y = 0;
-		jugadores[0].sprite.body.velocity.x = jugadores[0].dashVelocity;
-		jugadores[0].contadorDash += delta;
-		jugadores[0].sprite.body.setAllowGravity(false);
-		
-	}
-	if(jugadores[0].contadorDash > tiempoDash){
-		jugadores[0].dashing = false;
-		jugadores[0].dashVelocity = 0;
-		jugadores[0].contadorDash = 0;
-		jugadores[0].sprite.body.setAllowGravity(true);
-	}
-}
-
-function SubirEscalon(delta, enParedIzq, enParedDcha){
-	if(!jugadores[0].enEscalera){
-		if(enParedIzq){
-			// El bloque de arriba a la izq está libre
-			// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
-			if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x-tileSize, jugadores[0].sprite.y-tileSize)&&
-				!suelo.getTileAtWorldXY(jugadores[0].sprite.x,jugadores[0].sprite.y-tileSize)) || 
-				jugadores[0].subiendoEscalon){
-					
-				jugadores[0].sprite.body.velocity.y = velEscalon;
-				jugadores[0].sprite.body.velocity.x = velJugador/4  * jugadores[0].dirX;
-				jugadores[0].subiendoEscalon = true;
-			}
-		}else{
-			jugadores[0].subiendoEscalon = false;
-		}
-		if(enParedDcha){
-			if((!suelo.getTileAtWorldXY(jugadores[0].sprite.x+tileSize, jugadores[0].sprite.y-tileSize)&&
-				!suelo.getTileAtWorldXY(jugadores[0].sprite.x, jugadores[0].sprite.y-tileSize)) ||
-				
-				jugadores[0].subiendoEscalon){
-				jugadores[0].sprite.body.velocity.y = velEscalon;
-				jugadores[0].sprite.body.velocity.x = velJugador/4  * jugadores[0].dirX;
-				jugadores[0].subiendoEscalon = true;
-			}
-		}else{
-			jugadores[0].subiendoEscalon = false;
-		}
-	}
 }
 
 function ActualizarCamara(delta, that){
 	that.cameraDolly.x = Math.round(jugadores[0].sprite.x);
     that.cameraDolly.y = Math.round(jugadores[0].sprite.y);
+}
+
+function RecogerObjeto(delta, that){
+	if(cursors.accion.isDown){
+		if(that.physics.overlap(jugadores[0].sprite, floresAmarillas)){
+			RecogerFlorAmarilla()
+		}
+	}
+}
+function RecogerFlorAmarilla(){
+	console.log(florAmarilla.tipo);
+	jugadores[0].numObjetos = jugadores[0].inventario.push(florAmarilla);
 }
