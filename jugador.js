@@ -86,7 +86,7 @@ function AccionDash(delta){
 
 }
 
-function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, that){
+function ProcesarMovimiento(delta, enSuelo, enSueloResbaladizo, enParedIzq, enParedDcha, that){
 	if(jugadores[0].enEscalera){
 		// Como tal no hace falta ya porque no cuenta la escalera como pared por quitar el add overlap
 		// Pero mejor ponerlo en false por si se da el caso de que hay una escalera al lado de una pared
@@ -103,7 +103,11 @@ function ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, that){
 		if(jugadores[0].dirX != 0){
 			jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, jugadores[0].dirX * velJugador, aceleracion);
 		}else{
-			if(enSuelo){
+			console.log(enSueloResbaladizo);
+			if(enSueloResbaladizo){
+				jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, 1);
+			}
+			else if(enSuelo){
 				jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccionSuelo);
 			}else{
 				jugadores[0].sprite.body.velocity.x = Phaser.Math.Linear(jugadores[0].sprite.body.velocity.x, 0, friccionAerea);
