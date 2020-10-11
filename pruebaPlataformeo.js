@@ -44,8 +44,6 @@ class prueba extends Phaser.Scene {
 		GenerarJugador(this);
 		GenerarCamara(this);
 		
-		
-		
 		InicializarCursores(this);
 		
 		this.input.gamepad.start();
@@ -61,57 +59,20 @@ class prueba extends Phaser.Scene {
     }
 
     update(time, delta){
-		// Comprobamos una sola vez si tocamos suelo o paredes
-		let enSuelo = jugadores[0].sprite.body.blocked.down;
-		// Solo queremos hacer las interacciones con paredes (salto en pared y subir escalon) si es suelo normal
-		let enParedIzq = jugadores[0].sprite.body.blocked.left && this.physics.overlap(jugadores[0].sprite, suelo);
-		let enParedDcha = jugadores[0].sprite.body.blocked.right && this.physics.overlap(jugadores[0].sprite, suelo);
+		// Según el tile que tengamos alrededor tendremos un estado u otro. Ej suelo normal o resbaladizo
+		ComprobarEstados(jugadores[0], this);
 		
-		let enSueloResbaladizo = enSuelo && this.physics.overlap(jugadores[0].sprite, sueloResbaladizo);
+		// Al volver al suelo reiniciamos valores como el dash aereo, etc
+		ReiniciarValores(jugadores[0]);
 		
-		jugadores[0].enEscalera = this.physics.overlap(jugadores[0].sprite, grupoEscaleras);
-		// Al volver al suelo reiniciamos valores
-		if (enSuelo){
-			jugadores[0].dashDisponible = true;
-			jugadores[0].saltoEnParedDisponible = true;
-			jugadores[0].subiendoEscalon = false;
-			jugadores[0].deslizandoPared = false;
-			jugadores[0].saltandoEnPared = false;
-			jugadores[0].saltando = false;
-			jugadores[0].dashing = false;
-		}
+		ProcesarMovimiento(delta, jugadores[0]);
+		ProcesarDash(delta, jugadores[0]);
 		
-		if(!jugadores[0].dashing){
-			ProcesarMovimiento(delta, enSuelo, enSueloResbaladizo, enParedIzq, enParedDcha, this);
-		}else{
-			ProcesarDash(delta, enSuelo);
-		}
+		AccionSalto(delta, jugadores[0]);
+
+		SubirEscalon(delta, jugadores[0]);
 		
-		if (jugadores[0].jumpsquat && enSuelo || 
-		    !enSuelo && jugadores[0].dashDisponible || 
-			!enSuelo && jugadores[0].saltoEnParedDisponible || 
-			jugadores[0].empezandoSalto){
-				AccionSalto(delta, enSuelo); 
-		}
-		
-		
-		if (jugadores[0].dash && jugadores[0].dashDisponible && !jugadores[0].saltandoEnPared && !enSuelo){
-			AccionDash(delta);
-		}
-		
-		
-		
-		/*if (Escalera())
-    	{
-        	if(cursors.up.isDown){
-				jugadores[0].sprite.body.velocity.y = -velJugador;
-			}
-    	}*/
-		RecogerObjeto(delta, this);
-		
-		SubirEscalon(delta, enParedIzq, enParedDcha);
-		
-		//ActualizarCamara(delta, this);
+		RecogerObjeto(delta, jugadores[0], this);
     }
 }
 
@@ -232,8 +193,11 @@ function InicializarCursores(that){
 		jugadores[0].sprite.anims.stop("andar");
 		if(cursors.right.isUp){
 			jugadores[0].dirX = 0;
+			jugadores[0].ultimaDirX = -1;
 		}else{
 			jugadores[0].dirX = 1;
+			jugadores[0].ultimaDirX = 1;
+			
 		}
 	}, that);
 	
@@ -249,8 +213,10 @@ function InicializarCursores(that){
 		jugadores[0].sprite.anims.stop("andar");
 		if(cursors.left.isUp){
 			jugadores[0].dirX = 0;
+			jugadores[0].ultimaDirX = 1;
 		}else{
 			jugadores[0].dirX = -1
+			jugadores[0].ultimaDirX = -1
 		}
 	}, that);
 	
@@ -303,18 +269,18 @@ function ActualizarCamara(delta, that){
     that.cameraDolly.y = Math.round(jugadores[0].sprite.y);
 }
 
-function RecogerObjeto(delta, that){
+function RecogerObjeto(delta, jugador, that){
 	if(cursors.accion.isDown){
-		if(that.physics.overlap(jugadores[0].sprite, tulipanes)){
-			RecogerTulipan()
+		if(that.physics.overlap(jugador.sprite, tulipanes)){
+			RecogerTulipan(jugador)
 		}
 	}
 }
 
-function RecogerTulipan(){
-	if(jugadores[0].numObjetos < limInventario){
-		jugadores[0].inventario[jugadores[0].numObjetos] = tulipan;
-		jugadores[0].numObjetos += 1;
+function RecogerTulipan(jugador){
+	if(jugador.numObjetos < limInventario){
+		jugador.inventario[jugador.numObjetos] = tulipan;
+		jugador.numObjetos += 1;
 	}
 }
 
