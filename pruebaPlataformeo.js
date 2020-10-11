@@ -28,7 +28,7 @@ class prueba extends Phaser.Scene {
         this.load.image('vicente', 'assets/Sprites Personajes/boceto prueba dielivery.png');
 		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet_tiles_extruded.png");
 		this.load.image("escalera", "assets/ladder.png");
-		this.load.tilemapTiledJSON("map", "assets/Mapas/mapa_fixed.json");
+		this.load.tilemapTiledJSON("map", "assets/Mapas/plataformeo.json");
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
 		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
@@ -63,8 +63,11 @@ class prueba extends Phaser.Scene {
     update(time, delta){
 		// Comprobamos una sola vez si tocamos suelo o paredes
 		let enSuelo = jugadores[0].sprite.body.blocked.down;
-		let enParedIzq = jugadores[0].sprite.body.blocked.left;
-		let enParedDcha = jugadores[0].sprite.body.blocked.right;
+		// Solo queremos hacer las interacciones con paredes (salto en pared y subir escalon) si es suelo normal
+		let enParedIzq = jugadores[0].sprite.body.blocked.left && this.physics.overlap(jugadores[0].sprite, suelo);
+		let enParedDcha = jugadores[0].sprite.body.blocked.right && this.physics.overlap(jugadores[0].sprite, suelo);
+		
+		let enSueloResbaladizo = enSuelo && this.physics.overlap(jugadores[0].sprite, sueloResbaladizo);
 		
 		jugadores[0].enEscalera = this.physics.overlap(jugadores[0].sprite, grupoEscaleras);
 		// Al volver al suelo reiniciamos valores
@@ -79,7 +82,7 @@ class prueba extends Phaser.Scene {
 		}
 		
 		if(!jugadores[0].dashing){
-			ProcesarMovimiento(delta, enSuelo, enParedIzq, enParedDcha, this);
+			ProcesarMovimiento(delta, enSuelo, enSueloResbaladizo, enParedIzq, enParedDcha, this);
 		}else{
 			ProcesarDash(delta, enSuelo);
 		}
@@ -120,7 +123,10 @@ function GenerarMundo(that){
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
 	fondo = map.createStaticLayer("Fondo", tileset, 0, 0);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
+	sueloResbaladizo = map.createStaticLayer("SueloRes", tileset, 0, 0);
+	
 	suelo.setCollisionByProperty({ collides: true });
+	sueloResbaladizo.setCollisionByProperty({ collides: true });
 }
 	
 function GenerarEscalera(that){
@@ -129,15 +135,16 @@ function GenerarEscalera(that){
 }
 
 function GenerarRecogidas(that){
-	floresAmarillas = that.physics.add.staticGroup();
-	floresAmarillas.create(450, 850, 'escalera');
+	tulipanes = that.physics.add.staticGroup();
+	tulipanes.create(450, 850, 'escalera');
 }
 
 function GenerarJugador(that){
-	jugadores[0].sprite = that.physics.add.sprite(200, 200, 'anim_andar', 0);
+	jugadores[0].sprite = that.physics.add.sprite(1000, 1000, 'anim_andar', 0);
 	jugadores[0].sprite.setMaxVelocity(velDash, 1100); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
+	that.physics.add.collider(jugadores[0].sprite, sueloResbaladizo);
 	
 	
 	that.anims.create({
@@ -286,11 +293,7 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.inventario.on('down', function () {
-		console.log("En el inventario tengo: ");
-		// Aqui falla y dice que inventario is undefined y no tengo ni puta idea de por que
-		for(var i = 0; i < jugadores[0].numObjetos; i++){
-			console.log((i + 1) + jugadores[0].inventario[i].tipo);
-		}
+		console.log(GenerarPedido())
 	}, that);
 	
 }
@@ -302,16 +305,15 @@ function ActualizarCamara(delta, that){
 
 function RecogerObjeto(delta, that){
 	if(cursors.accion.isDown){
-		if(that.physics.overlap(jugadores[0].sprite, floresAmarillas)){
-			RecogerFlorAmarilla()
+		if(that.physics.overlap(jugadores[0].sprite, tulipanes)){
+			RecogerTulipan()
 		}
 	}
 }
 
-function RecogerFlorAmarilla(){
-	console.log(florAmarilla.tipo);
+function RecogerTulipan(){
 	if(jugadores[0].numObjetos < limInventario){
-		jugadores[0].inventario[jugadores[0].numObjetos] = florAmarilla;
+		jugadores[0].inventario[jugadores[0].numObjetos] = tulipan;
 		jugadores[0].numObjetos += 1;
 	}
 }
