@@ -120,8 +120,8 @@ function AccionSalto(delta, jugador){
 
 	if(jugador.sprite.body.velocity.y > 0){
 		console.log("bajando");
-		jugador.sprite.anims.play('caidaSalto');
-		if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + 50)){
+		jugador.sprite.anims.play('caidaSalto', true);
+		if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (tileSize-14))){
 			console.log("cai");
 			jugador.sprite.anims.play('aterrizajeSalto', true);
 		}

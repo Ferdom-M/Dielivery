@@ -125,7 +125,7 @@ function GenerarJugador(that){
 	that.anims.create({
 		key: 'caidaSalto',
 		frames: that.anims.generateFrameNames('anim_CaidaSalto', {start: 0, end: 1}),
-		frameRate: 4,
+		frameRate: 6,
 		repeat: 0
 	});
 	
