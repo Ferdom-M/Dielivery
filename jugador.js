@@ -33,6 +33,7 @@ class Jugador {
 		this.enEscalera = false;
 		this.empezandoSalto = false;
 		this.contadorJumpsquat = 0.0;
+		this.alturaSalto = 0.0;
 		this.deslizandoPared = false;
 		this.contadorSaltoEnPared = 0.0;
 		this.contadorDash = 0.0;
@@ -85,44 +86,44 @@ function AccionSalto(delta, jugador){
 			
 		if (jugador.empezandoSalto){
 			jugador.contadorJumpsquat += delta;
+			// Dependiendo de cuanto tiempo se pulse el salto, saltará más o menos
+			if(jugador.jumpsquat){
+				jugador.alturaSalto += delta;
+			}
 		}
 		if (jugador.contadorJumpsquat > tiempoJumpsquat){
 			jugador.empezandoSalto = false;
 			jugador.contadorJumpsquat = 0.0;
+			// limitamos el maximo a tiempoJumpsquat
+			jugador.alturaSalto = Math.min(tiempoJumpsquat, jugador.alturaSalto);
 			jugador.saltando = true;
 			if (!jugador.enSuelo){
-				
 				if (jugador.deslizandoPared && jugador.saltoEnParedDisponible){
-					
-					jugador.sprite.body.velocity.x = -velSaltoPared * jugador.dirX;
 					jugador.deslizandoPared = false;
 					jugador.saltoEnParedDisponible = false;
 					jugador.saltandoEnPared = true;
-					jugador.contadorSaltoEnPared = 0.0;
-					jugador.sprite.body.velocity.y = velSalto
+					
+					// El contador empieza con un valor mayor si ha sido un salto pequeño
+					jugador.contadorSaltoEnPared = (tiempoJumpsquat - jugador.alturaSalto) * ((tiempoSaltoEnPared / (tiempoJumpsquat / delta)) / (tiempoJumpsquat - delta));
+					jugador.sprite.body.velocity.x = -velSaltoPared * jugador.dirX  - (tiempoJumpsquat - jugador.alturaSalto) * (velSaltoPared / 2 - velSaltoPared) / (tiempoJumpsquat - delta) * jugador.dirX;
+					jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
 				}
 				else if (jugador.dashDisponible){
 					jugador.dashDisponible = false
-					jugador.sprite.body.velocity.y = velSalto
+					jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
 				}
 			}
 			else{
-				if (jugador.jumpsquat){
-					jugador.sprite.body.velocity.y = velSalto;
-					jugador.jumpsquat = false;
-				}else{
-					jugador.sprite.body.velocity.y = velSalto / 1.2;
-				}
-
+				jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
 			}
+			jugador.jumpsquat = false;
+			jugador.alturaSalto = 0.0;
 		}
 	}
 
 	if(jugador.sprite.body.velocity.y > 0){
-		console.log("bajando");
 		jugador.sprite.anims.play('caidaSalto', true);
 		if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (0.8*tileSize))){
-			console.log("cai");
 			jugador.sprite.anims.play('aterrizajeSalto', true);
 		}
 		//meter timer que llame a la animacion de idle una vez toque el suelo	
