@@ -58,7 +58,7 @@ function ComprobarEstados(jugador, that){
 		jugador.enParedIzqNormal = jugador.enParedIzq && suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y).index);
 		jugador.enParedDchaNormal = jugador.enParedDcha && suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y).index);
 		
-		jugador.enSueloResbaladizo = jugador.enSuelo && sueloResbaladizo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosResbaladizos.has(sueloResbaladizo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+		jugador.enSueloResbaladizo = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosResbaladizos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
 		
 		jugador.enEscalera = that.physics.overlap(jugador.sprite, grupoEscaleras);
 }
@@ -116,7 +116,18 @@ function AccionSalto(delta, jugador){
 
 			}
 		}
-			}
+	}
+
+	if(jugador.sprite.body.velocity.y > 0){
+		console.log("bajando");
+		jugador.sprite.anims.play('caidaSalto', true);
+		if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + 50)){
+			console.log("cai");
+			jugador.sprite.anims.play('aterrizajeSalto', true);
+		}
+		//meter timer que llame a la animacion de idle una vez toque el suelo	
+	}
+	
 }
 
 

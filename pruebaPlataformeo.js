@@ -87,7 +87,7 @@ function GenerarMundo(that){
 	sueloResbaladizo = map.createStaticLayer("SueloRes", tileset, 0, 0);
 	
 	suelo.setCollisionByProperty({ collides: true });
-	sueloResbaladizo.setCollisionByProperty({ collides: true });
+	//sueloResbaladizo.setCollisionByProperty({ collides: true });
 }
 	
 function GenerarEscalera(that){
