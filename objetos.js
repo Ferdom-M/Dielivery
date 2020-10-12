@@ -69,7 +69,7 @@ function GenerarPedido(){
 	var destinatario = Math.floor(Math.random() * 2) == 0;
 	
 	// Aleatorio 2 a 4
-	var numObjetos = Math.floor(Math.random() * 4) + 2;
+	var numObjetos = Math.floor(Math.random() * 3) + 2;
 	
 	// Aleatorio entre los 19 con la misma probabilidad
 	var objetosGenerados = new Array();
