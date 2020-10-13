@@ -61,21 +61,19 @@ class prueba extends Phaser.Scene {
     update(time, delta){
 		// Según el tile que tengamos alrededor tendremos un estado u otro. Ej suelo normal o resbaladizo
 		ComprobarEstados(jugadores[0], this);
-		
 		// Al volver al suelo reiniciamos valores como el dash aereo, etc
 		ReiniciarValores(jugadores[0]);
 		
 		ProcesarMovimiento(delta, jugadores[0]);
 		ProcesarDash(delta, jugadores[0]);
-		
 		AccionSalto(delta, jugadores[0]);
-
 		SubirEscalon(delta, jugadores[0]);
 		
 		RecogerObjeto(delta, jugadores[0], this);
 		
 		InteractuarPinchos(delta, jugadores[0]);
-    }
+		TiempoObjeto(delta, jugadores[0]);
+	}
 }
 
 function GenerarMundo(that){
@@ -259,7 +257,7 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.inventario.on('down', function () {
-		console.log(GenerarPedido())
+		console.log(jugadores[0].inventario)
 	}, that);
 	
 }
@@ -270,7 +268,7 @@ function ActualizarCamara(delta, that){
 }
 
 function RecogerObjeto(delta, jugador, that){
-	if(cursors.accion.isDown){
+	if(cursors.accion.isDown && !jugador.recogiendoObjeto){
 		if(that.physics.overlap(jugador.sprite, tulipanes)){
 			RecogerTulipan(jugador)
 		}
@@ -279,6 +277,7 @@ function RecogerObjeto(delta, jugador, that){
 
 function RecogerTulipan(jugador){
 	if(jugador.numObjetos < limInventario){
+		jugador.recogiendoObjeto = true;
 		jugador.inventario.push(tulipan);
 		jugador.numObjetos += 1;
 	}

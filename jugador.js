@@ -7,6 +7,7 @@ var friccionResbalo = 0.01;
 var friccionAerea = 0.25;
 var tiempoJumpsquat = 66.6;
 var tiempoSaltoEnPared = 350;
+var tiempoRecogerObjeto = 5000; // 5 sEGUNDOS
 var tiempoDash = 100;
 var velSaltoPared = 500;
 var velSalto = -700;
@@ -37,6 +38,8 @@ class Jugador {
 		this.deslizandoPared = false;
 		this.contadorSaltoEnPared = 0.0;
 		this.contadorDash = 0.0;
+		this.contadorRecogiendoObjeto = 0.0;
+		this.recogiendoObjeto = false;
 		this.enSuelo = false;
 		this.enSueloNormal = false;
 		this.enSueloResbaladizo = false;
@@ -80,64 +83,65 @@ function ReiniciarValores(jugador){
 }
 
 function AccionSalto(delta, jugador){
-	if (jugador.jumpsquat && jugador.enSuelo || 
-	   !jugador.enSuelo && jugador.dashDisponible || 
-	   !jugador.enSuelo && jugador.saltoEnParedDisponible || 
-		jugador.empezandoSalto){
-		if (jugador.contadorJumpsquat == 0 && jugador.jumpsquat){
-			jugador.empezandoSalto = true;
-		}
-			
-		if (jugador.empezandoSalto){
-			jugador.contadorJumpsquat += delta;
-			// Dependiendo de cuanto tiempo se pulse el salto, saltará más o menos
-			if(jugador.jumpsquat){
-				jugador.alturaSalto += delta;
+	if(!jugador.recogiendoObjeto){
+		if (jugador.jumpsquat && jugador.enSuelo || 
+		   !jugador.enSuelo && jugador.dashDisponible || 
+		   !jugador.enSuelo && jugador.saltoEnParedDisponible || 
+			jugador.empezandoSalto){
+			if (jugador.contadorJumpsquat == 0 && jugador.jumpsquat){
+				jugador.empezandoSalto = true;
 			}
-		}
-		if (jugador.contadorJumpsquat > tiempoJumpsquat){
-			jugador.empezandoSalto = false;
-			jugador.contadorJumpsquat = 0.0;
-			// limitamos el maximo a tiempoJumpsquat
-			jugador.alturaSalto = Math.min(tiempoJumpsquat, jugador.alturaSalto);
-			jugador.saltando = true;
-			if (!jugador.enSuelo){
-				if (jugador.deslizandoPared && jugador.saltoEnParedDisponible){
-					jugador.deslizandoPared = false;
-					jugador.saltoEnParedDisponible = false;
-					jugador.saltandoEnPared = true;
-					
-					// El contador empieza con un valor mayor si ha sido un salto pequeño
-					jugador.contadorSaltoEnPared = (tiempoJumpsquat - jugador.alturaSalto) * ((tiempoSaltoEnPared / (tiempoJumpsquat / delta)) / (tiempoJumpsquat - delta));
-					jugador.sprite.body.velocity.x = -velSaltoPared * jugador.dirX  - (tiempoJumpsquat - jugador.alturaSalto) * (velSaltoPared / 2 - velSaltoPared) / (tiempoJumpsquat - delta) * jugador.dirX;
-					jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
-				}
-				else if (jugador.dashDisponible){
-					jugador.dashDisponible = false
-					jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
+				
+			if (jugador.empezandoSalto){
+				jugador.contadorJumpsquat += delta;
+				// Dependiendo de cuanto tiempo se pulse el salto, saltará más o menos
+				if(jugador.jumpsquat){
+					jugador.alturaSalto += delta;
 				}
 			}
-			else{
-				jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
+			if (jugador.contadorJumpsquat > tiempoJumpsquat){
+				jugador.empezandoSalto = false;
+				jugador.contadorJumpsquat = 0.0;
+				// limitamos el maximo a tiempoJumpsquat
+				jugador.alturaSalto = Math.min(tiempoJumpsquat, jugador.alturaSalto);
+				jugador.saltando = true;
+				if (!jugador.enSuelo){
+					if (jugador.deslizandoPared && jugador.saltoEnParedDisponible){
+						jugador.deslizandoPared = false;
+						jugador.saltoEnParedDisponible = false;
+						jugador.saltandoEnPared = true;
+						
+						// El contador empieza con un valor mayor si ha sido un salto pequeño
+						jugador.contadorSaltoEnPared = (tiempoJumpsquat - jugador.alturaSalto) * ((tiempoSaltoEnPared / (tiempoJumpsquat / delta)) / (tiempoJumpsquat - delta));
+						jugador.sprite.body.velocity.x = -velSaltoPared * jugador.dirX  - (tiempoJumpsquat - jugador.alturaSalto) * (velSaltoPared / 2 - velSaltoPared) / (tiempoJumpsquat - delta) * jugador.dirX;
+						jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
+					}
+					else if (jugador.dashDisponible){
+						jugador.dashDisponible = false
+						jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
+					}
+				}
+				else{
+					jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
+				}
+				jugador.jumpsquat = false;
+				jugador.alturaSalto = 0.0;
 			}
-			jugador.jumpsquat = false;
-			jugador.alturaSalto = 0.0;
 		}
-	}
 
-	if(jugador.sprite.body.velocity.y > 0){
-		jugador.sprite.anims.play('caidaSalto', true);
-		if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (0.8*tileSize))){
-			jugador.sprite.anims.play('aterrizajeSalto', true);
+		if(jugador.sprite.body.velocity.y > 0){
+			jugador.sprite.anims.play('caidaSalto', true);
+			if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (0.8*tileSize))){
+				jugador.sprite.anims.play('aterrizajeSalto', true);
+			}
+			//meter timer que llame a la animacion de idle una vez toque el suelo	
 		}
-		//meter timer que llame a la animacion de idle una vez toque el suelo	
 	}
-	
 }
 
 
 function ProcesarMovimiento(delta, jugador){
-	if(!jugador.dashing){
+	if(!jugador.dashing && !jugador.recogiendoObjeto){
 		if(jugador.enEscalera){
 			// Como tal no hace falta ya porque no cuenta la escalera como pared por quitar el add overlap
 			// Pero mejor ponerlo en false por si se da el caso de que hay una escalera al lado de una pared
@@ -193,7 +197,7 @@ function ProcesarDash(delta, jugador){
 		
 			jugador.dashVelocity = velDash * jugador.ultimaDirX;
 	}	
-	if(jugador.dashing){
+	if(jugador.dashing && !jugador.recogiendoObjeto){
 		if(!jugador.enSuelo){
 			jugador.sprite.body.velocity.y = 0;
 			jugador.sprite.body.velocity.x = jugador.dashVelocity;
@@ -212,7 +216,7 @@ function ProcesarDash(delta, jugador){
 }
 
 function SubirEscalon(delta, jugador){
-	if(!jugador.enEscalera){
+	if(!jugador.enEscalera && !jugador.recogiendoObjeto){
 		if(jugador.enParedIzqNormal){
 			// El bloque de arriba a la izq está libre
 			// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
@@ -251,3 +255,13 @@ function InteractuarPinchos(delta, jugador){
 	}
 }
 
+function TiempoObjeto(delta, jugador){
+	if(jugador.recogiendoObjeto){
+		jugador.contadorRecogiendoObjeto += delta;
+		if(jugador.contadorRecogiendoObjeto > tiempoRecogerObjeto){
+			jugador.recogiendoObjeto = false;
+			jugador.contadorRecogiendoObjeto = 0.0;
+			console.log("Terminé de coger el objeto");
+		}
+	}
+}
