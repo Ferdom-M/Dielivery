@@ -12,7 +12,7 @@ var jugadores = new Array(numJugadores);
 var limInventario = 6;
 
 for (var i = 0; i < numJugadores; i++) {
-    jugadores[i] = new Jugador(limInventario);
+    jugadores[i] = new Jugador();
 }
 
 class prueba extends Phaser.Scene {
@@ -73,6 +73,8 @@ class prueba extends Phaser.Scene {
 		SubirEscalon(delta, jugadores[0]);
 		
 		RecogerObjeto(delta, jugadores[0], this);
+		
+		InteractuarPinchos(delta, jugadores[0]);
     }
 }
 
@@ -84,10 +86,9 @@ function GenerarMundo(that){
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
 	fondo = map.createStaticLayer("Fondo", tileset, 0, 0);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
-	sueloResbaladizo = map.createStaticLayer("SueloRes", tileset, 0, 0);
+	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 	
 	suelo.setCollisionByProperty({ collides: true });
-	//sueloResbaladizo.setCollisionByProperty({ collides: true });
 }
 	
 function GenerarEscalera(that){
@@ -105,7 +106,6 @@ function GenerarJugador(that){
 	jugadores[0].sprite.setMaxVelocity(velDash, 1100); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
-	that.physics.add.collider(jugadores[0].sprite, sueloResbaladizo);
 	
 	
 	that.anims.create({
@@ -279,7 +279,7 @@ function RecogerObjeto(delta, jugador, that){
 
 function RecogerTulipan(jugador){
 	if(jugador.numObjetos < limInventario){
-		jugador.inventario[jugador.numObjetos] = tulipan;
+		jugador.inventario.push(tulipan);
 		jugador.numObjetos += 1;
 	}
 }

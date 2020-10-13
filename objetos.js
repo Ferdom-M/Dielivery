@@ -1,3 +1,5 @@
+var puntuacionPedidoFallido = -50;
+
 class Objeto {
 	constructor(tipo, peso, puntuacion){
 		this.tipo = tipo; // String
@@ -9,7 +11,7 @@ class Objeto {
 class Pedido{
 	constructor(numObjetos, objetos, destinatario){
 		this.numObjetos = numObjetos; // int numero de objetos del pedido
-		this.objetos = objetos; // array de strings de objetos que conforman el pedido
+		this.objetos = objetos; // array de objetos que conforman el pedido
 		this.destinatario = destinatario // bool true = cielo, false = infierno
 	}
 }
@@ -83,21 +85,30 @@ function GenerarPedido(){
 	return pedido;
 }
 
-// Paquete creado por el jugador, pedido a cumplir que elige el jugador  
+//						Paquete creado por el jugador, pedido a cumplir que elige el jugador  
 function CompararPedidos(paquete, pedido){
-	if(paquete.numObjetos == pedido.numObjetos && paquete.destinatario == pedido.destinatario){
+	var puntuacion = 0
+	if(paquete.destinatario == pedido.destinatario){
 		var objetosCorrectos = 0;
-		while(pedido.objetos.contains(paquete.objetos[objetosCorrectos])){
-			// Sobreescribimos ese elemento del array
-			pedido.objetos[pedido.objetos.indexOf(paquete.objetos[objetosCorrectos])] = 0;
-			objetosCorrectos += 1;
+		for (var i = 0; i < paquete.numObjetos; i++){
+			if(pedido.objetos.contains(paquete.objetos[i])){
+				// Sobreescribimos ese elemento del array
+				pedido.objetos[pedido.objetos.indexOf(paquete.objetos[i])] = 0;
+				objetosCorrectos += 1;
+				puntuacion += paquete.objetos[i].puntuacion;
+			}else{
+				puntuacion -= paquete.objetos[i].puntuacion;
+			}
 		}
 		if(objetosCorrectos == paquete.numObjetos){
 			console.log("Pedido correcto");
 		}else{
 			console.log("Pedido fallido");
+			puntuacion -= puntuacionPedidoFallido;
 		}
 	}else{
 		console.log("Pedido fallido");
+		puntuacion += puntuacionPedidoFallido;
 	}
+	return puntuacion;
 }

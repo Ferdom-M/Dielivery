@@ -113,3 +113,7 @@ idSuelosResbaladizos.add(420);
 idSuelosResbaladizos.add(421);
 idSuelosResbaladizos.add(422);
 idSuelosResbaladizos.add(423);
+
+var idPinchos = new Set();
+
+idPinchos.add(291);

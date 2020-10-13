@@ -14,9 +14,9 @@ var velDash = 960;
 
 // Clase jugador, aquí guardaremos el inventario, puntuacion, etc
 class Jugador {
-    constructor(limInventario) {
+    constructor() {
         this.puntuacion = 0;
-        this.inventario = new Array(limInventario);
+        this.inventario = new Array();
         this.numObjetos = 0;
 		this.subiendoEscalon = false;
 		this.dirX = 0;
@@ -44,37 +44,41 @@ class Jugador {
 		this.enParedIzqNormal = false;
 		this.enParedDcha = false;
 		this.enParedDchaNormal = false;
+		this.enPinchos = false;
     }
 }
 
 function ComprobarEstados(jugador, that){
 	// Comprobamos una sola vez si tocamos suelo o paredes
-		jugador.enSuelo = jugador.sprite.body.blocked.down;
-		// Solo queremos hacer las interacciones con paredes (salto en pared y subir escalon) si es suelo normal
-		jugador.enParedIzq = jugador.sprite.body.blocked.left;
-		jugador.enParedDcha = jugador.sprite.body.blocked.right;
-		
-						// Tocamos el suelo? && Hay algun bloque debajo? && Es suelo normal?
-		jugador.enSueloNormal = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
-		jugador.enParedIzqNormal = jugador.enParedIzq && suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y).index);
-		jugador.enParedDchaNormal = jugador.enParedDcha && suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y).index);
-		
-		jugador.enSueloResbaladizo = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosResbaladizos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
-		
-		jugador.enEscalera = that.physics.overlap(jugador.sprite, grupoEscaleras);
+	jugador.enSuelo = jugador.sprite.body.blocked.down;
+	// Solo queremos hacer las interacciones con paredes (salto en pared y subir escalon) si es suelo normal
+	jugador.enParedIzq = jugador.sprite.body.blocked.left;
+	jugador.enParedDcha = jugador.sprite.body.blocked.right;
+	
+					// Tocamos el suelo? && Hay algun bloque debajo? && Es suelo normal?
+	jugador.enSueloNormal = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+	jugador.enParedIzqNormal = jugador.enParedIzq && suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y).index);
+	jugador.enParedDchaNormal = jugador.enParedDcha && suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y).index);
+	
+	jugador.enSueloResbaladizo = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosResbaladizos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+	
+	jugador.enPinchos = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idPinchos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+	
+	jugador.enEscalera = that.physics.overlap(jugador.sprite, grupoEscaleras);	
 }
 
 function ReiniciarValores(jugador){
 	if (jugador.enSuelo){
-			jugador.dashDisponible = true;
-			jugador.saltoEnParedDisponible = true;
-			jugador.subiendoEscalon = false;
-			jugador.deslizandoPared = false;
-			jugador.saltandoEnPared = false;
-			jugador.saltando = false;
-			jugador.dashing = false;
-		}
+		jugador.dashDisponible = true;
+		jugador.saltoEnParedDisponible = true;
+		jugador.subiendoEscalon = false;
+		jugador.deslizandoPared = false;
+		jugador.saltandoEnPared = false;
+		jugador.saltando = false;
+		jugador.dashing = false;
+	}
 }
+
 function AccionSalto(delta, jugador){
 	if (jugador.jumpsquat && jugador.enSuelo || 
 	   !jugador.enSuelo && jugador.dashDisponible || 
@@ -235,6 +239,15 @@ function SubirEscalon(delta, jugador){
 		}else{
 			jugador.subiendoEscalon = false;
 		}
+	}
+}
+
+function InteractuarPinchos(delta, jugador){
+	if(jugador.enPinchos){
+		// Ocurre algo, idk no recuerdo el que, perder un objeto creo
+		//jugador.inventario.pop();
+		console.log("Oh no, perdí " + jugador.inventario.pop());
+		jugador.sprite.body.velocity.y = velSalto;
 	}
 }
 
