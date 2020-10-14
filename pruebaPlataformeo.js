@@ -1,8 +1,8 @@
-var debug = true;
+var debug = false;
 
 var map;
 var suelo;
-var tileSize = 64;
+var tileSize = 32;
 
 var cursors;
 
@@ -28,7 +28,7 @@ class prueba extends Phaser.Scene {
         this.load.image('vicente', 'assets/Sprites Personajes/boceto prueba dielivery.png');
 		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet_tiles_extruded.png");
 		this.load.image("escalera", "assets/ladder.png");
-		this.load.tilemapTiledJSON("map", "assets/Mapas/plataformeo.json");
+		this.load.tilemapTiledJSON("map", "assets/Mapas/plataformeodimensionado.json");
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
 		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
@@ -82,9 +82,9 @@ function GenerarMundo(that){
 	// Phaser's cache (i.e. the name you used in preload)
 	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 64, 64, 1, 12);
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
-	fondo = map.createStaticLayer("Fondo", tileset, 0, 0);
-	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
-	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
+	fondo = map.createStaticLayer("Fondo", tileset, 0, 0).setScale(0.5);
+	suelo = map.createStaticLayer("Suelo", tileset, 0, 0).setScale(0.5);
+	//objetos = map.createStaticLayer("Objetos", tileset, 0, 0).setScale(0.5);
 	
 	suelo.setCollisionByProperty({ collides: true });
 }

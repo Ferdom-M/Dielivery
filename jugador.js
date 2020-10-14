@@ -35,7 +35,8 @@ class Jugador {
 		this.empezandoSalto = false;
 		this.contadorJumpsquat = 0.0;
 		this.alturaSalto = 0.0;
-		this.deslizandoPared = false;
+		this.deslizandoParedIzq = false;
+		this.deslizandoParedDcha = false;
 		this.contadorSaltoEnPared = 0.0;
 		this.contadorDash = 0.0;
 		this.contadorRecogiendoObjeto = 0.0;
@@ -60,8 +61,8 @@ function ComprobarEstados(jugador, that){
 	
 					// Tocamos el suelo? && Hay algun bloque debajo? && Es suelo normal?
 	jugador.enSueloNormal = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
-	jugador.enParedIzqNormal = jugador.enParedIzq && suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y).index);
-	jugador.enParedDchaNormal = jugador.enParedDcha && suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y).index);
+	jugador.enParedIzqNormal = suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y).index);
+	jugador.enParedDchaNormal = suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y).index);
 	
 	jugador.enSueloResbaladizo = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosResbaladizos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
 	
@@ -72,13 +73,16 @@ function ComprobarEstados(jugador, that){
 
 function ReiniciarValores(jugador){
 	if (jugador.enSuelo){
+		jugador.sprite.body.velocity.y = 0;
 		jugador.dashDisponible = true;
 		jugador.saltoEnParedDisponible = true;
 		jugador.subiendoEscalon = false;
-		jugador.deslizandoPared = false;
+		jugador.deslizandoParedIzq = false;
+		jugador.deslizandoParedDcha = false;
 		jugador.saltandoEnPared = false;
 		jugador.saltando = false;
 		jugador.dashing = false;
+		jugador.sprite.body.setAllowGravity(true);
 	}
 }
 
@@ -106,15 +110,24 @@ function AccionSalto(delta, jugador){
 				jugador.alturaSalto = Math.min(tiempoJumpsquat, jugador.alturaSalto);
 				jugador.saltando = true;
 				if (!jugador.enSuelo){
-					if (jugador.deslizandoPared && jugador.saltoEnParedDisponible){
-						jugador.deslizandoPared = false;
+					if ((jugador.deslizandoParedIzq || jugador.deslizandoParedDcha) && jugador.saltoEnParedDisponible){
+						// El contador empieza con un valor mayor si ha sido un salto pequeño
+						jugador.contadorSaltoEnPared = (tiempoJumpsquat - jugador.alturaSalto) * ((tiempoSaltoEnPared / (tiempoJumpsquat / delta)) / (tiempoJumpsquat - delta));
+						jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
+						
+						if(jugador.deslizandoParedIzq){
+							jugador.sprite.body.velocity.x = -velSaltoPared * -1  - (tiempoJumpsquat - jugador.alturaSalto) * (velSaltoPared / 2 - velSaltoPared) / (tiempoJumpsquat - delta) * jugador.dirX;
+						}
+						if(jugador.deslizandoParedDcha){
+							jugador.sprite.body.velocity.x = -velSaltoPared * 1  - (tiempoJumpsquat - jugador.alturaSalto) * (velSaltoPared / 2 - velSaltoPared) / (tiempoJumpsquat - delta) * jugador.dirX;
+						}
+						
+						jugador.deslizandoParedIzq = false;
+						jugador.deslizandoParedDcha = false;
 						jugador.saltoEnParedDisponible = false;
 						jugador.saltandoEnPared = true;
 						
-						// El contador empieza con un valor mayor si ha sido un salto pequeño
-						jugador.contadorSaltoEnPared = (tiempoJumpsquat - jugador.alturaSalto) * ((tiempoSaltoEnPared / (tiempoJumpsquat / delta)) / (tiempoJumpsquat - delta));
-						jugador.sprite.body.velocity.x = -velSaltoPared * jugador.dirX  - (tiempoJumpsquat - jugador.alturaSalto) * (velSaltoPared / 2 - velSaltoPared) / (tiempoJumpsquat - delta) * jugador.dirX;
-						jugador.sprite.body.velocity.y = velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta));
+						
 					}
 					else if (jugador.dashDisponible){
 						jugador.dashDisponible = false
@@ -142,6 +155,7 @@ function AccionSalto(delta, jugador){
 
 function ProcesarMovimiento(delta, jugador){
 	if(!jugador.dashing && !jugador.recogiendoObjeto){
+		// Fragmento que maneja escaleras
 		if(jugador.enEscalera){
 			// Como tal no hace falta ya porque no cuenta la escalera como pared por quitar el add overlap
 			// Pero mejor ponerlo en false por si se da el caso de que hay una escalera al lado de una pared
@@ -154,10 +168,12 @@ function ProcesarMovimiento(delta, jugador){
 				jugador.sprite.body.velocity.y = Phaser.Math.Linear(jugador.sprite.body.velocity.y, 0, friccionAerea);
 			}
 		}
+		// Movimiento normal
 		if(!jugador.saltandoEnPared){
 			if(jugador.dirX != 0){
 				jugador.sprite.body.velocity.x = Phaser.Math.Linear(jugador.sprite.body.velocity.x, jugador.dirX * velJugador, aceleracion);
-			}else{
+			}
+			else{
 				if(jugador.enSueloResbaladizo){
 					jugador.sprite.body.velocity.x = Phaser.Math.Linear(jugador.sprite.body.velocity.x, 0, friccionResbalo);
 				}
@@ -167,23 +183,32 @@ function ProcesarMovimiento(delta, jugador){
 					jugador.sprite.body.velocity.x = Phaser.Math.Linear(jugador.sprite.body.velocity.x, 0, friccionAerea);
 				}
 			}
+			if(jugador.dirX > 0 && jugador.deslizandoParedIzq){ jugador.deslizandoParedIzq = false; }
+			if(jugador.dirX < 0 && jugador.deslizandoParedDcha){ jugador.deslizandoParedDcha = false; }
 		}else{
 			jugador.contadorSaltoEnPared += delta;
 			// Si tocamos una pared reiniciamos el contador de salto en pared para poder saltar y deslizarnos de forma normal
-			if(jugador.contadorSaltoEnPared > tiempoSaltoEnPared || jugador.enParedIzqNormal || jugador.enParedDchaNormal){
+			if(jugador.contadorSaltoEnPared > tiempoSaltoEnPared || jugador.deslizandoParedIzq || jugador.deslizandoParedDcha){
 				jugador.saltandoEnPared = false;
 				jugador.saltoEnParedDisponible = true;
 			}
 		}
-		if (!jugador.enSueloNormal){
-			if (jugador.enParedIzqNormal || jugador.enParedDchaNormal){
-				jugador.deslizandoPared = true;
+		// Deslizar pared
+		if (!jugador.enSuelo && !jugador.subiendoEscalon){
+			if ((jugador.enParedIzq && jugador.enParedIzqNormal) || jugador.deslizandoParedIzq){
+				jugador.deslizandoParedIzq = true;
+				
+				jugador.sprite.body.setAllowGravity(false);
+				jugador.sprite.body.velocity.y = velDeslizandoPared;
+			}else if((jugador.enParedDcha && jugador.enParedDchaNormal) || jugador.deslizandoParedDcha){
+				jugador.deslizandoParedDcha = true;
 				
 				jugador.sprite.body.setAllowGravity(false);
 				jugador.sprite.body.velocity.y = velDeslizandoPared;
 			}
-			else if(!jugador.enEscalera){
-				jugador.deslizandoPared = false;
+			if(!jugador.enEscalera && !jugador.enParedIzqNormal && !jugador.enParedDchaNormal ){
+				jugador.deslizandoParedIzq = false;
+				jugador.deslizandoParedDcha = false;
 				jugador.sprite.body.setAllowGravity(true);
 			}
 		}
@@ -217,13 +242,15 @@ function ProcesarDash(delta, jugador){
 
 function SubirEscalon(delta, jugador){
 	if(!jugador.enEscalera && !jugador.recogiendoObjeto){
-		if(jugador.enParedIzqNormal){
+		if(jugador.enParedIzq && jugador.enParedIzqNormal){
 			// El bloque de arriba a la izq está libre
 			// Comprueba también si el de justo encima está libre para poder pasar, no debería pasar nada pero por si acaso lo compruebo
 			if((!suelo.getTileAtWorldXY(jugador.sprite.x-tileSize, jugador.sprite.y-tileSize)&&
 				!suelo.getTileAtWorldXY(jugador.sprite.x,jugador.sprite.y-tileSize)) || 
 				jugador.subiendoEscalon){
 					
+				jugador.deslizandoParedIzq = false; 
+				jugador.deslizandoParedDcha = false; 
 				jugador.sprite.body.velocity.y = velEscalon;
 				jugador.sprite.body.velocity.x = velJugador/4  * jugador.dirX;
 				jugador.subiendoEscalon = true;
@@ -231,11 +258,13 @@ function SubirEscalon(delta, jugador){
 		}else{
 			jugador.subiendoEscalon = false;
 		}
-		if(jugador.enParedDchaNormal){
+		if(jugador.enParedDcha && jugador.enParedDchaNormal){
 			if((!suelo.getTileAtWorldXY(jugador.sprite.x+tileSize, jugador.sprite.y-tileSize)&&
 				!suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y-tileSize)) ||
-				
 				jugador.subiendoEscalon){
+					
+				jugador.deslizandoParedIzq = false; 
+				jugador.deslizandoParedDcha = false; 
 				jugador.sprite.body.velocity.y = velEscalon;
 				jugador.sprite.body.velocity.x = velJugador/4  * jugador.dirX;
 				jugador.subiendoEscalon = true;
