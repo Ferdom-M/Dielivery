@@ -32,6 +32,7 @@ class prueba extends Phaser.Scene {
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
 		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_Idle', 'assets/Sprites Personajes/Spritesheet Idle.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_CaidaSalto', 'assets/Sprites Personajes/Spritesheet Caida Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_AterrizajeSalto', 'assets/Sprites Personajes/Spritesheet Aterrizaje Salto.png', {frameWidth: 32, frameHeight: 64});
     }
@@ -66,13 +67,15 @@ class prueba extends Phaser.Scene {
 		
 		ProcesarMovimiento(delta, jugadores[0]);
 		ProcesarDash(delta, jugadores[0]);
-		AccionSalto(delta, jugadores[0]);
+		AccionSalto(delta, jugadores[0], this);
 		SubirEscalon(delta, jugadores[0]);
 		
 		RecogerObjeto(delta, jugadores[0], this);
 		
 		InteractuarPinchos(delta, jugadores[0]);
 		TiempoObjeto(delta, jugadores[0]);
+	
+		console.log(jugadores[0].ultimaDirX);
 	}
 }
 
@@ -84,7 +87,11 @@ function GenerarMundo(that){
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
 	fondo = map.createStaticLayer("Fondo", tileset, 0, 0).setScale(0.5);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0).setScale(0.5);
+<<<<<<< HEAD
 	//objetos = map.createStaticLayer("Objetos", tileset, 0, 0).setScale(0.5);
+=======
+	//objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
+>>>>>>> 0efe99fc8fd9a35225c12cac17863131a8d36095
 	
 	suelo.setCollisionByProperty({ collides: true });
 }
@@ -100,7 +107,7 @@ function GenerarRecogidas(that){
 }
 
 function GenerarJugador(that){
-	jugadores[0].sprite = that.physics.add.sprite(1000, 1000, 'anim_andar', 0);
+	jugadores[0].sprite = that.physics.add.sprite(1800, 400, 'anim_andar', 0);
 	jugadores[0].sprite.setMaxVelocity(velDash, 1100); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
@@ -110,6 +117,13 @@ function GenerarJugador(that){
 		key: 'andar',
 		frames: that.anims.generateFrameNames('anim_andar', {start: 1, end: 3}),
 		frameRate: 8,
+		repeat: -1
+	});
+
+	that.anims.create({
+		key: 'idle',
+		frames: that.anims.generateFrameNames('anim_Idle', {start: 0, end: 1}),
+		frameRate: 4,
 		repeat: -1
 	});
 
@@ -188,7 +202,13 @@ function InicializarCursores(that){
 		
 	}, that);
 	cursors.left.on('up', function () {
-		jugadores[0].sprite.anims.stop("andar");
+		if(cursors.right.isDown){
+			jugadores[0].sprite.flipX = true;
+			jugadores[0].sprite.anims.play("andar", true);
+		}
+		else{
+			jugadores[0].sprite.anims.play('idle');
+		}
 		if(cursors.right.isUp){
 			jugadores[0].dirX = 0;
 			jugadores[0].ultimaDirX = -1;
@@ -208,7 +228,13 @@ function InicializarCursores(that){
 		jugadores[0].ultimaDirX = 1;
 	}, that);
 	cursors.right.on('up', function () {
-		jugadores[0].sprite.anims.stop("andar");
+		if(cursors.left.isDown){
+			jugadores[0].sprite.resetFlip();
+			jugadores[0].sprite.anims.play("andar", true);
+		}else{
+			jugadores[0].sprite.anims.play('idle');
+		}
+		
 		if(cursors.left.isUp){
 			jugadores[0].dirX = 0;
 			jugadores[0].ultimaDirX = 1;
