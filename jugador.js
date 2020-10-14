@@ -82,7 +82,7 @@ function ReiniciarValores(jugador){
 	}
 }
 
-function AccionSalto(delta, jugador){
+function AccionSalto(delta, jugador, that){
 	if(!jugador.recogiendoObjeto){
 		if (jugador.jumpsquat && jugador.enSuelo || 
 		   !jugador.enSuelo && jugador.dashDisponible || 
@@ -131,10 +131,21 @@ function AccionSalto(delta, jugador){
 
 		if(jugador.sprite.body.velocity.y > 0){
 			jugador.sprite.anims.play('caidaSalto', true);
-			if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (0.8*tileSize))){
+			if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (1.5*tileSize))){
 				jugador.sprite.anims.play('aterrizajeSalto', true);
 			}
-			//meter timer que llame a la animacion de idle una vez toque el suelo	
+			//meter timer que llame a la animacion de idle una vez toque el suelo
+			if(!cursors.left.isDown && !cursors.right.isDown){
+				var timer = that.time.addEvent({
+					delay: 1000,
+					callback: idle,
+					callbackScpe: this,
+					loop: false
+				});
+			}else{
+				jugadores[0].sprite.anims.play('andar', true);
+			}
+			
 		}
 	}
 }
@@ -264,4 +275,11 @@ function TiempoObjeto(delta, jugador){
 			console.log("Terminé de coger el objeto");
 		}
 	}
+}
+
+function idle(){
+	if(cursors.right.isDown || cursors.left.isDown){
+		return 0;
+	}
+	jugadores[0].sprite.anims.play('idle');
 }
