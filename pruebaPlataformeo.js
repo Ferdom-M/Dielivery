@@ -74,8 +74,6 @@ class prueba extends Phaser.Scene {
 		
 		InteractuarPinchos(delta, jugadores[0]);
 		TiempoObjeto(delta, jugadores[0]);
-	
-		console.log(jugadores[0].ultimaDirX);
 	}
 }
 
@@ -87,11 +85,9 @@ function GenerarMundo(that){
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
 	fondo = map.createStaticLayer("Fondo", tileset, 0, 0).setScale(0.5);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0).setScale(0.5);
-<<<<<<< HEAD
+
 	//objetos = map.createStaticLayer("Objetos", tileset, 0, 0).setScale(0.5);
-=======
-	//objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
->>>>>>> 0efe99fc8fd9a35225c12cac17863131a8d36095
+
 	
 	suelo.setCollisionByProperty({ collides: true });
 }
