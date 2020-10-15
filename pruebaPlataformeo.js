@@ -35,6 +35,7 @@ class prueba extends Phaser.Scene {
 		this.load.spritesheet('anim_Idle', 'assets/Sprites Personajes/Spritesheet Idle.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_CaidaSalto', 'assets/Sprites Personajes/Spritesheet Caida Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_AterrizajeSalto', 'assets/Sprites Personajes/Spritesheet Aterrizaje Salto.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_Dash', 'assets/Sprites Personajes/Spritesheet Dash.png', {frameWidth: 32, frameHeight: 64});
     }
 
     create ()
@@ -140,6 +141,13 @@ function GenerarJugador(that){
 	that.anims.create({
 		key: 'aterrizajeSalto',
 		frames: that.anims.generateFrameNames('anim_AterrizajeSalto', {start: 0, end: 1}),
+		frameRate: 4,
+		repeat: 0
+	});
+
+	that.anims.create({
+		key: 'dash',
+		frames: that.anims.generateFrameNames('anim_Dash', {start: 0, end: 1}),
 		frameRate: 4,
 		repeat: 0
 	});
@@ -272,6 +280,7 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.dash.on('down', function () {
+		jugadores[0].sprite.anims.play("dash");
 		jugadores[0].dash = true;
 	}, that);
 	cursors.dash.on('up', function () {
