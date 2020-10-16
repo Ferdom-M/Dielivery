@@ -1,5 +1,5 @@
 var velJugador = 360;
-var velEscalon = -350;
+var velEscalon = -300;
 var velDeslizandoPared = 300;
 var aceleracion = 0.4;
 var friccionSuelo = 0.15;
@@ -10,7 +10,7 @@ var tiempoSaltoEnPared = 350;
 var tiempoRecogerObjeto = 5000; // 5 sEGUNDOS
 var tiempoDash = 100;
 var velSaltoPared = 500;
-var velSalto = -700;
+var velSalto = -625;
 var velDash = 960;
 
 // Clase jugador, aquí guardaremos el inventario, puntuacion, etc
@@ -73,7 +73,7 @@ function ComprobarEstados(jugador, that){
 
 function ReiniciarValores(jugador){
 	if (jugador.enSuelo){
-		jugador.sprite.body.velocity.y = 0;
+		//jugador.sprite.body.velocity.y = 0;
 		jugador.dashDisponible = true;
 		jugador.saltoEnParedDisponible = true;
 		jugador.subiendoEscalon = false;
@@ -150,7 +150,7 @@ function AccionSalto(delta, jugador, that){
 			//meter timer que llame a la animacion de idle una vez toque el suelo
 			if(!cursors.left.isDown && !cursors.right.isDown){
 				var timer = that.time.addEvent({
-					delay: 1000,
+					delay: 1250,
 					callback: idle,
 					callbackScpe: this,
 					loop: false

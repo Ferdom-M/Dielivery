@@ -105,7 +105,7 @@ function GenerarRecogidas(that){
 
 function GenerarJugador(that){
 	jugadores[0].sprite = that.physics.add.sprite(1800, 400, 'anim_andar', 0);
-	jugadores[0].sprite.setMaxVelocity(velDash, 1100); // x, y
+	jugadores[0].sprite.setMaxVelocity(velDash, 800); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugadores[0].sprite, suelo);
 	
@@ -280,7 +280,9 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.dash.on('down', function () {
-		jugadores[0].sprite.anims.play("dash");
+		if(!jugadores[0].enSuelo){
+			jugadores[0].sprite.anims.play("dash");
+		}
 		jugadores[0].dash = true;
 	}, that);
 	cursors.dash.on('up', function () {
