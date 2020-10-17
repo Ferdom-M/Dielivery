@@ -18,7 +18,7 @@ var config = {
             debug: false
         }
     },
-    scene: [prueba],
+    scene: [Mainmenu, ComoJugar, creditos, prueba],
     antialias: false
 };
 

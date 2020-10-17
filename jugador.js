@@ -68,7 +68,8 @@ function ComprobarEstados(jugador, that){
 	
 	jugador.enPinchos = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idPinchos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
 	
-	jugador.enEscalera = that.physics.overlap(jugador.sprite, grupoEscaleras);	
+	// Hay que hacer esto usando tiles
+	//jugador.enEscalera = that.physics.overlap(jugador.sprite, grupoEscaleras);	
 }
 
 function ReiniciarValores(jugador){
