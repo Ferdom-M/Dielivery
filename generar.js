@@ -25,13 +25,12 @@ function GenerarRecogidas(that){
 }
 
 function GenerarJugador(that, jugador, posX, posY){
+	InicializarJugador(jugador);
+	
 	jugador.sprite = that.physics.add.sprite(posX, posY, 'anim_andar', 0);
 	jugador.sprite.setMaxVelocity(velDash, 800); // x, y
 	//jugadores[0].sprite.setCollideWorldBounds(true);
 	that.physics.add.collider(jugador.sprite, suelo);
-	
-	jugador.ultimaDirX = 1;
-	jugador.sprite.flipX = true;
 	
 	that.anims.create({
 		key: 'andar',

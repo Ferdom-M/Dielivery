@@ -18,7 +18,7 @@ class Jugador {
     constructor() {
         this.puntuacion = 0;
         this.inventario = new Array();
-        this.numObjetos = 0;
+        this.velActual = velJugador;
 		this.subiendoEscalon = false;
 		this.dirX = 0;
 		this.dirY = 0;
@@ -52,6 +52,41 @@ class Jugador {
     }
 }
 
+function InicializarJugador(jugador){
+	jugador.puntuacion = 0;
+	jugador.inventario = new Array();
+	jugador.subiendoEscalon = false;
+	jugador.dirX = 0;
+	jugador.dirY = 0;
+	jugador.ultimaDirX = -1;
+	jugador.jumpsquat = false;
+	jugador.dash = false;
+	jugador.dashing = false;
+	jugador.dashVelocity = 0;
+	jugador.dashDisponible = false;
+	jugador.saltoEnParedDisponible = false;
+	jugador.saltandoEnPared = false;
+	jugador.saltando = false;
+	jugador.enEscalera = false;
+	jugador.empezandoSalto = false;
+	jugador.contadorJumpsquat = 0.0;
+	jugador.alturaSalto = 0.0;
+	jugador.deslizandoParedIzq = false;
+	jugador.deslizandoParedDcha = false;
+	jugador.contadorSaltoEnPared = 0.0;
+	jugador.contadorDash = 0.0;
+	jugador.contadorRecogiendoObjeto = 0.0;
+	jugador.recogiendoObjeto = false;
+	jugador.enSuelo = false;
+	jugador.enSueloNormal = false;
+	jugador.enSueloResbaladizo = false;
+	jugador.enParedIzq = false;
+	jugador.enParedIzqNormal = false;
+	jugador.enParedDcha = false;
+	jugador.enParedDchaNormal = false;
+	jugador.enPinchos = false;
+}
+
 function ComprobarEstados(jugador, that){
 	// Comprobamos una sola vez si tocamos suelo o paredes
 	jugador.enSuelo = jugador.sprite.body.blocked.down;
@@ -68,8 +103,8 @@ function ComprobarEstados(jugador, that){
 	
 	jugador.enPinchos = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idPinchos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
 	
-	// Hay que hacer esto usando tiles
-	//jugador.enEscalera = that.physics.overlap(jugador.sprite, grupoEscaleras);	
+	//jugador.enEscalera = objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idEscaleras.has(objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+	
 }
 
 function ReiniciarValores(jugador){
@@ -175,7 +210,7 @@ function ProcesarMovimiento(delta, jugador){
 			jugador.enParedDchaNormal = false;
 			jugador.sprite.body.setAllowGravity(false);
 			if(jugador.dirY != 0){
-				jugador.sprite.body.velocity.y = Phaser.Math.Linear(jugador.sprite.body.velocity.y, jugador.dirY * velJugador, aceleracion);
+				jugador.sprite.body.velocity.y = Phaser.Math.Linear(jugador.sprite.body.velocity.y, jugador.dirY * jugador.velActual, aceleracion);
 			}else{
 				jugador.sprite.body.velocity.y = Phaser.Math.Linear(jugador.sprite.body.velocity.y, 0, friccionAerea);
 			}
@@ -183,7 +218,7 @@ function ProcesarMovimiento(delta, jugador){
 		// Movimiento normal
 		if(!jugador.saltandoEnPared){
 			if(jugador.dirX != 0){
-				jugador.sprite.body.velocity.x = Phaser.Math.Linear(jugador.sprite.body.velocity.x, jugador.dirX * velJugador, aceleracion);
+				jugador.sprite.body.velocity.x = Phaser.Math.Linear(jugador.sprite.body.velocity.x, jugador.dirX * jugador.velActual, aceleracion);
 			}
 			else{
 				if(jugador.enSueloResbaladizo){
@@ -264,7 +299,7 @@ function SubirEscalon(delta, jugador){
 				jugador.deslizandoParedIzq = false; 
 				jugador.deslizandoParedDcha = false; 
 				jugador.sprite.body.velocity.y = velEscalon;
-				jugador.sprite.body.velocity.x = velJugador/4  * jugador.dirX;
+				jugador.sprite.body.velocity.x = jugador.velActual/4  * jugador.dirX;
 				jugador.subiendoEscalon = true;
 			}
 		}else{
@@ -278,7 +313,7 @@ function SubirEscalon(delta, jugador){
 				jugador.deslizandoParedIzq = false; 
 				jugador.deslizandoParedDcha = false; 
 				jugador.sprite.body.velocity.y = velEscalon;
-				jugador.sprite.body.velocity.x = velJugador/4  * jugador.dirX;
+				jugador.sprite.body.velocity.x = jugador.velActual / 4  * jugador.dirX;
 				jugador.subiendoEscalon = true;
 			}
 		}else{
@@ -291,7 +326,10 @@ function InteractuarPinchos(delta, jugador){
 	if(jugador.enPinchos){
 		// Ocurre algo, idk no recuerdo el que, perder un objeto creo
 		//jugador.inventario.pop();
-		console.log("Oh no, perdí " + jugador.inventario.pop());
+		if(jugador.inventario.length > 0){
+			console.log("Oh no, perdí " + jugador.inventario.pop());
+			jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
+		}
 		jugador.sprite.body.velocity.y = velSalto;
 	}
 }

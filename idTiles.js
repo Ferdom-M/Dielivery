@@ -114,6 +114,47 @@ idSuelosResbaladizos.add(421);
 idSuelosResbaladizos.add(422);
 idSuelosResbaladizos.add(423);
 
+// Objetos interactuables
 var idPinchos = new Set();
-
 idPinchos.add(291);
+
+var idEscaleras = new Set();
+
+// Objetos a recoger
+var idTulipanes = new Set();
+
+var idRosas = new Set();
+
+var idVioletas = new Set();
+
+var idMargaritas = new Set();
+
+var idOrujo = new Set();
+
+var idWhisky = new Set();
+
+var idRon = new Set();
+
+var idVino = new Set();
+
+var idBandera = new Set();
+
+var idPelucheViejo = new Set();
+
+var idPelucheNuevo = new Set();
+
+var idCartaSello = new Set();
+
+var idCartaAbierta = new Set();
+
+var idFotoFamiliar = new Set();
+
+var idFotoPersonal = new Set();
+
+var idAnillo = new Set();
+
+var idPendiente = new Set();
+
+var idCollarPerlas = new Set();
+
+var idCollarOro = new Set();
