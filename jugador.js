@@ -8,10 +8,10 @@ var friccionAerea = 0.25;
 var tiempoJumpsquat = 66.6;
 var tiempoSaltoEnPared = 350;
 var tiempoRecogerObjeto = 5000; // 5 sEGUNDOS
-var tiempoDash = 100;
+var tiempoDash = 200;
 var velSaltoPared = 500;
 var velSalto = -625;
-var velDash = 960;
+var velDash = 720;
 
 // Clase jugador, aquí guardaremos el inventario, puntuacion, etc
 class Jugador {
@@ -106,7 +106,7 @@ function ComprobarEstados(jugador, that){
 	
 	jugador.enPinchos = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idPinchos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
 	
-	//jugador.enEscalera = objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idEscaleras.has(objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+	jugador.enEscalera = objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idEscaleras.has(objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
 	
 }
 

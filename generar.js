@@ -8,7 +8,7 @@ function GenerarMundo(that, mapa){
 	fondo = map.createStaticLayer("Fondo", tileset, 0, 0).setScale(0.5);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0).setScale(0.5);
 
-	//objetos = map.createStaticLayer("Objetos", tileset, 0, 0).setScale(0.5);
+	objetos = map.createStaticLayer("Objetos", tileset, 0, 0).setScale(0.5);
 
 	
 	suelo.setCollisionByProperty({ collides: true });

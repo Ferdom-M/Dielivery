@@ -119,6 +119,12 @@ var idPinchos = new Set();
 idPinchos.add(291);
 
 var idEscaleras = new Set();
+idEscaleras.add(52);
+idEscaleras.add(53);
+idEscaleras.add(79);
+idEscaleras.add(80);
+idEscaleras.add(106);
+idEscaleras.add(107);
 
 // Objetos a recoger
 var idTulipanes = new Set();

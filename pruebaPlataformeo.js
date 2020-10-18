@@ -27,13 +27,14 @@ class prueba extends Phaser.Scene {
 		this.load.image("mesa", "assets/bolita.jpg");
 		this.load.image("tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
 		this.load.image("botonEnviar", "assets/cuadrencio.png");
-		this.load.tilemapTiledJSON("map", "assets/Mapas/plataformeodimensionado.json");
+		this.load.tilemapTiledJSON("plataformeo", "assets/Mapas/plataformeodimensionado.json");
+		this.load.tilemapTiledJSON("normal", "assets/Mapas/mapanormaldimensionado.json");
 		
     }
 
     create ()
     {
-		GenerarMundo(this, "map");
+		GenerarMundo(this, "plataformeo");
 		GenerarEscalera(this);
 		GenerarRecogidas(this);
 		GenerarJugador(this, jugadores[0], 1800, 400);
