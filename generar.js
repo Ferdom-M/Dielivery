@@ -3,12 +3,12 @@ function GenerarMundo(that, mapa){
 	map = that.make.tilemap({ key: mapa });
 	// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
 	// Phaser's cache (i.e. the name you used in preload)
-	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 64, 64, 1, 12);
+	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 32, 32, 0, 5);
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
-	fondo = map.createStaticLayer("Fondo", tileset, 0, 0).setScale(0.5);
-	suelo = map.createStaticLayer("Suelo", tileset, 0, 0).setScale(0.5);
+	fondo = map.createStaticLayer("Fondo", tileset, 0, 0);
+	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
 
-	objetos = map.createStaticLayer("Objetos", tileset, 0, 0).setScale(0.5);
+	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 
 	
 	suelo.setCollisionByProperty({ collides: true });
@@ -76,8 +76,8 @@ function GenerarJugador(that, jugador, posX, posY){
 	that.anims.create({
 		key: 'dash',
 		frames: that.anims.generateFrameNames('anim_Dash', {start: 0, end: 1}),
-		frameRate: 4,
-		repeat: 0
+		frameRate: 8,
+		repeat: -1
 	});
 
 }

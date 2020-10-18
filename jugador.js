@@ -217,6 +217,7 @@ function ProcesarMovimiento(delta, jugador){
 			}else{
 				jugador.sprite.body.velocity.y = Phaser.Math.Linear(jugador.sprite.body.velocity.y, 0, friccionAerea);
 			}
+			
 		}
 		// Movimiento normal
 		if(!jugador.saltandoEnPared){
