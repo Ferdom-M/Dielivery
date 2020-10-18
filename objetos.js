@@ -1,10 +1,11 @@
 var puntuacionPedidoFallido = -50;
 
 class Objeto {
-	constructor(tipo, peso, puntuacion){
+	constructor(tipo, peso, puntuacion, sprite){
 		this.tipo = tipo; // String
 		this.peso = peso; 
 		this.puntuacion = puntuacion;
+		this.sprite = sprite;
 	}
 }
 
@@ -68,7 +69,9 @@ arrayObjetos.push(pendiente);
 arrayObjetos.push(collarPerlas);
 arrayObjetos.push(collarOro);
 
-function GenerarPedido(){
+var arrayPedidos = new Array();
+
+function GenerarPedido(jugador, that){
 	// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
 	var destinatario = Math.floor(Math.random() * 2) == 0;
 	
@@ -83,14 +86,18 @@ function GenerarPedido(){
 	}
 	
 	var pedido = new Pedido(numObjetos, objetosGenerados, destinatario);
-	
+	arrayPedidos.push(pedido);
+	var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 525, 'logo').setScale(0.1).setInteractive();
+	tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
+
+
 	return pedido;
 }
 
-//						Paquete creado por el jugador, pedido a cumplir que elige el jugador  
-function CompararPedidos(paquete, pedido){
+//Paquete creado por el jugador, pedido a cumplir que elige el jugador  
+function CompararPedidos(paquete, pedido, destinoElegido){
 	var puntuacion = 0
-	if(paquete.destinatario == pedido.destinatario){
+	if(destinoElegido == pedido.destinatario){
 		var objetosCorrectos = 0;
 		for (var i = 0; i < paquete.numObjetos; i++){
 			if(pedido.objetos.contains(paquete.objetos[i])){

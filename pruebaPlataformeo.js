@@ -24,6 +24,9 @@ class prueba extends Phaser.Scene {
 	preload ()
     {
 		this.load.image("escalera", "assets/ladder.png");
+		this.load.image("mesa", "assets/bolita.jpg");
+		this.load.image("tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
+		this.load.image("botonEnviar", "assets/cuadrencio.png");
 		this.load.tilemapTiledJSON("map", "assets/Mapas/plataformeodimensionado.json");
 		
     }
@@ -35,7 +38,13 @@ class prueba extends Phaser.Scene {
 		GenerarRecogidas(this);
 		GenerarJugador(this, jugadores[0], 1800, 400);
 		GenerarCamara(this, jugadores[0]);
-		
+		GenerarMesaPaquetes(this);
+
+		//Placeholder
+		var genPedidos = this.add.sprite(2000, 450, 'botonEnviar').setScale(2).setInteractive();
+		genPedidos.on('pointerdown', () => GenerarPedido(jugadores[0], this));
+
+
 		InicializarCursores(this);
 		
 		this.input.gamepad.start();
@@ -142,4 +151,47 @@ function AñadirObjeto(jugador, objeto){
 		jugador.inventario.push(objeto);
 		jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
 	}
+}
+
+
+function EntrarMesa(jugador, that){
+	if(cursors.accion.isDown && !jugador.recogiendoObjeto){
+		if(that.physics.overlap(jugador.sprite, grupoMesa)){
+			for(let i = 0; i<jugador.inventario.length; i++){
+				//Para multi: usar elemento de UI para ubicarlo en funcion del canvas de la pantalla en vez de sprite para que el otro no lo vea
+				jugador.arrayMostrados[i] = that.add.sprite(jugador.sprite.x + tileSize, jugador.sprite.y-tileSize - 150*i, jugador.inventario[i].sprite.toString()).setScale(4).setInteractive();
+				jugador.arrayMostrados[i].on('pointerdown', () => clickObjeto(jugador.inventario[i].sprite, jugador));
+			}
+		}
+
+		buttEnviarCielo = that.add.sprite(jugador.sprite.x +100 + tileSize, jugador.sprite.y-tileSize - 150*i, 'botonEnviar').setScale(1.5).setInteractive();
+		buttEnviarInfierno = that.add.sprite(jugador.sprite.x +100 + tileSize, jugador.sprite.y - 150*i + 40, 'botonEnviar').setScale(1.5).setInteractive();
+		buttEnviarCielo.on('pointerdown', () => Enviar(jugador, true));
+		buttEnviarInfierno.on('pointerdown', () => Enviar(jugador, false));
+
+	}
+}
+
+function clickObjeto(objetoActual, jugador){
+	if(jugador.arraySeleccionados.includes(objetoActual.toString())){
+		//Falta meter cambio de sprite que indique que está seleccionado
+		//
+		//
+		//
+		index = jugador.arraySeleccionados.indexOf(objetoActual.toString());
+		jugador.arraySeleccionados.splice(index, 1);
+	}else{
+		jugador.arraySeleccionados.push(objetoActual.toString());
+	}
+
+}
+
+
+function Enviar(jugador, destElegido){
+	console.log(CompararPedidos(jugador.arraySeleccionados, jugador.pedidoSeleccionado, destElegido));
+	/*
+	for(let i = 0; i < jugador.arrayMostrados.length; i++){
+		jugador.arrayMostrados[i].destroy();
+	}
+	*/
 }

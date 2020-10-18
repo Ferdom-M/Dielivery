@@ -17,7 +17,10 @@ var velDash = 960;
 class Jugador {
     constructor() {
         this.puntuacion = 0;
-        this.inventario = new Array();
+		this.inventario = new Array();
+		this.arraySeleccionados = new Array();
+		this.arrayMostrados = new Array();
+		this.pedidoSeleccionado;
         this.velActual = velJugador;
 		this.subiendoEscalon = false;
 		this.dirX = 0;
