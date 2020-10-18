@@ -28,7 +28,8 @@ var ron = new Objeto("Ron", 1, 50);
 var vino = new Objeto("Vino", 1, 50);
 
 // Cosas personales
-var bandera = new Objeto("Bandera", 1, 50);
+var bandera1 = new Objeto("Bandera1", 1, 50);
+var bandera2 = new Objeto("Bandera2", 1, 50);
 var pelucheViejo = new Objeto("Peluche Viejo", 1, 50);
 var pelucheNuevo = new Objeto("Peluche Nuevo", 1, 50);
 
@@ -54,7 +55,8 @@ arrayObjetos.push(orujo);
 arrayObjetos.push(whisky);
 arrayObjetos.push(ron);
 arrayObjetos.push(vino);
-arrayObjetos.push(bandera);
+arrayObjetos.push(bandera1);
+arrayObjetos.push(bandera2);
 arrayObjetos.push(pelucheViejo);
 arrayObjetos.push(pelucheNuevo);
 arrayObjetos.push(cartaSello);
@@ -73,7 +75,7 @@ function GenerarPedido(){
 	// Aleatorio 2 a 4
 	var numObjetos = Math.floor(Math.random() * 3) + 2;
 	
-	// Aleatorio entre los 19 con la misma probabilidad
+	// Aleatorio entre los 20 con la misma probabilidad
 	var objetosGenerados = new Array();
 	for(var i = 0; i < numObjetos; i++){
 		var objetoGenerado = Math.floor(Math.random() * arrayObjetos.length);

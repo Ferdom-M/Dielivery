@@ -96,8 +96,11 @@ function RecogerObjeto(delta, jugador, that){
 			case idVino.has(tileActual):
 				AñadirObjeto(jugador, vino);
 				break;
-			case idBandera.has(tileActual):
-				AñadirObjeto(jugador, bandera);
+			case idBandera1.has(tileActual):
+				AñadirObjeto(jugador, bandera1);
+				break;
+			case idBandera2.has(tileActual):
+				AñadirObjeto(jugador, bandera2);
 				break;
 			case idPelucheViejo.has(tileActual):
 				AñadirObjeto(jugador, pelucheViejo);

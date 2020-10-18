@@ -137,7 +137,9 @@ var idRon = new Set();
 
 var idVino = new Set();
 
-var idBandera = new Set();
+var idBandera1 = new Set();
+
+var idBandera2 = new Set();
 
 var idPelucheViejo = new Set();
 
