@@ -92,19 +92,30 @@ function InicializarJugador(jugador){
 
 function ComprobarEstados(jugador, that){
 	// Comprobamos una sola vez si tocamos suelo o paredes
-	jugador.enSuelo = jugador.sprite.body.blocked.down;
-	// Solo queremos hacer las interacciones con paredes (salto en pared y subir escalon) si es suelo normal
+	let sueloDebajo = suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize);
+	// Necesitamos saber si en el extremo de Grimmy hay suelo		16 - 16, se queda en 0, dentro de su sprite
+	let sueloDebajoExtremoIzq = suelo.getTileAtWorldXY(jugador.sprite.x - jugador.sprite.width / 2, jugador.sprite.y + tileSize);
+	//																16 + 16, un pixel mas que su anchura, hay que restar 1. Se aplicaria siempre igual aunque midiese 64 en lugar de 32
+	let sueloDebajoExtremoDcha = suelo.getTileAtWorldXY(jugador.sprite.x + jugador.sprite.width / 2 - 1, jugador.sprite.y + tileSize);
+	
+	let sueloIzq = suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y);
+	let sueloDcha = suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y);
+	
+	jugador.enSuelo = sueloDebajo || sueloDebajoExtremoIzq || sueloDebajoExtremoDcha
+	
 	jugador.enParedIzq = jugador.sprite.body.blocked.left;
 	jugador.enParedDcha = jugador.sprite.body.blocked.right;
 	
-					// Tocamos el suelo? && Hay algun bloque debajo? && Es suelo normal?
-	jugador.enSueloNormal = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+					// Tocamos el suelo? && Es suelo normal?
+	jugador.enSueloNormal = jugador.enSuelo && sueloDebajo && idSuelosNormales.has(sueloDebajo.index);
+	
+	// Solo queremos hacer las interacciones con paredes (salto en pared y subir escalon) si es suelo normal
 	jugador.enParedIzqNormal = suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y).index);
 	jugador.enParedDchaNormal = suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y).index);
 	
-	jugador.enSueloResbaladizo = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosResbaladizos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+	jugador.enSueloResbaladizo = jugador.enSuelo && sueloDebajo && idSuelosResbaladizos.has(sueloDebajo.index);
 	
-	jugador.enPinchos = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idPinchos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+	jugador.enPinchos = jugador.enSuelo && sueloDebajo && idPinchos.has(sueloDebajo.index);
 	
 	jugador.enEscalera = objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idEscaleras.has(objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
 	
@@ -112,7 +123,6 @@ function ComprobarEstados(jugador, that){
 
 function ReiniciarValores(jugador){
 	if (jugador.enSuelo){
-		//jugador.sprite.body.velocity.y = 0;
 		jugador.dashDisponible = true;
 		jugador.saltoEnParedDisponible = true;
 		jugador.subiendoEscalon = false;
@@ -121,6 +131,10 @@ function ReiniciarValores(jugador){
 		jugador.saltandoEnPared = false;
 		jugador.saltando = false;
 		jugador.dashing = false;
+		
+		// Desactivamos la gravedad si estamos en el suelo, solo se vuelve a activar si estamos en el aire sin tocar paredes
+		jugador.sprite.body.setAllowGravity(false);
+	}else if(!jugador.deslizandoParedIzq && !jugador.deslizandoParedDcha){
 		jugador.sprite.body.setAllowGravity(true);
 	}
 }
