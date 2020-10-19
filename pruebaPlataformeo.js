@@ -18,6 +18,8 @@ for (var i = 0; i < numJugadores; i++) {
     jugadores[i] = new Jugador();
 }
 
+var emitter; 
+
 class prueba extends Phaser.Scene {
 
     constructor() {
@@ -40,6 +42,15 @@ class prueba extends Phaser.Scene {
 		GenerarMundo(this, "plataformeo");
 		GenerarEscalera(this);
 		GenerarRecogidas(this);
+		
+		/*
+		var particles = this.add.particles('mesa');
+		emitter = particles.createEmitter({
+            speed: 100,
+            scale: { start: 0.05, end: 0 }
+        });
+		*/
+		
 		GenerarJugador(this, jugadores[0], 1800, 400);
 		GenerarCamara(this, jugadores[0]);
 		GenerarMesaPaquetes(this);
@@ -48,7 +59,11 @@ class prueba extends Phaser.Scene {
 		var genPedidos = this.add.sprite(2000, 450, 'botonEnviar').setScale(2).setInteractive();
 		genPedidos.on('pointerdown', () => GenerarPedido(jugadores[0], this));
 
-
+		/*
+		emitter.startFollow(jugadores[0].sprite, 0, jugadores[0].sprite.body.height / 4);
+		emitter.stop();
+		*/
+		
 		InicializarCursores(this);
 		
 		this.input.gamepad.start();
@@ -61,6 +76,7 @@ class prueba extends Phaser.Scene {
 			  faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
 			});
 		}
+		
 		
 			// 2:30 in seconds
 		this.initialTime = 300;

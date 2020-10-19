@@ -119,6 +119,14 @@ function ComprobarEstados(jugador, that){
 	
 	jugador.enEscalera = objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idEscaleras.has(objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
 	
+	/*
+	if(jugador.enSuelo && jugador.sprite.body.velocity.x != 0){
+		console.log(jugador.sprite.body.velocity.x);
+		emitter.start();
+	}else{
+		emitter.stop();
+	}
+	*/
 }
 
 function ReiniciarValores(jugador){
@@ -247,6 +255,9 @@ function ProcesarMovimiento(delta, jugador){
 				}else{
 					jugador.sprite.body.velocity.x = Phaser.Math.Linear(jugador.sprite.body.velocity.x, 0, friccionAerea);
 				}
+				if(Math.abs(jugador.sprite.body.velocity.x) < 5){
+					jugador.sprite.body.velocity.x = 0;
+				}
 			}
 			if(jugador.dirX > 0 && jugador.deslizandoParedIzq){ jugador.deslizandoParedIzq = false; }
 			if(jugador.dirX < 0 && jugador.deslizandoParedDcha){ jugador.deslizandoParedDcha = false; }
@@ -282,10 +293,11 @@ function ProcesarMovimiento(delta, jugador){
 
 function ProcesarDash(delta, jugador){
 	if (jugador.dash && jugador.dashDisponible && !jugador.saltandoEnPared && !jugador.enSuelo){
-			jugador.dashing = true
-			jugador.dashDisponible = false
-		
-			jugador.dashVelocity = velDash * jugador.ultimaDirX;
+		// emitter.start();
+		jugador.dashing = true
+		jugador.dashDisponible = false
+	
+		jugador.dashVelocity = velDash * jugador.ultimaDirX;
 	}	
 	if(jugador.dashing && !jugador.recogiendoObjeto){
 		if(!jugador.enSuelo){
@@ -296,6 +308,7 @@ function ProcesarDash(delta, jugador){
 			
 		}
 		if(jugador.contadorDash > tiempoDash){
+			// emitter.stop();
 			jugador.dashing = false;
 			jugador.dashVelocity = 0;
 			jugador.contadorDash = 0;
