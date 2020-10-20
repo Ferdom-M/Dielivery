@@ -203,7 +203,7 @@ function AccionSalto(delta, jugador, that){
 			}
 		}
 
-		if(jugador.sprite.body.velocity.y > 0){
+		if(jugador.sprite.body.velocity.y > 0 && !jugador.enEscalera){
 			jugador.sprite.anims.play('caidaSalto', true);
 			if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (1.5*tileSize))){
 				jugador.sprite.anims.play('aterrizajeSalto', true);
@@ -357,11 +357,15 @@ function InteractuarPinchos(delta, jugador){
 	if(jugador.enPinchos){
 		// Ocurre algo, idk no recuerdo el que, perder un objeto creo
 		//jugador.inventario.pop();
+
+		//jugador.sprite.anims.stop();
+		//jugador.sprite.anims.play('dano', true);
 		if(jugador.inventario.length > 0){
 			console.log("Oh no, perdí " + jugador.inventario.pop());
 			jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
 		}
 		jugador.sprite.body.velocity.y = velSalto;
+		jugador.cayendoPinchos = true;
 	}
 }
 
@@ -382,3 +386,78 @@ function idle(){
 	}
 	jugadores[0].sprite.anims.play('idle');
 }
+
+function Animaciones(jugador, that){
+
+	//Idle al estar en el suelo
+	/*if(jugador.enSuelo && cursors.left.isUp && cursors.right.isUp && cursors.jump.isUp){
+		/*var timer = that.time.addEvent({
+			delay: 1250,
+			callback: idle,
+			callbackScpe: this,
+			loop: false
+		});
+		jugador.sprite.anims.play('idle', true);
+	}*/
+
+	//Si estoy en el suelo y me muevo, andar
+	/*if(jugador.enSuelo && (cursors.left.isDown || cursors.right.isDown)){
+		jugador.sprite.anims.play('andar', true);
+	}*/
+
+	//Si estoy en escalera y pulso hacia arriba o hacia abajo
+	/*if(jugador.enEscalera && (cursors.up.isDown || cursors.down.isDown)){
+		jugador.sprite.anims.play('trepar');
+	}*/
+
+	//Si estoy en el aire y pulso dash
+	if(!jugador.enSuelo && cursors.dash.isDown){
+		jugador.sprite.anims.play('dash', true);
+	}
+
+	if(jugador.enPinchos){
+		jugador.sprite.anims.play('dano', true);
+	}
+
+	//Si pulso el salto
+	/*if(cursors.jump.isDown){
+		jugador.sprite.anims.play('inicioSalto', true);
+		if(jugador.sprite.body.velocity.y > 0){
+			jugador.sprite.anims.play('caidaSalto', true);
+			if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (1.5*tileSize))){
+				jugador.sprite.anims.play('aterrizajeSalto', true);
+			}
+			//meter timer que llame a la animacion de idle una vez toque el suelo
+			if(!cursors.left.isDown && !cursors.right.isDown){
+				var timer = that.time.addEvent({
+					delay: 1250,
+					callback: idle,
+					callbackScpe: this,
+					loop: false
+				});
+			}
+		}
+	}*/
+
+}
+
+/*function caidaSalto(jugador, saltoPinchos){
+	if(saltoPinchos){
+
+	}
+	jugador.sprite.anims.play('caidaSalto', true);
+	if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (1.5*tileSize))){
+		jugador.sprite.anims.play('aterrizajeSalto', true);
+	}
+	//meter timer que llame a la animacion de idle una vez toque el suelo
+	if(!cursors.left.isDown && !cursors.right.isDown){
+		var timer = that.time.addEvent({
+			delay: 1250,
+			callback: idle,
+			callbackScpe: this,
+			loop: false
+		});
+	}else{
+		jugadores[0].sprite.anims.play('andar', true);
+	}
+}*/

@@ -103,6 +103,8 @@ class prueba extends Phaser.Scene {
 		
 		InteractuarPinchos(delta, jugadores[0]);
 		TiempoObjeto(delta, jugadores[0]);
+
+		//Animaciones(jugadores[0], this);
 	}
 }
 
