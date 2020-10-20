@@ -11,9 +11,14 @@ var numJugadores = 1;
 var jugadores = new Array(numJugadores);
 var limInventario = 6;
 
+var text;
+var timedEvent;
+
 for (var i = 0; i < numJugadores; i++) {
     jugadores[i] = new Jugador();
 }
+
+var emitter; 
 
 class prueba extends Phaser.Scene {
 
@@ -37,6 +42,15 @@ class prueba extends Phaser.Scene {
 		GenerarMundo(this, "plataformeo");
 		GenerarEscalera(this);
 		GenerarRecogidas(this);
+		
+		/*
+		var particles = this.add.particles('mesa');
+		emitter = particles.createEmitter({
+            speed: 100,
+            scale: { start: 0.05, end: 0 }
+        });
+		*/
+		
 		GenerarJugador(this, jugadores[0], 1800, 400);
 		GenerarCamara(this, jugadores[0]);
 		GenerarMesaPaquetes(this);
@@ -45,7 +59,11 @@ class prueba extends Phaser.Scene {
 		var genPedidos = this.add.sprite(2000, 450, 'botonEnviar').setScale(2).setInteractive();
 		genPedidos.on('pointerdown', () => GenerarPedido(jugadores[0], this));
 
-
+		/*
+		emitter.startFollow(jugadores[0].sprite, 0, jugadores[0].sprite.body.height / 4);
+		emitter.stop();
+		*/
+		
 		InicializarCursores(this);
 		
 		this.input.gamepad.start();
@@ -58,6 +76,16 @@ class prueba extends Phaser.Scene {
 			  faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
 			});
 		}
+		
+		
+			// 2:30 in seconds
+		this.initialTime = 300;
+
+		text = this.add.text(1800, 400, 'Countdown: ' + formatTime(this.initialTime));
+
+		// Each 1000 ms call onEvent
+		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
+
     }
 
     update(time, delta){
@@ -75,12 +103,31 @@ class prueba extends Phaser.Scene {
 		
 		InteractuarPinchos(delta, jugadores[0]);
 		TiempoObjeto(delta, jugadores[0]);
+
+		//Animaciones(jugadores[0], this);
 	}
 }
 
+function formatTime(seconds){
+    // Minutes
+    var minutes = Math.floor(seconds/60);
+    // Seconds
+    var partInSeconds = seconds%60;
+    // Adds left zeros to seconds
+    partInSeconds = partInSeconds.toString().padStart(2,'0');
+    // Returns formated time
+    return `${minutes}:${partInSeconds}`;
+}
+
+function onEvent ()
+{
+    this.initialTime -= 1; // One second
+    text.setText('Countdown: ' + formatTime(this.initialTime));
+}
+
 function RecogerObjeto(delta, jugador, that){
-	if(cursors.accion.isDown && !jugador.recogiendoObjeto && objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize)){
-		var tileActual = objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index;
+	if(cursors.accion.isDown && !jugador.recogiendoObjeto && objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y)){
+		var tileActual = objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y).index;
 		switch(true){
 			case idTulipanes.has(tileActual):
 				AñadirObjeto(jugador, tulipan);
@@ -146,8 +193,10 @@ function RecogerObjeto(delta, jugador, that){
 	}
 }
 
+
 function AñadirObjeto(jugador, objeto){
 	if(jugador.inventario.length < limInventario){
+		jugador.sprite.body.velocity.x = 0;
 		jugador.recogiendoObjeto = true;
 		jugador.inventario.push(objeto);
 		jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;

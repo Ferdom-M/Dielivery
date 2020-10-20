@@ -18,7 +18,7 @@
          "name":"Fondo",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":113,
          "x":0,
          "y":0

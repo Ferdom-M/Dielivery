@@ -3,12 +3,12 @@ function GenerarMundo(that, mapa){
 	map = that.make.tilemap({ key: mapa });
 	// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
 	// Phaser's cache (i.e. the name you used in preload)
-	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 64, 64, 1, 12);
+	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 32, 32, 0, 5);
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
-	fondo = map.createStaticLayer("Fondo", tileset, 0, 0).setScale(0.5);
-	suelo = map.createStaticLayer("Suelo", tileset, 0, 0).setScale(0.5);
+	fondo = map.createStaticLayer("Fondo", tileset, 0, 0);
+	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
 
-	objetos = map.createStaticLayer("Objetos", tileset, 0, 0).setScale(0.5);
+	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 
 	
 	suelo.setCollisionByProperty({ collides: true });
@@ -76,8 +76,22 @@ function GenerarJugador(that, jugador, posX, posY){
 	that.anims.create({
 		key: 'dash',
 		frames: that.anims.generateFrameNames('anim_Dash', {start: 0, end: 1}),
-		frameRate: 4,
+		frameRate: 8,
 		repeat: 0
+	});
+
+	that.anims.create({
+		key: 'trepar',
+		frames: that.anims.generateFrameNames('anim_Trepar', {start: 0, end: 2}),
+		frameRate: 8,
+		repeat: -1
+	});
+
+	that.anims.create({
+		key: 'dano',
+		frames: that.anims.generateFrameNames('anim_Dano', {start: 0, end: 1}),
+		frameRate: 4,
+		repeat: -1
 	});
 
 }
@@ -177,10 +191,14 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.up.on('down', function () {
+		if(jugadores[0].enEscalera){
+			jugadores[0].sprite.anims.play('trepar', true);
+		}
 		jugadores[0].dirY = -1;
 	}, that);
 
 	cursors.up.on('up', function () {
+		jugadores[0].sprite.anims.stop('trepar', true);
 		if(cursors.left.isUp){
 			jugadores[0].dirY = 0;
 		}else{
@@ -189,9 +207,13 @@ function InicializarCursores(that){
 	}, that);
 	
 	cursors.down.on('down', function () {
+		if(jugadores[0].enEscalera){
+			jugadores[0].sprite.anims.play('trepar', true);
+		}
 		jugadores[0].dirY = 1;
 	}, that);
 	cursors.down.on('up', function () {
+		jugadores[0].sprite.anims.stop('trepar', true);
 		if(cursors.left.isUp){
 			jugadores[0].dirY = 0;
 		}else{

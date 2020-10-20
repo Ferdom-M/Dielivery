@@ -1,5 +1,8 @@
 var idSuelosNormales = new Set();
 
+idSuelosNormales.add(1);
+idSuelosNormales.add(31);
+idSuelosNormales.add(32);
 idSuelosNormales.add(109);
 idSuelosNormales.add(110);
 idSuelosNormales.add(111);
@@ -58,6 +61,7 @@ idSuelosNormales.add(252);
 
 var idSuelosResbaladizos = new Set();
 
+idSuelosResbaladizos.add(3);
 idSuelosResbaladizos.add(280);
 idSuelosResbaladizos.add(281);
 idSuelosResbaladizos.add(282);
@@ -119,50 +123,126 @@ var idPinchos = new Set();
 idPinchos.add(291);
 
 var idEscaleras = new Set();
-idEscaleras.add(52);
-idEscaleras.add(53);
-idEscaleras.add(79);
-idEscaleras.add(80);
-idEscaleras.add(106);
-idEscaleras.add(107);
+idEscaleras.add(56);
+
 
 // Objetos a recoger
 var idTulipanes = new Set();
+idTulipanes.add(439);
+idTulipanes.add(440);
+idTulipanes.add(466);
+idTulipanes.add(467);
 
 var idRosas = new Set();
+idRosas.add(491);
+idRosas.add(492);
+idRosas.add(518);
+idRosas.add(519);
 
 var idVioletas = new Set();
+idVioletas.add(493);
+idVioletas.add(494);
+idVioletas.add(520);
+idVioletas.add(521);
 
 var idMargaritas = new Set();
+idMargaritas.add(435);
+idMargaritas.add(436);
+idMargaritas.add(462);
+idMargaritas.add(463);
 
 var idOrujo = new Set();
+idOrujo.add(277);
+idOrujo.add(278);
+idOrujo.add(304);
+idOrujo.add(305);
 
 var idWhisky = new Set();
+idWhisky.add(329);
+idWhisky.add(330);
+idWhisky.add(356);
+idWhisky.add(357);
 
 var idRon = new Set();
+idRon.add(325);
+idRon.add(326);
+idRon.add(352);
+idRon.add(353);
 
 var idVino = new Set();
+idVino.add(327);
+idVino.add(328);
+idVino.add(354);
+idVino.add(355);
 
 var idBandera1 = new Set();
+idBandera1.add(273);
+idBandera1.add(274);
+idBandera1.add(300);
+idBandera1.add(301);
 
 var idBandera2 = new Set();
+idBandera1.add(275);
+idBandera1.add(276);
+idBandera1.add(302);
+idBandera1.add(303);
 
 var idPelucheViejo = new Set();
+idPelucheViejo.add(489);
+idPelucheViejo.add(490);
+idPelucheViejo.add(516);
+idPelucheViejo.add(517);
 
 var idPelucheNuevo = new Set();
+idPelucheNuevo.add(487);
+idPelucheNuevo.add(488);
+idPelucheNuevo.add(514);
+idPelucheNuevo.add(515);
 
 var idCartaSello = new Set();
+idCartaSello.add(379);
+idCartaSello.add(380);
+idCartaSello.add(406);
+idCartaSello.add(407);
 
 var idCartaAbierta = new Set();
+idCartaAbierta.add(331);
+idCartaAbierta.add(332);
+idCartaAbierta.add(358);
+idCartaAbierta.add(359);
 
 var idFotoFamiliar = new Set();
+idFotoFamiliar.add(385);
+idFotoFamiliar.add(386);
+idFotoFamiliar.add(412);
+idFotoFamiliar.add(413);
 
 var idFotoPersonal = new Set();
+idFotoPersonal.add(433);
+idFotoPersonal.add(434);
+idFotoPersonal.add(460);
+idFotoPersonal.add(461);
 
 var idAnillo = new Set();
+idAnillo.add(271);
+idAnillo.add(272);
+idAnillo.add(298);
+idAnillo.add(299);
 
 var idPendiente = new Set();
+idPendiente.add(437);
+idPendiente.add(438);
+idPendiente.add(464);
+idPendiente.add(465);
 
 var idCollarPerlas = new Set();
+idCollarPerlas.add(383);
+idCollarPerlas.add(384);
+idCollarPerlas.add(410);
+idCollarPerlas.add(411);
 
 var idCollarOro = new Set();
+idCollarOro.add(381);
+idCollarOro.add(382);
+idCollarOro.add(408);
+idCollarOro.add(409);

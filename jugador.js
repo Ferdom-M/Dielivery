@@ -92,27 +92,45 @@ function InicializarJugador(jugador){
 
 function ComprobarEstados(jugador, that){
 	// Comprobamos una sola vez si tocamos suelo o paredes
-	jugador.enSuelo = jugador.sprite.body.blocked.down;
-	// Solo queremos hacer las interacciones con paredes (salto en pared y subir escalon) si es suelo normal
+	let sueloDebajo = suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize);
+	// Necesitamos saber si en el extremo de Grimmy hay suelo		16 - 16, se queda en 0, dentro de su sprite
+	let sueloDebajoExtremoIzq = suelo.getTileAtWorldXY(jugador.sprite.x - jugador.sprite.width / 2, jugador.sprite.y + tileSize);
+	//																16 + 16, un pixel mas que su anchura, hay que restar 1. Se aplicaria siempre igual aunque midiese 64 en lugar de 32
+	let sueloDebajoExtremoDcha = suelo.getTileAtWorldXY(jugador.sprite.x + jugador.sprite.width / 2 - 1, jugador.sprite.y + tileSize);
+	
+	let sueloIzq = suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y);
+	let sueloDcha = suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y);
+	
+	jugador.enSuelo = sueloDebajo || sueloDebajoExtremoIzq || sueloDebajoExtremoDcha
+	
 	jugador.enParedIzq = jugador.sprite.body.blocked.left;
 	jugador.enParedDcha = jugador.sprite.body.blocked.right;
 	
-					// Tocamos el suelo? && Hay algun bloque debajo? && Es suelo normal?
-	jugador.enSueloNormal = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+					// Tocamos el suelo? && Es suelo normal?
+	jugador.enSueloNormal = jugador.enSuelo && sueloDebajo && idSuelosNormales.has(sueloDebajo.index);
+	
+	// Solo queremos hacer las interacciones con paredes (salto en pared y subir escalon) si es suelo normal
 	jugador.enParedIzqNormal = suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x - tileSize, jugador.sprite.y).index);
 	jugador.enParedDchaNormal = suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y) && idSuelosNormales.has(suelo.getTileAtWorldXY(jugador.sprite.x + tileSize, jugador.sprite.y).index);
 	
-	jugador.enSueloResbaladizo = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idSuelosResbaladizos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+	jugador.enSueloResbaladizo = jugador.enSuelo && sueloDebajo && idSuelosResbaladizos.has(sueloDebajo.index);
 	
-	jugador.enPinchos = jugador.enSuelo && suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idPinchos.has(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
+	jugador.enPinchos = jugador.enSuelo && sueloDebajo && idPinchos.has(sueloDebajo.index);
 	
 	jugador.enEscalera = objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize) && idEscaleras.has(objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + tileSize).index);
 	
+	/*
+	if(jugador.enSuelo && jugador.sprite.body.velocity.x != 0){
+		console.log(jugador.sprite.body.velocity.x);
+		emitter.start();
+	}else{
+		emitter.stop();
+	}
+	*/
 }
 
 function ReiniciarValores(jugador){
 	if (jugador.enSuelo){
-		//jugador.sprite.body.velocity.y = 0;
 		jugador.dashDisponible = true;
 		jugador.saltoEnParedDisponible = true;
 		jugador.subiendoEscalon = false;
@@ -121,6 +139,10 @@ function ReiniciarValores(jugador){
 		jugador.saltandoEnPared = false;
 		jugador.saltando = false;
 		jugador.dashing = false;
+		
+		// Desactivamos la gravedad si estamos en el suelo, solo se vuelve a activar si estamos en el aire sin tocar paredes
+		jugador.sprite.body.setAllowGravity(false);
+	}else if(!jugador.deslizandoParedIzq && !jugador.deslizandoParedDcha){
 		jugador.sprite.body.setAllowGravity(true);
 	}
 }
@@ -181,7 +203,7 @@ function AccionSalto(delta, jugador, that){
 			}
 		}
 
-		if(jugador.sprite.body.velocity.y > 0){
+		if(jugador.sprite.body.velocity.y > 0 && !jugador.enEscalera){
 			jugador.sprite.anims.play('caidaSalto', true);
 			if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (1.5*tileSize))){
 				jugador.sprite.anims.play('aterrizajeSalto', true);
@@ -217,6 +239,7 @@ function ProcesarMovimiento(delta, jugador){
 			}else{
 				jugador.sprite.body.velocity.y = Phaser.Math.Linear(jugador.sprite.body.velocity.y, 0, friccionAerea);
 			}
+			
 		}
 		// Movimiento normal
 		if(!jugador.saltandoEnPared){
@@ -231,6 +254,9 @@ function ProcesarMovimiento(delta, jugador){
 					jugador.sprite.body.velocity.x = Phaser.Math.Linear(jugador.sprite.body.velocity.x, 0, friccionSuelo);
 				}else{
 					jugador.sprite.body.velocity.x = Phaser.Math.Linear(jugador.sprite.body.velocity.x, 0, friccionAerea);
+				}
+				if(Math.abs(jugador.sprite.body.velocity.x) < 5){
+					jugador.sprite.body.velocity.x = 0;
 				}
 			}
 			if(jugador.dirX > 0 && jugador.deslizandoParedIzq){ jugador.deslizandoParedIzq = false; }
@@ -267,10 +293,11 @@ function ProcesarMovimiento(delta, jugador){
 
 function ProcesarDash(delta, jugador){
 	if (jugador.dash && jugador.dashDisponible && !jugador.saltandoEnPared && !jugador.enSuelo){
-			jugador.dashing = true
-			jugador.dashDisponible = false
-		
-			jugador.dashVelocity = velDash * jugador.ultimaDirX;
+		// emitter.start();
+		jugador.dashing = true
+		jugador.dashDisponible = false
+	
+		jugador.dashVelocity = velDash * jugador.ultimaDirX;
 	}	
 	if(jugador.dashing && !jugador.recogiendoObjeto){
 		if(!jugador.enSuelo){
@@ -281,6 +308,7 @@ function ProcesarDash(delta, jugador){
 			
 		}
 		if(jugador.contadorDash > tiempoDash){
+			// emitter.stop();
 			jugador.dashing = false;
 			jugador.dashVelocity = 0;
 			jugador.contadorDash = 0;
@@ -329,11 +357,15 @@ function InteractuarPinchos(delta, jugador){
 	if(jugador.enPinchos){
 		// Ocurre algo, idk no recuerdo el que, perder un objeto creo
 		//jugador.inventario.pop();
+
+		//jugador.sprite.anims.stop();
+		//jugador.sprite.anims.play('dano', true);
 		if(jugador.inventario.length > 0){
 			console.log("Oh no, perdí " + jugador.inventario.pop());
 			jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
 		}
 		jugador.sprite.body.velocity.y = velSalto;
+		jugador.cayendoPinchos = true;
 	}
 }
 
@@ -354,3 +386,78 @@ function idle(){
 	}
 	jugadores[0].sprite.anims.play('idle');
 }
+
+function Animaciones(jugador, that){
+
+	//Idle al estar en el suelo
+	/*if(jugador.enSuelo && cursors.left.isUp && cursors.right.isUp && cursors.jump.isUp){
+		/*var timer = that.time.addEvent({
+			delay: 1250,
+			callback: idle,
+			callbackScpe: this,
+			loop: false
+		});
+		jugador.sprite.anims.play('idle', true);
+	}*/
+
+	//Si estoy en el suelo y me muevo, andar
+	/*if(jugador.enSuelo && (cursors.left.isDown || cursors.right.isDown)){
+		jugador.sprite.anims.play('andar', true);
+	}*/
+
+	//Si estoy en escalera y pulso hacia arriba o hacia abajo
+	/*if(jugador.enEscalera && (cursors.up.isDown || cursors.down.isDown)){
+		jugador.sprite.anims.play('trepar');
+	}*/
+
+	//Si estoy en el aire y pulso dash
+	if(!jugador.enSuelo && cursors.dash.isDown){
+		jugador.sprite.anims.play('dash', true);
+	}
+
+	if(jugador.enPinchos){
+		jugador.sprite.anims.play('dano', true);
+	}
+
+	//Si pulso el salto
+	/*if(cursors.jump.isDown){
+		jugador.sprite.anims.play('inicioSalto', true);
+		if(jugador.sprite.body.velocity.y > 0){
+			jugador.sprite.anims.play('caidaSalto', true);
+			if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (1.5*tileSize))){
+				jugador.sprite.anims.play('aterrizajeSalto', true);
+			}
+			//meter timer que llame a la animacion de idle una vez toque el suelo
+			if(!cursors.left.isDown && !cursors.right.isDown){
+				var timer = that.time.addEvent({
+					delay: 1250,
+					callback: idle,
+					callbackScpe: this,
+					loop: false
+				});
+			}
+		}
+	}*/
+
+}
+
+/*function caidaSalto(jugador, saltoPinchos){
+	if(saltoPinchos){
+
+	}
+	jugador.sprite.anims.play('caidaSalto', true);
+	if(suelo.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y + (1.5*tileSize))){
+		jugador.sprite.anims.play('aterrizajeSalto', true);
+	}
+	//meter timer que llame a la animacion de idle una vez toque el suelo
+	if(!cursors.left.isDown && !cursors.right.isDown){
+		var timer = that.time.addEvent({
+			delay: 1250,
+			callback: idle,
+			callbackScpe: this,
+			loop: false
+		});
+	}else{
+		jugadores[0].sprite.anims.play('andar', true);
+	}
+}*/

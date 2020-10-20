@@ -27,17 +27,18 @@ class Mainmenu extends Phaser.Scene {
         this.load.image('volver', 'assets/Botones/volver.png');
         this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
 		
-        this.load.image('vicente', 'assets/Sprites Personajes/boceto prueba dielivery.png');
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
 		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_Idle', 'assets/Sprites Personajes/Spritesheet Idle.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_CaidaSalto', 'assets/Sprites Personajes/Spritesheet Caida Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_AterrizajeSalto', 'assets/Sprites Personajes/Spritesheet Aterrizaje Salto.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_Dash', 'assets/Sprites Personajes/Spritesheet Dash.png', {frameWidth: 32, frameHeight: 64});
+        this.load.spritesheet('anim_Dash', 'assets/Sprites Personajes/Spritesheet Dash.png', {frameWidth: 32, frameHeight: 64});
+        this.load.spritesheet('anim_Trepar', 'assets/Sprites Personajes/Spritesheet Trepar.png', {frameWidth: 32, frameHeight: 64});
+        this.load.spritesheet('anim_Dano', 'assets/Sprites Personajes/Spritesheet Dano.png', {frameWidth: 32, frameHeight: 64});
 		
 		this.load.tilemapTiledJSON("mapComoJugar", "assets/Mapas/como jugar.json");
-		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet_tiles_extruded.png");
+		this.load.image("tiles", "assets/Mapas/Spritesheets/nuevos sprites.png");
     }
 
     create() {
