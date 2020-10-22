@@ -8,6 +8,8 @@ var creditosPosY = 550;
 var volverPosX = 200;
 var volverPosY = 50;
 
+var ratio;
+
 class Mainmenu extends Phaser.Scene {
 
     constructor() {
@@ -24,24 +26,15 @@ class Mainmenu extends Phaser.Scene {
         this.load.image('creditos_pulsado', 'assets/Botones/creditos_pulsados.png');
         this.load.image('como_jugar', 'assets/Botones/como_jugar.png');
         this.load.image('como_jugar_pulsado', 'assets/Botones/como_jugar_pulsado.png');
-        this.load.image('volver', 'assets/Botones/volver.png');
-        this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
-		
-		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
-		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_Idle', 'assets/Sprites Personajes/Spritesheet Idle.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_CaidaSalto', 'assets/Sprites Personajes/Spritesheet Caida Salto.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_AterrizajeSalto', 'assets/Sprites Personajes/Spritesheet Aterrizaje Salto.png', {frameWidth: 32, frameHeight: 64});
-        this.load.spritesheet('anim_Dash', 'assets/Sprites Personajes/Spritesheet Dash.png', {frameWidth: 32, frameHeight: 64});
-        this.load.spritesheet('anim_Trepar', 'assets/Sprites Personajes/Spritesheet Trepar.png', {frameWidth: 32, frameHeight: 64});
-        this.load.spritesheet('anim_Dano', 'assets/Sprites Personajes/Spritesheet Dano.png', {frameWidth: 32, frameHeight: 64});
-		
-		this.load.tilemapTiledJSON("mapComoJugar", "assets/Mapas/como jugar.json");
-		this.load.image("tiles", "assets/Mapas/Spritesheets/nuevos sprites.png");
     }
 
     create() {
+		//this.resizeCamera();
+		//this.scale.on('resize', () => this.resizeCamera());
+		
+		this.cameras.main.setZoom(ratio);
+		
+		
         this.add.image(640, 360, 'fondo');
         this.add.image(300, 150, 'logo').setScale(0.4);
 
@@ -74,13 +67,24 @@ class Mainmenu extends Phaser.Scene {
         }, this);
     }
 
+	
+	resizeCamera(){
+		var ratio = this.sys.game.canvas.height / 720;
+		
+		console.log("a");
+		this.cameras.main.setZoom(ratio);
+	}
+	
     clickButtonJugar(){
+		//this.scale.off('resize');
         this.scene.start("prueba");
     }
     clickButtonCreditos(){
-        this.scene.switch("creditos");
+		//this.scale.off('resize');
+        this.scene.start("creditos");
     }
     clickButtonComoJugar(){
+		//this.scale.off('resize');
         this.scene.start("ComoJugar");
     }
 
@@ -133,115 +137,4 @@ class Mainmenu extends Phaser.Scene {
         this.buttonCreditos.on('pointerup', () => this.changeSpriteJugar());
 
     }
-}
-
-
-
-class ComoJugar extends Phaser.Scene {
-
-    constructor() {
-        super("ComoJugar");
-    }
-    create() {
-        this.add.image(640, 360, 'fondo');
-
-        
-        
-		GenerarMundo(this, "mapComoJugar");
-		GenerarJugador(this, jugadores[0], 300, 200);
-		InicializarCursores(this);
-		
-		// Boton volver
-		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-        this.buttonVolver.on('pointerup', () => this.changeSpriteVolver());
-
-    }
-
-    update(time, delta) {
-        // Según el tile que tengamos alrededor tendremos un estado u otro. Ej suelo normal o resbaladizo
-		ComprobarEstados(jugadores[0], this);
-		// Al volver al suelo reiniciamos valores como el dash aereo, etc
-		ReiniciarValores(jugadores[0]);
-		
-		ProcesarMovimiento(delta, jugadores[0]);
-		ProcesarDash(delta, jugadores[0]);
-		AccionSalto(delta, jugadores[0], this);
-		SubirEscalon(delta, jugadores[0]);
-    }
-	
-    clickButtonVolver() {
-        this.scene.start("Mainmenu");
-    }
-
-    changeSpriteVolverPulsado() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver_pulsado').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.changeSpriteVolver());
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerout', () => this.changeSpriteVolver());
-
-    }
-    changeSpriteVolver() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-
-    }
- 
-
-}
-
-// JavaScript source code
-class creditos extends Phaser.Scene {
-
-    constructor() {
-        super("creditos");
-    }
-
-    create() {
-        this.add.image(640, 360, 'fondo');
-
-
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-        this.buttonVolver.on('pointerup', () => this.changeSpriteVolver());
-        var FKey = this.input.keyboard.addKey('F');
-
-        FKey.on('down', function () {
-
-            if (this.scale.isFullscreen) {
-                this.scale.stopFullscreen();
-            }
-            else {
-                this.scale.startFullscreen();
-            }
-
-        }, this);
-    }
-
-    clickButtonVolver() {
-        this.scene.start("Mainmenu");
-
-    }
-
-    changeSpriteVolverPulsado() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver_pulsado').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.changeSpriteVolver());
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerout', () => this.changeSpriteVolver());
-
-    }
-    changeSpriteVolver() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-
-    }
-
 }

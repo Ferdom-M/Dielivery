@@ -2,6 +2,8 @@ var debug = false;
 
 var map;
 var suelo;
+var fondo;
+var objetos;
 var tileSize = 32;
 
 var cursors;
@@ -9,14 +11,11 @@ var cursors;
 // Por si acaso acabamos metiendo multi local, se hará con un array del tamaño de numJugadores
 var numJugadores = 1;
 var jugadores = new Array(numJugadores);
-var limInventario = 6;
+
 
 var text;
 var timedEvent;
 
-for (var i = 0; i < numJugadores; i++) {
-    jugadores[i] = new Jugador();
-}
 
 var emitter; 
 
@@ -28,6 +27,7 @@ class prueba extends Phaser.Scene {
 	
 	preload ()
     {
+        this.load.image('logo', 'assets/logo.png');
 		this.load.image("escalera", "assets/ladder.png");
 		this.load.image("mesa", "assets/bolita.jpg");
 		this.load.image("tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
@@ -35,10 +35,30 @@ class prueba extends Phaser.Scene {
 		this.load.tilemapTiledJSON("plataformeo", "assets/Mapas/plataformeodimensionado.json");
 		this.load.tilemapTiledJSON("normal", "assets/Mapas/mapanormaldimensionado.json");
 		
+		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
+		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_Idle', 'assets/Sprites Personajes/Spritesheet Idle.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_CaidaSalto', 'assets/Sprites Personajes/Spritesheet Caida Salto.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_AterrizajeSalto', 'assets/Sprites Personajes/Spritesheet Aterrizaje Salto.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_Dash', 'assets/Sprites Personajes/Spritesheet Dash.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_Trepar', 'assets/Sprites Personajes/Spritesheet Trepar Nuevo.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_Dano', 'assets/Sprites Personajes/Spritesheet Dano.png', {frameWidth: 32, frameHeight: 64});
+		
+		this.load.image("tiles", "assets/Mapas/Spritesheets/nuevos sprites.png");
+		
     }
 
     create ()
     {
+		//this.resizeCamera();
+		//this.scale.on('resize', () => this.resizeCamera());
+		
+		if(this.sys.game.device.os.desktop ){
+			console.log( this.sys.game.canvas.width);
+		}else{
+			console.log("Eres un pringao");
+		}
 		GenerarMundo(this, "plataformeo");
 		GenerarEscalera(this);
 		GenerarRecogidas(this);
@@ -51,8 +71,10 @@ class prueba extends Phaser.Scene {
         });
 		*/
 		
-		GenerarJugador(this, jugadores[0], 1800, 400);
-		GenerarCamara(this, jugadores[0]);
+		this.jugador = new Jugador({scene: this, x: 1800, y: 400, key: 'anim_andar'});
+		
+		
+		GenerarCamara(this, this.jugador);
 		GenerarMesaPaquetes(this);
 
 		//Placeholder
@@ -64,7 +86,7 @@ class prueba extends Phaser.Scene {
 		emitter.stop();
 		*/
 		
-		InicializarCursores(this);
+		InicializarCursores(this, this.jugador);
 		
 		this.input.gamepad.start();
 		
@@ -87,25 +109,18 @@ class prueba extends Phaser.Scene {
 		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
 
     }
-
+	
     update(time, delta){
-		// Según el tile que tengamos alrededor tendremos un estado u otro. Ej suelo normal o resbaladizo
-		ComprobarEstados(jugadores[0], this);
-		// Al volver al suelo reiniciamos valores como el dash aereo, etc
-		ReiniciarValores(jugadores[0]);
-		
-		ProcesarMovimiento(delta, jugadores[0]);
-		ProcesarDash(delta, jugadores[0]);
-		AccionSalto(delta, jugadores[0], this);
-		SubirEscalon(delta, jugadores[0]);
-		
-		RecogerObjeto(delta, jugadores[0], this);
-		
-		InteractuarPinchos(delta, jugadores[0]);
-		TiempoObjeto(delta, jugadores[0]);
-
-		//Animaciones(jugadores[0], this);
+		this.jugador.update(time, delta);
 	}
+	
+	resizeCamera(){
+		var ratio = this.sys.game.canvas.height / 720;
+		
+		console.log("a");
+		this.cameras.main.setZoom(ratio);
+	}
+	
 }
 
 function formatTime(seconds){
@@ -125,83 +140,7 @@ function onEvent ()
     text.setText('Countdown: ' + formatTime(this.initialTime));
 }
 
-function RecogerObjeto(delta, jugador, that){
-	if(cursors.accion.isDown && !jugador.recogiendoObjeto && objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y)){
-		var tileActual = objetos.getTileAtWorldXY(jugador.sprite.x, jugador.sprite.y).index;
-		switch(true){
-			case idTulipanes.has(tileActual):
-				AñadirObjeto(jugador, tulipan);
-				break;
-			case idRosas.has(tileActual):
-				AñadirObjeto(jugador, rosa);
-				break;
-			case idVioletas.has(tileActual):
-				AñadirObjeto(jugador, violeta);
-				break;
-			case idMargaritas.has(tileActual):
-				AñadirObjeto(jugador, margarita);
-				break;
-			case idOrujo.has(tileActual):
-				AñadirObjeto(jugador, orujo);
-				break;
-			case idWhisky.has(tileActual):
-				AñadirObjeto(jugador, whisky);
-				break;
-			case idRon.has(tileActual):
-				AñadirObjeto(jugador, ron);
-				break;
-			case idVino.has(tileActual):
-				AñadirObjeto(jugador, vino);
-				break;
-			case idBandera1.has(tileActual):
-				AñadirObjeto(jugador, bandera1);
-				break;
-			case idBandera2.has(tileActual):
-				AñadirObjeto(jugador, bandera2);
-				break;
-			case idPelucheViejo.has(tileActual):
-				AñadirObjeto(jugador, pelucheViejo);
-				break;
-			case idPelucheNuevo.has(tileActual):
-				AñadirObjeto(jugador, pelucheNuevo);
-				break;
-			case idCartaSello.has(tileActual):
-				AñadirObjeto(jugador, cartaSello);
-				break;
-			case idCartaAbierta.has(tileActual):
-				AñadirObjeto(jugador, cartaAbierta);
-				break;
-			case idFotoFamiliar.has(tileActual):
-				AñadirObjeto(jugador, fotoFamiliar);
-				break;
-			case idFotoPersonal.has(tileActual):
-				AñadirObjeto(jugador, fotoPersonal);
-				break;
-			case idAnillo.has(tileActual):
-				AñadirObjeto(jugador, anillo);
-				break;
-			case idPendiente.has(tileActual):
-				AñadirObjeto(jugador, pendiente);
-				break;
-			case idCollarPerlas.has(tileActual):
-				AñadirObjeto(jugador, collarPerlas);
-				break;
-			case idCollarOro.has(tileActual):
-				AñadirObjeto(jugador, collarOro);
-				break;
-		}
-	}
-}
 
-
-function AñadirObjeto(jugador, objeto){
-	if(jugador.inventario.length < limInventario){
-		jugador.sprite.body.velocity.x = 0;
-		jugador.recogiendoObjeto = true;
-		jugador.inventario.push(objeto);
-		jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
-	}
-}
 
 
 function EntrarMesa(jugador, that){

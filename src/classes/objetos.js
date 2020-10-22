@@ -1,10 +1,17 @@
 var puntuacionPedidoFallido = -50;
+var ratio;
 
 class Objeto {
-	constructor(tipo, peso, puntuacion, sprite){
+	constructor(tipo, puntuacion, sprite){
 		this.tipo = tipo; // String
 		this.puntuacion = puntuacion;
 		this.sprite = sprite;
+	}
+	
+	Clone(objeto){
+		this.tipo = objeto.tipo; 
+		this.puntuacion = objeto.puntuacion; 
+		this.sprite = objeto.sprite; 
 	}
 }
 
