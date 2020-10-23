@@ -1,6 +1,6 @@
 class Dano extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado daño");
+		//console.log("Estado daño");
 		
 		jugador.anims.play("dano");
 		// Ocurre algo, idk no recuerdo el que, perder un objeto creo

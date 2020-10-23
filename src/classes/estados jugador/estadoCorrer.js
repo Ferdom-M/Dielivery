@@ -1,6 +1,6 @@
 class Correr extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado correr");
+		//console.log("Estado correr");
 		if (jugador.dirX == -1){
 			jugador.resetFlip();
 		}else{
@@ -31,7 +31,7 @@ class Correr extends State{
 			jugador.stateMachine.transition(delta, 'escalera');
 			return;
 		}
-		if(cursors.accion.isDown && objetos.getTileAtWorldXY(jugador.x, jugador.y) && jugador.inventario.length < limInventario){
+		if(jugador.accion && objetos.getTileAtWorldXY(jugador.x, jugador.y) && jugador.inventario.length < limInventario){
 			jugador.stateMachine.transition(delta, 'recogerObjeto');
 			return;
 		}

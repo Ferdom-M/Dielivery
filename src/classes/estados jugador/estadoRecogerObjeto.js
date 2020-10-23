@@ -1,6 +1,6 @@
 class RecogerObjeto extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado recoger objeto");
+		//console.log("Estado recoger objeto");
 		
 		var tileActual = objetos.getTileAtWorldXY(jugador.x, jugador.y).index;
 		var objeto = new Objeto();

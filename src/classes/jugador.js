@@ -79,6 +79,12 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 			frameRate: 8,
 			repeat: -1
 		});
+		config.scene.anims.create({
+			key: 'pared',
+			frames: config.scene.anims.generateFrameNames('anim_Pared', {start: 0, end: 1}),
+			frameRate: 8,
+			repeat: 0
+		});
 		
 		// Referencia a la escena
 		this.scene = config.scene;
@@ -91,6 +97,7 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		this.dash = false;
 		this.dashVelocity = 0;
 		this.jumpsquat = false;
+		this.accion = false;
 		// Acciones posibles
 		this.dashDisponible = false;
 		// Percepciones

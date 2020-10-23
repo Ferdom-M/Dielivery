@@ -1,9 +1,9 @@
 class DeslizandoPared extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado deslizando pared");
+		//console.log("Estado deslizando pared");
 		
 		
-		jugador.anims.play("caidaSalto");
+		jugador.anims.play("pared");
 		
 		jugador.body.setAllowGravity(false);
 		jugador.setVelocityY(velDeslizandoPared);

@@ -1,6 +1,6 @@
 class Idle extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado idle");
+		//console.log("Estado idle");
 		
 		jugador.dashDisponible = true;
 		// Desactivamos la gravedad si estamos en el suelo, solo se vuelve a activar si estamos en el aire sin tocar paredes
@@ -30,7 +30,7 @@ class Idle extends State{
 			jugador.stateMachine.transition(delta, 'escalera');
 			return;
 		}
-		if(cursors.accion.isDown && objetos.getTileAtWorldXY(jugador.x, jugador.y) && jugador.inventario.length < limInventario){
+		if(jugador.accion && objetos.getTileAtWorldXY(jugador.x, jugador.y) && jugador.inventario.length < limInventario){
 			jugador.stateMachine.transition(delta, 'recogerObjeto');
 			return;
 		}

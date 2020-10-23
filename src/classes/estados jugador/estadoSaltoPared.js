@@ -1,6 +1,6 @@
 class SaltoPared extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado salto pared");
+		//console.log("Estado salto pared");
 		
 		jugador.anims.play("inicioSalto");
 		

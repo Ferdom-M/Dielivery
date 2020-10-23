@@ -1,6 +1,6 @@
 class Escalera extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado escalera");
+		//console.log("Estado escalera");
 		
 		jugador.anims.play("trepar", true);
 		

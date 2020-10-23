@@ -71,7 +71,6 @@ class Mainmenu extends Phaser.Scene {
 	resizeCamera(){
 		var ratio = this.sys.game.canvas.height / 720;
 		
-		console.log("a");
 		this.cameras.main.setZoom(ratio);
 	}
 	

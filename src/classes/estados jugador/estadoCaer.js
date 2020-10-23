@@ -1,6 +1,6 @@
 class Caer extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado caer");
+		//console.log("Estado caer");
 		
 		jugador.anims.play("caidaSalto");
 		jugador.body.setAllowGravity(true);

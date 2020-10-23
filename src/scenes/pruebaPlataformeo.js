@@ -44,6 +44,7 @@ class prueba extends Phaser.Scene {
 		this.load.spritesheet('anim_Dash', 'assets/Sprites Personajes/Spritesheet Dash.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_Trepar', 'assets/Sprites Personajes/Spritesheet Trepar Nuevo.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_Dano', 'assets/Sprites Personajes/Spritesheet Dano.png', {frameWidth: 32, frameHeight: 64});
+		this.load.spritesheet('anim_Pared', 'assets/Sprites Personajes/Spritesheet Pared.png', {frameWidth: 32, frameHeight: 64});
 		
 		this.load.image("tiles", "assets/Mapas/Spritesheets/nuevos sprites.png");
 		
@@ -51,14 +52,9 @@ class prueba extends Phaser.Scene {
 
     create ()
     {
-		//this.resizeCamera();
-		//this.scale.on('resize', () => this.resizeCamera());
 		
-		if(this.sys.game.device.os.desktop ){
-			console.log( this.sys.game.canvas.width);
-		}else{
-			console.log("Eres un pringao");
-		}
+		//this.scale.on('resize', () => this.resizeCamera());
+
 		GenerarMundo(this, "plataformeo");
 		GenerarEscalera(this);
 		GenerarRecogidas(this);
@@ -75,6 +71,7 @@ class prueba extends Phaser.Scene {
 		
 		
 		GenerarCamara(this, this.jugador);
+		//this.resizeCamera();
 		GenerarMesaPaquetes(this);
 
 		//Placeholder
@@ -115,10 +112,11 @@ class prueba extends Phaser.Scene {
 	}
 	
 	resizeCamera(){
-		var ratio = this.sys.game.canvas.height / 720;
+		var ratio = this.sys.game.canvas.height / 540;
 		
-		console.log("a");
 		this.cameras.main.setZoom(ratio);
+		
+
 	}
 	
 }

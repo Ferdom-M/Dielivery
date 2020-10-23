@@ -1,6 +1,6 @@
 class Salto extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado salto");
+		//console.log("Estado salto");
 		
 		jugador.alturaSalto = 0;
 		jugador.empezandoSalto = true;

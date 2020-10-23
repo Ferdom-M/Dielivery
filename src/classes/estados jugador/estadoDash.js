@@ -1,11 +1,17 @@
 class Dash extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado dash");
+		//console.log("Estado dash");
 		
 		jugador.anims.play("dash");
 		
 		jugador.dashDisponible = false
-			
+		
+		if (jugador.ultimaDirX == -1){
+			jugador.resetFlip();
+		}else{
+			jugador.flipX = true;
+		}
+		
 		jugador.dashVelocity = velDash * jugador.ultimaDirX;
 		jugador.setVelocity(jugador.dashVelocity, 0);
 		jugador.body.setAllowGravity(false);
