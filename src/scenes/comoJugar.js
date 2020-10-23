@@ -43,7 +43,6 @@ class ComoJugar extends Phaser.Scene {
         this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
         this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
         this.buttonVolver.on('pointerup', () => this.changeSpriteVolver());
-
     }
 
     update(time, delta) {
@@ -67,13 +66,11 @@ class ComoJugar extends Phaser.Scene {
         this.buttonVolver.on('pointerdown', () => this.changeSpriteVolver());
         this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
         this.buttonVolver.on('pointerout', () => this.changeSpriteVolver());
-
     }
     changeSpriteVolver() {
         this.buttonVolver.destroy();
         this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
         this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
         this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-
     }
 }

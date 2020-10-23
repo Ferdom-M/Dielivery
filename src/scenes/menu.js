@@ -32,7 +32,7 @@ class Mainmenu extends Phaser.Scene {
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
-		this.cameras.main.setZoom(ratio);
+		//this.cameras.main.setZoom(ratio);
 		
 		
         this.add.image(640, 360, 'fondo');
@@ -76,7 +76,7 @@ class Mainmenu extends Phaser.Scene {
 	
     clickButtonJugar(){
 		//this.scale.off('resize');
-        this.scene.start("prueba");
+        this.scene.start("LevelSelect");
     }
     clickButtonCreditos(){
 		//this.scale.off('resize');

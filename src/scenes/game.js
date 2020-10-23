@@ -19,10 +19,10 @@ var timedEvent;
 
 var emitter; 
 
-class prueba extends Phaser.Scene {
+class Game extends Phaser.Scene {
 
     constructor() {
-        super("prueba");
+        super("Game");
     }
 	
 	preload ()
@@ -32,8 +32,9 @@ class prueba extends Phaser.Scene {
 		this.load.image("mesa", "assets/bolita.jpg");
 		this.load.image("tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
 		this.load.image("botonEnviar", "assets/cuadrencio.png");
-		this.load.tilemapTiledJSON("plataformeo", "assets/Mapas/plataformeodimensionado.json");
-		this.load.tilemapTiledJSON("normal", "assets/Mapas/mapanormaldimensionado.json");
+		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
+		this.load.tilemapTiledJSON("Nivel2", "assets/Mapas/plataformeodimensionado.json");
+		this.load.tilemapTiledJSON("Nivel3", "assets/Mapas/plataformeodimensionado.json");
 		
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
 		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
@@ -50,12 +51,11 @@ class prueba extends Phaser.Scene {
 		
     }
 
-    create ()
+    create (mapa)
     {
-		
 		//this.scale.on('resize', () => this.resizeCamera());
 
-		GenerarMundo(this, "plataformeo");
+		GenerarMundo(this, mapa);
 		GenerarEscalera(this);
 		GenerarRecogidas(this);
 		
@@ -66,8 +66,22 @@ class prueba extends Phaser.Scene {
             scale: { start: 0.05, end: 0 }
         });
 		*/
-		
-		this.jugador = new Jugador({scene: this, x: 1800, y: 400, key: 'anim_andar'});
+		var posInicialX, posInicialY;
+		switch(mapa){
+			case "Nivel1":
+				posInicialX = 3232;
+				posInicialY = 800;
+				break;
+			case "Nivel2":
+				posInicialX = 1824;
+				posInicialY = 800;
+				break;
+			case "Nivel3":
+				posInicialX = 1824;
+				posInicialY = 800;
+				break;
+		}
+		this.jugador = new Jugador({scene: this, x: posInicialX, y: posInicialY, key: 'anim_andar'});
 		
 		
 		GenerarCamara(this, this.jugador);
@@ -97,14 +111,13 @@ class prueba extends Phaser.Scene {
 		}
 		
 		
-			// 2:30 in seconds
 		this.initialTime = 300;
 
 		text = this.add.text(1800, 400, 'Countdown: ' + formatTime(this.initialTime));
 
 		// Each 1000 ms call onEvent
 		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
-
+		
     }
 	
     update(time, delta){
@@ -136,6 +149,10 @@ function onEvent ()
 {
     this.initialTime -= 1; // One second
     text.setText('Countdown: ' + formatTime(this.initialTime));
+	if(this.initialTime == 0){
+		var puntuacionFinal = this.jugador.puntuacion;
+        this.scene.start("Results", [puntuacionFinal]);
+	}
 }
 
 

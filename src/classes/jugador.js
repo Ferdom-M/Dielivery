@@ -20,7 +20,6 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		
 		config.scene.add.existing(this);
 		config.scene.physics.add.existing(this);
-		config.scene.events.on('update', (time, delta) => { this.update(time, delta)} );
 
 		config.scene.physics.add.collider(this, suelo);
 		

@@ -36,7 +36,7 @@ class SaltoPared extends State{
 		jugador.alturaSalto = Math.min(tiempoJumpsquat, jugador.alturaSalto);
 		
 		jugador.setVelocityY(velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta)));
-		console.log(jugador.body.velocity.y);
+		//console.log(jugador.body.velocity.y);
 		if(jugador.enParedIzqNormal){
 			jugador.setVelocityX(velSaltoPared * 1  + (tiempoJumpsquat - jugador.alturaSalto) * (velSaltoPared / 2 - velSaltoPared) / (tiempoJumpsquat - delta));
 			jugador.flipX = true;
