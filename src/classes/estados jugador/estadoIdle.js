@@ -38,6 +38,12 @@ class Idle extends State{
 			jugador.stateMachine.transition(delta, 'salto');
 			return;
 		}
+		if(jugador.accion && idMesa.has(fondo.getTileAtWorldXY(jugador.x, jugador.y).index)){
+			console.log(fondo.getTileAtWorldXY(jugador.x, jugador.y).index);
+			jugador.stateMachine.transition(delta, 'mesa');
+			return;
+		}
+
 		
 		
 		if(jugador.enSueloResbaladizo){

@@ -21,11 +21,13 @@ function GenerarEscalera(that){
 	grupoEscaleras.create(450, 250, 'escalera');
 }
 
+/*
 function GenerarMesaPaquetes(that){
 	grupoMesa = that.physics.add.staticGroup();
 	grupoMesa.create(2535, 800, 'mesa').setScale(0.1);
 	//mesaPaquete = that.add.sprite(2535,800, 'escalera');
 } 
+*/
 
 function GenerarRecogidas(that){
 	tulipanes = that.physics.add.staticGroup();
@@ -63,7 +65,8 @@ function InicializarCursores(that, jugador){
 				dash: Phaser.Input.Keyboard.KeyCodes.SHIFT,
 				accion: Phaser.Input.Keyboard.KeyCodes.E,
 				inventario: Phaser.Input.Keyboard.KeyCodes.Q,
-				fullscreen: Phaser.Input.Keyboard.KeyCodes.F
+				fullscreen: Phaser.Input.Keyboard.KeyCodes.F,
+				propiedades: Phaser.Input.Keyboard.KeyCodes.L
 			});
 			
 			// Al pulsar F se hace un evento
@@ -153,7 +156,16 @@ function InicializarCursores(that, jugador){
 			jugador.accion = false;
 		}, that);
 		
-		
+		/*
+		/
+		/
+		/
+		*/
+		cursors.propiedades.on('down', function () {
+			console.log(jugador.arrayMostrados);
+			console.log(jugador.arraySeleccionados);
+			console.log(jugador.pedidoSeleccionado);
+		}, that);
 
 	}else{
 		

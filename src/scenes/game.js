@@ -30,7 +30,7 @@ class Game extends Phaser.Scene {
         this.load.image('logo', 'assets/logo.png');
 		this.load.image("escalera", "assets/ladder.png");
 		this.load.image("mesa", "assets/bolita.jpg");
-		this.load.image("tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
+		this.load.image("Tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
 		this.load.image("botonEnviar", "assets/cuadrencio.png");
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
 		this.load.tilemapTiledJSON("Nivel2", "assets/Mapas/plataformeodimensionado.json");
@@ -86,11 +86,11 @@ class Game extends Phaser.Scene {
 		
 		GenerarCamara(this, this.jugador);
 		//this.resizeCamera();
-		GenerarMesaPaquetes(this);
+		//GenerarMesaPaquetes(this);
 
 		//Placeholder
-		var genPedidos = this.add.sprite(2000, 450, 'botonEnviar').setScale(2).setInteractive();
-		genPedidos.on('pointerdown', () => GenerarPedido(jugadores[0], this));
+		var genPedidos = this.add.sprite(2000, 575, 'botonEnviar').setScale(2).setInteractive();
+		genPedidos.on('pointerdown', () => GenerarPedido(this.jugador, this));
 
 		/*
 		emitter.startFollow(jugadores[0].sprite, 0, jugadores[0].sprite.body.height / 4);
@@ -157,7 +157,7 @@ function onEvent ()
 
 
 
-
+/*
 function EntrarMesa(jugador, that){
 	if(cursors.accion.isDown && !jugador.recogiendoObjeto){
 		if(that.physics.overlap(jugador.sprite, grupoMesa)){
@@ -197,5 +197,7 @@ function Enviar(jugador, destElegido){
 	for(let i = 0; i < jugador.arrayMostrados.length; i++){
 		jugador.arrayMostrados[i].destroy();
 	}
-	*/
+	
 }
+
+*/

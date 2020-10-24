@@ -2,10 +2,9 @@ var puntuacionPedidoFallido = -50;
 var ratio;
 
 class Objeto {
-	constructor(tipo, puntuacion, sprite){
+	constructor(tipo, puntuacion){
 		this.tipo = tipo; // String
 		this.puntuacion = puntuacion;
-		this.sprite = sprite;
 	}
 	
 	Clone(objeto){
@@ -93,7 +92,7 @@ function GenerarPedido(jugador, that){
 	
 	var pedido = new Pedido(numObjetos, objetosGenerados, destinatario);
 	arrayPedidos.push(pedido);
-	var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 525, 'logo').setScale(0.1).setInteractive();
+	var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
 	tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
 
 

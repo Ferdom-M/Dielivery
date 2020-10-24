@@ -246,3 +246,8 @@ idCollarOro.add(381);
 idCollarOro.add(382);
 idCollarOro.add(408);
 idCollarOro.add(409);
+
+//Mesa de creacion de paquetes
+var idMesa = new Set();
+idMesa.add(19);
+idMesa.add(1000001);
