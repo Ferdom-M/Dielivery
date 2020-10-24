@@ -27,7 +27,7 @@ class Mainmenu extends Phaser.Scene {
         this.load.image('como_jugar', 'assets/Botones/como_jugar.png');
         this.load.image('como_jugar_pulsado', 'assets/Botones/como_jugar_pulsado.png');
     }
-
+	
     create() {
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());

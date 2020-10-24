@@ -81,8 +81,8 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		config.scene.anims.create({
 			key: 'pared',
 			frames: config.scene.anims.generateFrameNames('anim_Pared', {start: 0, end: 1}),
-			frameRate: 8,
-			repeat: 0
+			frameRate: 4,
+			repeat: -1
 		});
 		
 		// Referencia a la escena

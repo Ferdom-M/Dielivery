@@ -33,6 +33,8 @@ window.onload = function(){
 		},
 		scene: [Mainmenu, ComoJugar, creditos, LevelSelect, Game, Results],
 		antialias: false,
+		pixelart: true,
+		failIfMajorPerformanceCaveat: true,
 		debug: true
 	};
 	

@@ -113,7 +113,7 @@ class Game extends Phaser.Scene {
 		
 		this.initialTime = 300;
 
-		text = this.add.text(1800, 400, 'Countdown: ' + formatTime(this.initialTime));
+		text = this.add.text(0, 0, 'Countdown: ' + formatTime(this.initialTime)).setScrollFactor(0,0);
 
 		// Each 1000 ms call onEvent
 		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
