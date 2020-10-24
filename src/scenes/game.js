@@ -30,7 +30,30 @@ class Game extends Phaser.Scene {
         this.load.image('logo', 'assets/logo.png');
 		this.load.image("escalera", "assets/ladder.png");
 		this.load.image("mesa", "assets/bolita.jpg");
+
+		//ICONOS DE OBJETOS PARA INVENTARIO
+		this.load.image("Anillo", "assets/Sprites Objetos/Icono Anillo.png");
+		this.load.image("Bandera 1", "assets/Sprites Objetos/Icono Bandera 1.png");
+		this.load.image("Bandera 2", "assets/Sprites Objetos/Icono Bandera 2.png");
+		this.load.image("Botella Orujo", "assets/Sprites Objetos/Icono Botella Orujo.png");
+		this.load.image("Botella Ron", "assets/Sprites Objetos/Icono Botella Ron.png");
+		this.load.image("Botella Vino", "assets/Sprites Objetos/Icono Botella Vino.png");
+		this.load.image("Botella Whisky", "assets/Sprites Objetos/Icono Botella Whisky.png");
+		this.load.image("Carta Abierta", "assets/Sprites Objetos/Icono Carta Abierta.png");
+		this.load.image("Carta Sellada", "assets/Sprites Objetos/Icono Carta Sellada.png");
+		this.load.image("Collar Oro", "assets/Sprites Objetos/Icono Collar Oro.png");
+		this.load.image("Collar Perlas", "assets/Sprites Objetos/Icono Collar Perlas.png");
+		this.load.image("Foto Familiar", "assets/Sprites Objetos/Icono Foto Familiar.png");
+		this.load.image("Foto Personal", "assets/Sprites Objetos/Icono Foto Personal.png");
+		this.load.image("Margarita", "assets/Sprites Objetos/Icono Margarita.png");
+		this.load.image("Osito Nuevo", "assets/Sprites Objetos/Icono Osito Nuevo.png");
+		this.load.image("Osito Viejo", "assets/Sprites Objetos/Icono Osito Viejo.png");
+		this.load.image("Pendientes", "assets/Sprites Objetos/Icono Pendientes.png");
+		this.load.image("Rosa", "assets/Sprites Objetos/Icono Rosa.png");
 		this.load.image("Tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
+		this.load.image("Violeta", "assets/Sprites Objetos/Icono Violeta.png");
+
+
 		this.load.image("botonEnviar", "assets/cuadrencio.png");
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
 		this.load.tilemapTiledJSON("Nivel2", "assets/Mapas/plataformeodimensionado.json");
