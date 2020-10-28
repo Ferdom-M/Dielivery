@@ -19,6 +19,10 @@ var timedEvent;
 
 var emitter; 
 
+
+var width = 960;
+var height = 540;
+
 class Game extends Phaser.Scene {
 
     constructor() {
@@ -27,7 +31,43 @@ class Game extends Phaser.Scene {
 	
 	preload ()
     {
-        this.load.image('logo', 'assets/logo.png');
+		// BARRA DE CARGA
+		var width = this.cameras.main.width;
+		var height = this.cameras.main.height;
+		
+		var progressBar = this.add.graphics(width / 2, height / 2);
+		var progressBox = this.add.graphics(width / 2, height / 2);
+		progressBox.fillStyle(0x222222, 0.8);
+		progressBox.fillRect(240, 270, 320, 50);
+		
+		var percentText = this.make.text({
+			x: width / 2,
+			y: height / 2 - 5,
+			text: '0%',
+			style: {
+				font: '18px monospace',
+				fill: '#ffffff'
+			}
+		});
+		percentText.setOrigin(0.5, 0.5);
+
+		this.load.on('progress', function (value) {
+			progressBar.clear();
+			progressBar.fillStyle(0xffffff, 1);
+			progressBar.fillRect(250, 280, 300 * value, 30);
+
+			percentText.setText(parseInt(value * 100) + '%');
+		});
+
+
+		this.load.on('complete', function () {
+			progressBar.destroy();
+			progressBox.destroy();
+			percentText.destroy();
+		});
+		
+		// CARGA
+		this.load.image('logo', 'assets/logo.png');
 		this.load.image("escalera", "assets/ladder.png");
 		this.load.image("mesa", "assets/bolita.jpg");
 
@@ -48,11 +88,13 @@ class Game extends Phaser.Scene {
 		this.load.image("Margarita", "assets/Sprites Objetos/Icono Margarita.png");
 		this.load.image("Osito Nuevo", "assets/Sprites Objetos/Icono Osito Nuevo.png");
 		this.load.image("Osito Viejo", "assets/Sprites Objetos/Icono Osito Viejo.png");
-		this.load.image("Pendientes", "assets/Sprites Objetos/Icono Pendientes.png");
+		this.load.image("Pendiente", "assets/Sprites Objetos/Icono Pendientes.png");
 		this.load.image("Rosa", "assets/Sprites Objetos/Icono Rosa.png");
 		this.load.image("Tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
 		this.load.image("Violeta", "assets/Sprites Objetos/Icono Violeta.png");
-
+		this.load.image("cielo", "assets/Interfaz/Cielo.png");
+		this.load.image("infierno", "assets/Interfaz/Infierno.png");
+		
 
 		this.load.image("botonEnviar", "assets/cuadrencio.png");
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
@@ -72,12 +114,13 @@ class Game extends Phaser.Scene {
 		
 		this.load.image("tiles", "assets/Mapas/Spritesheets/nuevos sprites.png");
 		
+		
     }
 
     create (mapa)
     {
 		//this.scale.on('resize', () => this.resizeCamera());
-
+		
 		GenerarMundo(this, mapa);
 		GenerarEscalera(this);
 		GenerarRecogidas(this);
@@ -113,6 +156,7 @@ class Game extends Phaser.Scene {
 
 		//Placeholder
 		var genPedidos = this.add.sprite(2000, 575, 'botonEnviar').setScale(2).setInteractive();
+		
 		genPedidos.on('pointerdown', () => GenerarPedido(this.jugador, this));
 
 		/*
@@ -140,6 +184,8 @@ class Game extends Phaser.Scene {
 
 		// Each 1000 ms call onEvent
 		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
+		
+		var tarjeta = new Tarjeta(this, width / 2, height / 2, GenerarPedido(this.jugador, this)).setScrollFactor(0,0);
 		
     }
 	

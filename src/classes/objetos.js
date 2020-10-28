@@ -15,10 +15,12 @@ class Objeto {
 }
 
 class Pedido{
-	constructor(numObjetos, objetos, destinatario){
+	constructor(numObjetos, objetos, destinatario, nombre, causaDeMuerte){
 		this.numObjetos = numObjetos; // int numero de objetos del pedido
 		this.objetos = objetos; // array de objetos que conforman el pedido
-		this.destinatario = destinatario // bool true = cielo, false = infierno
+		this.destinatario = destinatario; // bool true = cielo, false = infierno
+		this.nombre = nombre;
+		this.causaDeMuerte = causaDeMuerte;
 	}
 }
 // Flores
@@ -50,6 +52,22 @@ var anillo = new Objeto("Anillo", 50);
 var pendiente = new Objeto("Pendiente", 50);
 var collarPerlas = new Objeto("Collar Perlas", 50);
 var collarOro = new Objeto("Collar Oro", 50);
+
+var arrayNombres = new Array();
+arrayNombres.push("Fer");
+arrayNombres.push("Dvd");
+arrayNombres.push("Nou");
+arrayNombres.push("Leggnas");
+arrayNombres.push("Raúl");
+arrayNombres.push("Nacho");
+
+var arrayCausaMuerte = new Array();
+arrayCausaMuerte.push("Pensó que el ajo era una papa");
+arrayCausaMuerte.push("Colleja de Nou");
+arrayCausaMuerte.push("Estuvo trabajando en la capa equivocada en Tiled");
+arrayCausaMuerte.push("Era artista");
+arrayCausaMuerte.push("Se tropezó con el espagueti code que tenemos montado y se partió la crisma");
+arrayCausaMuerte.push("Fue Fer");
 
 // Los objetos se meten en un array para sacarlos directamente con el numero generado
 var arrayObjetos = new Array();
@@ -90,7 +108,10 @@ function GenerarPedido(jugador, that){
 		objetosGenerados.push(arrayObjetos[objetoGenerado].tipo);
 	}
 	
-	var pedido = new Pedido(numObjetos, objetosGenerados, destinatario);
+	var nombre = Math.floor(Math.random() * arrayNombres.length);
+	var causaDeMuerte = Math.floor(Math.random() * arrayCausaMuerte.length);
+	
+	var pedido = new Pedido(numObjetos, objetosGenerados, destinatario, arrayNombres[nombre], arrayCausaMuerte[causaDeMuerte]);
 	arrayPedidos.push(pedido);
 	var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
 	tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);

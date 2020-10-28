@@ -3,6 +3,8 @@ var idSuelosNormales = new Set();
 idSuelosNormales.add(1);
 idSuelosNormales.add(31);
 idSuelosNormales.add(32);
+idSuelosNormales.add(36);
+idSuelosNormales.add(37);
 idSuelosNormales.add(109);
 idSuelosNormales.add(110);
 idSuelosNormales.add(111);
