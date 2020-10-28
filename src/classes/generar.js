@@ -146,7 +146,10 @@ function InicializarCursores(that, jugador){
 		}, that);
 
 		cursors.inventario.on('down', function () {
-			console.log(jugador.inventario)
+			jugador.tarjetas = true;
+		}, that);
+		cursors.inventario.on('up', function () {
+			jugador.tarjetas = false;
 		}, that);
 		
 		cursors.accion.on('down', function () {

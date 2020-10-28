@@ -43,6 +43,10 @@ class Idle extends State{
 			jugador.stateMachine.transition(delta, 'mesa');
 			return;
 		}
+		if(jugador.tarjetas && arrayPedidos.length > 0){
+			jugador.stateMachine.transition(delta, "mirandoTarjetas");
+			return;
+		}
 
 		
 		

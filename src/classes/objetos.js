@@ -15,7 +15,8 @@ class Objeto {
 }
 
 class Pedido{
-	constructor(numObjetos, objetos, destinatario, nombre, causaDeMuerte){
+	constructor(numPedido, numObjetos, objetos, destinatario, nombre, causaDeMuerte){
+		this.numPedido = numPedido;
 		this.numObjetos = numObjetos; // int numero de objetos del pedido
 		this.objetos = objetos; // array de objetos que conforman el pedido
 		this.destinatario = destinatario; // bool true = cielo, false = infierno
@@ -93,6 +94,7 @@ arrayObjetos.push(collarPerlas);
 arrayObjetos.push(collarOro);
 
 var arrayPedidos = new Array();
+var arrayTarjetas = new Array();
 
 function GenerarPedido(jugador, that){
 	// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
@@ -111,12 +113,13 @@ function GenerarPedido(jugador, that){
 	var nombre = Math.floor(Math.random() * arrayNombres.length);
 	var causaDeMuerte = Math.floor(Math.random() * arrayCausaMuerte.length);
 	
-	var pedido = new Pedido(numObjetos, objetosGenerados, destinatario, arrayNombres[nombre], arrayCausaMuerte[causaDeMuerte]);
+	var pedido = new Pedido(arrayPedidos.length, numObjetos, objetosGenerados, destinatario, arrayNombres[nombre], arrayCausaMuerte[causaDeMuerte]);
 	arrayPedidos.push(pedido);
 	var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
 	tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
 
-
+	arrayTarjetas.push(new Tarjeta(that, 100 + 200 * (arrayPedidos.length - 1), -35, pedido).setScrollFactor(0,0).setScale(0.4));
+		
 	return pedido;
 }
 

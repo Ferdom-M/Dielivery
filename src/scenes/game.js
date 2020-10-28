@@ -185,9 +185,8 @@ class Game extends Phaser.Scene {
 		// Each 1000 ms call onEvent
 		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
 		
-		var tarjeta = new Tarjeta(this, width / 2, height / 2, GenerarPedido(this.jugador, this)).setScrollFactor(0,0);
 		
-    }
+	}
 	
     update(time, delta){
 		this.jugador.update(time, delta);
@@ -201,6 +200,18 @@ class Game extends Phaser.Scene {
 
 	}
 	
+}
+
+function MoverTarjeta(that, tarjeta){
+	console.log("a");
+	// Mover de vuelta arriba
+	if(tarjeta.expandida){
+		this.tarjeta.setPosition((Phaser.Math.Linear(tarjeta.x, 0, friccionResbalo)), (Phaser.Math.Linear(tarjeta.y, 0, friccionResbalo)));
+	}
+	// Mover al centro de pantalla y agrandar
+	else{
+		
+	}
 }
 
 function formatTime(seconds){

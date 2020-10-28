@@ -40,6 +40,10 @@ class Correr extends State{
 			jugador.stateMachine.transition(delta, 'escalon');
 			return;
 		}
+		if(jugador.tarjetas && arrayPedidos.length > 0){
+			jugador.stateMachine.transition(delta, "mirandoTarjetas");
+			return;
+		}
 		
 		jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, aceleracion));
 		if (jugador.dirX == -1){

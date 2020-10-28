@@ -97,6 +97,7 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		this.dashVelocity = 0;
 		this.jumpsquat = false;
 		this.accion = false;
+		this.tarjetas = false;
 		// Acciones posibles
 		this.dashDisponible = false;
 		// Percepciones
@@ -130,7 +131,8 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 			deslizandoPared: new DeslizandoPared(),
 			saltoPared: new SaltoPared(),
 			dano: new Dano(),
-			mesa: new Mesa()
+			mesa: new Mesa(),
+			mirandoTarjetas: new MirandoTarjetas()
 		}, [this.scene, this]);
 	}
 	
