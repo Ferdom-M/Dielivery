@@ -14,14 +14,12 @@ class Tarjeta extends Phaser.GameObjects.Container{
 		/*
 		this.imagenes.push(scene.add.image(0, 0, 'persona' + pedido.persona));
 		*/
-		console.log(pedido);
 		
 		imagenes.push(scene.add.text(50, -100, pedido.nombre));
 		imagenes.push(scene.add.text(50, -50, pedido.causaDeMuerte));
         super(scene, x, y, imagenes);
         
 		this.imagenes = imagenes;
-		this.expandida = true; 
 		
         scene.add.existing(this);
     }

@@ -1,6 +1,6 @@
 class MirandoTarjetas extends State{
 	enter(delta, scene, jugador){
-		console.log("Estado mirando tarjetas");
+		//console.log("Estado mirando tarjetas");
 		jugador.tarjetas = false;
 		
 		jugador.body.velocity.x = 0;
@@ -17,15 +17,15 @@ class MirandoTarjetas extends State{
 			jugador.tarjetas = false;
 			
 			for(var i = 0; i < arrayTarjetas.length; i++){
-				arrayTarjetas[i].setScale(0.4);
-				arrayTarjetas[i].setPosition(100 + 200 * i, -35);
+				arrayTarjetas[i].setScale(escalaTarjeta);
+				arrayTarjetas[i].setPosition(margenInicialTarjeta + (i / (maxPedidos - 1)) * (width - 2 * margenInicialTarjeta), -35);
 			}
 				
 			jugador.stateMachine.transition(delta, 'idle');
 			return;
 		}
-
-		if(jugador.dirX != 0){
+		
+		if(jugador.dirX != 0 && arrayTarjetas[0].x + jugador.dirX * 10 < width / 2 && arrayTarjetas[arrayTarjetas.length - 1].x + jugador.dirX * 10 > width / 2){
 			for(var i = 0; i < arrayTarjetas.length; i++){
 				arrayTarjetas[i].x += jugador.dirX * 10;
 			}

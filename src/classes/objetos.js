@@ -96,31 +96,39 @@ arrayObjetos.push(collarOro);
 var arrayPedidos = new Array();
 var arrayTarjetas = new Array();
 
+var maxPedidos = 5;
+var escalaTarjeta = 0.4;
+var margenInicialTarjeta = 100;
 function GenerarPedido(jugador, that){
-	// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
-	var destinatario = Math.floor(Math.random() * 2) == 0;
-	
-	// Aleatorio 2 a 4
-	var numObjetos = Math.floor(Math.random() * 3) + 2;
-	
-	// Aleatorio entre los 20 con la misma probabilidad
-	var objetosGenerados = new Array();
-	for(var i = 0; i < numObjetos; i++){
-		var objetoGenerado = Math.floor(Math.random() * arrayObjetos.length);
-		objetosGenerados.push(arrayObjetos[objetoGenerado].tipo);
-	}
-	
-	var nombre = Math.floor(Math.random() * arrayNombres.length);
-	var causaDeMuerte = Math.floor(Math.random() * arrayCausaMuerte.length);
-	
-	var pedido = new Pedido(arrayPedidos.length, numObjetos, objetosGenerados, destinatario, arrayNombres[nombre], arrayCausaMuerte[causaDeMuerte]);
-	arrayPedidos.push(pedido);
-	var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
-	tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
-
-	arrayTarjetas.push(new Tarjeta(that, 100 + 200 * (arrayPedidos.length - 1), -35, pedido).setScrollFactor(0,0).setScale(0.4));
+	if(arrayPedidos.length < maxPedidos){
+		// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
+		var destinatario = Math.floor(Math.random() * 2) == 0;
 		
-	return pedido;
+		// Aleatorio 2 a 4
+		var numObjetos = Math.floor(Math.random() * 3) + 2;
+		
+		// Aleatorio entre los 20 con la misma probabilidad
+		var objetosGenerados = new Array();
+		for(var i = 0; i < numObjetos; i++){
+			var objetoGenerado = Math.floor(Math.random() * arrayObjetos.length);
+			objetosGenerados.push(arrayObjetos[objetoGenerado].tipo);
+		}
+		
+		var nombre = Math.floor(Math.random() * arrayNombres.length);
+		var causaDeMuerte = Math.floor(Math.random() * arrayCausaMuerte.length);
+		
+		var pedido = new Pedido(arrayPedidos.length, numObjetos, objetosGenerados, destinatario, arrayNombres[nombre], arrayCausaMuerte[causaDeMuerte]);
+		arrayPedidos.push(pedido);
+		//var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
+		//tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
+
+		var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
+		
+		tarjeta.setPosition(margenInicialTarjeta + (arrayTarjetas.length / (maxPedidos - 1)) * (width - 2 * margenInicialTarjeta), -35).setScale(escalaTarjeta);
+		arrayTarjetas.push(tarjeta);
+		
+		return pedido;
+	}
 }
 
 //Paquete creado por el jugador, pedido a cumplir que elige el jugador  

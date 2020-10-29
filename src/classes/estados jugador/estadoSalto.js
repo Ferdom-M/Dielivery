@@ -54,7 +54,6 @@ class Salto extends State{
 		jugador.empezandoSalto = false;
 		
 		jugador.alturaSalto = Math.min(tiempoJumpsquat, jugador.alturaSalto);
-		console.log(jugador.alturaSalto);
 		jugador.setVelocityY(velSalto + ((tiempoJumpsquat - jugador.alturaSalto) * (velSalto / 2 - velSalto) / (tiempoJumpsquat - delta)));
 		jugador.alturaSalto = 0;
 	}
