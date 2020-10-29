@@ -15,7 +15,7 @@ var jugadores = new Array(numJugadores);
 
 var text;
 var timedEvent;
-
+var generacionPedidos;
 
 var emitter; 
 
@@ -155,9 +155,9 @@ class Game extends Phaser.Scene {
 		//GenerarMesaPaquetes(this);
 
 		//Placeholder
-		var genPedidos = this.add.sprite(2000, 575, 'botonEnviar').setScale(2).setInteractive();
+		//var genPedidos = this.add.sprite(2000, 575, 'botonEnviar').setScale(2).setInteractive();
 		
-		genPedidos.on('pointerdown', () => GenerarPedido(this.jugador, this));
+		//genPedidos.on('pointerdown', () => GenerarPedido(this.jugador, this));
 
 		/*
 		emitter.startFollow(jugadores[0].sprite, 0, jugadores[0].sprite.body.height / 4);
@@ -184,7 +184,7 @@ class Game extends Phaser.Scene {
 
 		// Each 1000 ms call onEvent
 		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
-		
+		generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
 		
 	}
 	

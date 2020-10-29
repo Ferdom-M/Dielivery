@@ -15,13 +15,14 @@ class Objeto {
 }
 
 class Pedido{
-	constructor(numPedido, numObjetos, objetos, destinatario, nombre, causaDeMuerte){
+	constructor(numPedido, numObjetos, objetos, destinatario, nombre, causaDeMuerte, indice){
 		this.numPedido = numPedido;
 		this.numObjetos = numObjetos; // int numero de objetos del pedido
 		this.objetos = objetos; // array de objetos que conforman el pedido
 		this.destinatario = destinatario; // bool true = cielo, false = infierno
 		this.nombre = nombre;
 		this.causaDeMuerte = causaDeMuerte;
+		this.indice = indice;
 	}
 }
 // Flores
@@ -95,10 +96,13 @@ arrayObjetos.push(collarOro);
 
 var arrayPedidos = new Array();
 var arrayTarjetas = new Array();
+//var tarjetasVigentes = [];
+var pedidosVigentes = 0;
 
 var maxPedidos = 5;
 var escalaTarjeta = 0.4;
 var margenInicialTarjeta = 100;
+
 function GenerarPedido(jugador, that){
 	if(arrayPedidos.length < maxPedidos){
 		// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
@@ -117,7 +121,7 @@ function GenerarPedido(jugador, that){
 		var nombre = Math.floor(Math.random() * arrayNombres.length);
 		var causaDeMuerte = Math.floor(Math.random() * arrayCausaMuerte.length);
 		
-		var pedido = new Pedido(arrayPedidos.length, numObjetos, objetosGenerados, destinatario, arrayNombres[nombre], arrayCausaMuerte[causaDeMuerte]);
+		var pedido = new Pedido(arrayPedidos.length, numObjetos, objetosGenerados, destinatario, arrayNombres[nombre], arrayCausaMuerte[causaDeMuerte], pedidosVigentes);
 		arrayPedidos.push(pedido);
 		//var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
 		//tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
@@ -125,7 +129,10 @@ function GenerarPedido(jugador, that){
 		var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
 		
 		tarjeta.setPosition(margenInicialTarjeta + (arrayTarjetas.length / (maxPedidos - 1)) * (width - 2 * margenInicialTarjeta), -35).setScale(escalaTarjeta);
+		
 		arrayTarjetas.push(tarjeta);
+
+		pedidosVigentes++;
 		
 		return pedido;
 	}
@@ -156,5 +163,13 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 		console.log("Pedido fallido");
 		puntuacion += puntuacionPedidoFallido;
 	}
+
+	arrayTarjetas[pedido.indice].destroy();
+	arrayTarjetas.splice(pedido.indice, 1);
+	for(let i = pedido.indice; i < arrayPedidos.length; i++){
+		arrayPedidos[i].indice = arrayPedidos[i].indice - 1;
+	}
+	pedidosVigentes--;
+
 	return puntuacion;
 }
