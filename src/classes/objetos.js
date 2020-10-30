@@ -64,12 +64,15 @@ arrayNombres.push("Raúl");
 arrayNombres.push("Nacho");
 
 var arrayCausaMuerte = new Array();
-arrayCausaMuerte.push("Pensó que el ajo era una papa");
+arrayCausaMuerte.push("Pensó que el ajo era\nuna papa");
 arrayCausaMuerte.push("Colleja de Nou");
 arrayCausaMuerte.push("Estuvo trabajando en la capa equivocada en Tiled");
 arrayCausaMuerte.push("Era artista");
 arrayCausaMuerte.push("Se tropezó con el espagueti code que tenemos montado y se partió la crisma");
 arrayCausaMuerte.push("Fue Fer");
+arrayCausaMuerte.push("Nou le dijo mec");
+arrayCausaMuerte.push("Dijo cinco");
+arrayCausaMuerte.push("Tuvo que programar en javascript");
 
 // Los objetos se meten en un array para sacarlos directamente con el numero generado
 var arrayObjetos = new Array();
