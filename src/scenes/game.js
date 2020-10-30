@@ -99,7 +99,7 @@ class Game extends Phaser.Scene {
 		this.load.image("botonEnviar", "assets/cuadrencio.png");
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
 		this.load.tilemapTiledJSON("Nivel2", "assets/Mapas/plataformeodimensionado.json");
-		this.load.tilemapTiledJSON("Nivel3", "assets/Mapas/plataformeodimensionado.json");
+		this.load.tilemapTiledJSON("Nivel3", "assets/Mapas/intermedio.json");
 		
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
 		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
