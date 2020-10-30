@@ -1,34 +1,24 @@
 var idSuelosNormales = new Set();
 
 idSuelosNormales.add(1);
+idSuelosNormales.add(2);
+idSuelosNormales.add(3);
+idSuelosNormales.add(4);
+idSuelosNormales.add(9);
+idSuelosNormales.add(10);
+idSuelosNormales.add(11);
+idSuelosNormales.add(30);
 idSuelosNormales.add(31);
-idSuelosNormales.add(32);
-idSuelosNormales.add(36);
-idSuelosNormales.add(37);
-idSuelosNormales.add(109);
-idSuelosNormales.add(110);
-idSuelosNormales.add(111);
 idSuelosNormales.add(112);
 idSuelosNormales.add(113);
 idSuelosNormales.add(114);
 idSuelosNormales.add(115);
 idSuelosNormales.add(116);
 idSuelosNormales.add(117);
-idSuelosNormales.add(135);
-idSuelosNormales.add(136);
-idSuelosNormales.add(137);
-idSuelosNormales.add(138);
-idSuelosNormales.add(139);
-idSuelosNormales.add(140);
 idSuelosNormales.add(141);
 idSuelosNormales.add(142);
 idSuelosNormales.add(143);
 idSuelosNormales.add(144);
-idSuelosNormales.add(163);
-idSuelosNormales.add(164);
-idSuelosNormales.add(165);
-idSuelosNormales.add(166);
-idSuelosNormales.add(167);
 idSuelosNormales.add(168);
 idSuelosNormales.add(169);
 idSuelosNormales.add(170);
@@ -63,7 +53,12 @@ idSuelosNormales.add(252);
 
 var idSuelosResbaladizos = new Set();
 
-idSuelosResbaladizos.add(3);
+idSuelosResbaladizos.add(5);
+idSuelosResbaladizos.add(6);
+idSuelosResbaladizos.add(7);
+idSuelosResbaladizos.add(8);
+idSuelosResbaladizos.add(32);
+idSuelosResbaladizos.add(33);
 idSuelosResbaladizos.add(280);
 idSuelosResbaladizos.add(281);
 idSuelosResbaladizos.add(282);
@@ -126,6 +121,8 @@ idPinchos.add(291);
 
 var idEscaleras = new Set();
 idEscaleras.add(56);
+idEscaleras.add(137);
+idEscaleras.add(138);
 
 
 // Objetos a recoger
@@ -252,4 +249,3 @@ idCollarOro.add(409);
 //Mesa de creacion de paquetes
 var idMesa = new Set();
 idMesa.add(19);
-idMesa.add(1000001);

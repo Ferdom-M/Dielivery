@@ -112,7 +112,7 @@ class Game extends Phaser.Scene {
 		this.load.spritesheet('anim_Dano', 'assets/Sprites Personajes/Spritesheet Dano.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_Pared', 'assets/Sprites Personajes/Spritesheet Pared.png', {frameWidth: 32, frameHeight: 64});
 		
-		this.load.image("tiles", "assets/Mapas/Spritesheets/nuevos sprites.png");
+		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet definitiva (en curso).png");
 		
 		
     }
