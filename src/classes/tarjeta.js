@@ -15,8 +15,10 @@ class Tarjeta extends Phaser.GameObjects.Container{
 		this.imagenes.push(scene.add.image(0, 0, 'persona' + pedido.persona));
 		*/
 		
-		imagenes.push(scene.add.text(50, -100, pedido.nombre));
-		imagenes.push(scene.add.text(50, -50, pedido.causaDeMuerte));
+		imagenes.push(scene.add.text(0, -100, arrayNombres[pedido.persona]));
+		imagenes.push(scene.add.text(0, -50, arrayCausaMuerte[pedido.persona]));
+		
+		imagenes.push(scene.add.image(-95, -50, "perfil" + (pedido.persona)).setInteractive());
         super(scene, x, y, imagenes);
         
 		this.imagenes = imagenes;

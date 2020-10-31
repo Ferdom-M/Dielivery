@@ -9,29 +9,11 @@ function GenerarMundo(that, mapa){
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
 	fondo = map.createStaticLayer("Fondo", tileset, 0, 0);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
-
 	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
+	resto = map.createStaticLayer("Resto", tileset, 0, 0);
 
 	
 	suelo.setCollisionByProperty({ collides: true });
-}
-	
-function GenerarEscalera(that){
-	grupoEscaleras = that.physics.add.staticGroup();
-	grupoEscaleras.create(450, 250, 'escalera');
-}
-
-/*
-function GenerarMesaPaquetes(that){
-	grupoMesa = that.physics.add.staticGroup();
-	grupoMesa.create(2535, 800, 'mesa').setScale(0.1);
-	//mesaPaquete = that.add.sprite(2535,800, 'escalera');
-} 
-*/
-
-function GenerarRecogidas(that){
-	tulipanes = that.physics.add.staticGroup();
-	tulipanes.create(450, 850, 'escalera');
 }
 
 function GenerarCamara(that, jugador){
