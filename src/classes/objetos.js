@@ -167,12 +167,15 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 		puntuacion += puntuacionPedidoFallido;
 	}
 
+	//Eliminamos tarjeta del pedido que hemos hecho
 	arrayTarjetas[pedido.indice].destroy();
 	arrayTarjetas.splice(pedido.indice, 1);
 	for(let i = pedido.indice; i < arrayPedidos.length; i++){
 		arrayPedidos[i].indice = arrayPedidos[i].indice - 1;
 	}
 	pedidosVigentes--;
+
+	//Insertar bucle de vaciado de inventario(actualmente en ClickObjeto de estadoMesa) 
 
 	return puntuacion;
 }

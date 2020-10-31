@@ -66,7 +66,10 @@ function InicializarCursores(that, jugador){
 				accion: Phaser.Input.Keyboard.KeyCodes.E,
 				inventario: Phaser.Input.Keyboard.KeyCodes.Q,
 				fullscreen: Phaser.Input.Keyboard.KeyCodes.F,
-				propiedades: Phaser.Input.Keyboard.KeyCodes.L
+				//debug
+				propiedades: Phaser.Input.Keyboard.KeyCodes.L,
+				tpMesa: Phaser.Input.Keyboard.KeyCodes.P,
+				tpCosas: Phaser.Input.Keyboard.KeyCodes.O
 			});
 			
 			// Al pulsar F se hace un evento
@@ -147,6 +150,7 @@ function InicializarCursores(that, jugador){
 
 		cursors.inventario.on('down', function () {
 			jugador.tarjetas = true;
+			console.log(this.jugador.inventario);
 		}, that);
 		cursors.inventario.on('up', function () {
 			jugador.tarjetas = false;
@@ -168,6 +172,16 @@ function InicializarCursores(that, jugador){
 			console.log(jugador.arrayMostrados);
 			console.log(jugador.arraySeleccionados);
 			console.log(jugador.pedidoSeleccionado);
+		}, that);
+		cursors.tpMesa.on('down', function () {
+			console.log("tpd");
+			jugador.x = 1824;
+			jugador.y = 800;
+		}, that);
+		cursors.tpCosas.on('down', function () {
+			console.log("tpd");
+			jugador.x = 1130;
+			jugador.y = 2432;
 		}, that);
 
 	}else{
