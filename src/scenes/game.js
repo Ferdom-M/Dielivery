@@ -4,6 +4,7 @@ var map;
 var suelo;
 var fondo;
 var objetos;
+var resto;
 var tileSize = 32;
 
 var cursors;
@@ -122,8 +123,6 @@ class Game extends Phaser.Scene {
 		//this.scale.on('resize', () => this.resizeCamera());
 		
 		GenerarMundo(this, mapa);
-		GenerarEscalera(this);
-		GenerarRecogidas(this);
 		
 		/*
 		var particles = this.add.particles('mesa');
