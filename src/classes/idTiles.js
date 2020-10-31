@@ -120,7 +120,7 @@ var idPinchos = new Set();
 idPinchos.add(291);
 
 var idEscaleras = new Set();
-idEscaleras.add(56);
+idEscaleras.add(111);
 idEscaleras.add(137);
 idEscaleras.add(138);
 

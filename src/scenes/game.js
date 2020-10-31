@@ -115,7 +115,9 @@ class Game extends Phaser.Scene {
 		
 		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet definitiva (en curso).png");
 		
-		
+		for (var i = 0;  i < arrayNombres.length; i++){
+			this.load.image("perfil" + i, "assets/Perfiles/perfil" + i + ".jpg");
+		}
     }
 
     create (mapa)

@@ -168,7 +168,7 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		
 		this.enPinchos = this.enSuelo && sueloDebajo && idPinchos.has(sueloDebajo.index);
 		
-		this.enEscalera = resto.getTileAtWorldXY(this.x, this.y) && idEscaleras.has(objetos.getTileAtWorldXY(this.x, this.y).index);
+		this.enEscalera = resto.getTileAtWorldXY(this.x, this.y) && idEscaleras.has(resto.getTileAtWorldXY(this.x, this.y).index);
 
 		/*
 		if(this.enSuelo && this.body.velocity.x != 0){
