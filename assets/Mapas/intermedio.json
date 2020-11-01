@@ -6,13 +6,10 @@
          "target":"."
         }
     },
-<<<<<<< HEAD
- "height":100,
- "infinite": false,
-=======
+
  "height":143,
  "infinite":false,
->>>>>>> 62dcb640952427794332de41e1c7ed5cc574a2ef
+
  "layers":[
         {
          "compression":"",

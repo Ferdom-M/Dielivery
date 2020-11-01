@@ -127,10 +127,12 @@ class Mesa extends State{
             //
             //
             //
+            jugador.arrayMostrados[objetoActual].clearTint();
             console.log("borrar " + jugador.inventario[objetoActual].tipo);
             var index = jugador.arraySeleccionados.indexOf(objetoActual);
             jugador.arraySeleccionados.splice(index, 1);
         }else{
+            jugador.arrayMostrados[objetoActual].setTint(0x616161);
             jugador.arraySeleccionados.push(objetoActual);
         }
     
