@@ -7,27 +7,35 @@ class RecogerObjeto extends State{
 		var objeto = new Objeto();
 		switch(true){
 			case idTulipanes.has(tileActual):
+				jugador.sFlores.play();
 				objeto.Clone(tulipan);
 				break;
 			case idRosas.has(tileActual):
+				jugador.sFlores.play();
 				objeto.Clone(rosa);
 				break;
 			case idVioletas.has(tileActual):
+				jugador.sFlores.play();
 				objeto.Clone(violeta);
 				break;
 			case idMargaritas.has(tileActual):
+				jugador.sFlores.play();
 				objeto.Clone(margarita);
 				break;
 			case idOrujo.has(tileActual):
+				jugador.sBotellas.play();
 				objeto.Clone(orujo);
 				break;
 			case idWhisky.has(tileActual):
+				jugador.sBotellas.play();
 				objeto.Clone(whisky);
 				break;
 			case idRon.has(tileActual):
+				jugador.sBotellas.play();
 				objeto.Clone(ron);
 				break;
 			case idVino.has(tileActual):
+				jugador.sBotellas.play();
 				objeto.Clone(vino);
 				break;
 			case idBandera1.has(tileActual):
@@ -43,9 +51,11 @@ class RecogerObjeto extends State{
 				objeto.Clone(pelucheNuevo);
 				break;
 			case idCartaSello.has(tileActual):
+				jugador.sCarta.play();
 				objeto.Clone(cartaSello);
 				break;
 			case idCartaAbierta.has(tileActual):
+				jugador.sCarta.play();
 				objeto.Clone(cartaAbierta);
 				break;
 			case idFotoFamiliar.has(tileActual):
@@ -55,15 +65,19 @@ class RecogerObjeto extends State{
 				objeto.Clone(fotoPersonal);
 				break;
 			case idAnillo.has(tileActual):
+				jugador.sJoyero.play();
 				objeto.Clone(anillo);
 				break;
 			case idPendiente.has(tileActual):
+				jugador.sJoyero.play();
 				objeto.Clone(pendiente);
 				break;
 			case idCollarPerlas.has(tileActual):
+				jugador.sJoyero.play();
 				objeto.Clone(collarPerlas);
 				break;
 			case idCollarOro.has(tileActual):
+				jugador.sJoyero.play();
 				objeto.Clone(collarOro);
 				break;
 		}

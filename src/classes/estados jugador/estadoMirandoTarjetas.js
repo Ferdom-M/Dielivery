@@ -5,6 +5,7 @@ class MirandoTarjetas extends State{
 		
 		jugador.body.velocity.x = 0;
 		jugador.anims.play("idle", true);
+		jugador.sExtTarjeta.play();
 		
 		for(var i = 0; i < arrayTarjetas.length; i++){
 			arrayTarjetas[i].setScale(1);
@@ -20,7 +21,9 @@ class MirandoTarjetas extends State{
 				arrayTarjetas[i].setScale(escalaTarjeta);
 				arrayTarjetas[i].setPosition(margenInicialTarjeta + (i / (maxPedidos - 1)) * (width - 2 * margenInicialTarjeta), -35);
 			}
-				
+			
+			jugador.sGuarTarjeta.play();
+		
 			jugador.stateMachine.transition(delta, 'idle');
 			return;
 		}

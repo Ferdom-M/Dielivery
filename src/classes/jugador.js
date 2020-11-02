@@ -118,7 +118,16 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		this.arrayMostrados = new Array();
 		this.pedidoSeleccionado;
 		this.velActual = velJugador;
+		// Sonidos
+		this.sPasos = config.scene.sound.add('s_pasos').setLoop(true);
+		this.sBotellas = config.scene.sound.add('s_botellas');
+		this.sCarta = config.scene.sound.add('s_carta');
+		this.sFlores = config.scene.sound.add('s_flores');
+		this.sJoyero = config.scene.sound.add('s_joyero');
+		this.sExtTarjeta = config.scene.sound.add('s_extTarjeta');
+		this.sGuarTarjeta = config.scene.sound.add('s_guarTarjeta');
 		
+		// Máquina de estados
 		this.stateMachine = new StateMachine('idle', {
 			idle: new Idle(), 
 			correr: new Correr(), 

@@ -96,6 +96,15 @@ class Game extends Phaser.Scene {
 		this.load.image("cielo", "assets/Interfaz/Cielo.png");
 		this.load.image("infierno", "assets/Interfaz/Infierno.png");
 		
+		// Sonidos
+		this.load.audio('s_pasos', 'assets/Sonidos/s_pasos.wav');
+		this.load.audio('s_botellas', 'assets/Sonidos/s_botellas.wav');
+		this.load.audio('s_carta', 'assets/Sonidos/s_carta.wav');
+		this.load.audio('s_flores', 'assets/Sonidos/s_flores.wav');
+		this.load.audio('s_joyero', 'assets/Sonidos/s_joyero.wav');
+		this.load.audio('s_extTarjeta', 'assets/Sonidos/s_extTarjeta.wav');
+		this.load.audio('s_guarTarjeta', 'assets/Sonidos/s_guarTarjeta.wav');
+		
 
 		this.load.image("botonEnviar", "assets/cuadrencio.png");
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
