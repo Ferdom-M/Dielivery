@@ -6,14 +6,15 @@ class creditos extends Phaser.Scene {
         super("creditos");
     }
 	
-	preload() {// BARRA DE CARGA
+	preload() {
+		// BARRA DE CARGA
 		var width = this.cameras.main.width;
 		var height = this.cameras.main.height;
 		
 		var progressBar = this.add.graphics(width / 2, height / 2);
 		var progressBox = this.add.graphics(width / 2, height / 2);
 		progressBox.fillStyle(0x222222, 0.8);
-		progressBox.fillRect(240, 270, 320, 50);
+		progressBox.fillRect(width / 2 - 320 / 2, height / 2, 320, 50);
 		
 		var percentText = this.make.text({
 			x: width / 2,
@@ -29,7 +30,7 @@ class creditos extends Phaser.Scene {
 		this.load.on('progress', function (value) {
 			progressBar.clear();
 			progressBar.fillStyle(0xffffff, 1);
-			progressBar.fillRect(250, 280, 300 * value, 30);
+			progressBar.fillRect(width / 2 - 320 / 2 + 10, height / 2 + 10, 300 * value, 30);
 
 			percentText.setText(parseInt(value * 100) + '%');
 		});

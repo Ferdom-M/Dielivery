@@ -19,18 +19,22 @@ function GenerarMundo(that, mapa){
 function GenerarCamara(that, jugador){
 	// Cámara un jugador
 	
-	var camJugador1 = that.cameras.main;
+	camJugador1 = that.cameras.main;
 	camJugador1.setZoom(ratio);
-	//that.cameraDolly = new Phaser.Geom.Point(jugadores[0].sprite.x, jugadores[0].sprite.y);
 	camJugador1.startFollow(jugador);
 	
+	var camInterfaz = that.cameras.add(0, 0, width, height, false, "interfaz");
+	camInterfaz.ignore([jugador, fondo, suelo, objetos, resto]);
 	// Cámara dos jugadores
 	/*
-	that.cameras.resize(640, 720);
-	var camJugador2 = that.cameras.add(640, 0, 640, 720, false, "jugador2");
+	that.cameras.resize(width / 2, height);
+	camJugador1 = that.cameras.main;
+	camJugador2 = that.cameras.add(width / 2, 0, width / 2, height, false, "jugador2");
 	
-	camJugador1.startFollow(jugadores[0].sprite);
-	camJugador2.startFollow(logo);
+	var camInterfaz = that.cameras.add(0, 0, width, height, false, "interfaz");
+	camInterfaz.ignore([jugador, fondo, suelo, objetos, resto]);
+	camJugador1.startFollow(jugador);
+	camJugador2.startFollow(jugador);
 	*/
 }
 
@@ -132,7 +136,6 @@ function InicializarCursores(that, jugador){
 
 		cursors.inventario.on('down', function () {
 			jugador.tarjetas = true;
-			console.log(this.jugador.inventario);
 		}, that);
 		cursors.inventario.on('up', function () {
 			jugador.tarjetas = false;
@@ -170,21 +173,38 @@ function InicializarCursores(that, jugador){
 		
 		that.input.addPointer(3);
 		
-		that.zonaSwipe = that.add.rectangle(that.sys.game.canvas.width / 4 * 3, that.sys.game.canvas.height / 2, that.sys.game.canvas.width / 2, that.sys.game.canvas.height).setInteractive({ draggable: true }).setScrollFactor(0,0);
-		console.log(that.zonaSwipe);
-
+		// Necesitamos este objeto interactuable para que funcione bien el stick por la camara interfaz
+		// (Ocurre porque al usar la nueva cámara interfaz no hay interactuables en algunas zonas, entonces no se sabe donde se está pulsando el puntero)
+		that.zonaFondo = that.add.rectangle(width / 2, height / 2, width, height).setInteractive().setScrollFactor(0,0);
+		
+		that.zonaSwipe = that.add.rectangle(width / 4 * 3, height / 2, width / 2, height).setInteractive({ draggable: true }).setScrollFactor(0,0);
+		that.zonaTarjetas = that.add.rectangle(width / 2, 25, width, 50).setInteractive().setScrollFactor(0,0);
+		that.base = that.add.circle(0, 0, 100, 000000);
+		that.thumb = that.add.circle(0, 0, 50, 111111);
+		
 		that.joyStick = that.plugins.get('rexVirtualJoystick').add(that, {
 			//x: (that.sys.game.canvas.width - ((that.sys.game.canvas.width/that.sys.game.canvas.height) * 540)) / 2 + 150,
 			//y: (that.sys.game.canvas.height - 540) / 2 + 390,
 			x: 150,
-			y: 390,
-			radius: 100
+			y: height - 154,
+			radius: 100,
+			base: that.base,
+			thumb: that.thumb,
+			fixed: true
 			// dir: '8dir',
 			// forceMin: 16,
 			// fixed: true,
 			// enable: true
 			
 		});
+		
+		that.zonaSwipe.depth = 100;
+		that.zonaTarjetas.depth = 100;
+		that.base.depth = 100;
+		that.thumb.depth = 100;
+		
+		camJugador1.ignore([that.zonaSwipe, that.zonaTarjetas, that.base, that.thumb, that.zonaFondo]);
+		
 		cursorStick = that.joyStick.createCursorKeys();
 		
 		cursorStick.left.on('down', function () {
@@ -262,6 +282,15 @@ function InicializarCursores(that, jugador){
 				jugador.jumpsquat = true;	
 				setTimeout(function() { jugador.jumpsquat = false; }, 75);	
 			}
+		}    
+		);
+		
+		that.zonaTarjetas.on('pointerdown', function() {
+			jugador.tarjetas = true;
+		}    
+		);
+		that.zonaTarjetas.on('pointerup', function() {
+			jugador.tarjetas = false;
 		}    
 		);
 	}

@@ -9,8 +9,8 @@ window.onload = function(){
 			mode: Phaser.Scale.FIT,
 			parent: 'phaser-example',
 			autoCenter: Phaser.Scale.CENTER_BOTH,
-			width: 960,
-			height: 540
+			width: width,
+			height: height
 		},
 		input: {
 			gamepad: true

@@ -1,5 +1,4 @@
 var puntuacionPedidoFallido = -50;
-var ratio;
 
 class Objeto {
 	constructor(tipo, puntuacion){
@@ -113,6 +112,9 @@ function GenerarPedido(jugador, that){
 		//tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
 
 		var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
+		
+		camJugador1.ignore(tarjeta);
+		//camJugador2.ignore(tarjeta);
 		
 		tarjeta.setPosition(margenInicialTarjeta + (arrayTarjetas.length / (maxPedidos - 1)) * (width - 2 * margenInicialTarjeta), -35).setScale(escalaTarjeta);
 		
