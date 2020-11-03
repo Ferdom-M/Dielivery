@@ -131,6 +131,9 @@ class Game extends Phaser.Scene {
 		for (var i = 0;  i < arrayNombres.length; i++){
 			this.load.image("perfil" + i, "assets/Perfiles/perfil" + i + ".jpg");
 		}
+
+
+		this.load.image("pruebaNombre", "assets/prueba nombre.png");
     }
 
     create (mapa)

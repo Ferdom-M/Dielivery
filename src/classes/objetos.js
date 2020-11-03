@@ -79,6 +79,7 @@ arrayObjetos.push(collarOro);
 
 var arrayPedidos = new Array();
 var arrayTarjetas = new Array();
+var arrayPedidosMostrados =  new Array();
 //var tarjetasVigentes = [];
 var pedidosVigentes = 0;
 
