@@ -98,14 +98,18 @@ class Game extends Phaser.Scene {
 		
 		// Sonidos
 		this.load.audio('s_pasos', 'assets/Sonidos/s_pasos.wav');
+		this.load.audio('s_pasosMojados', 'assets/Sonidos/s_pasosMojado.wav');
 		this.load.audio('s_botellas', 'assets/Sonidos/s_botellas.wav');
 		this.load.audio('s_carta', 'assets/Sonidos/s_carta.wav');
 		this.load.audio('s_flores', 'assets/Sonidos/s_flores.wav');
 		this.load.audio('s_joyero', 'assets/Sonidos/s_joyero.wav');
 		this.load.audio('s_extTarjeta', 'assets/Sonidos/s_extTarjeta.wav');
 		this.load.audio('s_guarTarjeta', 'assets/Sonidos/s_guarTarjeta.wav');
+		this.load.audio('s_baulRecuerdos', 'assets/Sonidos/s_baulRecuerdos.wav');
+		this.load.audio('s_dash', 'assets/Sonidos/s_dash.wav');
+		this.load.audio('s_escalera', 'assets/Sonidos/s_escalera.wav');
+		this.load.audio('s_salto', 'assets/Sonidos/s_salto.wav');
 		
-
 		this.load.image("botonEnviar", "assets/cuadrencio.png");
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
 		this.load.tilemapTiledJSON("Nivel2", "assets/Mapas/plataformeodimensionado.json");

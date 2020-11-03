@@ -5,8 +5,9 @@ class Salto extends State{
 		jugador.alturaSalto = delta;
 		jugador.empezandoSalto = true;
 		
-		jugador.anims.play("inicioSalto");	
-
+		jugador.anims.play("inicioSalto");
+		jugador.sSalto.play();
+		
 		scene.time.delayedCall(tiempoJumpsquat, () => this.ComenzarSalto(delta, scene, jugador));		
 	}
 	execute(delta, scene, jugador){

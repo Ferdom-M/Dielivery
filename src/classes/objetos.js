@@ -102,7 +102,10 @@ function GenerarPedido(jugador, that){
 		}
 		
 		var persona = Math.floor(Math.random() * arrayNombres.length);
-		
+		while(perfilesUsados.has(persona)){
+			persona = Math.floor(Math.random() * arrayNombres.length);
+		}
+		perfilesUsados.add(persona);
 		var pedido = new Pedido(arrayPedidos.length, numObjetos, objetosGenerados, destinatario, persona, pedidosVigentes);
 		arrayPedidos.push(pedido);
 		//var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();

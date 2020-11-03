@@ -3,7 +3,8 @@ class Dash extends State{
 		//console.log("Estado dash");
 		
 		jugador.anims.play("dash");
-		
+		jugador.sDash.play();
+			
 		jugador.dashDisponible = false
 		
 		if (jugador.ultimaDirX == -1){

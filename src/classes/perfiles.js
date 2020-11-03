@@ -21,3 +21,5 @@ arrayCausaMuerte.push("Sacó un 1 de natural\nen DnD");
 arrayCausaMuerte.push("Murió por comer kebab\nmientras saltaba\nal hiperespacio");
 arrayCausaMuerte.push("Broncoaspiración por\nvómito");
 arrayCausaMuerte.push("Murió haciendo lo que\nmás disfrutaba,\ndurmiendo");
+
+var perfilesUsados = new Set();

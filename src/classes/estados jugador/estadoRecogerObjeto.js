@@ -39,15 +39,19 @@ class RecogerObjeto extends State{
 				objeto.Clone(vino);
 				break;
 			case idBandera1.has(tileActual):
+				jugador.sBaulRecuerdos.play();
 				objeto.Clone(bandera1);
 				break;
 			case idBandera2.has(tileActual):
+				jugador.sBaulRecuerdos.play();
 				objeto.Clone(bandera2);
 				break;
 			case idPelucheViejo.has(tileActual):
+				jugador.sBaulRecuerdos.play();
 				objeto.Clone(pelucheViejo);
 				break;
 			case idPelucheNuevo.has(tileActual):
+				jugador.sBaulRecuerdos.play();
 				objeto.Clone(pelucheNuevo);
 				break;
 			case idCartaSello.has(tileActual):

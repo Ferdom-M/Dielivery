@@ -2,6 +2,7 @@ var velJugador = 360;
 var velEscalon = -150;
 var velDeslizandoPared = 300;
 var aceleracion = 0.4;
+var aceleracionResbaladizo = 0.01;
 var friccionSuelo = 0.15;
 var friccionResbalo = 0.01;
 var friccionAerea = 0.25;
@@ -120,12 +121,17 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		this.velActual = velJugador;
 		// Sonidos
 		this.sPasos = config.scene.sound.add('s_pasos').setLoop(true);
+		this.sPasosMojados = config.scene.sound.add('s_pasosMojados').setLoop(true);
 		this.sBotellas = config.scene.sound.add('s_botellas');
 		this.sCarta = config.scene.sound.add('s_carta');
 		this.sFlores = config.scene.sound.add('s_flores');
 		this.sJoyero = config.scene.sound.add('s_joyero');
 		this.sExtTarjeta = config.scene.sound.add('s_extTarjeta');
 		this.sGuarTarjeta = config.scene.sound.add('s_guarTarjeta');
+		this.sBaulRecuerdos = config.scene.sound.add('s_baulRecuerdos');
+		this.sDash = config.scene.sound.add('s_dash');
+		this.sEscalera = config.scene.sound.add('s_escalera').setLoop(true);
+		this.sSalto = config.scene.sound.add('s_salto');
 		
 		// Máquina de estados
 		this.stateMachine = new StateMachine('idle', {

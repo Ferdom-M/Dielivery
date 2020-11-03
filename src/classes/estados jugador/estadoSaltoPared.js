@@ -3,6 +3,7 @@ class SaltoPared extends State{
 		//console.log("Estado salto pared");
 		
 		jugador.anims.play("inicioSalto");
+		jugador.sSalto.play();
 		
 		jugador.empezandoSalto = true;
 		
