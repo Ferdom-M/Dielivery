@@ -12,156 +12,24 @@ class Mesa extends State{
         jugador.body.velocity.x = 0;
     
 
-        /*for(var i = 0; i<jugador.inventario.length; i++){
+        for(var i = 0; i < jugador.inventario.length; i++){
             //Para multi: usar elemento de UI para ubicarlo en funcion del canvas de la pantalla en vez de sprite para que el otro no lo vea
             var miObj = jugador.inventario[i].tipo;
-            var indice = i;
-            jugador.arrayMostrados[i] = scene.add.sprite(jugador.x + tileSize + 75*i, jugador.y-tileSize - 40, miObj).setScale(1.5).setInteractive();
-            jugador.arrayMostrados[i].on('pointerdown', () => this.ClickObjeto(miObj, jugador, indice));
-
-        }*/
-
-        switch(jugador.inventario.length){
-            case 1:
-                var obj1 = scene.add.sprite(jugador.x + tileSize, jugador.y-tileSize - 40, jugador.inventario[0].tipo).setScale(1.5).setInteractive();
-                obj1.on('pointerdown', () => this.ClickObjeto(0, jugador));
-                jugador.arrayMostrados.push(obj1);
-                break;
-            case 2:
-                var obj1 = scene.add.sprite(jugador.x + tileSize, jugador.y-tileSize - 40, jugador.inventario[0].tipo).setScale(1.5).setInteractive();
-                obj1.on('pointerdown', () => this.ClickObjeto(0, jugador));
-                jugador.arrayMostrados.push(obj1);
-                var obj2 = scene.add.sprite(jugador.x + tileSize + 75, jugador.y-tileSize - 40, jugador.inventario[1].tipo).setScale(1.5).setInteractive();
-                obj2.on('pointerdown', () => this.ClickObjeto(1, jugador));
-                jugador.arrayMostrados.push(obj2);
-                break;
-            case 3:
-                var obj1 = scene.add.sprite(jugador.x + tileSize, jugador.y-tileSize - 40, jugador.inventario[0].tipo).setScale(1.5).setInteractive();
-                obj1.on('pointerdown', () => this.ClickObjeto(0, jugador));
-                jugador.arrayMostrados.push(obj1);
-                var obj2 = scene.add.sprite(jugador.x + tileSize + 75, jugador.y-tileSize - 40, jugador.inventario[1].tipo).setScale(1.5).setInteractive();
-                obj2.on('pointerdown', () => this.ClickObjeto(1, jugador));
-                jugador.arrayMostrados.push(obj2);
-                var obj3 = scene.add.sprite(jugador.x + tileSize + 75*2, jugador.y-tileSize - 40, jugador.inventario[2].tipo).setScale(1.5).setInteractive();
-                obj3.on('pointerdown', () => this.ClickObjeto(2, jugador));
-                jugador.arrayMostrados.push(obj3);
-                break;
-            case 4:
-                var obj1 = scene.add.sprite(jugador.x + tileSize, jugador.y-tileSize - 40, jugador.inventario[0].tipo).setScale(1.5).setInteractive();
-                obj1.on('pointerdown', () => this.ClickObjeto(0, jugador));
-                jugador.arrayMostrados.push(obj1);
-                var obj2 = scene.add.sprite(jugador.x + tileSize + 75, jugador.y-tileSize - 40, jugador.inventario[1].tipo).setScale(1.5).setInteractive();
-                obj2.on('pointerdown', () => this.ClickObjeto(1, jugador));
-                jugador.arrayMostrados.push(obj2);
-                var obj3 = scene.add.sprite(jugador.x + tileSize + 75*2, jugador.y-tileSize - 40, jugador.inventario[2].tipo).setScale(1.5).setInteractive();
-                obj3.on('pointerdown', () => this.ClickObjeto(2, jugador));
-                jugador.arrayMostrados.push(obj3);
-                var obj4 = scene.add.sprite(jugador.x + tileSize + 75*3, jugador.y-tileSize - 40, jugador.inventario[3].tipo).setScale(1.5).setInteractive();
-                obj4.on('pointerdown', () => this.ClickObjeto(3, jugador));
-                jugador.arrayMostrados.push(obj4);
-                break;
-            case 5:
-                var obj1 = scene.add.sprite(jugador.x + tileSize, jugador.y-tileSize - 40, jugador.inventario[0].tipo).setScale(1.5).setInteractive();
-                obj1.on('pointerdown', () => this.ClickObjeto(0, jugador));
-                jugador.arrayMostrados.push(obj1);
-                var obj2 = scene.add.sprite(jugador.x + tileSize + 75, jugador.y-tileSize - 40, jugador.inventario[1].tipo).setScale(1.5).setInteractive();
-                obj2.on('pointerdown', () => this.ClickObjeto(1, jugador));
-                jugador.arrayMostrados.push(obj2);
-                var obj3 = scene.add.sprite(jugador.x + tileSize + 75*2, jugador.y-tileSize - 40, jugador.inventario[2].tipo).setScale(1.5).setInteractive();
-                obj3.on('pointerdown', () => this.ClickObjeto(2, jugador));
-                jugador.arrayMostrados.push(obj3);
-                var obj4 = scene.add.sprite(jugador.x + tileSize + 75*3, jugador.y-tileSize - 40, jugador.inventario[3].tipo).setScale(1.5).setInteractive();
-                obj4.on('pointerdown', () => this.ClickObjeto(3, jugador));
-                jugador.arrayMostrados.push(obj4);
-                var obj5 = scene.add.sprite(jugador.x + tileSize + 75*4, jugador.y-tileSize - 40, jugador.inventario[4].tipo).setScale(1.5).setInteractive();
-                obj5.on('pointerdown', () => this.ClickObjeto(4, jugador));
-                jugador.arrayMostrados.push(obj5);
-                break;
-
+			
+            jugador.arrayMostrados.push(scene.add.sprite(jugador.x + tileSize + 75*i, jugador.y-tileSize - 40, miObj).setScale(1.5).setInteractive());
+            jugador.arrayMostrados[i].on("pointerdown", this.ClickObjeto.bind(this, i, jugador));
         }
-        
+
         textoSeleccionPedido = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 200, "Selecciona tu pedido", {fontFamily: 'Georgia, Times, serif'});
-        switch(arrayPedidos.length){
-            case 1:
-                //var pedido1 = scene.add.sprite(jugador.x - tileSize*4, jugador.y-tileSize - 150, "pruebaNombre").setScale(0.2).setInteractive();
-                //var pedido1 = scene.add.text(jugador.x - tileSize, jugador.y-tileSize - 40, "Pedido: " + arrayNombres[arrayPedidos[0].persona], {fontFamily: 'Georgia, Times, serif'}).setInteractive();
-                var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 150, arrayNombres[arrayPedidos[0].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido1.on('pointerdown', () => this.SeleccionarPedido(0, jugador));
-                arrayPedidosMostrados.push(pedido1);
-                break;
-            case 2:
-                var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 150, arrayNombres[arrayPedidos[0].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido1.on('pointerdown', () => this.SeleccionarPedido(0, jugador));
-                arrayPedidosMostrados.push(pedido1);
-
-                var pedido2 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 125, arrayNombres[arrayPedidos[1].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido2.on('pointerdown', () => this.SeleccionarPedido(1, jugador));
-                arrayPedidosMostrados.push(pedido2);
-                break;
-            case 3:
-                var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 150, arrayNombres[arrayPedidos[0].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido1.on('pointerdown', () => this.SeleccionarPedido(0, jugador));
-                arrayPedidosMostrados.push(pedido1);
-
-                var pedido2 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 125, arrayNombres[arrayPedidos[1].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido2.on('pointerdown', () => this.SeleccionarPedido(1, jugador));
-                arrayPedidosMostrados.push(pedido2);
-
-                var pedido3 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 100, arrayNombres[arrayPedidos[2].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido3.on('pointerdown', () => this.SeleccionarPedido(2, jugador));
-                arrayPedidosMostrados.push(pedido3);
-                break;
-            case 4:
-                var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 150, arrayNombres[arrayPedidos[0].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido1.on('pointerdown', () => this.SeleccionarPedido(0, jugador));
-                arrayPedidosMostrados.push(pedido1);
-
-                var pedido2 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 125, arrayNombres[arrayPedidos[1].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido2.on('pointerdown', () => this.SeleccionarPedido(1, jugador));
-                arrayPedidosMostrados.push(pedido2);
-
-                var pedido3 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 100, arrayNombres[arrayPedidos[2].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido3.on('pointerdown', () => this.SeleccionarPedido(2, jugador));
-                arrayPedidosMostrados.push(pedido3);
-
-                var pedido4 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 75, arrayNombres[arrayPedidos[3].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido4.on('pointerdown', () => this.SeleccionarPedido(3, jugador));
-                arrayPedidosMostrados.push(pedido4);
-                break;
-            case 5:
-                var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 150, arrayNombres[arrayPedidos[0].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido1.on('pointerdown', () => this.SeleccionarPedido(0, jugador));
-                arrayPedidosMostrados.push(pedido1);
-
-                var pedido2 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 125, arrayNombres[arrayPedidos[1].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido2.on('pointerdown', () => this.SeleccionarPedido(1, jugador));
-                arrayPedidosMostrados.push(pedido2);
-
-                var pedido3 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 100, arrayNombres[arrayPedidos[2].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido3.on('pointerdown', () => this.SeleccionarPedido(2, jugador));
-                arrayPedidosMostrados.push(pedido3);
-
-                var pedido4 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 75, arrayNombres[arrayPedidos[3].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido4.on('pointerdown', () => this.SeleccionarPedido(3, jugador));
-                arrayPedidosMostrados.push(pedido4);
-
-                var pedido5 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 50, arrayNombres[arrayPedidos[1].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
-                pedido5.on('pointerdown', () => this.SeleccionarPedido(4, jugador));
-                arrayPedidosMostrados.push(pedido5);
-                break;
-            
-           /*case 5:
-            var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 150, arrayNombres[arrayPedidos[0].persona], {fontFamily: 'Georgia, Times, serif'}).setInteractive();
-            var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 125, arrayNombres[arrayPedidos[1].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '20px', resolution: 100}).setInteractive();
-            var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 100, arrayNombres[arrayPedidos[2].persona], {fontFamily: 'Georgia, Times, serif'}).setInteractive();
-            var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 75,  arrayNombres[arrayPedidos[3].persona], {fontFamily: 'Georgia, Times, serif'}).setInteractive();
-            var pedido1 = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 50,  arrayNombres[arrayPedidos[4].persona], {fontFamily: 'Georgia, Times, serif'}).setInteractive();
-            */
+		
+		for(var i = 0; i < arrayPedidos.length; i++){
+            //Para multi: usar elemento de UI para ubicarlo en funcion del canvas de la pantalla en vez de sprite para que el otro no lo vea
+            var pedido = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - (150 - 25 * i), arrayNombres[arrayPedidos[i].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
+                
+			arrayPedidosMostrados.push(pedido);
+            arrayPedidosMostrados[i].on("pointerdown", this.SeleccionarPedido.bind(this, i, jugador));
         }
-        
-        console.log(jugador.inventario);
 
-        
         buttEnviarCielo = scene.add.sprite(jugador.x +70 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
         buttEnviarInfierno = scene.add.sprite(jugador.x +130 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
         buttBasura = scene.add.sprite(jugador.x + 200 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
@@ -184,8 +52,7 @@ class Mesa extends State{
         }
     }
     
-    ClickObjeto(objetoActual, jugador){
-        console.log(objetoActual);
+    ClickObjeto (objetoActual, jugador){
         if(jugador.arraySeleccionados.includes(objetoActual)){
             //Falta meter cambio de sprite que indique que está seleccionado
             //
@@ -217,6 +84,7 @@ class Mesa extends State{
 
         //Esto debe ir en Comparar paquete, esta aqui provisionalmente porque
         //Comparar paquete no va por la seleccion de pedidos
+		// No va porque no habeis leido el codigo de comparar paquete
         for(let i = 0; i < paqueteCreado.length; i++){
             for(let j = 0; j < jugador.inventario.length; j++){
                 console.log("Comparando: " + jugador.inventario[j].tipo + " y " + paqueteCreado[i]);
