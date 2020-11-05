@@ -1,4 +1,7 @@
-var puntuacionPedidoFallido = -50;
+var puntuacionDestinatarioFallido = -150;
+var puntuacionItemFallido = -40;
+var puntuacionTotal = 0;
+
 
 class Objeto {
 	constructor(tipo, puntuacion){
@@ -98,7 +101,10 @@ function GenerarPedido(jugador, that){
 		var objetosGenerados = new Array();
 		for(var i = 0; i < numObjetos; i++){
 			var objetoGenerado = Math.floor(Math.random() * arrayObjetos.length);
-			objetosGenerados.push(arrayObjetos[objetoGenerado].tipo);
+			//objetosGenerados.push(arrayObjetos[objetoGenerado].tipo);
+			objetosGenerados.push(arrayObjetos[objetoGenerado]);
+			//objetosGenerados solo tiene nombres por lo que no se puede acceder a la puntuacion
+			//en compararPedidos
 		}
 		
 		var persona = Math.floor(Math.random() * arrayNombres.length);
@@ -127,7 +133,7 @@ function GenerarPedido(jugador, that){
 }
 
 //Paquete creado por el jugador, pedido a cumplir que elige el jugador  
-function CompararPedidos(paquete, pedido, destinoElegido){
+/*function CompararPedidos(paquete, pedido, destinoElegido){
 	var puntuacion = 0
 	if(destinoElegido == pedido.destinatario){
 		var objetosCorrectos = 0;
@@ -163,4 +169,62 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 	//Insertar bucle de vaciado de inventario(actualmente en ClickObjeto de estadoMesa) 
 
 	return puntuacion;
+}*/
+
+function CompararPedidos(paquete, pedido, destinoElegido){
+	//var puntuacion = 0
+	var objetos = [];
+	for(var z = 0; z < pedido.objetos.length; z++){
+		objetos.push(pedido.objetos[z].tipo);
+	}
+	console.log("Score previo: " + puntuacionTotal);
+	if(destinoElegido == pedido.destinatario){
+		var objetosCorrectos = 0;
+		for (var i = 0; i < paquete.length; i++){
+			if(objetos.includes(paquete[i])){
+				console.log("contengo: " + paquete[i]);
+				console.log("Sumo: " + pedido.objetos[objetos.indexOf(paquete[i])].puntuacion);
+				puntuacionTotal += pedido.objetos[objetos.indexOf(paquete[i])].puntuacion;
+				// Sobreescribimos ese elemento del array
+				pedido.objetos[objetos.indexOf(paquete[i])] = 0;
+				objetos[objetos.indexOf(paquete[i])] = 0;
+				objetosCorrectos += 1;
+				//console.log("puntuacion" + paquete.objetos[pedido.objetos.indexOf(paquete[i])].puntuacion);
+				//puntuacion += 50;
+			}else{
+				console.log("fallo: " + paquete[i]);
+				puntuacionTotal += puntuacionItemFallido;
+				//puntuacion += 50;
+			}
+			
+		}
+		if(objetosCorrectos == pedido.length){
+			console.log("Pedido correcto");
+		}else{
+			console.log("Pedido fallido");
+			var itemsSobrantes = Math.abs(pedido.objetos.length - paquete.length);
+			puntuacionTotal -= Math.abs(itemsSobrantes * puntuacionItemFallido);
+			console.log("Resto: " + itemsSobrantes * puntuacionItemFallido);
+			//puntuacion += puntuacionItemFallido;
+		}
+	}else{
+		console.log("Pedido fallido por destino");
+		puntuacionTotal += puntuacionDestinatarioFallido;
+	}
+
+	//Eliminamos tarjeta del pedido que hemos hecho
+	arrayTarjetas[pedido.indice].destroy();
+	arrayTarjetas.splice(pedido.indice, 1);
+	arrayPedidos.splice(pedido.indice, 1);
+	for(let i = pedido.indice; i < arrayPedidos.length; i++){
+		arrayPedidos[i].indice = arrayPedidos[i].indice - 1;
+	}
+	arrayPedidosMostrados[pedido.indice].destroy();
+
+	pedidosVigentes--;
+
+	//Insertar bucle de vaciado de inventario(actualmente en ClickObjeto de estadoMesa) 
+
+	//return puntuacion;
+	console.log("Puntuacion actual: " + puntuacionTotal);
 }

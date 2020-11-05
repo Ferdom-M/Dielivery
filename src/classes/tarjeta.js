@@ -9,7 +9,7 @@ class Tarjeta extends Phaser.GameObjects.Container{
 		}
 		
 		for(var i = 0; i < pedido.numObjetos; i++){
-			imagenes.push(scene.add.image(-100 + i * 64, 75, pedido.objetos[i]));
+			imagenes.push(scene.add.image(-100 + i * 64, 75, pedido.objetos[i].tipo));
 		}
 		/*
 		this.imagenes.push(scene.add.image(0, 0, 'persona' + pedido.persona));

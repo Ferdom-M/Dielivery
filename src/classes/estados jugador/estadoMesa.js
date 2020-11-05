@@ -70,9 +70,12 @@ class Mesa extends State{
     }
 
     Enviar(jugador, destElegido){
-        var paquete = this.Eliminar(jugador);
-        //hasta aqui
-        console.log(CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido));
+        if(jugador.pedidoSeleccionado){
+            var paquete = this.Eliminar(jugador);
+            //hasta aqui
+            CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
+            //console.log("Puntuacion actual: " + puntuacionTotal);
+        }
     }
 
     Eliminar(jugador){
