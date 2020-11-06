@@ -74,14 +74,15 @@ class LevelSelect extends Phaser.Scene {
         this.buttonNivel2 = this.add.sprite(Nivel2PosX, Nivel2PosY, '2').setScale(0.5).setInteractive();
 		this.buttonNivel3 = this.add.sprite(Nivel3PosX, Nivel3PosY, '3').setScale(0.5).setInteractive();
         
-		this.buttonNivel1.on('pointerdown', () => this.clickButtonNivel1());
-		this.buttonNivel2.on('pointerdown', () => this.clickButtonNivel2());
-		this.buttonNivel3.on('pointerdown', () => this.clickButtonNivel3());
+		this.buttonNivel1.on('pointerdown', () => PasarEscena(this, "Game", "Nivel1"));
+		this.buttonNivel2.on('pointerdown', () => PasarEscena(this, "Game", "Nivel2"));
+		this.buttonNivel3.on('pointerdown', () => PasarEscena(this, "Game", "Nivel3"));
 		
 		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-        this.buttonVolver.on('pointerup', () => this.changeSpriteVolver());
+		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
+        this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
+        this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
+        this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
 		
 		var FKey = this.input.keyboard.addKey('F');
 
@@ -103,36 +104,4 @@ class LevelSelect extends Phaser.Scene {
 		
 		this.cameras.main.setZoom(ratio);
 	}
-	
-    clickButtonNivel1(){
-		//this.scale.off('resize');
-        this.scene.start("Game", "Nivel1");
-    }
-    clickButtonNivel2(){
-		//this.scale.off('resize');
-        this.scene.start("Game", "Nivel2");
-    }
-    clickButtonNivel3(){
-		//this.scale.off('resize');
-        this.scene.start("Game", "Nivel3");
-    }
-
-	clickButtonVolver() {
-		//this.scale.off('resize');
-        this.scene.start("Mainmenu");
-    }
-
-    changeSpriteVolverPulsado() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver_pulsado').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.changeSpriteVolver());
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerout', () => this.changeSpriteVolver());
-    }
-    changeSpriteVolver() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-    }
 }

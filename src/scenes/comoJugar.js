@@ -46,6 +46,20 @@ class ComoJugar extends Phaser.Scene {
         this.load.image('volver', 'assets/Botones/volver.png');
         this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
 		
+		// Sonidos
+		this.load.audio('s_pasos', 'assets/Sonidos/s_pasos.wav');
+		this.load.audio('s_pasosMojados', 'assets/Sonidos/s_pasosMojado.wav');
+		this.load.audio('s_botellas', 'assets/Sonidos/s_botellas.wav');
+		this.load.audio('s_carta', 'assets/Sonidos/s_carta.wav');
+		this.load.audio('s_flores', 'assets/Sonidos/s_flores.wav');
+		this.load.audio('s_joyero', 'assets/Sonidos/s_joyero.wav');
+		this.load.audio('s_extTarjeta', 'assets/Sonidos/s_extTarjeta.wav');
+		this.load.audio('s_guarTarjeta', 'assets/Sonidos/s_guarTarjeta.wav');
+		this.load.audio('s_baulRecuerdos', 'assets/Sonidos/s_baulRecuerdos.wav');
+		this.load.audio('s_dash', 'assets/Sonidos/s_dash.wav');
+		this.load.audio('s_escalera', 'assets/Sonidos/s_escalera.wav');
+		this.load.audio('s_salto', 'assets/Sonidos/s_salto.wav');
+		
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
 		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
@@ -76,9 +90,10 @@ class ComoJugar extends Phaser.Scene {
 		
 		// Boton volver
 		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-        this.buttonVolver.on('pointerup', () => this.changeSpriteVolver());
+		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
+        this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
+        this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
+        this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
     }
 
     update(time, delta) {
@@ -90,23 +105,4 @@ class ComoJugar extends Phaser.Scene {
 		
 		this.cameras.main.setZoom(ratio);
 	}
-	
-    clickButtonVolver() {
-		//this.scale.off('resize');
-        this.scene.start("Mainmenu");
-    }
-
-    changeSpriteVolverPulsado() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver_pulsado').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.changeSpriteVolver());
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerout', () => this.changeSpriteVolver());
-    }
-    changeSpriteVolver() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-    }
 }

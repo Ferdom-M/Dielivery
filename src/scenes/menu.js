@@ -1,14 +1,12 @@
 // JavaScript source code
-var jugarPosX = 300;
-var jugarPosY = 350;
-var comoJugarPosX = 300;
-var comoJugarPosY = 450;
-var creditosPosX = 300;
-var creditosPosY = 550;
+var jugarPosX = width / 2;
+var jugarPosY = 300;
+var comoJugarPosX = width / 2;
+var comoJugarPosY = 375;
+var creditosPosX = width / 2;
+var creditosPosY = 450;
 var volverPosX = 200;
 var volverPosY = 50;
-
-var ratio;
 
 class Mainmenu extends Phaser.Scene {
 
@@ -53,7 +51,8 @@ class Mainmenu extends Phaser.Scene {
 		});
 		
 		// CARGA
-        this.load.image('fondo', 'assets/sky.jpeg');
+        this.load.image('fondo', 'assets/Interfaz/Fondo menu principal.jpg');
+        this.load.image('tablon', 'assets/Interfaz/Tablon menu principal.png');
         this.load.image('logo', 'assets/logo.png');
         
         this.load.image('jugar', 'assets/Botones/jugar.png');
@@ -73,23 +72,28 @@ class Mainmenu extends Phaser.Scene {
 		//this.cameras.main.setZoom(ratio);
 		
 		
-        this.add.image(640, 360, 'fondo');
+        this.fondo = this.add.image(width / 2, height / 2, 'fondo');
+		this.fondo.setDisplaySize(width, height);
+        this.tablon = this.add.image(width / 2, height / 2, 'tablon');
         this.add.image(300, 150, 'logo').setScale(0.4);
 
         this.buttonJugar = this.add.sprite(jugarPosX, jugarPosY, 'jugar').setScale(0.5).setInteractive();
-        this.buttonJugar.on('pointerdown', () => this.clickButtonJugar());
-        this.buttonJugar.on('pointerover', () => this.changeSpriteJugarPulsado());
-        this.buttonJugar.on('pointerup', () => this.changeSpriteJugar());
-
+        this.buttonJugar.on('pointerdown', () => {this.buttonJugar.setTexture("jugar_pulsado");});
+        this.buttonJugar.on('pointerup', () => PasarEscena(this, "LevelSelect"));
+        this.buttonJugar.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonJugar.setTexture("jugar_pulsado");}});
+        this.buttonJugar.on('pointerout', () => {this.buttonJugar.setTexture("jugar");});
+		
         this.buttonComoJugar = this.add.sprite(comoJugarPosX, comoJugarPosY, 'como_jugar').setScale(0.5).setInteractive();
-        this.buttonComoJugar.on('pointerdown', () => this.clickButtonComoJugar());
-        this.buttonComoJugar.on('pointerover', () => this.changeSpriteComoJugarPulsado());
-        this.buttonComoJugar.on('pointerup', () => this.changeSpriteComoJugar());
+		this.buttonComoJugar.on('pointerdown', () => {this.buttonComoJugar.setTexture("como_jugar_pulsado");});
+        this.buttonComoJugar.on('pointerup', () => PasarEscena(this, "ComoJugar"));
+        this.buttonComoJugar.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonComoJugar.setTexture("como_jugar_pulsado");}});
+        this.buttonComoJugar.on('pointerout', () => {this.buttonComoJugar.setTexture("como_jugar");});
 
         this.buttonCreditos = this.add.sprite(creditosPosX, creditosPosY, 'creditos').setScale(0.5).setInteractive();
-        this.buttonCreditos.on('pointerdown', () => this.clickButtonCreditos());
-        this.buttonCreditos.on('pointerover', () => this.changeSpriteCreditosPulsado());
-        this.buttonCreditos.on('pointerup', () => this.changeSpriteCreditos());
+		this.buttonCreditos.on('pointerdown', () => {this.buttonCreditos.setTexture("creditos_pulsado");});
+        this.buttonCreditos.on('pointerup', () => PasarEscena(this, "creditos"));
+        this.buttonCreditos.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonCreditos.setTexture("creditos_pulsado");}});
+        this.buttonCreditos.on('pointerout', () => {this.buttonCreditos.setTexture("creditos");});
 
         var FKey = this.input.keyboard.addKey('F');
 
@@ -111,67 +115,9 @@ class Mainmenu extends Phaser.Scene {
 		
 		this.cameras.main.setZoom(ratio);
 	}
-	
-    clickButtonJugar(){
-		//this.scale.off('resize');
-        this.scene.start("LevelSelect");
-    }
-    clickButtonCreditos(){
-		//this.scale.off('resize');
-        this.scene.start("creditos");
-    }
-    clickButtonComoJugar(){
-		//this.scale.off('resize');
-        this.scene.start("ComoJugar");
-    }
+}
 
-
-
-    changeSpriteJugarPulsado() {
-        this.buttonJugar.destroy();
-        this.buttonJugar = this.add.sprite(jugarPosX, jugarPosY, 'jugar_pulsado').setScale(0.5).setInteractive();
-        this.buttonJugar.on('pointerdown', () => this.changeSpriteJugar());
-        this.buttonJugar.on('pointerdown', () => this.clickButtonJugar());
-        this.buttonJugar.on('pointerout', () => this.changeSpriteJugar());
-    }
-	changeSpriteJugar() {
-        this.buttonJugar.destroy();
-        this.buttonJugar = this.add.sprite(jugarPosX, jugarPosY, 'jugar').setScale(0.5).setInteractive();
-        this.buttonJugar.on('pointerdown', () => this.clickButtonJugar());
-        this.buttonJugar.on('pointerover', () => this.changeSpriteJugarPulsado());
-        this.buttonJugar.on('pointerup', () => this.changeSpriteJugar());
-    }
-	
-	changeSpriteComoJugarPulsado() {
-        this.buttonComoJugar.destroy();
-        this.buttonComoJugar = this.add.sprite(comoJugarPosX, comoJugarPosY, 'como_jugar_pulsado').setScale(0.5).setInteractive();
-        this.buttonComoJugar.on('pointerdown', () => this.changeSpriteComoJugar());
-        this.buttonComoJugar.on('pointerdown', () => this.clickButtonComoJugar());
-        this.buttonComoJugar.on('pointerout', () => this.changeSpriteComoJugar());
-
-    }
-    changeSpriteComoJugar() {
-        this.buttonComoJugar.destroy();
-        this.buttonComoJugar = this.add.sprite(comoJugarPosX, comoJugarPosY, 'como_jugar').setScale(0.5).setInteractive();
-        this.buttonComoJugar.on('pointerdown', () => this.clickButtonComoJugar());
-        this.buttonComoJugar.on('pointerover', () => this.changeSpriteComoJugarPulsado());
-        this.buttonComoJugar.on('pointerup', () => this.changeSpriteJugar());
-
-    }
-    
-	changeSpriteCreditosPulsado() {
-        this.buttonCreditos.destroy();
-        this.buttonCreditos = this.add.sprite(creditosPosX, creditosPosY, 'creditos_pulsado').setScale(0.5).setInteractive();
-        this.buttonCreditos.on('pointerdown', () => this.changeSpriteCreditos());
-        this.buttonCreditos.on('pointerdown', () => this.clickButtonCreditos());
-        this.buttonCreditos.on('pointerout', () => this.changeSpriteCreditos());
-    }
-	changeSpriteCreditos() {
-        this.buttonCreditos.destroy();
-        this.buttonCreditos = this.add.sprite(creditosPosX, creditosPosY, 'creditos').setScale(0.5).setInteractive();
-        this.buttonCreditos.on('pointerdown', () => this.clickButtonCreditos());
-        this.buttonCreditos.on('pointerover', () => this.changeSpriteCreditosPulsado());
-        this.buttonCreditos.on('pointerup', () => this.changeSpriteJugar());
-
-    }
+function PasarEscena(that, escena, nivel){
+	//this.scale.off('resize');
+	that.scene.start(escena, nivel);
 }

@@ -54,9 +54,11 @@ class creditos extends Phaser.Scene {
 
 
         this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-        this.buttonVolver.on('pointerup', () => this.changeSpriteVolver());
+		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
+        this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
+        this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
+        this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
+		
         var FKey = this.input.keyboard.addKey('F');
 
         FKey.on('down', function () {
@@ -76,27 +78,4 @@ class creditos extends Phaser.Scene {
 		
 		this.cameras.main.setZoom(ratio);
 	}
-	
-    clickButtonVolver() {
-		//this.scale.off('resize');
-        this.scene.start("Mainmenu");
-
-    }
-
-    changeSpriteVolverPulsado() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver_pulsado').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.changeSpriteVolver());
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerout', () => this.changeSpriteVolver());
-
-    }
-    changeSpriteVolver() {
-        this.buttonVolver.destroy();
-        this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
-        this.buttonVolver.on('pointerdown', () => this.clickButtonVolver());
-        this.buttonVolver.on('pointerover', () => this.changeSpriteVolverPulsado());
-
-    }
-
 }
