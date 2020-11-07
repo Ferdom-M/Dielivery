@@ -7,6 +7,9 @@ var creditosPosX = width / 2;
 var creditosPosY = 450;
 var volverPosX = 200;
 var volverPosY = 50;
+var inputNombreX = 800;
+var inputNombreY = 100;
+var nombreJugador;
 
 class Mainmenu extends Phaser.Scene {
 
@@ -61,7 +64,9 @@ class Mainmenu extends Phaser.Scene {
         this.load.image('creditos_pulsado', 'assets/Botones/creditos_pulsados.png');
         this.load.image('como_jugar', 'assets/Botones/como_jugar.png');
         this.load.image('como_jugar_pulsado', 'assets/Botones/como_jugar_pulsado.png');
-		
+        
+        this.load.plugin('rexinputtextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexinputtextplugin.min.js', true);
+
 		
     }
 	
@@ -107,6 +112,15 @@ class Mainmenu extends Phaser.Scene {
             }
 
         }, this);
+        
+        //Creamos el input text del chaval este tan majo y ponemos que cuando el texto cambie se guarde en la variable nombreJugador
+        var inputText = this.add.rexInputText(inputNombreX, inputNombreY, 300, 40, {
+            placeholder: 'Introduce tu nombre',
+        });
+        inputText.on('textchange', function(inputText){
+            nombreJugador = inputText.text;
+        });
+
     }
 
 	
@@ -118,6 +132,11 @@ class Mainmenu extends Phaser.Scene {
 }
 
 function PasarEscena(that, escena, nivel){
-	//this.scale.off('resize');
-	that.scene.start(escena, nivel);
+    //this.scale.off('resize');
+    if(nombreJugador == undefined){
+        console.log('Mete un nombre, bobo');
+    }else{
+        that.scene.start(escena, nivel);
+    }
+	
 }

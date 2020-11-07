@@ -4,6 +4,9 @@ import VirtualJoystickPlugin from './node_modules/phaser3-rex-plugins/plugins/vi
 window.onload = function(){
 
 	var config = {
+		dom: {
+			createContainer: true
+		},
 		type: Phaser.AUTO,
 		scale: {
 			mode: Phaser.Scale.FIT,

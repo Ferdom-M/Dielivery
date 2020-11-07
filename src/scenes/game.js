@@ -196,7 +196,7 @@ class Game extends Phaser.Scene {
 		
 		this.initialTime = 300;
 
-		text = this.add.text(0, 0, 'Countdown: ' + formatTime(this.initialTime)).setScrollFactor(0,0);
+		text = this.add.text(0, 30, 'Countdown: ' + formatTime(this.initialTime)).setScrollFactor(0,0);
 
 		// Each 1000 ms call onEvent
 		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
@@ -246,8 +246,8 @@ function onEvent ()
     this.initialTime -= 1; // One second
     text.setText('Countdown: ' + formatTime(this.initialTime));
 	if(this.initialTime == 0){
-		var puntuacionFinal = this.jugador.puntuacion;
-        this.scene.start("Results", [puntuacionFinal]);
+		var puntuacionFinal = puntuacionTotal;
+        this.scene.start("Results", puntuacionFinal);
 	}
 }
 
