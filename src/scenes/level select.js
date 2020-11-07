@@ -54,12 +54,12 @@ class LevelSelect extends Phaser.Scene {
     }
 
     create() {
-		var Nivel1PosX = this.sys.game.canvas.width / 4;
-		var Nivel1PosY = this.sys.game.canvas.height / 2;
-		var Nivel2PosX = this.sys.game.canvas.width / 4 * 2;
-		var Nivel2PosY = this.sys.game.canvas.height / 2;
-		var Nivel3PosX = this.sys.game.canvas.width / 4 * 3;
-		var Nivel3PosY = this.sys.game.canvas.height / 2;
+		var Nivel1PosX = width / 4;
+		var Nivel1PosY = height / 2;
+		var Nivel2PosX = width / 4 * 2;
+		var Nivel2PosY = height / 2;
+		var Nivel3PosX = width / 4 * 3;
+		var Nivel3PosY = height / 2;
 		var volverPosX = 200;
 		var volverPosY = 50;
 		//this.resizeCamera();
@@ -68,7 +68,8 @@ class LevelSelect extends Phaser.Scene {
 		//this.cameras.main.setZoom(ratio);
 		
 		
-        this.add.image(640, 360, 'fondo');
+        this.fondo = this.add.image(width / 2, height / 2, 'fondo');
+		this.fondo.setDisplaySize(width, height);
 
         this.buttonNivel1 = this.add.sprite(Nivel1PosX, Nivel1PosY, '1').setScale(0.5).setInteractive();
         this.buttonNivel2 = this.add.sprite(Nivel2PosX, Nivel2PosY, '2').setScale(0.5).setInteractive();

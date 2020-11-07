@@ -55,8 +55,8 @@ class Results extends Phaser.Scene {
     }
 
     create(puntuacion) {
-		var puntuacionPosX = this.sys.game.canvas.width / 2;
-		var puntuacionPosY = this.sys.game.canvas.height / 2;
+		var puntuacionPosX = width / 2;
+		var puntuacionPosY = height / 2;
 		var volverPosX = 200;
 		var volverPosY = 50;
 		//this.resizeCamera();
@@ -65,7 +65,8 @@ class Results extends Phaser.Scene {
 		//this.cameras.main.setZoom(ratio);
 		
 		
-        this.add.image(640, 360, 'fondo');
+        this.fondo = this.add.image(width / 2, height / 2, 'fondo');
+		this.fondo.setDisplaySize(width, height);
 		
 		console.log(puntuacion);
 		

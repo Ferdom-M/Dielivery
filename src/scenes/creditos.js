@@ -50,7 +50,8 @@ class creditos extends Phaser.Scene {
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
-        this.add.image(640, 360, 'fondo');
+        this.fondo = this.add.image(width / 2, height / 2, 'fondo');
+		this.fondo.setDisplaySize(width, height);
 
 
         this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
