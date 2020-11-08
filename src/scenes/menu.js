@@ -198,6 +198,4 @@ function PasarEscena(that, escena, nivel){
     //}else{
       //  that.scene.start(escena, nivel);
     //}
-	
-}
 }

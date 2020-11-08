@@ -201,7 +201,7 @@ class Game extends Phaser.Scene {
 		}
 		
 		
-		this.initialTime = 2;
+		this.initialTime = 300;
 
 		text = this.add.text(0, 30, 'Countdown: ' + formatTime(this.initialTime)).setScrollFactor(0,0);
 
