@@ -157,6 +157,7 @@ function InicializarCursores(that, jugador){
 			console.log(jugador.arrayMostrados);
 			console.log(jugador.arraySeleccionados);
 			console.log(jugador.pedidoSeleccionado);
+			console.log(jugador.inventario);
 		}, that);
 		cursors.tpMesa.on('down', function () {
 			console.log("tpd");

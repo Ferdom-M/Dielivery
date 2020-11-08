@@ -8,6 +8,7 @@ class Dano extends State{
 		jugador.body.setAllowGravity(true);
 		if(jugador.inventario.length > 0){
 			console.log("Oh no, perdí " + jugador.inventario.pop());
+			RepresentarInventario(scene, jugador);
 			jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
 		}
 		jugador.setVelocityY(velSalto);
