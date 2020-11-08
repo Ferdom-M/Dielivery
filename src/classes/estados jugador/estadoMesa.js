@@ -35,7 +35,7 @@ class Mesa extends State{
         buttBasura = scene.add.sprite(jugador.x + 200 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
         buttEnviarCielo.on('pointerdown', () => this.Enviar(delta, scene, jugador, true));
         buttEnviarInfierno.on('pointerdown', () => this.Enviar(delta, scene, jugador, false));
-        buttBasura.on('pointerdown', () => this.Eliminar(jugador));
+        buttBasura.on('pointerdown', () => this.Eliminar(delta, scene, jugador, false));
 
 
         jugador.accion = false;
@@ -71,7 +71,7 @@ class Mesa extends State{
 
     Enviar(delta, scene, jugador, destElegido){
         if(jugador.pedidoSeleccionado){
-            var paquete = this.Eliminar(jugador);
+            var paquete = this.Eliminar(jugador, true);
             //hasta aqui
             CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
             //console.log("Puntuacion actual: " + puntuacionTotal);
@@ -80,7 +80,7 @@ class Mesa extends State{
         }
     }
 
-    Eliminar(jugador){
+    Eliminar(delta, scene, jugador, enviar){
         var paqueteCreado = [];
         for(let a = 0; a < jugador.arraySeleccionados.length; a++){
             paqueteCreado.push(jugador.inventario[jugador.arraySeleccionados[a]].tipo);
@@ -104,6 +104,11 @@ class Mesa extends State{
         }
 
         jugador.arraySeleccionados.splice(0, jugador.arraySeleccionados.length);
+
+        if(!enviar){
+            this.BorrarBotones(delta, jugador);
+            this.enter(delta, scene, jugador);
+        }
 
         return paqueteCreado;
     }
