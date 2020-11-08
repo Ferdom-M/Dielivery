@@ -5,10 +5,10 @@ class creditos extends Phaser.Scene {
     constructor() {
         super("creditos");
     }
-	shutdown(){​​
+	shutdown(){
 		this.load.off('progress');
 		this.load.off('complete');
-	}​​
+	}
     preload() {
 		// BARRA DE CARGA
 		var width = this.cameras.main.width;

@@ -4,10 +4,10 @@ class Ranking extends Phaser.Scene {
     constructor() {
         super("Ranking");
     }
-    shutdown(){​​
+    shutdown(){
 		this.load.off('progress');
 		this.load.off('complete');
-	}​​
+	}
     preload() {
 		// BARRA DE CARGA
 		var width = this.cameras.main.width;

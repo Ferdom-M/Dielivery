@@ -18,10 +18,10 @@ class Mainmenu extends Phaser.Scene {
         super("Mainmenu");
     }
     
-    shutdown() {​​
+	shutdown(){
 		this.load.off('progress');
 		this.load.off('complete');
-    }​​
+    }
     
     preload() {
 		// BARRA DE CARGA
