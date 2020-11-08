@@ -8,7 +8,10 @@ class Results extends Phaser.Scene {
     constructor() {
         super("Results");
     }
-
+	shutdown(){​​
+		this.load.off('progress');
+		this.load.off('complete');
+	}​​
     preload() {
 		// BARRA DE CARGA
 		var width = this.cameras.main.width;
@@ -44,6 +47,7 @@ class Results extends Phaser.Scene {
 			progressBox.destroy();
 			percentText.destroy();
 		});
+		this.sys.events.once('shutdown', this.shutdown, this);
 		
 		
 		// CARGA
@@ -52,9 +56,6 @@ class Results extends Phaser.Scene {
         
         this.load.image('volver', 'assets/Botones/volver.png');
         this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
-        this.load.image('1', 'assets/Botones/1.png');
-        this.load.image('2', 'assets/Botones/2.png');;
-        this.load.image('3', 'assets/Botones/3.png');
         
     }
 
@@ -141,10 +142,9 @@ class Results extends Phaser.Scene {
 
 	clickButtonVolver() {
 		//this.scale.off('resize');
-		
 		this.scene.stop("Game");
 		this.scene.stop("Results");
-        this.scene.start("Mainmenu");
+        this.scene.start("Ranking");
     }
 
     changeSpriteVolverPulsado() {

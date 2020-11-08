@@ -7,16 +7,22 @@ var creditosPosX = width / 2;
 var creditosPosY = 450;
 var volverPosX = 200;
 var volverPosY = 50;
-var inputNombreX = 800;
-var inputNombreY = 100;
+var inputNombreX = (width/4) * 3;
+var inputNombreY = height/4;
 var nombreJugador;
+
 
 class Mainmenu extends Phaser.Scene {
 
     constructor() {
         super("Mainmenu");
     }
-
+    
+    shutdown() {​​
+		this.load.off('progress');
+		this.load.off('complete');
+    }​​
+    
     preload() {
 		// BARRA DE CARGA
 		var width = this.cameras.main.width;
@@ -46,12 +52,12 @@ class Mainmenu extends Phaser.Scene {
 			percentText.setText(parseInt(value * 100) + '%');
 		});
 
-
 		this.load.on('complete', function () {
 			progressBar.destroy();
 			progressBox.destroy();
 			percentText.destroy();
 		});
+		this.sys.events.once('shutdown', this.shutdown, this);
 		
 		// CARGA
         this.load.image('fondo', 'assets/Interfaz/Fondo menu principal.jpg');
@@ -75,7 +81,7 @@ class Mainmenu extends Phaser.Scene {
 		//this.scale.on('resize', () => this.resizeCamera());
 		
 		//this.cameras.main.setZoom(ratio);
-		
+		var flipflop = false;
 		
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
@@ -101,16 +107,14 @@ class Mainmenu extends Phaser.Scene {
         this.buttonCreditos.on('pointerout', () => {this.buttonCreditos.setTexture("creditos");});
 
         var FKey = this.input.keyboard.addKey('F');
-
+        
         FKey.on('down', function () {
-
-            if (this.scale.isFullscreen) {
-                this.scale.stopFullscreen();
-            }
-            else {
-                this.scale.startFullscreen();
-            }
-
+                if (this.scale.isFullscreen) {
+                    this.scale.stopFullscreen();
+                }
+                else {
+                    this.scale.startFullscreen();
+                }
         }, this);
         
         //Creamos el input text del chaval este tan majo y ponemos que cuando el texto cambie se guarde en la variable nombreJugador
@@ -119,7 +123,15 @@ class Mainmenu extends Phaser.Scene {
         });
         inputText.on('textchange', function(inputText){
             nombreJugador = inputText.text;
-        });
+        }, this);
+
+        inputText.on('focus', function(){
+            flipflop = true;
+        }, this);
+        
+        inputText.on('blur', function(){
+            flipflop = false;
+        }, this);
 
     }
 

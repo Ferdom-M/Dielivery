@@ -3,8 +3,11 @@ class ComoJugar extends Phaser.Scene {
     constructor() {
         super("ComoJugar");
     }
-	
-	preload() {
+	shutdown(){​​
+		this.load.off('progress');
+		this.load.off('complete');
+	}​​
+    preload() {
 		// BARRA DE CARGA
 		var width = this.cameras.main.width;
 		var height = this.cameras.main.height;
@@ -39,6 +42,7 @@ class ComoJugar extends Phaser.Scene {
 			progressBox.destroy();
 			percentText.destroy();
 		});
+		this.sys.events.once('shutdown', this.shutdown, this);
 		
 		// CARGA
         this.load.image('fondo', 'assets/sky.jpeg');

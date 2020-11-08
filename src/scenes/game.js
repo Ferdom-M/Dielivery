@@ -28,9 +28,11 @@ class Game extends Phaser.Scene {
     constructor() {
         super("Game");
     }
-	
-	preload ()
-    {
+	shutdown(){​​
+		this.load.off('progress');
+		this.load.off('complete');
+	}​​
+    preload() {
 		// BARRA DE CARGA
 		var width = this.cameras.main.width;
 		var height = this.cameras.main.height;
@@ -65,6 +67,7 @@ class Game extends Phaser.Scene {
 			progressBox.destroy();
 			percentText.destroy();
 		});
+		this.sys.events.once('shutdown', this.shutdown, this);
 		
 		// CARGA
 		this.load.image('logo', 'assets/logo.png');
@@ -194,7 +197,7 @@ class Game extends Phaser.Scene {
 		}
 		
 		
-		this.initialTime = 300;
+		this.initialTime = 2;
 
 		text = this.add.text(0, 30, 'Countdown: ' + formatTime(this.initialTime)).setScrollFactor(0,0);
 

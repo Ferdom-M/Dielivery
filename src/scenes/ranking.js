@@ -1,10 +1,10 @@
 // JavaScript source code
-class LevelSelect extends Phaser.Scene {
+class Ranking extends Phaser.Scene {
 
     constructor() {
-        super("LevelSelect");
+        super("Ranking");
     }
-	shutdown(){​​
+    shutdown(){​​
 		this.load.off('progress');
 		this.load.off('complete');
 	}​​
@@ -47,23 +47,13 @@ class LevelSelect extends Phaser.Scene {
 		
 		// CARGA
         this.load.image('fondo', 'assets/sky.jpeg');
-        this.load.image('logo', 'assets/logo.png');
         
         this.load.image('volver', 'assets/Botones/volver.png');
         this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
-        this.load.image('1', 'assets/Botones/1.png');
-        this.load.image('2', 'assets/Botones/2.png');;
-        this.load.image('3', 'assets/Botones/3.png');
         
     }
 
     create() {
-		var Nivel1PosX = width / 4;
-		var Nivel1PosY = height / 2;
-		var Nivel2PosX = width / 4 * 2;
-		var Nivel2PosY = height / 2;
-		var Nivel3PosX = width / 4 * 3;
-		var Nivel3PosY = height / 2;
 		var volverPosX = 200;
 		var volverPosY = 50;
 		//this.resizeCamera();
@@ -74,14 +64,6 @@ class LevelSelect extends Phaser.Scene {
 		
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
-
-        this.buttonNivel1 = this.add.sprite(Nivel1PosX, Nivel1PosY, '1').setScale(0.5).setInteractive();
-        this.buttonNivel2 = this.add.sprite(Nivel2PosX, Nivel2PosY, '2').setScale(0.5).setInteractive();
-		this.buttonNivel3 = this.add.sprite(Nivel3PosX, Nivel3PosY, '3').setScale(0.5).setInteractive();
-        
-		this.buttonNivel1.on('pointerdown', () => PasarEscena(this, "Game", "Nivel1"));
-		this.buttonNivel2.on('pointerdown', () => PasarEscena(this, "Game", "Nivel2"));
-		this.buttonNivel3.on('pointerdown', () => PasarEscena(this, "Game", "Nivel3"));
 		
 		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});

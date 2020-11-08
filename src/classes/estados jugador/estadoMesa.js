@@ -71,7 +71,7 @@ class Mesa extends State{
 
     Enviar(delta, scene, jugador, destElegido){
         if(jugador.pedidoSeleccionado){
-            var paquete = this.Eliminar(jugador, true);
+            var paquete = this.Eliminar(delta, scene, jugador, true);
             //hasta aqui
             CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
             //console.log("Puntuacion actual: " + puntuacionTotal);

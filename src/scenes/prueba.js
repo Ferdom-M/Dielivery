@@ -35,9 +35,46 @@ class prueba extends Phaser.Scene {
     constructor() {
         super("prueba");
     }
-	
-	preload ()
-    {
+	shutdown(){​​
+		this.load.off('progress');
+		this.load.off('complete');
+	}​​
+    preload() {
+		// BARRA DE CARGA
+		var width = this.cameras.main.width;
+		var height = this.cameras.main.height;
+		
+		var progressBar = this.add.graphics(width / 2, height / 2);
+		var progressBox = this.add.graphics(width / 2, height / 2);
+		progressBox.fillStyle(0x222222, 0.8);
+		progressBox.fillRect(width / 2 - 320 / 2, height / 2, 320, 50);
+		
+		var percentText = this.make.text({
+			x: width / 2,
+			y: height / 2 - 5,
+			text: '0%',
+			style: {
+				font: '18px monospace',
+				fill: '#ffffff'
+			}
+		});
+		percentText.setOrigin(0.5, 0.5);
+
+		this.load.on('progress', function (value) {
+			progressBar.clear();
+			progressBar.fillStyle(0xffffff, 1);
+			progressBar.fillRect(width / 2 - 320 / 2 + 10, height / 2 + 10, 300 * value, 30);
+
+			percentText.setText(parseInt(value * 100) + '%');
+		});
+
+
+		this.load.on('complete', function () {
+			progressBar.destroy();
+			progressBox.destroy();
+			percentText.destroy();
+		});
+		this.sys.events.once('shutdown', this.shutdown, this);
         this.load.image('sky', 'assets/sky.jpeg');
         this.load.image('logo', 'assets/logo.png');
         this.load.image('vicente', 'assets/Sprites Personajes/boceto prueba dielivery.png');
