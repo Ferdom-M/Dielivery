@@ -262,6 +262,7 @@ function onEvent ()
     this.initialTime -= 1; // One second
     text.setText('Countdown: ' + formatTime(this.initialTime));
 	if(this.initialTime == 0){
+		seHaJugado = true;
 		var puntuacionFinal = puntuacionTotal;
         this.scene.start("Results", puntuacionFinal);
 	}

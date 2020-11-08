@@ -1,6 +1,9 @@
 // JavaScript source code
 
 
+var inputNombreX = (width/4) * 3;
+var inputNombreY = height/4;
+var nombreJugador;
 
 
 class Results extends Phaser.Scene {
@@ -62,42 +65,13 @@ class Results extends Phaser.Scene {
     create(puntuacion) {
 		var puntuacionPosX = width / 2;
 		var puntuacionPosY = height / 2;
-		var scoreboardX = width / 4;
-		var scoreboardY = height / 4;
 		var volverPosX = 200;
 		var volverPosY = 50;
+		var flipflop = false;
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
 		//this.cameras.main.setZoom(ratio);
-
-		//Pillamos el scoreboard guardado y lo parseamos para que tenga los vamores bien y no en string, si no encuentra ningun scoreboard porque 
-		//nunca se ha jugado, se crea de 0
-		var scoreboardGuardado = JSON.parse(localStorage.getItem('scoreboardSave')) || false;
-		//Creo un JSON que almacene el nombre y puntuacion del jugador que acaba de jugar
-		var nuevoJugador = {
-			nombre: nombreJugador,
-			puntuacion: puntuacionTotal
-		}
-		//Si no hay scoreboard, creo uno nuevo, creando primero un array vacio de puntuaciones, metiendo al jugador que acaba de jugar, y metiendo ese array en un JSON
-		if(scoreboardGuardado == false){
-			var puntuaciones = new Array();
-			puntuaciones.push(nuevoJugador);
-			var scoreboard = {
-				scores: puntuaciones
-			}
-		}else{
-			var scoreboard = scoreboardGuardado
-			scoreboard.scores.push(nuevoJugador)
-			scoreboard.scores.sort(function(a, b){
-				return a.puntuacion-b.puntuacion;
-			});
-			if(scoreboard.scores.length > 10){
-				scoreboard.scores.shift()
-			}
-			scoreboard.scores = scoreboard.scores.reverse();
-		}
-		localStorage.setItem('scoreboardSave', JSON.stringify(scoreboard));
 
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
@@ -106,17 +80,11 @@ class Results extends Phaser.Scene {
 		
 		this.add.text(puntuacionPosX, puntuacionPosY, "Has acabado con " + puntuacionTotal.toString() + " puntos, pog felicididades " + nombreJugador,
 		  { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
-		//Escritura del scoreboard
-		this.add.text(scoreboardX, scoreboardY, "Scoreboard", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
-		for(let i = 0; i < scoreboard.scores.length; i++){
-			var rango = i+1;
-			this.add.text(scoreboardX, scoreboardY + (rango*20), rango + 'º: ' + scoreboard.scores[i].nombre + '  ' + scoreboard.scores[i].puntuacion, 
-				{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
-		}
+		
 		
 		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
-        this.buttonVolver.on('pointerup', () => PasarEscena(this, "Ranking"));
+        this.buttonVolver.on('pointerup', () => this.checkNombre());
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
         this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
 		
@@ -131,8 +99,32 @@ class Results extends Phaser.Scene {
                 this.scale.startFullscreen();
             }
 
+		}, this);
+		
+		//Creamos el input text del chaval este tan majo y ponemos que cuando el texto cambie se guarde en la variable nombreJugador
+        var inputText = this.add.rexInputText(inputNombreX, inputNombreY, 300, 40, {
+            placeholder: 'Introduce tu nombre',
+        });
+        inputText.on('textchange', function(inputText){
+            nombreJugador = inputText.text;
         }, this);
-    }
+
+        inputText.on('focus', function(){
+            flipflop = true;
+        }, this);
+        
+        inputText.on('blur', function(){
+            flipflop = false;
+        }, this);
+	}
+	
+	checkNombre() {
+		if(nombreJugador == undefined){
+			console.log('Mete un nombre, bobo');
+		}else{
+			PasarEscena(this, "Ranking");
+		}
+	}
 
 	
 	resizeCamera(){

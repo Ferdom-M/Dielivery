@@ -10,9 +10,8 @@ var volverPosX = 200;
 var volverPosY = 50;
 var idiomaPosX = width - 75;
 var idiomaPosY = height - 75
-var inputNombreX = (width/4) * 3;
-var inputNombreY = height/4;
-var nombreJugador;
+
+var seHaJugado = false;
 
 class Mainmenu extends Phaser.Scene {
 
@@ -139,21 +138,6 @@ class Mainmenu extends Phaser.Scene {
                 }
         }, this);
         
-        //Creamos el input text del chaval este tan majo y ponemos que cuando el texto cambie se guarde en la variable nombreJugador
-        var inputText = this.add.rexInputText(inputNombreX, inputNombreY, 300, 40, {
-            placeholder: 'Introduce tu nombre',
-        });
-        inputText.on('textchange', function(inputText){
-            nombreJugador = inputText.text;
-        }, this);
-
-        inputText.on('focus', function(){
-            flipflop = true;
-        }, this);
-        
-        inputText.on('blur', function(){
-            flipflop = false;
-        }, this);
 
     }
 
@@ -192,7 +176,10 @@ class Mainmenu extends Phaser.Scene {
 }
 
 function PasarEscena(that, escena, nivel){
-    //this.scale.off('resize');
+	//this.scale.off('resize');
+	if(nivel == "Ranking"){
+		seHaJugado = false;
+	}
 	that.scene.start(escena, nivel);
     
 	
