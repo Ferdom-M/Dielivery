@@ -54,7 +54,7 @@ function InicializarCursores(that, jugador){
 				fullscreen: Phaser.Input.Keyboard.KeyCodes.F,
 				//debug
 				propiedades: Phaser.Input.Keyboard.KeyCodes.L,
-				tpMesa: Phaser.Input.Keyboard.KeyCodes.P,
+				tpMesa: Phaser.Input.Keyboard.KeyCodes.I,
 				tpCosas: Phaser.Input.Keyboard.KeyCodes.O
 			});
 			
@@ -273,14 +273,14 @@ function InicializarCursores(that, jugador){
 			if (upX < downX - threshold){
 				jugador.ultimaDirX = -1;
 				jugador.dash = true;
-				setTimeout(function() { jugador.dash = false; }, 75);	
+				setTimeout(function() { jugador.dash = false; }, tiempoJumpsquat + 1);	
 			} else if (upX > downX + threshold) {
 				jugador.ultimaDirX = 1;
 				jugador.dash = true;
-				setTimeout(function() { jugador.dash = false; }, 75);	
+				setTimeout(function() { jugador.dash = false; }, tiempoJumpsquat + 1);	
 			} else if (upY < downY - threshold) {
 				jugador.jumpsquat = true;	
-				setTimeout(function() { jugador.jumpsquat = false; }, 75);	
+				setTimeout(function() { jugador.jumpsquat = false; }, tiempoJumpsquat + 1);	
 			}
 		}    
 		);

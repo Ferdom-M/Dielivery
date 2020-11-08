@@ -128,6 +128,10 @@ class Game extends Phaser.Scene {
 		this.load.spritesheet('anim_Dano', 'assets/Sprites Personajes/Spritesheet Dano.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_Pared', 'assets/Sprites Personajes/Spritesheet Pared.png', {frameWidth: 32, frameHeight: 64});
 		
+		
+        this.load.image('pausa', 'assets/Fondo_pausa.png');
+        this.load.image('pausaSprite', 'assets/pausa.png');
+		
 		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet definitiva (en curso).png");
 		
 		for (var i = 0;  i < arrayNombres.length; i++){
@@ -204,6 +208,15 @@ class Game extends Phaser.Scene {
 		// Each 1000 ms call onEvent
 		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
 		generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
+		
+		var PKey = this.input.keyboard.addKey('P');
+        PKey.on('down', pause, this);
+
+        // And finally the method that handels the pause menu
+        function pause() {
+            this.scene.pause();
+            this.scene.launch('Pausa');
+        };
 		
 	}
 	

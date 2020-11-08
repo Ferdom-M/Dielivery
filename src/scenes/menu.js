@@ -1,16 +1,21 @@
 // JavaScript source code
+var separacionBotones = 90;
 var jugarPosX = width / 2;
-var jugarPosY = 300;
+var jugarPosY = 270;
 var comoJugarPosX = width / 2;
-var comoJugarPosY = 375;
+var comoJugarPosY = jugarPosY + separacionBotones;
 var creditosPosX = width / 2;
-var creditosPosY = 450;
+var creditosPosY = comoJugarPosY + separacionBotones;
 var volverPosX = 200;
 var volverPosY = 50;
+var idiomaPosX = width - 150;
+var idiomaPosY = height - 125
 var inputNombreX = (width/4) * 3;
 var inputNombreY = height/4;
 var nombreJugador;
 
+// true = español, false = ingles
+var idioma = window.navigator.userLanguage || window.navigator.language;
 
 class Mainmenu extends Phaser.Scene {
 
@@ -64,12 +69,29 @@ class Mainmenu extends Phaser.Scene {
         this.load.image('tablon', 'assets/Interfaz/Tablon menu principal.png');
         this.load.image('logo', 'assets/logo.png');
         
-        this.load.image('jugar', 'assets/Botones/jugar.png');
-        this.load.image('jugar_pulsado', 'assets/Botones/jugar_pulsado.png');;
-        this.load.image('creditos', 'assets/Botones/creditos.png');
-        this.load.image('creditos_pulsado', 'assets/Botones/creditos_pulsados.png');
-        this.load.image('como_jugar', 'assets/Botones/como_jugar.png');
-        this.load.image('como_jugar_pulsado', 'assets/Botones/como_jugar_pulsado.png');
+		// SENSIBLE A IDIOMA
+		// ESPAÑOL
+		if(idioma.includes("es")){
+			this.load.image('jugar', 'assets/Botones/jugar.png');
+			this.load.image('jugar_pulsado', 'assets/Botones/jugar_pulsado.png');;
+			this.load.image('creditos', 'assets/Botones/creditos.png');
+			this.load.image('creditos_pulsado', 'assets/Botones/creditos_pulsado.png');
+			this.load.image('ranking', 'assets/Botones/empleado.png');
+			this.load.image('ranking_pulsado', 'assets/Botones/empleado_pulsado.png');
+			this.load.image('idioma', 'assets/Botones/idioma_espanol.png');
+		}
+        else{
+			// INGLES
+			this.load.image('jugar', 'assets/Botones/play.png');
+			this.load.image('jugar_pulsado', 'assets/Botones/play_pulsado.png');;
+			this.load.image('creditos', 'assets/Botones/credits.png');
+			this.load.image('creditos_pulsado', 'assets/Botones/credits_pulsado.png');
+			this.load.image('ranking', 'assets/Botones/employee.png');
+			this.load.image('ranking_pulsado', 'assets/Botones/employee_pulsado.png');
+			this.load.image('idioma', 'assets/Botones/idioma_ingles.png');
+		}
+		
+		
         
         this.load.plugin('rexinputtextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexinputtextplugin.min.js', true);
 
@@ -88,23 +110,46 @@ class Mainmenu extends Phaser.Scene {
         this.tablon = this.add.image(width / 2, height / 2, 'tablon');
         this.add.image(300, 150, 'logo').setScale(0.4);
 
-        this.buttonJugar = this.add.sprite(jugarPosX, jugarPosY, 'jugar').setScale(0.5).setInteractive();
+        this.buttonJugar = this.add.sprite(jugarPosX, jugarPosY, 'jugar').setInteractive();
         this.buttonJugar.on('pointerdown', () => {this.buttonJugar.setTexture("jugar_pulsado");});
         this.buttonJugar.on('pointerup', () => PasarEscena(this, "LevelSelect"));
         this.buttonJugar.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonJugar.setTexture("jugar_pulsado");}});
         this.buttonJugar.on('pointerout', () => {this.buttonJugar.setTexture("jugar");});
 		
-        this.buttonComoJugar = this.add.sprite(comoJugarPosX, comoJugarPosY, 'como_jugar').setScale(0.5).setInteractive();
-		this.buttonComoJugar.on('pointerdown', () => {this.buttonComoJugar.setTexture("como_jugar_pulsado");});
-        this.buttonComoJugar.on('pointerup', () => PasarEscena(this, "ComoJugar"));
-        this.buttonComoJugar.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonComoJugar.setTexture("como_jugar_pulsado");}});
-        this.buttonComoJugar.on('pointerout', () => {this.buttonComoJugar.setTexture("como_jugar");});
+        this.buttonRanking = this.add.sprite(comoJugarPosX, comoJugarPosY, 'ranking').setInteractive();
+		this.buttonRanking.on('pointerdown', () => {this.buttonRanking.setTexture("ranking_pulsado");});
+        this.buttonRanking.on('pointerup', () => PasarEscena(this, "Ranking"));
+        this.buttonRanking.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonRanking.setTexture("ranking_pulsado");}});
+        this.buttonRanking.on('pointerout', () => {this.buttonRanking.setTexture("ranking");});
 
-        this.buttonCreditos = this.add.sprite(creditosPosX, creditosPosY, 'creditos').setScale(0.5).setInteractive();
+        this.buttonCreditos = this.add.sprite(creditosPosX, creditosPosY, 'creditos').setInteractive();
 		this.buttonCreditos.on('pointerdown', () => {this.buttonCreditos.setTexture("creditos_pulsado");});
         this.buttonCreditos.on('pointerup', () => PasarEscena(this, "creditos"));
         this.buttonCreditos.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonCreditos.setTexture("creditos_pulsado");}});
         this.buttonCreditos.on('pointerout', () => {this.buttonCreditos.setTexture("creditos");});
+		
+		this.buttonIdioma = this.add.sprite(idiomaPosX, idiomaPosY, 'idioma').setInteractive();
+		this.buttonIdioma.on('pointerdown', () => {
+			if(idioma.includes("es")){
+				idioma = "en";
+				// LO PONGO EN ELSE IF POR SI ACASO AÑADIMOS MÁS IDIOMAS
+			}else if(idioma.includes("en")){
+				idioma = "es";
+			}else{ // 
+				idioma = "es";
+			}
+			
+			this.textures.remove('jugar');
+			this.textures.remove('jugar_pulsado');
+			this.textures.remove('ranking');
+			this.textures.remove('ranking_pulsado');
+			this.textures.remove('creditos');
+			this.textures.remove('creditos_pulsado');
+			this.textures.remove('idioma');
+			PasarEscena(this, "Mainmenu");
+			
+		
+		}, this);
 
         var FKey = this.input.keyboard.addKey('F');
         
@@ -145,10 +190,14 @@ class Mainmenu extends Phaser.Scene {
 
 function PasarEscena(that, escena, nivel){
     //this.scale.off('resize');
-    if(nombreJugador == undefined){
-        console.log('Mete un nombre, bobo');
-    }else{
-        that.scene.start(escena, nivel);
-    }
+	that.scene.start(escena, nivel);
+    
 	
+    //if(nombreJugador == undefined){
+      //  console.log('Mete un nombre, bobo');
+    //}else{
+      //  that.scene.start(escena, nivel);
+    //}
+	
+}
 }

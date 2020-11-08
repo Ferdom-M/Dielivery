@@ -34,7 +34,7 @@ window.onload = function(){
 			// ...
 			]
 		},
-		scene: [Mainmenu, ComoJugar, creditos, LevelSelect, Game, Results],
+		scene: [Mainmenu, ComoJugar, creditos, LevelSelect, Game, Pausa, Results, Ranking],
 		antialias: false,
 		pixelart: true,
 		failIfMajorPerformanceCaveat: true,
