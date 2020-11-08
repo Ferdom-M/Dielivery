@@ -130,6 +130,20 @@ class Mesa extends State{
     }
 
     SeleccionarPedido(pedido, jugador){
-        jugador.pedidoSeleccionado = arrayPedidos[pedido];
+		if(jugador.pedidoSeleccionado == arrayPedidos[pedido]){
+            //Falta meter cambio de sprite que indique que está seleccionado
+            //
+            //
+            //
+            arrayPedidosMostrados[pedido].clearTint();
+			jugador.pedidoSeleccionado = undefined;
+        }else{
+			for(var i = 0; i < arrayPedidos.length; i++){
+				arrayPedidosMostrados[i].clearTint();
+			}
+		
+            arrayPedidosMostrados[pedido].setTint(0x616161);
+			jugador.pedidoSeleccionado = arrayPedidos[pedido];
+        }
     }
 }
