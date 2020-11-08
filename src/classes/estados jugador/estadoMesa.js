@@ -24,7 +24,7 @@ class Mesa extends State{
 		
 		for(var i = 0; i < arrayPedidos.length; i++){
             //Para multi: usar elemento de UI para ubicarlo en funcion del canvas de la pantalla en vez de sprite para que el otro no lo vea
-            var pedido = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - (150 - 25 * i), arrayNombres[arrayPedidos[i].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px', resolution: 100}).setInteractive();
+            var pedido = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - (150 - 25 * i), arrayNombres[arrayPedidos[i].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px'}).setInteractive();
                 
 			arrayPedidosMostrados.push(pedido);
             arrayPedidosMostrados[i].on("pointerdown", this.SeleccionarPedido.bind(this, i, jugador));

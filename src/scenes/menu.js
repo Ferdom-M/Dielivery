@@ -8,14 +8,11 @@ var creditosPosX = width / 2;
 var creditosPosY = comoJugarPosY + separacionBotones;
 var volverPosX = 200;
 var volverPosY = 50;
-var idiomaPosX = width - 150;
-var idiomaPosY = height - 125
+var idiomaPosX = width - 75;
+var idiomaPosY = height - 75
 var inputNombreX = (width/4) * 3;
 var inputNombreY = height/4;
 var nombreJugador;
-
-// true = español, false = ingles
-var idioma = window.navigator.userLanguage || window.navigator.language;
 
 class Mainmenu extends Phaser.Scene {
 
@@ -78,7 +75,7 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image('creditos_pulsado', 'assets/Botones/creditos_pulsado.png');
 			this.load.image('ranking', 'assets/Botones/empleado.png');
 			this.load.image('ranking_pulsado', 'assets/Botones/empleado_pulsado.png');
-			this.load.image('idioma', 'assets/Botones/idioma_espanol.png');
+			this.load.image('idioma', 'assets/Botones/idioma_ingles.png');
 		}
         else{
 			// INGLES
@@ -88,7 +85,7 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image('creditos_pulsado', 'assets/Botones/credits_pulsado.png');
 			this.load.image('ranking', 'assets/Botones/employee.png');
 			this.load.image('ranking_pulsado', 'assets/Botones/employee_pulsado.png');
-			this.load.image('idioma', 'assets/Botones/idioma_ingles.png');
+			this.load.image('idioma', 'assets/Botones/idioma_espanol.png');
 		}
 		
 		
@@ -129,27 +126,7 @@ class Mainmenu extends Phaser.Scene {
         this.buttonCreditos.on('pointerout', () => {this.buttonCreditos.setTexture("creditos");});
 		
 		this.buttonIdioma = this.add.sprite(idiomaPosX, idiomaPosY, 'idioma').setInteractive();
-		this.buttonIdioma.on('pointerdown', () => {
-			if(idioma.includes("es")){
-				idioma = "en";
-				// LO PONGO EN ELSE IF POR SI ACASO AÑADIMOS MÁS IDIOMAS
-			}else if(idioma.includes("en")){
-				idioma = "es";
-			}else{ // 
-				idioma = "es";
-			}
-			
-			this.textures.remove('jugar');
-			this.textures.remove('jugar_pulsado');
-			this.textures.remove('ranking');
-			this.textures.remove('ranking_pulsado');
-			this.textures.remove('creditos');
-			this.textures.remove('creditos_pulsado');
-			this.textures.remove('idioma');
-			PasarEscena(this, "Mainmenu");
-			
-		
-		}, this);
+		this.buttonIdioma.on('pointerdown', () => this.CambiarIdioma());
 
         var FKey = this.input.keyboard.addKey('F');
         
@@ -180,6 +157,32 @@ class Mainmenu extends Phaser.Scene {
 
     }
 
+	CambiarIdioma(){
+		arrayCausaMuerte = new Array();
+		if(idioma.includes("es")){
+			idioma = "en";
+			
+			arrayCausaMuerte = arrayCausaMuerteIngles;
+			// LO PONGO EN ELSE IF POR SI ACASO AÑADIMOS MÁS IDIOMAS
+		}else if(idioma.includes("en")){
+			idioma = "es";
+			
+			arrayCausaMuerte = arrayCausaMuerteEspanol
+		}else{ // 
+			idioma = "es";
+			
+			arrayCausaMuerte = arrayCausaMuerteEspanol
+		}
+
+		this.textures.remove('jugar');
+		this.textures.remove('jugar_pulsado');
+		this.textures.remove('ranking');
+		this.textures.remove('ranking_pulsado');
+		this.textures.remove('creditos');
+		this.textures.remove('creditos_pulsado');
+		this.textures.remove('idioma');
+		PasarEscena(this, "Mainmenu");
+	}
 	
 	resizeCamera(){
 		var ratio = this.sys.game.canvas.height / 720;
@@ -199,3 +202,4 @@ function PasarEscena(that, escena, nivel){
       //  that.scene.start(escena, nivel);
     //}
 }
+

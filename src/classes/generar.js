@@ -40,7 +40,7 @@ function GenerarCamara(that, jugador){
 
 function InicializarCursores(that, jugador){
 	// Guardar cursores
-	if(that.sys.game.device.os.desktop ){
+	if(!that.sys.game.device.os.desktop ){
 		cursors = that.input.keyboard.addKeys(
 			{
 				left: Phaser.Input.Keyboard.KeyCodes.A,
@@ -278,10 +278,11 @@ function InicializarCursores(that, jugador){
 				jugador.ultimaDirX = 1;
 				jugador.dash = true;
 				setTimeout(function() { jugador.dash = false; }, tiempoJumpsquat + 1);	
-			} else if (upY < downY - threshold) {
+			} else if (upY < downY - threshold && !jugador.jumpsquat) {
 				jugador.jumpsquat = true;	
 				setTimeout(function() { jugador.jumpsquat = false; }, tiempoJumpsquat + 1);	
 			}
+			
 		}    
 		);
 		

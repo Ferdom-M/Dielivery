@@ -8,7 +8,18 @@ class Salto extends State{
 		jugador.anims.play("inicioSalto");
 		jugador.sSalto.play();
 		
-		scene.time.delayedCall(tiempoJumpsquat, () => this.ComenzarSalto(delta, scene, jugador));		
+		scene.time.delayedCall(tiempoJumpsquat, () => this.ComenzarSalto(delta, scene, jugador));	
+
+		if(jugador.dirX == 0){
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, aceleracion));
+		}else{
+			jugador.setVelocityX(jugador.dirX * jugador.velActual);
+			if (jugador.dirX == -1){
+				jugador.resetFlip();
+			}else{
+				jugador.flipX = true;
+			}
+		}		
 	}
 	execute(delta, scene, jugador){
 		// Transiciones
@@ -38,9 +49,9 @@ class Salto extends State{
 			jugador.alturaSalto += delta;
 		}
 		if(jugador.dirX == 0){
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionAerea));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, 0.03));
 		}else{
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, aceleracion));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, 0.03));
 			if (jugador.dirX == -1){
 				jugador.resetFlip();
 			}else{
