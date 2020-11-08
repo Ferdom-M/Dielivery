@@ -88,14 +88,15 @@ class RecogerObjeto extends State{
 		
 		jugador.body.velocity.x = 0;
 		
-		scene.time.delayedCall(tiempoRecogerObjeto, () => this.AgregarObjeto(delta, jugador, objeto));			
+		scene.time.delayedCall(tiempoRecogerObjeto, () => this.AgregarObjeto(delta, scene, jugador, objeto));			
 	}
 	
-	AgregarObjeto(delta, jugador, objeto){
+	AgregarObjeto(delta, scene, jugador, objeto){
 		console.log(objeto);
 		jugador.inventario.push(objeto);
 		jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
 
+		RepresentarInventario(scene, jugador);
 		jugador.stateMachine.transition(delta, 'idle');
 	}
 }

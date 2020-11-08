@@ -117,6 +117,7 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		this.inventario = new Array();
 		this.arraySeleccionados = new Array();
 		this.arrayMostrados = new Array();
+		this.arrayInventario = new Array();
 		this.pedidoSeleccionado;
 		this.velActual = velJugador;
 		// Sonidos

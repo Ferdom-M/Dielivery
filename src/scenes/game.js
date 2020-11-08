@@ -267,7 +267,24 @@ function onEvent ()
 	}
 }
 
+function RepresentarInventario(that, jugador){
+	
+	if(jugador.arrayInventario.length > 0){
+		for(var i = 0; i < jugador.arrayInventario.length; i++){
+			jugador.arrayInventario[i].destroy();
+		}
+		jugador.arrayInventario.splice(0, jugador.arrayInventario.length);
+	}
+	
 
+	for(let i = 0; i < jugador.inventario.length; i++){
+		console.log(jugador.inventario[i].tipo);
+		jugador.arrayInventario.push(that.add.sprite(50 + 50*i, 500, jugador.inventario[i].tipo).setScrollFactor(0,0));
+	}
+	cogiObjeto = false;
+	console.log("arrayInventario");
+	console.log(jugador.arrayInventario);
+}
 
 /*
 function EntrarMesa(jugador, that){

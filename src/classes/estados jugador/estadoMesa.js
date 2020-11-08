@@ -8,7 +8,11 @@ class Mesa extends State{
 
 	enter(delta, scene, jugador){
 		console.log("Estado mesa");
-		
+        
+        for(var i = 0; i < jugador.arrayInventario.length; i++){
+            jugador.arrayInventario[i].destroy();
+        }
+
         jugador.body.velocity.x = 0;
     
 
@@ -46,6 +50,7 @@ class Mesa extends State{
         //cuando salir de este estado
         if(jugador.accion){
             console.log("salir mesa");
+            RepresentarInventario(scene, jugador);
             jugador.stateMachine.transition(delta, "idle");
             jugador.accion = false;
             this.BorrarBotones(delta, jugador);
