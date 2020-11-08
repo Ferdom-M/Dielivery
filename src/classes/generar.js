@@ -40,7 +40,7 @@ function GenerarCamara(that, jugador){
 
 function InicializarCursores(that, jugador){
 	// Guardar cursores
-	if(!that.sys.game.device.os.desktop ){
+	if(that.sys.game.device.os.desktop ){
 		cursors = that.input.keyboard.addKeys(
 			{
 				left: Phaser.Input.Keyboard.KeyCodes.A,
