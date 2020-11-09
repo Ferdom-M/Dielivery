@@ -133,7 +133,7 @@ class Game extends Phaser.Scene {
         this.load.image('pausaSprite', 'assets/pausa.png');
 		
 		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet definitiva (en curso).png");
-		this.load.image("invernadero", "assets/Mapas/Spritesheets/invernadero.png");
+		this.load.image("fondos", "assets/Mapas/Spritesheets/spritesheet_fondos.png");
 		
 		for (var i = 0;  i < arrayNombres.length; i++){
 			this.load.image("perfil" + i, "assets/Perfiles/perfil" + i + ".jpg");

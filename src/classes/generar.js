@@ -6,13 +6,13 @@ function GenerarMundo(that, mapa){
 	// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
 	// Phaser's cache (i.e. the name you used in preload)
 	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 32, 32, 0, 0);
-	const invernadero = map.addTilesetImage("invernadero", "invernadero", 32, 32, 0, 0);
+	const fondos = map.addTilesetImage("spritesheet_fondos", "fondos", 32, 32, 0, 0);
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
-	fondo = map.createStaticLayer("Fondo", [tileset, invernadero], 0, 0);
+	fondo = map.createStaticLayer("Fondo", [tileset, fondos], 0, 0);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
 	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 	resto = map.createStaticLayer("Resto", tileset, 0, 0);
-	iluminacion = map.createStaticLayer("Iluminacion", [invernadero], 0, 0);
+	iluminacion = map.createStaticLayer("Iluminacion", fondos, 0, 0);
 
 	iluminacion.depth = 50;
 	suelo.setCollisionByProperty({ collides: true });
