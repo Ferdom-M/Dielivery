@@ -165,10 +165,10 @@ idTulipanes.add(466);
 idTulipanes.add(467);
 
 var idRosas = new Set();
-idRosas.add(491);
-idRosas.add(492);
-idRosas.add(518);
-idRosas.add(519);
+idRosas.add(487);
+idRosas.add(488);
+idRosas.add(514);
+idRosas.add(515);
 
 var idVioletas = new Set();
 idVioletas.add(493);
@@ -221,14 +221,21 @@ idBandera1.add(303);
 var idPelucheViejo = new Set();
 idPelucheViejo.add(489);
 idPelucheViejo.add(490);
+idPelucheViejo.add(491);
 idPelucheViejo.add(516);
 idPelucheViejo.add(517);
+idPelucheViejo.add(518);
 
 var idPelucheNuevo = new Set();
-idPelucheNuevo.add(487);
-idPelucheNuevo.add(488);
-idPelucheNuevo.add(514);
-idPelucheNuevo.add(515);
+idPelucheNuevo.add(468);
+idPelucheNuevo.add(469);
+idPelucheNuevo.add(470);
+idPelucheNuevo.add(495);
+idPelucheNuevo.add(496);
+idPelucheNuevo.add(497);
+idPelucheNuevo.add(522);
+idPelucheNuevo.add(523);
+idPelucheNuevo.add(524);
 
 var idCartaSello = new Set();
 idCartaSello.add(379);
