@@ -1,19 +1,19 @@
-var velJugador = 360;
-var velEscalon = -150;
-var velDeslizandoPared = 300;
-var aceleracion = 0.4;
-var aceleracionResbaladizo = 0.01;
-var friccionSuelo = 0.15;
-var friccionResbalo = 0.01;
-var friccionAerea = 0.25;
-var tiempoJumpsquat = 84;
-var tiempoSaltoEnPared = 350;
-var tiempoRecogerObjeto = 5000; // 5 sEGUNDOS
-var tiempoDash = 200;
-var velSaltoPared = 500;
-var velSalto = -625;
-var velDash = 720;
-var limInventario = 6;
+const velJugador = 360;
+const velEscalon = -150;
+const velDeslizandoPared = 300;
+const aceleracion = 0.4;
+const aceleracionResbaladizo = 0.01;
+const friccionSuelo = 0.15;
+const inerciaAscenso = 0.03;
+const inerciaDescenso = 0.1;
+const tiempoJumpsquat = 84;
+const tiempoSaltoEnPared = 350;
+const tiempoRecogerObjeto = 5000; // 5 sEGUNDOS
+const tiempoDash = 200;
+const velSaltoPared = 500;
+const velSalto = -625;
+const velDash = 720;
+const limInventario = 6;
 
 class Jugador extends Phaser.Physics.Arcade.Sprite{
 	constructor(config){
@@ -194,5 +194,29 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 			emitter.stop();
 		}
 		*/
+	}
+	
+	PararSonidos(){
+		this.sPasos.stop();
+		this.sPasosMojados.stop();
+		this.sBotellas.stop();
+		this.sCarta.stop();
+		this.sFlores.stop();
+		this.sJoyero.stop();
+		this.sExtTarjeta.stop();
+		this.sGuarTarjeta.stop();
+		this.sBaulRecuerdos.stop();
+		this.sDash.stop();
+		this.sEscalera.stop();
+		this.sSalto.stop();
+	}
+	
+	ResetearControl(){
+		this.dirX = 0;
+		this.dirY = 0;
+		this.dash = false;
+		this.jumpsquat = false;
+		this.accion = false;
+		this.tarjetas = false;
 	}
 }

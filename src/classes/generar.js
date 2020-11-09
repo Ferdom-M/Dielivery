@@ -1,5 +1,3 @@
-var ratio
-
 function GenerarMundo(that, mapa){
 	
 	map = that.make.tilemap({ key: mapa });
@@ -22,11 +20,10 @@ function GenerarCamara(that, jugador){
 	// Cámara un jugador
 	
 	camJugador1 = that.cameras.main;
-	camJugador1.setZoom(ratio);
 	camJugador1.startFollow(jugador);
 	
 	var camInterfaz = that.cameras.add(0, 0, width, height, false, "interfaz");
-	camInterfaz.ignore([jugador, fondo, suelo, objetos, resto]);
+	camInterfaz.ignore([jugador, fondo, suelo, objetos, resto, iluminacion]);
 	// Cámara dos jugadores
 	/*
 	that.cameras.resize(width / 2, height);
@@ -54,11 +51,15 @@ function InicializarCursores(that, jugador){
 				accion: Phaser.Input.Keyboard.KeyCodes.E,
 				inventario: Phaser.Input.Keyboard.KeyCodes.Q,
 				fullscreen: Phaser.Input.Keyboard.KeyCodes.F,
+				pausa: Phaser.Input.Keyboard.KeyCodes.P,
 				//debug
 				propiedades: Phaser.Input.Keyboard.KeyCodes.L,
 				tpMesa: Phaser.Input.Keyboard.KeyCodes.I,
 				tpCosas: Phaser.Input.Keyboard.KeyCodes.O
-			});
+			}); 
+			// El segundo valor de entrada es enableCapture, llama a preventDefault en el navegador, 
+			// es decir, desactiva los valores predeterminados. El valor predeterminado es true. En
+			// resultados hay que desactivar esto.
 			
 			// Al pulsar F se hace un evento
 		cursors.fullscreen.on('down', function () {
@@ -148,6 +149,14 @@ function InicializarCursores(that, jugador){
 		}, that);
 		cursors.accion.on('up', function () {	
 			jugador.accion = false;
+		}, that);
+		
+		cursors.pausa.on('down', function() {
+			jugador.PararSonidos();
+			jugador.ResetearControl();
+			
+			this.scene.pause();
+            this.scene.launch('Pausa');
 		}, that);
 		
 		/*

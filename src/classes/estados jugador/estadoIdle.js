@@ -51,12 +51,10 @@ class Idle extends State{
 		
 		
 		if(jugador.enSueloResbaladizo){
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionResbalo));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, aceleracionResbaladizo));
 		}
-		else if(jugador.enSueloNormal){
+		else{
 			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionSuelo));
-		}else{
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionAerea));
 		}
 		
 		if(Math.abs(jugador.body.velocity.x) < 5){

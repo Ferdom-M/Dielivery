@@ -1,15 +1,15 @@
 // JavaScript source code
-var separacionBotones = 90;
-var jugarPosX = width / 2;
-var jugarPosY = 270;
-var comoJugarPosX = width / 2;
-var comoJugarPosY = jugarPosY + separacionBotones;
-var creditosPosX = width / 2;
-var creditosPosY = comoJugarPosY + separacionBotones;
-var volverPosX = 200;
-var volverPosY = 50;
-var idiomaPosX = width - 75;
-var idiomaPosY = height - 75
+const separacionBotones = 90;
+const jugarPosX = width / 2;
+const jugarPosY = 270;
+const comoJugarPosX = width / 2;
+const comoJugarPosY = jugarPosY + separacionBotones;
+const creditosPosX = width / 2;
+const creditosPosY = comoJugarPosY + separacionBotones;
+const volverPosX = 200;
+const volverPosY = 50;
+const idiomaPosX = width - 75;
+const idiomaPosY = height - 75
 
 var seHaJugado = false;
 
@@ -89,7 +89,7 @@ class Mainmenu extends Phaser.Scene {
 		
 		
         
-        this.load.plugin('rexinputtextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexinputtextplugin.min.js', true);
+        
 
 		
     }

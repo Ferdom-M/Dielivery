@@ -11,12 +11,12 @@ class Escalera extends State{
 		if(jugador.dirY != 0){
 			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, jugador.dirY * jugador.velActual, aceleracion));
 		}else{
-			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, 0, friccionAerea));
+			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, 0, friccionSuelo));
 		}
 		if(jugador.dirX != 0){
 			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirY * jugador.velActual, aceleracion));
 		}else{
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionAerea));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionSuelo));
 		}
 	}
 	
@@ -46,7 +46,7 @@ class Escalera extends State{
 			
 			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, jugador.dirY * jugador.velActual, aceleracion));
 		}else{
-			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, 0, friccionAerea));
+			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, 0, friccionSuelo));
 		}
 		if(jugador.dirX != 0){
 			jugador.anims.play("trepar", true);
@@ -55,7 +55,7 @@ class Escalera extends State{
 			}
 			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, aceleracion));
 		}else{
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionAerea));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionSuelo));
 		}
 		if(jugador.dirX == 0 && jugador.dirY == 0){
 			jugador.sEscalera.pause();

@@ -49,9 +49,9 @@ class Salto extends State{
 			jugador.alturaSalto += delta;
 		}
 		if(jugador.dirX == 0){
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, 0.03));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, inerciaAscenso));
 		}else{
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, 0.03));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, inerciaAscenso));
 			if (jugador.dirX == -1){
 				jugador.resetFlip();
 			}else{

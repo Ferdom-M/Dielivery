@@ -52,6 +52,7 @@ class Ranking extends Phaser.Scene {
         this.load.image('volver', 'assets/Botones/volver.png');
         this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
         
+		
     }
 
     create() {

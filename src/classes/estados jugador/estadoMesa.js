@@ -37,11 +37,16 @@ class Mesa extends State{
         buttEnviarCielo = scene.add.sprite(jugador.x +70 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
         buttEnviarInfierno = scene.add.sprite(jugador.x +130 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
         buttBasura = scene.add.sprite(jugador.x + 200 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
-        buttEnviarCielo.on('pointerdown', () => this.Enviar(delta, scene, jugador, true));
+        
+		buttEnviarCielo.on('pointerdown', () => this.Enviar(delta, scene, jugador, true));
         buttEnviarInfierno.on('pointerdown', () => this.Enviar(delta, scene, jugador, false));
         buttBasura.on('pointerdown', () => this.Eliminar(delta, scene, jugador, false));
 
 
+		for(var i = 0; i < arrayTarjetas.length; i++){
+			arrayTarjetas[i].setPosition(-1000, -1000);
+		}
+		
         jugador.accion = false;
     }
     
@@ -53,6 +58,16 @@ class Mesa extends State{
             RepresentarInventario(scene, jugador);
             jugador.stateMachine.transition(delta, "idle");
             jugador.accion = false;
+			
+			jugador.arraySeleccionados = new Array();
+			jugador.pedidoSeleccionado = undefined;
+			
+			for(var i = 0; i < arrayTarjetas.length; i++){
+				arrayTarjetas[i] = ColocarTarjeta(arrayTarjetas[i], i);
+			}
+			
+			jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
+			
             this.BorrarBotones(delta, jugador);
         }
     }
@@ -73,9 +88,27 @@ class Mesa extends State{
         }
     
     }
-
+	
+	SeleccionarPedido(pedido, jugador){
+		if(jugador.pedidoSeleccionado == arrayPedidos[pedido]){
+            //Falta meter cambio de sprite que indique que está seleccionado
+            //
+            //
+            //
+            arrayPedidosMostrados[pedido].clearTint();
+			jugador.pedidoSeleccionado = undefined;
+        }else{
+			for(var i = 0; i < arrayPedidos.length; i++){
+				arrayPedidosMostrados[i].clearTint();
+			}
+		
+            arrayPedidosMostrados[pedido].setTint(0x616161);
+			jugador.pedidoSeleccionado = arrayPedidos[pedido];
+        }
+    }
+	
     Enviar(delta, scene, jugador, destElegido){
-        if(jugador.pedidoSeleccionado){
+        if(jugador.pedidoSeleccionado && jugador.arraySeleccionados.length > 0){
             var paquete = this.Eliminar(delta, scene, jugador, true);
             //hasta aqui
             CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
@@ -86,36 +119,40 @@ class Mesa extends State{
     }
 
     Eliminar(delta, scene, jugador, enviar){
-        var paqueteCreado = [];
-        for(let a = 0; a < jugador.arraySeleccionados.length; a++){
-            paqueteCreado.push(jugador.inventario[jugador.arraySeleccionados[a]].tipo);
-        }
-        console.log("he creado el paquete: " + paqueteCreado);
+		console.log("intento eliminar");
+		if(jugador.arraySeleccionados.length > 0){
+			console.log("Elimino");
+			var paqueteCreado = [];
+			for(let a = 0; a < jugador.arraySeleccionados.length; a++){
+				paqueteCreado.push(jugador.inventario[jugador.arraySeleccionados[a]].tipo);
+			}
+			console.log("he creado el paquete: " + paqueteCreado);
 
-        //Esto debe ir en Comparar paquete, esta aqui provisionalmente porque
-        //Comparar paquete no va por la seleccion de pedidos
-		// No va porque no habeis leido el codigo de comparar paquete
-        for(let i = 0; i < paqueteCreado.length; i++){
-            for(let j = 0; j < jugador.inventario.length; j++){
-                console.log("Comparando: " + jugador.inventario[j].tipo + " y " + paqueteCreado[i]);
-                if(jugador.inventario[j].tipo == paqueteCreado[i]){
-                    console.log("coindice el elemento: " + j + ", " + jugador.inventario[j].tipo);
-                    jugador.inventario.splice(j, 1);
-                }
-            }
-        }
-        for(let z = 0; z < jugador.arraySeleccionados.length; z++){
-            jugador.arrayMostrados[jugador.arraySeleccionados[z]].destroy();
-        }
+			//Esto debe ir en Comparar paquete, esta aqui provisionalmente porque
+			//Comparar paquete no va por la seleccion de pedidos
+			// No va porque no habeis leido el codigo de comparar paquete
+			for(let i = 0; i < paqueteCreado.length; i++){
+				for(let j = 0; j < jugador.inventario.length; j++){
+					console.log("Comparando: " + jugador.inventario[j].tipo + " y " + paqueteCreado[i]);
+					if(jugador.inventario[j].tipo == paqueteCreado[i]){
+						console.log("coindice el elemento: " + j + ", " + jugador.inventario[j].tipo);
+						jugador.inventario.splice(j, 1);
+					}
+				}
+			}
+			for(let z = 0; z < jugador.arraySeleccionados.length; z++){
+				jugador.arrayMostrados[jugador.arraySeleccionados[z]].destroy();
+			}
 
-        jugador.arraySeleccionados.splice(0, jugador.arraySeleccionados.length);
+			jugador.arraySeleccionados.splice(0, jugador.arraySeleccionados.length);
 
-        if(!enviar){
-            this.BorrarBotones(delta, jugador);
-            this.enter(delta, scene, jugador);
-        }
+			if(!enviar){
+				this.BorrarBotones(delta, jugador);
+				this.enter(delta, scene, jugador);
+			}
 
-        return paqueteCreado;
+			return paqueteCreado;
+		}
     }
 
 
@@ -132,23 +169,5 @@ class Mesa extends State{
         }
         arrayPedidosMostrados.splice(0, arrayPedidosMostrados.length);
         jugador.arrayMostrados.splice(0, jugador.arrayMostrados.length);
-    }
-
-    SeleccionarPedido(pedido, jugador){
-		if(jugador.pedidoSeleccionado == arrayPedidos[pedido]){
-            //Falta meter cambio de sprite que indique que está seleccionado
-            //
-            //
-            //
-            arrayPedidosMostrados[pedido].clearTint();
-			jugador.pedidoSeleccionado = undefined;
-        }else{
-			for(var i = 0; i < arrayPedidos.length; i++){
-				arrayPedidosMostrados[i].clearTint();
-			}
-		
-            arrayPedidosMostrados[pedido].setTint(0x616161);
-			jugador.pedidoSeleccionado = arrayPedidos[pedido];
-        }
     }
 }

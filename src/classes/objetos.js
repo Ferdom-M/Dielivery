@@ -1,5 +1,5 @@
-var puntuacionDestinatarioFallido = -150;
-var puntuacionItemFallido = -40;
+const puntuacionDestinatarioFallido = -150;
+const puntuacionItemFallido = -40;
 var puntuacionTotal = 0;
 
 
@@ -27,34 +27,34 @@ class Pedido{
 	}
 }
 // Flores
-var tulipan = new Objeto("Tulipan", 50);
-var rosa = new Objeto("Rosa", 50);
-var violeta = new Objeto("Violeta", 50);
-var margarita = new Objeto("Margarita", 50);
+const tulipan = new Objeto("Tulipan", 50);
+const rosa = new Objeto("Rosa", 50);
+const violeta = new Objeto("Violeta", 50);
+const margarita = new Objeto("Margarita", 50);
 
 // Bebidas
-var orujo = new Objeto("Botella Orujo", 50);
-var whisky = new Objeto("Botella Whisky", 50);
-var ron = new Objeto("Botella Ron", 50);
-var vino = new Objeto("Botella Vino", 50);
+const orujo = new Objeto("Botella Orujo", 50);
+const whisky = new Objeto("Botella Whisky", 50);
+const ron = new Objeto("Botella Ron", 50);
+const vino = new Objeto("Botella Vino", 50);
 
 // Cosas personales
-var bandera1 = new Objeto("Bandera 1", 50);
-var bandera2 = new Objeto("Bandera 2", 50);
-var pelucheViejo = new Objeto("Osito Viejo", 50);
-var pelucheNuevo = new Objeto("Osito Nuevo", 50);
+const bandera1 = new Objeto("Bandera 1", 50);
+const bandera2 = new Objeto("Bandera 2", 50);
+const pelucheViejo = new Objeto("Osito Viejo", 50);
+const pelucheNuevo = new Objeto("Osito Nuevo", 50);
 
 // Cartas 
-var cartaSello = new Objeto("Carta Sellada", 50);
-var cartaAbierta = new Objeto("Carta Abierta", 50);
-var fotoFamiliar = new Objeto("Foto Familiar", 50);
-var fotoPersonal = new Objeto("Foto Personal", 50);
+const cartaSello = new Objeto("Carta Sellada", 50);
+const cartaAbierta = new Objeto("Carta Abierta", 50);
+const fotoFamiliar = new Objeto("Foto Familiar", 50);
+const fotoPersonal = new Objeto("Foto Personal", 50);
 
 // Joyas
-var anillo = new Objeto("Anillo", 50);
-var pendiente = new Objeto("Pendiente", 50);
-var collarPerlas = new Objeto("Collar Perlas", 50);
-var collarOro = new Objeto("Collar Oro", 50);
+const anillo = new Objeto("Anillo", 50);
+const pendiente = new Objeto("Pendiente", 50);
+const collarPerlas = new Objeto("Collar Perlas", 50);
+const collarOro = new Objeto("Collar Oro", 50);
 
 // Los objetos se meten en un array para sacarlos directamente con el numero generado
 var arrayObjetos = new Array();
@@ -85,9 +85,13 @@ var arrayPedidosMostrados =  new Array();
 //var tarjetasVigentes = [];
 var pedidosVigentes = 0;
 
-var maxPedidos = 5;
-var escalaTarjeta = 0.4;
-var margenInicialTarjeta = 100;
+const maxPedidos = 5;
+const tarjetaAncho = 426;
+const tarjetaAlto = 310;
+const escalaTarjeta = 0.7
+const margenInicialTarjeta = 160;
+const margenFinalTarjeta = margenInicialTarjeta - (tarjetaAncho * escalaTarjeta) / 5;
+const alturaTarjeta = -65;
 
 function GenerarPedido(jugador, that){
 	if(arrayPedidos.length < maxPedidos){
@@ -122,7 +126,7 @@ function GenerarPedido(jugador, that){
 		camJugador1.ignore(tarjeta);
 		//camJugador2.ignore(tarjeta);
 		
-		tarjeta.setPosition(margenInicialTarjeta + (arrayTarjetas.length / (maxPedidos - 1)) * (width - 2 * margenInicialTarjeta), -35).setScale(escalaTarjeta);
+		tarjeta = ColocarTarjeta(tarjeta, arrayTarjetas.length);
 		
 		arrayTarjetas.push(tarjeta);
 
@@ -130,6 +134,17 @@ function GenerarPedido(jugador, that){
 		
 		return pedido;
 	}
+}
+
+const anguloMaximo = 9;
+function ColocarTarjeta(tarjeta, numTarjeta){
+	var angulo = Math.floor(Math.random() * anguloMaximo * 2) - anguloMaximo;
+	
+	tarjeta.setPosition(margenInicialTarjeta + (numTarjeta / (maxPedidos - 1)) * (width - 2 * margenFinalTarjeta), alturaTarjeta);
+	tarjeta.setScale(escalaTarjeta);
+	tarjeta.setAngle(angulo);
+	
+	return tarjeta
 }
 
 //Paquete creado por el jugador, pedido a cumplir que elige el jugador  

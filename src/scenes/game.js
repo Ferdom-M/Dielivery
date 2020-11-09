@@ -5,7 +5,9 @@ var suelo;
 var fondo;
 var objetos;
 var resto;
-var tileSize = 32;
+var iluminacion;
+
+const tileSize = 32;
 
 var cursors;
 
@@ -209,16 +211,6 @@ class Game extends Phaser.Scene {
 		// Each 1000 ms call onEvent
 		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
 		generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
-		
-		var PKey = this.input.keyboard.addKey('P');
-        PKey.on('down', pause, this);
-
-        // And finally the method that handels the pause menu
-        function pause() {
-            this.scene.pause();
-            this.scene.launch('Pausa');
-        };
-		
 	}
 	
     update(time, delta){
@@ -265,6 +257,7 @@ function onEvent ()
 	if(this.initialTime == 0){
 		seHaJugado = true;
 		var puntuacionFinal = puntuacionTotal;
+		this.jugador.PararSonidos();
         this.scene.start("Results", puntuacionFinal);
 	}
 }

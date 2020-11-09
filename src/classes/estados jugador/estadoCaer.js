@@ -38,9 +38,9 @@ class Caer extends State{
 		
 		
 		if(jugador.dirX == 0){
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, 0.1));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, inerciaDescenso));
 		}else{
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, 0.1));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, inerciaDescenso));
 			if (jugador.dirX == -1){
 				jugador.resetFlip();
 			}else{

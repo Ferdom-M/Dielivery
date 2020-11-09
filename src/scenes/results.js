@@ -60,6 +60,7 @@ class Results extends Phaser.Scene {
         this.load.image('volver', 'assets/Botones/volver.png');
         this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
         
+		this.load.plugin('rexinputtextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexinputtextplugin.min.js', true);
     }
 
     create(puntuacion) {
@@ -91,14 +92,14 @@ class Results extends Phaser.Scene {
 		var FKey = this.input.keyboard.addKey('F');
 
         FKey.on('down', function () {
-
-            if (this.scale.isFullscreen) {
-                this.scale.stopFullscreen();
-            }
-            else {
-                this.scale.startFullscreen();
-            }
-
+			if(!flipflop){
+				if (this.scale.isFullscreen) {
+					this.scale.stopFullscreen();
+				}
+				else {
+					this.scale.startFullscreen();
+				}
+			}
 		}, this);
 		
 		//Creamos el input text del chaval este tan majo y ponemos que cuando el texto cambie se guarde en la variable nombreJugador
@@ -116,6 +117,10 @@ class Results extends Phaser.Scene {
         inputText.on('blur', function(){
             flipflop = false;
         }, this);
+		
+		
+		// Desactivamos que ignore los eventos de teclado del navegador
+		this.input.keyboard.disableGlobalCapture();
 	}
 	
 	checkNombre() {

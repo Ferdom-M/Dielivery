@@ -10,6 +10,7 @@ class MirandoTarjetas extends State{
 		for(var i = 0; i < arrayTarjetas.length; i++){
 			arrayTarjetas[i].setScale(1);
 			arrayTarjetas[i].setPosition(width / 2 + arrayTarjetas[i].imagenes[0].width * 1.25 * i, height / 2);
+			arrayTarjetas[i].setAngle(0);
 		}
 	}
 	
@@ -18,8 +19,7 @@ class MirandoTarjetas extends State{
 			jugador.tarjetas = false;
 			
 			for(var i = 0; i < arrayTarjetas.length; i++){
-				arrayTarjetas[i].setScale(escalaTarjeta);
-				arrayTarjetas[i].setPosition(margenInicialTarjeta + (i / (maxPedidos - 1)) * (width - 2 * margenInicialTarjeta), -35);
+				arrayTarjetas[i] = ColocarTarjeta(arrayTarjetas[i], i);
 			}
 			
 			jugador.sGuarTarjeta.play();
