@@ -69,17 +69,15 @@ class Results extends Phaser.Scene {
 		var volverPosX = 200;
 		var volverPosY = 50;
 		var flipflop = false;
-		//this.resizeCamera();
-		//this.scale.on('resize', () => this.resizeCamera());
 		
-		//this.cameras.main.setZoom(ratio);
+		this.scale.stopFullscreen();
 
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
 		
 		console.log(puntuacionTotal);
 		
-		this.add.text(puntuacionPosX, puntuacionPosY, "Has acabado con " + puntuacionTotal.toString() + " puntos, pog felicididades " + nombreJugador,
+		this.add.text(puntuacionPosX, puntuacionPosY, "Has acabado con " + puntuacionTotal.toString() + " puntos, pog felicididades",
 		  { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 		
 		
@@ -89,7 +87,7 @@ class Results extends Phaser.Scene {
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
         this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
 		
-		var FKey = this.input.keyboard.addKey('F');
+		/*var FKey = this.input.keyboard.addKey('F');
 
         FKey.on('down', function () {
 			if(!flipflop){
@@ -100,14 +98,15 @@ class Results extends Phaser.Scene {
 					this.scale.startFullscreen();
 				}
 			}
-		}, this);
+		}, this);*/
 		
 		//Creamos el input text del chaval este tan majo y ponemos que cuando el texto cambie se guarde en la variable nombreJugador
         var inputText = this.add.rexInputText(inputNombreX, inputNombreY, 300, 40, {
-            placeholder: 'Introduce tu nombre',
+			placeholder: 'Introduce tu nombre',
+			backgroundColor: 'blue',
         });
         inputText.on('textchange', function(inputText){
-            nombreJugador = inputText.text;
+			nombreJugador = inputText.text;
         }, this);
 
         inputText.on('focus', function(){
@@ -124,7 +123,7 @@ class Results extends Phaser.Scene {
 	}
 	
 	checkNombre() {
-		if(nombreJugador == undefined){
+		if(nombreJugador == undefined || nombreJugador == ''){
 			console.log('Mete un nombre, bobo');
 		}else{
 			PasarEscena(this, "Ranking");
