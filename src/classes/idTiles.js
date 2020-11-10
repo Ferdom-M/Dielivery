@@ -214,15 +214,15 @@ idCollarOro.add(408);
 idCollarOro.add(409);
 
 var idTumbas = new Set();
-idTumbas(109);
-idTumbas(136);
-idTumbas(139);
-idTumbas(140);
-idTumbas(163);
-idTumbas(164);
-idTumbas(165);
-idTumbas(166);
-idTumbas(167);
+idTumbas.add(109);
+idTumbas.add(136);
+idTumbas.add(139);
+idTumbas.add(140);
+idTumbas.add(163);
+idTumbas.add(164);
+idTumbas.add(165);
+idTumbas.add(166);
+idTumbas.add(167);
 //Mesa de creacion de paquetes
 var idMesa = new Set();
 idMesa.add(19);

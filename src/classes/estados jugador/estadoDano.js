@@ -22,7 +22,7 @@ class Dano extends State{
 		}
 		
 		if(jugador.dirX == 0){
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionAerea));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, aceleracion));
 		}else{
 			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, aceleracion));
 			if (jugador.dirX == -1){

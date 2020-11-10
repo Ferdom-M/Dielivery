@@ -32,7 +32,7 @@ class Escalera extends State{
 			jugador.stateMachine.transition(delta, 'idle');
 			return;
 		}
-		if(jugador.jumpsquat){
+		if(jugador.jumpsquat && jugador.dirY == 0){
 			jugador.sEscalera.stop();
 			jugador.stateMachine.transition(delta, 'salto');
 			return;
