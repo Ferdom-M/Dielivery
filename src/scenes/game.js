@@ -181,9 +181,9 @@ class Game extends Phaser.Scene {
 		//GenerarMesaPaquetes(this);
 
 		//Placeholder
-		//var genPedidos = this.add.sprite(2000, 575, 'botonEnviar').setScale(2).setInteractive();
+		var genPedidos = this.add.sprite(2000, 700, 'botonEnviar').setScale(2).setInteractive();
 		
-		//genPedidos.on('pointerdown', () => GenerarPedido(this.jugador, this));
+		genPedidos.on('pointerdown', () => RecogerPedido(this, arrayPedidosPorRecoger[0]));
 
 		/*
 		emitter.startFollow(jugadores[0].sprite, 0, jugadores[0].sprite.body.height / 4);

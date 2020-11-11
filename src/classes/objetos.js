@@ -1,6 +1,7 @@
 const puntuacionDestinatarioFallido = -150;
 const puntuacionItemFallido = -40;
 var puntuacionTotal = 0;
+var pedido;
 
 
 class Objeto {
@@ -82,10 +83,12 @@ arrayObjetos.push(collarOro);
 var arrayPedidos = new Array();
 var arrayTarjetas = new Array();
 var arrayPedidosMostrados =  new Array();
+var arrayPedidosPorRecoger =  new Array();
 //var tarjetasVigentes = [];
 var pedidosVigentes = 0;
 
 const maxPedidos = 5;
+const numTumbas = 3;
 const tarjetaAncho = 426;
 const tarjetaAlto = 310;
 const escalaTarjeta = 0.7
@@ -94,7 +97,7 @@ const margenFinalTarjeta = margenInicialTarjeta - (tarjetaAncho * escalaTarjeta)
 const alturaTarjeta = -65;
 
 function GenerarPedido(jugador, that){
-	if(arrayPedidos.length < maxPedidos){
+	if(arrayPedidos.length < maxPedidos && arrayPedidosPorRecoger.length < numTumbas){
 		// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
 		var destinatario = Math.floor(Math.random() * 2) == 0;
 		
@@ -116,12 +119,14 @@ function GenerarPedido(jugador, that){
 			persona = Math.floor(Math.random() * arrayNombres.length);
 		}
 		perfilesUsados.add(persona);
-		var pedido = new Pedido(arrayPedidos.length, numObjetos, objetosGenerados, destinatario, persona, pedidosVigentes);
-		arrayPedidos.push(pedido);
+		pedido = new Pedido(arrayPedidos.length, numObjetos, objetosGenerados, destinatario, persona, pedidosVigentes);
+		//arrayPedidos.push(pedido);
+		arrayPedidosPorRecoger.push(pedido);
+		
 		//var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
 		//tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
 
-		var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
+		/*var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
 		
 		camJugador1.ignore(tarjeta);
 		//camJugador2.ignore(tarjeta);
@@ -131,9 +136,28 @@ function GenerarPedido(jugador, that){
 		arrayTarjetas.push(tarjeta);
 
 		pedidosVigentes++;
-		
+		*/
 		return pedido;
 	}
+}
+
+function RecogerPedido(that, pedido){
+	if(arrayPedidosPorRecoger.length > 0){
+		var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
+		
+		camJugador1.ignore(tarjeta);
+		//camJugador2.ignore(tarjeta);
+		
+		tarjeta = ColocarTarjeta(tarjeta, arrayTarjetas.length);
+		
+		arrayTarjetas.push(tarjeta);
+		arrayPedidos.push(pedido);
+		arrayPedidosPorRecoger.splice(0, 1);
+
+		pedidosVigentes++;
+	}
+	
+	
 }
 
 const anguloMaximo = 9;
