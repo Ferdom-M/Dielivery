@@ -38,7 +38,11 @@ class Idle extends State{
 			jugador.stateMachine.transition(delta, 'salto');
 			return;
 		}
-		if(jugador.accion && idMesa.has(fondo.getTileAtWorldXY(jugador.x, jugador.y).index)){
+		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idTumbas.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index)){
+			jugador.stateMachine.transition(delta, 'recogerPedido');
+			return;
+		}
+		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idMesa.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index)){
 			console.log(fondo.getTileAtWorldXY(jugador.x, jugador.y).index);
 			jugador.stateMachine.transition(delta, 'mesa');
 			return;
@@ -47,8 +51,8 @@ class Idle extends State{
 			jugador.stateMachine.transition(delta, "mirandoTarjetas");
 			return;
 		}
-
 		
+
 		
 		if(jugador.enSueloResbaladizo){
 			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, aceleracionResbaladizo));

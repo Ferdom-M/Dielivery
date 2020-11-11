@@ -148,7 +148,8 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 			saltoPared: new SaltoPared(),
 			dano: new Dano(),
 			mesa: new Mesa(),
-			mirandoTarjetas: new MirandoTarjetas()
+			mirandoTarjetas: new MirandoTarjetas(),
+			recogerPedido: new estadoRecogerPedido()
 		}, [this.scene, this]);
 	}
 	
