@@ -141,10 +141,10 @@ idBandera1.add(300);
 idBandera1.add(301);
 
 var idBandera2 = new Set();
-idBandera1.add(275);
-idBandera1.add(276);
-idBandera1.add(302);
-idBandera1.add(303);
+idBandera2.add(275);
+idBandera2.add(276);
+idBandera2.add(302);
+idBandera2.add(303);
 
 var idPelucheViejo = new Set();
 idPelucheViejo.add(489);
@@ -226,4 +226,13 @@ idTumbas.add(167);
 
 //Mesa de creacion de paquetes
 var idMesa = new Set();
-idMesa.add(19);
+idMesa.add(498);
+idMesa.add(499);
+idMesa.add(500);
+idMesa.add(501);
+idMesa.add(502);
+idMesa.add(525);
+idMesa.add(526);
+idMesa.add(527);
+idMesa.add(528);
+idMesa.add(529);

@@ -25,6 +25,8 @@ var emitter;
 var camJugador1;
 var camJugador2;
 
+var mapaActual;
+
 class Game extends Phaser.Scene {
 
     constructor() {
@@ -147,8 +149,15 @@ class Game extends Phaser.Scene {
 
     create (mapa)
     {
+		arrayPedidos = new Array();
+		arrayTarjetas = new Array();
+		arrayPedidosMostrados =  new Array();
+		arrayPedidosPorRecoger =  new Array();
+		//var tarjetasVigentes = [];
+		pedidosVigentes = 0;
+		 
 		//this.scale.on('resize', () => this.resizeCamera());
-		
+		mapaActual = mapa;
 		GenerarMundo(this, mapa);
 		
 		/*
@@ -203,14 +212,16 @@ class Game extends Phaser.Scene {
 			});
 		}
 		
+		if(mapa != "tutorial"){
+			this.initialTime = 5;
+
+			text = this.add.text(0, 30, 'Countdown: ' + formatTime(this.initialTime)).setScrollFactor(0,0);
+
+			// Each 1000 ms call onEvent
+			timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
+			generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
+		}
 		
-		this.initialTime = 300;
-
-		text = this.add.text(0, 30, 'Countdown: ' + formatTime(this.initialTime)).setScrollFactor(0,0);
-
-		// Each 1000 ms call onEvent
-		timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
-		generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
 	}
 	
     update(time, delta){
@@ -227,17 +238,6 @@ class Game extends Phaser.Scene {
 	
 }
 
-function MoverTarjeta(that, tarjeta){
-	console.log("a");
-	// Mover de vuelta arriba
-	if(tarjeta.expandida){
-		this.tarjeta.setPosition((Phaser.Math.Linear(tarjeta.x, 0, friccionResbalo)), (Phaser.Math.Linear(tarjeta.y, 0, friccionResbalo)));
-	}
-	// Mover al centro de pantalla y agrandar
-	else{
-		
-	}
-}
 
 function formatTime(seconds){
     // Minutes

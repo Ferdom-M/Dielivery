@@ -11,6 +11,15 @@ function GenerarMundo(that, mapa){
 	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 	resto = map.createStaticLayer("Resto", tileset, 0, 0);
 	iluminacion = map.createStaticLayer("Iluminacion", fondos, 0, 0);
+	
+	if(mapa == "tutorial"){
+		if(that.sys.game.device.os.desktop ){
+			cartelesPc = map.createStaticLayer("CartelesPC", tileset, 0, 0);
+		}else{
+			cartelesMovil = map.createStaticLayer("CartelesMovil", tileset, 0, 0);
+		}
+	}
+	
 
 	iluminacion.depth = 50;
 	suelo.setCollisionByProperty({ collides: true });

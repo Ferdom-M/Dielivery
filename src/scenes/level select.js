@@ -80,8 +80,17 @@ class LevelSelect extends Phaser.Scene {
 		this.buttonNivel3 = this.add.sprite(Nivel3PosX, Nivel3PosY, '3').setScale(0.5).setInteractive();
         
 		this.buttonNivel1.on('pointerdown', () => PasarEscena(this, "Game", "Nivel1"));
-		this.buttonNivel2.on('pointerdown', () => PasarEscena(this, "Game", "Nivel2"));
-		this.buttonNivel3.on('pointerdown', () => PasarEscena(this, "Game", "Nivel3"));
+		
+		// La base para bloquear niveles si no se han jugado, se puede tambien poner el boton de nivel distinto
+		var nivel1Jugado = JSON.parse(localStorage.getItem('nivel1Jugado')) || false;
+		var nivel2Jugado = JSON.parse(localStorage.getItem('nivel2Jugado')) || false;
+		if(nivel1Jugado){
+			this.buttonNivel2.on('pointerdown', () => PasarEscena(this, "Game", "Nivel2"));
+		}
+		if(nivel2Jugado){
+			this.buttonNivel3.on('pointerdown', () => PasarEscena(this, "Game", "Nivel3"));
+		}
+		
 		
 		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});

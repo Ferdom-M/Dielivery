@@ -64,6 +64,7 @@ class Results extends Phaser.Scene {
     }
 
     create(puntuacion) {
+		console.log(mapaActual);
 		var puntuacionPosX = width / 2;
 		var puntuacionPosY = height / 2;
 		var volverPosX = 200;
@@ -86,6 +87,18 @@ class Results extends Phaser.Scene {
         this.buttonVolver.on('pointerup', () => this.checkNombre());
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
         this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
+		
+		if(mapaActual == "Nivel1"){
+			var nivel1Jugado = {
+				nivel1Jugado: true
+			};
+			localStorage.setItem('nivel1Jugado', JSON.stringify(nivel1Jugado));
+		}else if(mapaActual == "Nivel2"){
+			var nivel2Jugado = {
+				nivel2Jugado: true
+			};
+			localStorage.setItem('nivel2Jugado', JSON.stringify(nivel2Jugado));
+		}
 		
 		/*var FKey = this.input.keyboard.addKey('F');
 
