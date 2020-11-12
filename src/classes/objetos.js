@@ -237,12 +237,10 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 			}
 			
 		}
-		if(objetosCorrectos == pedido.length){
+		if(objetosCorrectos == pedido.objetos.length){
 			console.log("Pedido correcto");
 		}else{
-			console.log("Pedido fallido");
-			var itemsSobrantes = Math.abs(pedido.objetos.length - paquete.length);
-			puntuacionTotal -= Math.abs(itemsSobrantes * puntuacionItemFallido);
+			puntuacionTotal -= Math.abs(objetosCorrectos * puntuacionItemFallido);
 			console.log("Resto: " + itemsSobrantes * puntuacionItemFallido);
 			//puntuacion += puntuacionItemFallido;
 		}
@@ -251,15 +249,16 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 		puntuacionTotal += puntuacionDestinatarioFallido;
 	}
 
+
 	//Eliminamos tarjeta del pedido que hemos hecho
 	arrayTarjetas[pedido.indice].destroy();
 	arrayTarjetas.splice(pedido.indice, 1);
 	arrayPedidos.splice(pedido.indice, 1);
+	
+
 	for(let i = pedido.indice; i < arrayPedidos.length; i++){
 		arrayPedidos[i].indice = arrayPedidos[i].indice - 1;
 	}
-	arrayPedidosMostrados[pedido.indice].destroy();
-
 	pedidosVigentes--;
 
 	//Insertar bucle de vaciado de inventario(actualmente en ClickObjeto de estadoMesa) 

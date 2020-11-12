@@ -97,10 +97,6 @@ class Mesa extends State{
 	
 	SeleccionarPedido(pedido, jugador){
 		if(jugador.pedidoSeleccionado == arrayPedidos[pedido]){
-            //Falta meter cambio de sprite que indique que está seleccionado
-            //
-            //
-            //
             arrayPedidosMostrados[pedido].clearTint();
 			jugador.pedidoSeleccionado = undefined;
         }else{
@@ -129,23 +125,17 @@ class Mesa extends State{
 		if(jugador.arraySeleccionados.length > 0){
 			console.log("Elimino");
 			var paqueteCreado = [];
-			for(let a = 0; a < jugador.arraySeleccionados.length; a++){
+			// Lo hacemos de final a principio porque si hacemos el splice de principio a final nos cargamos el orden despues, de esta forma no intervenimos en los demás
+			for(let a = jugador.arraySeleccionados.length - 1; a >= 0; a--){
 				paqueteCreado.push(jugador.inventario[jugador.arraySeleccionados[a]].tipo);
+				jugador.inventario.splice(jugador.arraySeleccionados[a], 1);
 			}
 			console.log("he creado el paquete: " + paqueteCreado);
 
 			//Esto debe ir en Comparar paquete, esta aqui provisionalmente porque
 			//Comparar paquete no va por la seleccion de pedidos
 			// No va porque no habeis leido el codigo de comparar paquete
-			for(let i = 0; i < paqueteCreado.length; i++){
-				for(let j = 0; j < jugador.inventario.length; j++){
-					console.log("Comparando: " + jugador.inventario[j].tipo + " y " + paqueteCreado[i]);
-					if(jugador.inventario[j].tipo == paqueteCreado[i]){
-						console.log("coindice el elemento: " + j + ", " + jugador.inventario[j].tipo);
-						jugador.inventario.splice(j, 1);
-					}
-				}
-			}
+
 			for(let z = 0; z < jugador.arraySeleccionados.length; z++){
 				jugador.arrayMostrados[jugador.arraySeleccionados[z]].destroy();
 			}
@@ -163,15 +153,20 @@ class Mesa extends State{
 
 
     BorrarBotones(delta, jugador){
+		buttEnviarCielo.off('pointerdown');
+		buttEnviarInfierno.off('pointerdown');
+		buttBasura.off('pointerdown');
 		tablon.destroy();
         buttEnviarCielo.destroy();
         buttEnviarInfierno.destroy();
         buttBasura.destroy();
         textoSeleccionPedido.destroy();
         for(var i = 0; i < jugador.arrayMostrados.length; i++){
+            jugador.arrayMostrados[i].off('pointerdown');
             jugador.arrayMostrados[i].destroy();
         }
         for(var i = 0; i < arrayPedidosMostrados.length; i++){
+            arrayPedidosMostrados[i].off('pointerdown');
             arrayPedidosMostrados[i].destroy();
         }
         arrayPedidosMostrados.splice(0, arrayPedidosMostrados.length);
