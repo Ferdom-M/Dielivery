@@ -41,7 +41,7 @@ arrayCausaMuerteEspanol.push("Tuvo un accidente al\nintentar realizar un\nviaje 
 arrayCausaMuerteEspanol.push("No durmió su siesta\nde 3 horas");
 arrayCausaMuerteEspanol.push("Se murió del susto");
 arrayCausaMuerteEspanol.push("Diabetes");
-arrayCausaMuerteEspanol.push("Diabetes");
+arrayCausaMuerteEspanol.push("Intentó hacer\nparacaidismo sin\nparacaidas");
 
 arrayCausaMuerteIngles.push("Fell down the stairs\nat the café");
 arrayCausaMuerteIngles.push("Sufrió un pito\ncerebral tras\njugar 453 horas\nseguidas al Isaac");

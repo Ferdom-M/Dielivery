@@ -3,40 +3,44 @@ var buttEnviarInfierno;
 var buttCerrar;
 var buttBasura;
 var textoSeleccionPedido;
+var tablon;
 
 class Mesa extends State{
 
 	enter(delta, scene, jugador){
-		console.log("Estado mesa");
+		jugador.enMesa = true;
         
-        for(var i = 0; i < jugador.arrayInventario.length; i++){
-            jugador.arrayInventario[i].destroy();
-        }
+        BorrarInventario(scene, jugador);
 
         jugador.body.velocity.x = 0;
-    
+		
+		tablon = scene.add.image(width / 2, height / 2, 'interfazMesa').setScrollFactor(0,0);
+		
+		var PosX0 = width / 2 - tablon.width / 2;
+		var PosY0 = height / 2 - tablon.height / 2;
 
         for(var i = 0; i < jugador.inventario.length; i++){
             //Para multi: usar elemento de UI para ubicarlo en funcion del canvas de la pantalla en vez de sprite para que el otro no lo vea
             var miObj = jugador.inventario[i].tipo;
 			
-            jugador.arrayMostrados.push(scene.add.sprite(jugador.x + tileSize + 75*i, jugador.y-tileSize - 40, miObj).setScale(1.5).setInteractive());
+            jugador.arrayMostrados.push(scene.add.sprite(width / 2 - 50 + (i / (limInventario - 1)) * 374.5, PosY0 + tablon.height - 75, miObj).setScale(1.5).setInteractive().setScrollFactor(0,0));
+			//jugador.arrayInventario.push(that.add.sprite((width / 2 - 430) + (i / (limInventario - 1)) * 350, height - 50, jugador.inventario[i].tipo).setScrollFactor(0,0));
             jugador.arrayMostrados[i].on("pointerdown", this.ClickObjeto.bind(this, i, jugador));
         }
 
-        textoSeleccionPedido = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - 200, "Selecciona tu pedido", {fontFamily: 'Georgia, Times, serif'});
+        textoSeleccionPedido = scene.add.text(PosX0 + 50, PosY0 + 50, "Selecciona el pedido y crea el paquete", {fontFamily: 'Georgia, Times, serif'}).setScrollFactor(0,0);
 		
 		for(var i = 0; i < arrayPedidos.length; i++){
             //Para multi: usar elemento de UI para ubicarlo en funcion del canvas de la pantalla en vez de sprite para que el otro no lo vea
-            var pedido = scene.add.text(jugador.x - tileSize*4, jugador.y-tileSize - (150 - 25 * i), arrayNombres[arrayPedidos[i].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px'}).setInteractive();
-                
+            var pedido = scene.add.text(PosX0 + 50, PosY0 + 90 + (i / (maxPedidos - 1)) * 155, arrayNombres[arrayPedidos[i].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px'}).setInteractive().setScrollFactor(0,0);
+ 
 			arrayPedidosMostrados.push(pedido);
             arrayPedidosMostrados[i].on("pointerdown", this.SeleccionarPedido.bind(this, i, jugador));
         }
 
-        buttEnviarCielo = scene.add.sprite(jugador.x +70 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
-        buttEnviarInfierno = scene.add.sprite(jugador.x +130 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
-        buttBasura = scene.add.sprite(jugador.x + 200 + tileSize, jugador.y - 150, 'botonEnviar').setScale(1.5).setInteractive();
+        buttEnviarCielo = scene.add.sprite(PosX0 + tablon.width / 2 + 100, PosY0 + 100, 'botonEnviar').setScale(1.5).setInteractive();
+        buttEnviarInfierno = scene.add.sprite(PosX0 + tablon.width / 2 + 100, PosY0 + 160, 'botonEnviar').setScale(1.5).setInteractive();
+        buttBasura = scene.add.sprite(PosX0 + tablon.width / 2 + 250, PosY0 + 130, 'botonEnviar').setScale(1.5).setInteractive();
         
 		buttEnviarCielo.on('pointerdown', () => this.Enviar(delta, scene, jugador, true));
         buttEnviarInfierno.on('pointerdown', () => this.Enviar(delta, scene, jugador, false));
@@ -67,6 +71,8 @@ class Mesa extends State{
 			}
 			
 			jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
+			
+			jugador.enMesa = false;
 			
             this.BorrarBotones(delta, jugador);
         }
@@ -157,6 +163,7 @@ class Mesa extends State{
 
 
     BorrarBotones(delta, jugador){
+		tablon.destroy();
         buttEnviarCielo.destroy();
         buttEnviarInfierno.destroy();
         buttBasura.destroy();

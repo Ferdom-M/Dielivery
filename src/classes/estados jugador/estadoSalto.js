@@ -45,6 +45,7 @@ class Salto extends State{
 			return;
 		}
 		
+		
 		if(jugador.jumpsquat){
 			jugador.alturaSalto += delta;
 		}

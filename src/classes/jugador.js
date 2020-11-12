@@ -112,6 +112,7 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		this.enParedDcha = false;
 		this.enParedDchaNormal = false;
 		this.enPinchos = false;
+		this.enMesa = false;
 		// Valores
 		this.puntuacion = 0;
 		this.inventario = new Array();
@@ -161,10 +162,15 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 	Percepcion(){
 		// Comprobamos una sola vez si tocamos suelo o paredes
 		let sueloDebajo = suelo.getTileAtWorldXY(this.x, this.y + tileSize);
+		let sueloEncima = suelo.getTileAtWorldXY(this.x, this.y - tileSize);
 		// Necesitamos saber si en el extremo de Grimmy hay suelo		16 - 16, se queda en 0, dentro de su sprite
 		let sueloDebajoExtremoIzq = suelo.getTileAtWorldXY(this.x - this.width / 2, this.y + tileSize);
 		//																16 + 16, un pixel mas que su anchura, hay que restar 1. Se aplicaria siempre igual aunque midiese 64 en lugar de 32
-		let sueloDebajoExtremoDcha = suelo.getTileAtWorldXY(this.x + this.width / 2 - 1, this.y + tileSize);
+		let sueloDebajoExtremoDcha = suelo.getTileAtWorldXY(this.x + this.width / 2 - 1, this.y + tileSize);// Necesitamos saber si en el extremo de Grimmy hay suelo		16 - 16, se queda en 0, dentro de su sprite
+		
+		let sueloEncimaExtremoIzq = suelo.getTileAtWorldXY(this.x - this.width / 2, this.y - tileSize);
+		//																16 + 16, un pixel mas que su anchura, hay que restar 1. Se aplicaria siempre igual aunque midiese 64 en lugar de 32
+		let sueloEncimaExtremoDcha = suelo.getTileAtWorldXY(this.x + this.width / 2 - 1, this.y - tileSize);
 		
 		let sueloIzq = suelo.getTileAtWorldXY(this.x - tileSize, this.y);
 		let sueloDcha = suelo.getTileAtWorldXY(this.x + tileSize, this.y);
@@ -183,8 +189,8 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		
 		this.enSueloResbaladizo = this.enSuelo && sueloDebajo && idSuelosResbaladizos.has(sueloDebajo.index);
 		
-		this.enPinchos = this.enSuelo && sueloDebajo && idPinchos.has(sueloDebajo.index);
-		
+		this.enPinchos = (sueloDebajo && idPinchos.has(sueloDebajo.index)) || (sueloDebajoExtremoIzq && idPinchos.has(sueloDebajoExtremoIzq.index)) || (sueloDebajoExtremoDcha && idPinchos.has(sueloDebajoExtremoDcha.index));
+
 		this.enEscalera = resto.getTileAtWorldXY(this.x, this.y) && idEscaleras.has(resto.getTileAtWorldXY(this.x, this.y).index);
 
 		/*

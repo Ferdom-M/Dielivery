@@ -27,6 +27,10 @@ var camJugador2;
 
 var mapaActual;
 
+var tiempo;
+var tablonInventario;
+var puntuacion;
+
 class Game extends Phaser.Scene {
 
     constructor() {
@@ -77,6 +81,11 @@ class Game extends Phaser.Scene {
 		this.load.image('logo', 'assets/logo.png');
 		this.load.image("escalera", "assets/ladder.png");
 		this.load.image("mesa", "assets/bolita.jpg");
+		
+		this.load.image("interfazInventario", "assets/Interfaz/Tablon interfaz partida.png");
+		this.load.image("interfazMesa", "assets/Interfaz/Tablon interfaz pedidos.png");
+		
+		
 
 		//ICONOS DE OBJETOS PARA INVENTARIO
 		this.load.image("Anillo", "assets/Sprites Objetos/Icono Anillo.png");
@@ -212,14 +221,17 @@ class Game extends Phaser.Scene {
 			});
 		}
 		
+		tablonInventario = this.add.image(width / 2, height - 57, 'interfazInventario').setScrollFactor(0,0);
 		if(mapa != "tutorial"){
-			this.initialTime = 5;
+			this.initialTime = 500;
 
-			text = this.add.text(0, 30, 'Countdown: ' + formatTime(this.initialTime)).setScrollFactor(0,0);
+			tiempo = this.add.text(width / 2 - 16, height - 60, formatTime(this.initialTime)).setScrollFactor(0,0);
 
 			// Each 1000 ms call onEvent
 			timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
 			generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
+			
+			puntuacion = this.add.text(width - 100, height - 60, puntuacionTotal).setScrollFactor(0,0);
 		}
 		
 	}
@@ -253,7 +265,8 @@ function formatTime(seconds){
 function onEvent ()
 {
     this.initialTime -= 1; // One second
-    text.setText('Countdown: ' + formatTime(this.initialTime));
+	tiempo.setText(formatTime(this.initialTime));
+	
 	if(this.initialTime == 0){
 		seHaJugado = true;
 		var puntuacionFinal = puntuacionTotal;
@@ -263,6 +276,10 @@ function onEvent ()
 }
 
 function RepresentarInventario(that, jugador){
+	tiempo.setVisible(true);
+	puntuacion.setVisible(true);
+	puntuacion.setText(puntuacionTotal);
+	tablonInventario.setVisible(true);
 	
 	if(jugador.arrayInventario.length > 0){
 		for(var i = 0; i < jugador.arrayInventario.length; i++){
@@ -274,11 +291,22 @@ function RepresentarInventario(that, jugador){
 
 	for(let i = 0; i < jugador.inventario.length; i++){
 		console.log(jugador.inventario[i].tipo);
-		jugador.arrayInventario.push(that.add.sprite(50 + 50*i, 500, jugador.inventario[i].tipo).setScrollFactor(0,0));
+		jugador.arrayInventario.push(that.add.sprite((width / 2 - 430) + (i / (limInventario - 1)) * (350), height - 55, jugador.inventario[i].tipo).setScrollFactor(0,0));
+		
+		
 	}
 	cogiObjeto = false;
-	console.log("arrayInventario");
-	console.log(jugador.arrayInventario);
+}
+
+function BorrarInventario(that, jugador){
+	for(var i = 0; i < jugador.arrayInventario.length; i++){
+		jugador.arrayInventario[i].destroy();
+	}
+	tiempo.setVisible(false);
+	puntuacion.setVisible(false);
+	tablonInventario.setVisible(false);
+	
+
 }
 
 /*

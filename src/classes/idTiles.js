@@ -77,7 +77,8 @@ idSuelosResbaladizos.add(145);
 
 // Objetos interactuables
 var idPinchos = new Set();
-idPinchos.add(291);
+idPinchos.add(141);
+idPinchos.add(168);
 
 var idEscaleras = new Set();
 idEscaleras.add(111);
