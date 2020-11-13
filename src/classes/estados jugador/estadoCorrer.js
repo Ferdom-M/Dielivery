@@ -53,6 +53,12 @@ class Correr extends State{
 			jugador.stateMachine.transition(delta, 'recogerObjeto');
 			return;
 		}
+		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idTumbas.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index) && arrayPedidos.length < 5 && arrayPedidosPorRecoger.length > 0){
+			jugador.sPasos.stop();
+			jugador.sPasosMojados.stop();
+			jugador.stateMachine.transition(delta, 'recogerPedido');
+			return;
+		}
 		if((jugador.enParedIzq && jugador.enParedIzqNormal && !suelo.getTileAtWorldXY(jugador.x-tileSize, jugador.y-tileSize) && !suelo.getTileAtWorldXY(jugador.x,jugador.y-tileSize)) || 
 		   (jugador.enParedDcha && jugador.enParedDchaNormal && !suelo.getTileAtWorldXY(jugador.x+tileSize, jugador.y-tileSize) && !suelo.getTileAtWorldXY(jugador.x, jugador.y-tileSize))){
 			jugador.sPasos.stop();

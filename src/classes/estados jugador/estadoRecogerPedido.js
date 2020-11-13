@@ -1,5 +1,6 @@
 class estadoRecogerPedido extends State{
 	enter(delta, scene, jugador){
+		// console.log("Estado recoger pedido");
 		RecogerPedido(scene, arrayPedidosPorRecoger[0]);
 		
 		jugador.body.velocity.x = 0;
@@ -7,10 +8,7 @@ class estadoRecogerPedido extends State{
 		if(!jugador.sGuarTarjeta.isPlaying){
 			jugador.sGuarTarjeta.play();
 		}
-	}
-	
-	execute(delta, scene, jugador){
-		scene.time.delayedCall(100, () => jugador.stateMachine.transition(delta, 'idle'));
+		scene.time.delayedCall(1000, () => jugador.stateMachine.transition(delta, 'idle'));
 	}
 }
 

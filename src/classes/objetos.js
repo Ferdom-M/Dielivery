@@ -142,20 +142,19 @@ function GenerarPedido(jugador, that){
 }
 
 function RecogerPedido(that, pedido){
-	if(arrayPedidosPorRecoger.length > 0){
-		var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
-		
-		camJugador1.ignore(tarjeta);
-		//camJugador2.ignore(tarjeta);
-		
-		tarjeta = ColocarTarjeta(tarjeta, arrayTarjetas.length);
-		
-		arrayTarjetas.push(tarjeta);
-		arrayPedidos.push(pedido);
-		arrayPedidosPorRecoger.splice(0, 1);
+	var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
+	
+	camJugador1.ignore(tarjeta);
+	//camJugador2.ignore(tarjeta);
+	
+	tarjeta = ColocarTarjeta(tarjeta, arrayTarjetas.length);
+	
+	arrayTarjetas.push(tarjeta);
+	arrayPedidos.push(pedido);
+	arrayPedidosPorRecoger.splice(0, 1);
 
-		pedidosVigentes++;
-	}
+	pedidosVigentes++;
+
 	
 	
 }

@@ -38,7 +38,7 @@ class Idle extends State{
 			jugador.stateMachine.transition(delta, 'salto');
 			return;
 		}
-		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idTumbas.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index)){
+		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idTumbas.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index) && arrayPedidos.length < 5 && arrayPedidosPorRecoger.length > 0){
 			jugador.stateMachine.transition(delta, 'recogerPedido');
 			return;
 		}

@@ -222,6 +222,8 @@ class Game extends Phaser.Scene {
 		}
 		
 		tablonInventario = this.add.image(width / 2, height - 57, 'interfazInventario').setScrollFactor(0,0);
+		generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
+		puntuacion = this.add.text(width - 100, height - 60, puntuacionTotal).setScrollFactor(0,0);
 		if(mapa != "tutorial"){
 			this.initialTime = 500;
 
@@ -229,9 +231,7 @@ class Game extends Phaser.Scene {
 
 			// Each 1000 ms call onEvent
 			timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
-			generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
 			
-			puntuacion = this.add.text(width - 100, height - 60, puntuacionTotal).setScrollFactor(0,0);
 		}
 		
 	}
