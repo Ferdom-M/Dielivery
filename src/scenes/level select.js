@@ -49,11 +49,11 @@ class LevelSelect extends Phaser.Scene {
         this.load.image('fondo', 'assets/sky.jpeg');
         this.load.image('logo', 'assets/logo.png');
         
-        this.load.image('volver', 'assets/Botones/volver.png');
-        this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
-        this.load.image('1', 'assets/Botones/1.png');
-        this.load.image('2', 'assets/Botones/2.png');;
-        this.load.image('3', 'assets/Botones/3.png');
+        this.load.image('volver', 'assets/Interfaz/Botones/volver.png');
+        this.load.image('volver_pulsado', 'assets/Interfaz/Botones/volver_pulsado.png');
+        this.load.image('1', 'assets/Interfaz/Botones/1.png');
+        this.load.image('2', 'assets/Interfaz/Botones/2.png');;
+        this.load.image('3', 'assets/Interfaz/Botones/3.png');
         
     }
 

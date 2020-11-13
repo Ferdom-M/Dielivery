@@ -62,29 +62,29 @@ class Mainmenu extends Phaser.Scene {
 		
 		// CARGA
         this.load.image('fondo', 'assets/Interfaz/Fondo menu principal.jpg');
-        this.load.image('tablon', 'assets/Interfaz/Tablon menu principal.png');
+        this.load.image('tablon', 'assets/Interfaz/Tablon menu principal cartas.png');
         this.load.image('logo', 'assets/logo.png');
         
 		// SENSIBLE A IDIOMA
 		// ESPAÑOL
 		if(idioma.includes("es")){
-			this.load.image('jugar', 'assets/Botones/jugar.png');
-			this.load.image('jugar_pulsado', 'assets/Botones/jugar_pulsado.png');;
-			this.load.image('creditos', 'assets/Botones/creditos.png');
-			this.load.image('creditos_pulsado', 'assets/Botones/creditos_pulsado.png');
-			this.load.image('ranking', 'assets/Botones/empleado.png');
-			this.load.image('ranking_pulsado', 'assets/Botones/empleado_pulsado.png');
-			this.load.image('idioma', 'assets/Botones/idioma_ingles.png');
+			this.load.image('jugar', 'assets/Interfaz/Botones/jugar.png');
+			this.load.image('jugar_pulsado', 'assets/Interfaz/Botones/jugar_pulsado.png');;
+			this.load.image('creditos', 'assets/Interfaz/Botones/creditos.png');
+			this.load.image('creditos_pulsado', 'assets/Interfaz/Botones/creditos_pulsado.png');
+			this.load.image('ranking', 'assets/Interfaz/Botones/empleado.png');
+			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/empleado_pulsado.png');
+			this.load.image('idioma', 'assets/Interfaz/Botones/idioma_ingles.png');
 		}
         else{
 			// INGLES
-			this.load.image('jugar', 'assets/Botones/play.png');
-			this.load.image('jugar_pulsado', 'assets/Botones/play_pulsado.png');;
-			this.load.image('creditos', 'assets/Botones/credits.png');
-			this.load.image('creditos_pulsado', 'assets/Botones/credits_pulsado.png');
-			this.load.image('ranking', 'assets/Botones/employee.png');
-			this.load.image('ranking_pulsado', 'assets/Botones/employee_pulsado.png');
-			this.load.image('idioma', 'assets/Botones/idioma_espanol.png');
+			this.load.image('jugar', 'assets/Interfaz/Botones/play.png');
+			this.load.image('jugar_pulsado', 'assets/Interfaz/Botones/play_pulsado.png');;
+			this.load.image('creditos', 'assets/Interfaz/Botones/credits.png');
+			this.load.image('creditos_pulsado', 'assets/Interfaz/Botones/credits_pulsado.png');
+			this.load.image('ranking', 'assets/Interfaz/Botones/employee.png');
+			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/employee_pulsado.png');
+			this.load.image('idioma', 'assets/Interfaz/Botones/idioma_espanol.png');
 		}
 		
 		

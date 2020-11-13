@@ -57,8 +57,8 @@ class Results extends Phaser.Scene {
         this.load.image('fondo', 'assets/sky.jpeg');
         this.load.image('logo', 'assets/logo.png');
         
-        this.load.image('volver', 'assets/Botones/volver.png');
-        this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
+        this.load.image('volver', 'assets/Interfaz/Botones/volver.png');
+        this.load.image('volver_pulsado', 'assets/Interfaz/Botones/volver_pulsado.png');
         
 		this.load.plugin('rexinputtextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexinputtextplugin.min.js', true);
     }

@@ -49,8 +49,8 @@ class Ranking extends Phaser.Scene {
 		// CARGA
         this.load.image('fondo', 'assets/sky.jpeg');
         
-        this.load.image('volver', 'assets/Botones/volver.png');
-        this.load.image('volver_pulsado', 'assets/Botones/volver_pulsado.png');
+        this.load.image('volver', 'assets/Interfaz/Botones/volver.png');
+        this.load.image('volver_pulsado', 'assets/Interfaz/Botones/volver_pulsado.png');
         
 		
     }
