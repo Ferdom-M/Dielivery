@@ -48,10 +48,13 @@ class creditos extends Phaser.Scene {
 		*/
 		
 		// CARGA
+		/*
         this.load.image('volver', 'assets/Interfaz/Botones/volver.png');
         this.load.image('volver_pulsado', 'assets/Interfaz/Botones/volver_pulsado.png');
-    }
+		*/
+	}
 	create() {
+		this.cameras.main.fadeIn(valorFade);
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		

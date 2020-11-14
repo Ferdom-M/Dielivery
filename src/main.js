@@ -35,7 +35,7 @@ window.onload = function(){
 			// ...
 			]
 		},
-		scene: [Mainmenu, ComoJugar, creditos, LevelSelect, Game, Pausa, Results, Ranking],
+		scene: [Preload, Mainmenu, ComoJugar, creditos, LevelSelect, Game, Pausa, Results, Ranking],
 		antialias: false,
 		pixelart: true,
 		failIfMajorPerformanceCaveat: true,

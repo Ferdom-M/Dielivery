@@ -180,6 +180,7 @@ class Game extends Phaser.Scene {
 
     create (mapa)
     {
+		this.cameras.main.fadeIn(valorFade);
 		assetsCargados = true;
 		arrayPedidos = new Array();
 		arrayTarjetas = new Array();
@@ -309,8 +310,9 @@ function onEvent ()
 		seHaJugado = true;
 		var puntuacionFinal = puntuacionTotal;
 		this.jugador.PararSonidos();
-		this.textures.remove('Anillo');
-        this.scene.start("Results", puntuacionFinal);
+		this.cameras.main.fadeOut(valorFade);
+		
+		this.cameras.main.on('camerafadeoutcomplete', () => {this.scene.start("Results", puntuacionFinal);});
 	}
 }
 

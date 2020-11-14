@@ -15,8 +15,10 @@ class Pausa extends Phaser.Scene {
 
         var NKey = this.input.keyboard.addKey('N');
         NKey.on('down', () => {
-            this.scene.stop("Game");
-            this.scene.start("Mainmenu");
+			this.cameras.main.fadeOut(valorFade);
+	
+			this.cameras.main.on('camerafadeoutcomplete', () => {this.scene.stop("Game"); this.scene.start("Mainmenu");});
+            
 		}, this);
     }
 }

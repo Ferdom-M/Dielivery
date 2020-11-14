@@ -56,6 +56,7 @@ class Ranking extends Phaser.Scene {
     }
 
     create() {
+		this.cameras.main.fadeIn(valorFade);
 		var scoreboardX = width / 4;
 		var scoreboardY = height / 4;
 		var volverPosX = 200;

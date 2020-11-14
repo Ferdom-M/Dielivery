@@ -13,6 +13,7 @@ const idiomaPosY = height - 75
 
 var seHaJugado = false;
 
+var valorFade = 200;
 class Mainmenu extends Phaser.Scene {
 
     constructor() {
@@ -62,10 +63,12 @@ class Mainmenu extends Phaser.Scene {
 		*/
 		
 		// CARGA
+		/*
         this.load.image('fondo', 'assets/Interfaz/Fondo menu principal.jpg');
         this.load.image('tablon', 'assets/Interfaz/Tablon menu principal cartas.png');
         this.load.image('logo', 'assets/logo.png');
-        
+        */
+		
 		// SENSIBLE A IDIOMA
 		// ESPAÑOL
 		if(idioma.includes("es")){
@@ -96,6 +99,7 @@ class Mainmenu extends Phaser.Scene {
     }
 	
     create() {
+		this.cameras.main.fadeIn(valorFade);
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
@@ -158,7 +162,6 @@ class Mainmenu extends Phaser.Scene {
 			
 			arrayCausaMuerte = arrayCausaMuerteEspanol
 		}
-
 		this.textures.remove('jugar');
 		this.textures.remove('jugar_pulsado');
 		this.textures.remove('ranking');
@@ -166,7 +169,7 @@ class Mainmenu extends Phaser.Scene {
 		this.textures.remove('creditos');
 		this.textures.remove('creditos_pulsado');
 		this.textures.remove('idioma');
-		PasarEscena(this, "Mainmenu");
+		this.scene.restart();
 	}
 	
 	resizeCamera(){
@@ -178,11 +181,12 @@ class Mainmenu extends Phaser.Scene {
 
 function PasarEscena(that, escena, nivel){
 	//this.scale.off('resize');
+	that.cameras.main.fadeOut(valorFade);
 	if(nivel == "Ranking"){
 		seHaJugado = false;
 	}
-	that.scene.start(escena, nivel);
-    
+    that.cameras.main.on('camerafadeoutcomplete', () => {that.scene.start(escena, nivel);});
+	
 	
     //if(nombreJugador == undefined){
       //  console.log('Mete un nombre, bobo');

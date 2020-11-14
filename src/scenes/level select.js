@@ -47,7 +47,8 @@ class LevelSelect extends Phaser.Scene {
 		*/
 		
 		// CARGA
-        this.load.image('fondo', 'assets/sky.jpeg');
+        /*
+		this.load.image('fondo', 'assets/sky.jpeg');
         this.load.image('logo', 'assets/logo.png');
         
         this.load.image('volver', 'assets/Interfaz/Botones/volver.png');
@@ -55,10 +56,11 @@ class LevelSelect extends Phaser.Scene {
         this.load.image('1', 'assets/Interfaz/Botones/1.png');
         this.load.image('2', 'assets/Interfaz/Botones/2.png');;
         this.load.image('3', 'assets/Interfaz/Botones/3.png');
-        
+        */
     }
 
     create() {
+		this.cameras.main.fadeIn(valorFade);
 		var Nivel1PosX = width / 4;
 		var Nivel1PosY = height / 2;
 		var Nivel2PosX = width / 4 * 2;
