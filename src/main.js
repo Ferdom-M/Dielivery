@@ -10,10 +10,11 @@ window.onload = function(){
 		type: Phaser.AUTO,
 		scale: {
 			mode: Phaser.Scale.FIT,
-			parent: 'phaser-example',
+			parent: 'dielivery',
 			autoCenter: Phaser.Scale.CENTER_BOTH,
 			width: width,
-			height: height
+			height: height,
+			fullscreenTarget: document.getElementById('dielivery')
 		},
 		input: {
 			gamepad: true
@@ -40,6 +41,7 @@ window.onload = function(){
 		failIfMajorPerformanceCaveat: true,
 		debug: true
 	};
+
 	
 	var game = new Phaser.Game(config);
 	window.focus();

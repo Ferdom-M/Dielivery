@@ -10,11 +10,14 @@ class Results extends Phaser.Scene {
 
     constructor() {
         super("Results");
-    }
+	}
+	
 	shutdown(){
 		this.load.off('progress');
 		this.load.off('complete');
 	}
+
+
     preload() {
 		// BARRA DE CARGA
 		var width = this.cameras.main.width;
@@ -64,19 +67,18 @@ class Results extends Phaser.Scene {
     }
 
     create(puntuacion) {
-		console.log(mapaActual);
+		//console.log(mapaActual);
 		var puntuacionPosX = width / 2;
 		var puntuacionPosY = height / 2;
 		var volverPosX = 200;
 		var volverPosY = 50;
-		var flipflop = false;
 		
-		this.scale.stopFullscreen();
+		//this.scale.stopFullscreen();
 
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
 		
-		console.log(puntuacionTotal);
+		//console.log(puntuacionTotal);
 		
 		this.add.text(puntuacionPosX, puntuacionPosY, "Has acabado con " + puntuacionTotal.toString() + " puntos, pog felicididades",
 		  { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
@@ -115,21 +117,13 @@ class Results extends Phaser.Scene {
 		
 		//Creamos el input text del chaval este tan majo y ponemos que cuando el texto cambie se guarde en la variable nombreJugador
         var inputText = this.add.rexInputText(inputNombreX, inputNombreY, 300, 40, {
+			id: 'inputText',
 			placeholder: 'Introduce tu nombre',
 			backgroundColor: 'blue',
         });
         inputText.on('textchange', function(inputText){
 			nombreJugador = inputText.text;
-        }, this);
-
-        inputText.on('focus', function(){
-            flipflop = true;
-        }, this);
-        
-        inputText.on('blur', function(){
-            flipflop = false;
-        }, this);
-		
+		}, this);
 		
 		// Desactivamos que ignore los eventos de teclado del navegador
 		this.input.keyboard.disableGlobalCapture();
