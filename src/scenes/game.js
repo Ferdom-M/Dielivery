@@ -92,10 +92,15 @@ class Game extends Phaser.Scene {
 		this.load.image('logo', 'assets/logo.png');
 		this.load.image("escalera", "assets/ladder.png");
 		
-		
+		// INTERFAZ
 		this.load.image("interfazInventario", "assets/Interfaz/Tablon interfaz partida.png");
 		this.load.image("interfazMesa", "assets/Interfaz/Tablon interfaz pedidos.png");
-		
+		this.load.image("botonEnviarCielo", "assets/Interfaz/Botones/boton_cielo.png");
+		this.load.image("botonEnviarCielo_pulsado", "assets/Interfaz/Botones/boton_cielo_pulsado.png");
+		this.load.image("botonEnviarInfierno", "assets/Interfaz/Botones/boton_infierno.png");
+		this.load.image("botonEnviarInfierno_pulsado", "assets/Interfaz/Botones/boton_infierno_pulsado.png");
+		this.load.image("botonEnviarBasura", "assets/Interfaz/Botones/basura.png");
+		this.load.image("botonEnviarBasura_pulsado", "assets/Interfaz/Botones/basura_pulsado.png");
 		
 
 		//ICONOS DE OBJETOS PARA INVENTARIO
@@ -119,6 +124,8 @@ class Game extends Phaser.Scene {
 		this.load.image("Rosa", "assets/Sprites Objetos/Icono Rosa.png");
 		this.load.image("Tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
 		this.load.image("Violeta", "assets/Sprites Objetos/Icono Violeta.png");
+		
+		// TARJETAS
 		this.load.image("cielo", "assets/Interfaz/Cielo.png");
 		this.load.image("infierno", "assets/Interfaz/Infierno.png");
 		
@@ -136,7 +143,6 @@ class Game extends Phaser.Scene {
 		this.load.audio('s_escalera', 'assets/Sonidos/s_escalera.wav');
 		this.load.audio('s_salto', 'assets/Sonidos/s_salto.wav');
 		
-		this.load.image("botonEnviar", "assets/cuadrencio.png");
 		
 		// MAPAS
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");

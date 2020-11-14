@@ -637,17 +637,20 @@ function InicializarCursores(that, jugador){
 			if (upX < downX - threshold){
 				jugador.ultimaDirX = -1;
 				jugador.dash = true;
-				setTimeout(function() { jugador.dash = false; }, tiempoJumpsquat + 1);	
 			} else if (upX > downX + threshold) {
 				jugador.ultimaDirX = 1;
 				jugador.dash = true;
-				setTimeout(function() { jugador.dash = false; }, tiempoJumpsquat + 1);	
 			} else if (upY < downY - threshold && !jugador.jumpsquat) {
 				jugador.jumpsquat = true;	
-				setTimeout(function() { jugador.jumpsquat = false; }, tiempoJumpsquat + 1);	
 			}
 			
 		}    
+		);
+		
+		that.zonaSwipe.on('dragend', function (pointer) {
+			jugador.dash = false;
+			jugador.jumpsquat = false;
+		}   
 		);
 		
 		that.zonaTarjetas.on('pointerdown', function() {

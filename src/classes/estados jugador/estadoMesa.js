@@ -5,6 +5,8 @@ var buttBasura;
 var textoSeleccionPedido;
 var tablon;
 
+var seleccionado; 
+
 class Mesa extends State{
 
 	enter(delta, scene, jugador){
@@ -25,7 +27,11 @@ class Mesa extends State{
 			
             jugador.arrayMostrados.push(scene.add.sprite(width / 2 - 50 + (i / (limInventario - 1)) * 374.5, PosY0 + tablon.height - 75, miObj).setScale(1.5).setInteractive().setScrollFactor(0,0));
 			//jugador.arrayInventario.push(that.add.sprite((width / 2 - 430) + (i / (limInventario - 1)) * 350, height - 50, jugador.inventario[i].tipo).setScrollFactor(0,0));
-            jugador.arrayMostrados[i].on("pointerdown", this.ClickObjeto.bind(this, i, jugador));
+
+			jugador.arrayMostrados[i].on('pointerdown', this.OnPointerDown.bind(this, jugador.arrayMostrados[i]));
+			jugador.arrayMostrados[i].on('pointerup', this.ClickObjeto.bind(this, i, jugador));
+			jugador.arrayMostrados[i].on('pointerover', this.OnPointerOver.bind(this, jugador.arrayMostrados[i], scene));
+			jugador.arrayMostrados[i].on('pointerout', this.OnPointerOut.bind(this, jugador.arrayMostrados[i], jugador.arraySeleccionados, i));
         }
 
         textoSeleccionPedido = scene.add.text(PosX0 + 50, PosY0 + 50, "Selecciona el pedido y crea el paquete", {fontFamily: 'Georgia, Times, serif'}).setScrollFactor(0,0);
@@ -35,25 +41,35 @@ class Mesa extends State{
             var pedido = scene.add.text(PosX0 + 50, PosY0 + 90 + (i / (maxPedidos - 1)) * 155, arrayNombres[arrayPedidos[i].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px'}).setInteractive().setScrollFactor(0,0);
  
 			arrayPedidosMostrados.push(pedido);
-            arrayPedidosMostrados[i].on("pointerdown", this.SeleccionarPedido.bind(this, i, jugador));
+			
+			arrayPedidosMostrados[i].on('pointerdown', this.SeleccionarPedido.bind(this, i, jugador));
         }
 
-        buttEnviarCielo = scene.add.sprite(PosX0 + tablon.width / 2 + 100, PosY0 + 100, 'botonEnviar').setScale(1.5).setInteractive();
-        buttEnviarInfierno = scene.add.sprite(PosX0 + tablon.width / 2 + 100, PosY0 + 160, 'botonEnviar').setScale(1.5).setInteractive();
-        buttBasura = scene.add.sprite(PosX0 + tablon.width / 2 + 250, PosY0 + 130, 'botonEnviar').setScale(1.5).setInteractive();
+        buttEnviarCielo = scene.add.sprite(PosX0 + tablon.width / 2 + 100, PosY0 + 100, 'botonEnviarCielo').setScale(1.5).setInteractive();
+        buttEnviarInfierno = scene.add.sprite(PosX0 + tablon.width / 2 + 100, PosY0 + 160, 'botonEnviarInfierno').setScale(1.5).setInteractive();
+        buttBasura = scene.add.sprite(PosX0 + tablon.width / 2 + 250, PosY0 + 130, 'botonEnviarBasura').setScale(1.5).setInteractive();
         
-		buttEnviarCielo.on('pointerdown', () => this.Enviar(delta, scene, jugador, true));
-        buttEnviarInfierno.on('pointerdown', () => this.Enviar(delta, scene, jugador, false));
-        buttBasura.on('pointerdown', () => this.Eliminar(delta, scene, jugador, false));
-
-
+		buttEnviarCielo.on('pointerdown', () => {buttEnviarCielo.setTexture('botonEnviarCielo_pulsado')});
+		buttEnviarCielo.on('pointerup', () => {buttEnviarCielo.setTexture('botonEnviarCielo'); this.Enviar(delta, scene, jugador, true)});
+		buttEnviarCielo.on('pointerover', () => {if(scene.input.activePointer.isDown){buttEnviarCielo.setTexture('botonEnviarCielo_pulsado')}});
+		buttEnviarCielo.on('pointerout', () => {buttEnviarCielo.setTexture('botonEnviarCielo')});
+		
+		buttEnviarInfierno.on('pointerdown', () => {buttEnviarInfierno.setTexture('botonEnviarInfierno_pulsado')});
+		buttEnviarInfierno.on('pointerup', () => {buttEnviarInfierno.setTexture('botonEnviarInfierno'); this.Enviar(delta, scene, jugador, false)});
+		buttEnviarInfierno.on('pointerover', () => {if(scene.input.activePointer.isDown){buttEnviarInfierno.setTexture('botonEnviarInfierno_pulsado')}});
+		buttEnviarInfierno.on('pointerout', () => {buttEnviarInfierno.setTexture('botonEnviarInfierno')});
+		
+		buttBasura.on('pointerdown', () => {buttBasura.setTexture('botonEnviarBasura_pulsado')});
+		buttBasura.on('pointerup', () => {buttBasura.setTexture('botonEnviarBasura'); this.Eliminar(delta, scene, jugador, false)});
+		buttBasura.on('pointerover', () => {if(scene.input.activePointer.isDown){buttBasura.setTexture('botonEnviarBasura_pulsado')}});
+		buttBasura.on('pointerout', () => {buttBasura.setTexture('botonEnviarBasura')});
+		
 		for(var i = 0; i < arrayTarjetas.length; i++){
 			arrayTarjetas[i].setPosition(-1000, -1000);
 		}
 		
         jugador.accion = false;
     }
-    
 
 	execute(delta, scene, jugador){
         //cuando salir de este estado
@@ -77,7 +93,27 @@ class Mesa extends State{
             this.BorrarBotones(delta, jugador);
         }
     }
+	
+	OnPointerDown(objeto){
+		objeto.setTint(0xBEBEBE);
+	}
+	
+	OnPointerOver(objeto, scene){
+		if(scene.input.activePointer.isDown){
+			objeto.setTint(0xBEBEBE);
+		}
+	}
     
+	OnPointerOut(objeto, seleccionados, i){
+		if(seleccionados.includes(i)){
+			objeto.setTint(0x616161);
+		}else{
+			objeto.clearTint();
+		}
+	}
+	
+
+	
     ClickObjeto (objetoActual, jugador){
         if(jugador.arraySeleccionados.includes(objetoActual)){
             //Falta meter cambio de sprite que indique que está seleccionado
@@ -96,6 +132,7 @@ class Mesa extends State{
     }
 	
 	SeleccionarPedido(pedido, jugador){
+		console.log(jugador.pedidoSeleccionado);
 		if(jugador.pedidoSeleccionado == arrayPedidos[pedido]){
             arrayPedidosMostrados[pedido].clearTint();
 			jugador.pedidoSeleccionado = undefined;
@@ -107,6 +144,7 @@ class Mesa extends State{
             arrayPedidosMostrados[pedido].setTint(0x616161);
 			jugador.pedidoSeleccionado = arrayPedidos[pedido];
         }
+		seleccionado = jugador.pedidoSeleccionado;
     }
 	
     Enviar(delta, scene, jugador, destElegido){
