@@ -253,7 +253,7 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 		if(objetosCorrectos == pedido.objetos.length){
 			console.log("Pedido correcto");
 		}else{
-			puntuacionTotal -= Math.abs(objetosCorrectos * puntuacionItemFallido);
+			puntuacionTotal -= Math.abs((pedido.objetos.length - paquete.length) * puntuacionItemFallido);
 			//puntuacion += puntuacionItemFallido;
 		}
 	}else{
