@@ -285,7 +285,6 @@ class Game extends Phaser.Scene {
         this.events.off('timedEvent');
 		this.particulasLuz.destroy();
 		this.particulasVela.destroy();
-		this.jugador.particulasDash.destroy();
     }
 }
     

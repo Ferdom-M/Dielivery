@@ -120,7 +120,7 @@ function GenerarPedido(jugador, that){
 			persona = Math.floor(Math.random() * arrayNombres.length);
 		}
 		perfilesUsados.add(persona);
-		pedido = new Pedido(arrayPedidos.length, numObjetos, objetosGenerados, destinatario, persona, pedidosVigentes);
+		pedido = new Pedido(0, numObjetos, objetosGenerados, destinatario, persona, pedidosVigentes);
 		//arrayPedidos.push(pedido);
 		arrayPedidosPorRecoger.push(pedido);
 		
@@ -158,6 +158,8 @@ function RecogerPedido(that, pedido){
 	
 	camJugador1.ignore(tarjeta);
 	//camJugador2.ignore(tarjeta);
+	
+	pedido.indice = arrayPedidos.length;
 	
 	tarjeta = ColocarTarjeta(tarjeta, arrayTarjetas.length);
 	
