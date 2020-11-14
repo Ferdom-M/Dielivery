@@ -75,7 +75,7 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image('creditos_pulsado', 'assets/Interfaz/Botones/creditos_pulsado.png');
 			this.load.image('ranking', 'assets/Interfaz/Botones/empleado.png');
 			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/empleado_pulsado.png');
-			this.load.image('idioma', 'assets/Interfaz/Botones/idioma_ingles.png');
+			this.load.image('idioma', 'assets/Interfaz/Botones/idioma_espanol.png');
 		}
         else{
 			// INGLES
@@ -85,7 +85,7 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image('creditos_pulsado', 'assets/Interfaz/Botones/credits_pulsado.png');
 			this.load.image('ranking', 'assets/Interfaz/Botones/employee.png');
 			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/employee_pulsado.png');
-			this.load.image('idioma', 'assets/Interfaz/Botones/idioma_espanol.png');
+			this.load.image('idioma', 'assets/Interfaz/Botones/idioma_ingles.png');
 		}
 		
 		
