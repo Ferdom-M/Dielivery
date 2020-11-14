@@ -45,9 +45,9 @@ class Mesa extends State{
 			arrayPedidosMostrados[i].on('pointerdown', this.SeleccionarPedido.bind(this, i, jugador));
         }
 
-        buttEnviarCielo = scene.add.sprite(PosX0 + tablon.width / 2 + 100, PosY0 + 100, 'botonEnviarCielo').setScale(1.5).setInteractive();
-        buttEnviarInfierno = scene.add.sprite(PosX0 + tablon.width / 2 + 100, PosY0 + 160, 'botonEnviarInfierno').setScale(1.5).setInteractive();
-        buttBasura = scene.add.sprite(PosX0 + tablon.width / 2 + 250, PosY0 + 130, 'botonEnviarBasura').setScale(1.5).setInteractive();
+        buttEnviarCielo = scene.add.sprite(PosX0 + tablon.width / 2 + 75, PosY0 + 80, 'botonEnviarCielo').setInteractive();
+        buttEnviarInfierno = scene.add.sprite(PosX0 + tablon.width / 2 + 75, PosY0 + 160, 'botonEnviarInfierno').setInteractive();
+        buttBasura = scene.add.sprite(PosX0 + tablon.width / 2 + 275, PosY0 + 120, 'botonEnviarBasura').setInteractive();
         
 		buttEnviarCielo.on('pointerdown', () => {buttEnviarCielo.setTexture('botonEnviarCielo_pulsado')});
 		buttEnviarCielo.on('pointerup', () => {buttEnviarCielo.setTexture('botonEnviarCielo'); this.Enviar(delta, scene, jugador, true)});
@@ -72,6 +72,7 @@ class Mesa extends State{
     }
 
 	execute(delta, scene, jugador){
+		//console.log(jugador.pedidoSeleccionado);
         //cuando salir de este estado
         if(jugador.accion){
             console.log("salir mesa");
@@ -165,6 +166,7 @@ class Mesa extends State{
 			var paqueteCreado = [];
 			// Lo hacemos de final a principio porque si hacemos el splice de principio a final nos cargamos el orden despues, de esta forma no intervenimos en los demás
 			for(let a = jugador.arraySeleccionados.length - 1; a >= 0; a--){
+				console.log(jugador.arraySeleccionados[a]);
 				paqueteCreado.push(jugador.inventario[jugador.arraySeleccionados[a]].tipo);
 				jugador.inventario.splice(jugador.arraySeleccionados[a], 1);
 			}

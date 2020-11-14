@@ -258,7 +258,7 @@ class Game extends Phaser.Scene {
 		generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
 		puntuacion = this.add.text(width - 100, height - 60, puntuacionTotal).setScrollFactor(0,0);
 		if(mapa != "tutorial"){
-			this.initialTime = 500;
+			this.initialTime = 300;
 
 			tiempo = this.add.text(width / 2 - 16, height - 60, formatTime(this.initialTime)).setScrollFactor(0,0).setVisible(true);
 
@@ -267,7 +267,7 @@ class Game extends Phaser.Scene {
 			
 		}
 		
-		
+		this.sys.events.once('shutdown', this.shutdown, this);
 	}
 	
     update(time, delta){
@@ -281,9 +281,14 @@ class Game extends Phaser.Scene {
 		
 
 	}
-	
+	shutdown (){
+        this.events.off('timedEvent');
+		this.particulasLuz.destroy();
+		this.particulasVela.destroy();
+		this.jugador.particulasDash.destroy();
+    }
 }
-
+    
 
 function formatTime(seconds){
     // Minutes

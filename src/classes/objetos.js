@@ -88,7 +88,7 @@ var arrayPedidosPorRecoger =  new Array();
 var pedidosVigentes = 0;
 
 const maxPedidos = 5;
-const numTumbas = 3;
+const numTumbas = 4;
 const tarjetaAncho = 426;
 const tarjetaAlto = 310;
 const escalaTarjeta = 0.7
@@ -252,7 +252,6 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 			console.log("Pedido correcto");
 		}else{
 			puntuacionTotal -= Math.abs(objetosCorrectos * puntuacionItemFallido);
-			console.log("Resto: " + itemsSobrantes * puntuacionItemFallido);
 			//puntuacion += puntuacionItemFallido;
 		}
 	}else{
@@ -268,7 +267,7 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 	
 
 	for(let i = pedido.indice; i < arrayPedidos.length; i++){
-		arrayPedidos[i].indice = arrayPedidos[i].indice - 1;
+		arrayPedidos[i].indice--;
 	}
 	pedidosVigentes--;
 
