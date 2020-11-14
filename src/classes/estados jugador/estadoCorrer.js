@@ -53,7 +53,7 @@ class Correr extends State{
 			jugador.stateMachine.transition(delta, 'recogerObjeto');
 			return;
 		}
-		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idTumbas.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index) && arrayPedidos.length < 5 && arrayPedidosPorRecoger.length > 0){
+		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idTumbasConPedidos.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index) && arrayPedidos.length < 5 && arrayPedidosPorRecoger.length > 0){
 			jugador.sPasos.stop();
 			jugador.sPasosMojados.stop();
 			jugador.stateMachine.transition(delta, 'recogerPedido');

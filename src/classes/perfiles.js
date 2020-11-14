@@ -18,6 +18,7 @@ arrayNombres.push("Raúl");
 arrayNombres.push("Candle Games");
 arrayNombres.push("Ataraxia");
 arrayNombres.push("Serendipy Studios");
+arrayNombres.push("Laratheia");
 
 var arrayCausaMuerte = new Array();
 var arrayCausaMuerteEspanol = new Array();
@@ -42,6 +43,7 @@ arrayCausaMuerteEspanol.push("No durmió su siesta\nde 3 horas");
 arrayCausaMuerteEspanol.push("Se murió del susto");
 arrayCausaMuerteEspanol.push("Diabetes");
 arrayCausaMuerteEspanol.push("Intentó hacer\nparacaidismo sin\nparacaidas");
+arrayCausaMuerteEspanol.push("Murió al intentar\nhacer una Jojo pose\ny romperse en dos");
 
 arrayCausaMuerteIngles.push("Fell down the stairs\nat the café");
 arrayCausaMuerteIngles.push("Sufrió un pito\ncerebral tras\njugar 453 horas\nseguidas al Isaac");

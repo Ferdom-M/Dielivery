@@ -214,16 +214,52 @@ idCollarOro.add(382);
 idCollarOro.add(408);
 idCollarOro.add(409);
 
-var idTumbas = new Set();
-idTumbas.add(109);
-idTumbas.add(136);
-idTumbas.add(139);
-idTumbas.add(140);
-idTumbas.add(163);
-idTumbas.add(164);
-idTumbas.add(165);
-idTumbas.add(166);
-idTumbas.add(167);
+var tilesTumba0 = new Array();
+tilesTumba0.push(109);
+
+var tilesTumba1 = new Array();
+tilesTumba1.push(136);
+tilesTumba1.push(163);
+
+var tilesTumba2 = new Array();
+tilesTumba2.push(165);
+tilesTumba2.push(164);
+
+var tilesTumba3 = new Array();
+tilesTumba3.push(140);
+tilesTumba3.push(139);
+tilesTumba3.push(166);
+tilesTumba3.push(167);
+
+var tilesTumba = new Array();
+tilesTumba.push(tilesTumba0);
+tilesTumba.push(tilesTumba1);
+tilesTumba.push(tilesTumba2);
+tilesTumba.push(tilesTumba3);
+
+var idTumbas0 = new Set();
+for(var i = 0; i < tilesTumba0.length; i++){
+	idTumbas0.add(tilesTumba0[i]);
+}
+
+var idTumbas1 = new Set();
+for(var i = 0; i < tilesTumba1.length; i++){
+	idTumbas1.add(tilesTumba1[i]);
+}
+
+var idTumbas2 = new Set();
+for(var i = 0; i < tilesTumba2.length; i++){
+	idTumbas2.add(tilesTumba2[i]);
+}
+
+var idTumbas3 = new Set();
+for(var i = 0; i < tilesTumba3.length; i++){
+	idTumbas3.add(tilesTumba3[i]);
+}
+
+var tumbaConPedidos = new Set();
+
+var idTumbasConPedidos = new Set();
 
 //Mesa de creacion de paquetes
 var idMesa = new Set();
@@ -237,9 +273,3 @@ idMesa.add(526);
 idMesa.add(527);
 idMesa.add(528);
 idMesa.add(529);
-
-var mapaTumbas = new Map();
-mapaTumbas.set(0, [109]); //mas a la derecha
-mapaTumbas.set(1, [163]); //mas izquierda
-mapaTumbas.set(2, [164, 165]);//centro izquierda
-mapaTumbas.set(3, [166, 167]); //centro derecha 

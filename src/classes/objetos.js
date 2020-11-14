@@ -84,8 +84,6 @@ var arrayPedidos = new Array();
 var arrayTarjetas = new Array();
 var arrayPedidosMostrados =  new Array();
 var arrayPedidosPorRecoger =  new Array();
-var arrayTumbasCooldown = new Array();
-var arrayTumbasLibres = [0, 1, 2, 3];
 //var tarjetasVigentes = [];
 var pedidosVigentes = 0;
 
@@ -98,15 +96,9 @@ const margenInicialTarjeta = 160;
 const margenFinalTarjeta = margenInicialTarjeta - (tarjetaAncho * escalaTarjeta) / 5;
 const alturaTarjeta = -65;
 
-function GenerarPedido(jugador, that){
-	if(arrayPedidos.length < maxPedidos && arrayPedidosPorRecoger.length < numTumbas && arrayTumbasLibres.length > 0){
-		
-		var random = Math.floor(Math.random()*(arrayTumbasLibres.length));
-		var tumbaRandom = arrayTumbasLibres[random];
-		console.log(tumbaRandom);
-		arrayIMGPedidos[tumbaRandom].setVisible(true);
-		arrayTumbasLibres.splice(random, 1);
 
+function GenerarPedido(jugador, that){
+	if(arrayPedidosPorRecoger.length < numTumbas){
 		// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
 		var destinatario = Math.floor(Math.random() * 2) == 0;
 		
@@ -132,6 +124,17 @@ function GenerarPedido(jugador, that){
 		//arrayPedidos.push(pedido);
 		arrayPedidosPorRecoger.push(pedido);
 		
+		// En qué tumba lo metemos?
+		var tumba = Math.floor(Math.random() * 4);
+		while(tumbaConPedidos.has(tumba)){
+			var tumba = Math.floor(Math.random() * 4);
+		}
+		tumbaConPedidos.add(tumba);
+		avisoTumba[tumba].setVisible(true);
+		for(var i = 0; i < tilesTumba[tumba].length; i++){
+			idTumbasConPedidos.add(tilesTumba[tumba][i]);
+		}
+		
 		//var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
 		//tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
 
@@ -150,7 +153,7 @@ function GenerarPedido(jugador, that){
 	}
 }
 
-function RecogerPedido(that, pedido, tumba){
+function RecogerPedido(that, pedido){
 	var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
 	
 	camJugador1.ignore(tarjeta);
@@ -162,18 +165,10 @@ function RecogerPedido(that, pedido, tumba){
 	arrayPedidos.push(pedido);
 	arrayPedidosPorRecoger.splice(0, 1);
 
-	arrayTumbasCooldown.push(tumba);
-	arrayIMGPedidos[tumba].setVisible(false);
-
 	pedidosVigentes++;
-	
-}
 
-function RecuperarTumba(){
-	if(arrayTumbasCooldown.length > 0){
-		arrayTumbasLibres.push(arrayTumbasCooldown[0]);
-		arrayTumbasCooldown.shift();
-	}
+	
+	
 }
 
 const anguloMaximo = 9;

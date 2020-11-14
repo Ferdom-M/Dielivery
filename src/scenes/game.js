@@ -14,8 +14,6 @@ var cursors;
 // Por si acaso acabamos metiendo multi local, se hará con un array del tamaño de numJugadores
 var numJugadores = 1;
 var jugadores = new Array(numJugadores);
-var recuperacionTumba;
-var arrayIMGPedidos = new Array();
 
 
 var text;
@@ -33,6 +31,12 @@ var tiempo;
 var tablonInventario;
 var puntuacion;
 
+var comienzoPedidos = 2;
+
+var avisoTumba = new Array();
+
+var assetsCargados = false;
+
 class Game extends Phaser.Scene {
 
     constructor() {
@@ -43,46 +47,51 @@ class Game extends Phaser.Scene {
 		this.load.off('complete');
 	}
     preload() {
-		// BARRA DE CARGA
-		var width = this.cameras.main.width;
-		var height = this.cameras.main.height;
+		if(!assetsCargados){
+			// BARRA DE CARGA
+			var width = this.cameras.main.width;
+			var height = this.cameras.main.height;
+			
 		
-		var progressBar = this.add.graphics(width / 2, height / 2);
-		var progressBox = this.add.graphics(width / 2, height / 2);
-		progressBox.fillStyle(0x222222, 0.8);
-		progressBox.fillRect(width / 2 - 320 / 2, height / 2, 320, 50);
+			var progressBar = this.add.graphics(width / 2, height / 2);
+			var progressBox = this.add.graphics(width / 2, height / 2);
+			progressBox.fillStyle(0x222222, 0.8);
+			progressBox.fillRect(width / 2 - 320 / 2, height / 2, 320, 50);
+			
+			var percentText = this.make.text({
+				x: width / 2,
+				y: height / 2 - 5,
+				text: '0%',
+				style: {
+					font: '18px monospace',
+					fill: '#ffffff'
+				}
+			});
+			percentText.setOrigin(0.5, 0.5);
+
+			this.load.on('progress', function (value) {
+				progressBar.clear();
+				progressBar.fillStyle(0xffffff, 1);
+				progressBar.fillRect(width / 2 - 320 / 2 + 10, height / 2 + 10, 300 * value, 30);
+
+				percentText.setText(parseInt(value * 100) + '%');
+			});
+
+
+			this.load.on('complete', function () {
+				progressBar.destroy();
+				progressBox.destroy();
+				percentText.destroy();
+			});
+			
+			this.sys.events.once('shutdown', this.shutdown, this);
+		}
 		
-		var percentText = this.make.text({
-			x: width / 2,
-			y: height / 2 - 5,
-			text: '0%',
-			style: {
-				font: '18px monospace',
-				fill: '#ffffff'
-			}
-		});
-		percentText.setOrigin(0.5, 0.5);
-
-		this.load.on('progress', function (value) {
-			progressBar.clear();
-			progressBar.fillStyle(0xffffff, 1);
-			progressBar.fillRect(width / 2 - 320 / 2 + 10, height / 2 + 10, 300 * value, 30);
-
-			percentText.setText(parseInt(value * 100) + '%');
-		});
-
-
-		this.load.on('complete', function () {
-			progressBar.destroy();
-			progressBox.destroy();
-			percentText.destroy();
-		});
-		this.sys.events.once('shutdown', this.shutdown, this);
 		
 		// CARGA
 		this.load.image('logo', 'assets/logo.png');
 		this.load.image("escalera", "assets/ladder.png");
-		this.load.image("mesa", "assets/bolita.jpg");
+		
 		
 		this.load.image("interfazInventario", "assets/Interfaz/Tablon interfaz partida.png");
 		this.load.image("interfazMesa", "assets/Interfaz/Tablon interfaz pedidos.png");
@@ -128,10 +137,13 @@ class Game extends Phaser.Scene {
 		this.load.audio('s_salto', 'assets/Sonidos/s_salto.wav');
 		
 		this.load.image("botonEnviar", "assets/cuadrencio.png");
+		
+		// MAPAS
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
 		this.load.tilemapTiledJSON("Nivel2", "assets/Mapas/plataformeodimensionado.json");
 		this.load.tilemapTiledJSON("Nivel3", "assets/Mapas/intermedio.json");
 		
+		// ANIMACIONES
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
 		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
@@ -143,27 +155,36 @@ class Game extends Phaser.Scene {
 		this.load.spritesheet('anim_Dano', 'assets/Sprites Personajes/Spritesheet Dano.png', {frameWidth: 32, frameHeight: 64});
 		this.load.spritesheet('anim_Pared', 'assets/Sprites Personajes/Spritesheet Pared.png', {frameWidth: 32, frameHeight: 64});
 		
+		// PARTICULAS
+		this.load.image("llamita", "assets/llamita.png");
+		this.load.image("luz1", "assets/luz1.png");
 		
         this.load.image('pausa', 'assets/Fondo_pausa.png');
         this.load.image('pausaSprite', 'assets/pausa.png');
 		
-		this.load.image("tiles", "assets/Mapas/Spritesheets/spritesheet definitiva (en curso).png");
-		this.load.image("fondos", "assets/Mapas/Spritesheets/spritesheet_fondos.png");
+		this.load.image("tiles", "assets/Mapas/Spritesheets/s-extruded.png");
+		this.load.image("fondos", "assets/Mapas/Spritesheets/f-extruded.png");
 		
 		for (var i = 0;  i < arrayNombres.length; i++){
 			this.load.image("perfil" + i, "assets/Perfiles/perfil" + i + ".jpg");
 		}
 
 
-		this.load.image("pruebaNombre", "assets/prueba nombre.png");
     }
 
     create (mapa)
     {
+		assetsCargados = true;
 		arrayPedidos = new Array();
 		arrayTarjetas = new Array();
 		arrayPedidosMostrados =  new Array();
 		arrayPedidosPorRecoger =  new Array();
+		
+		tumbaConPedidos = new Set();
+		idTumbasConPedidos = new Set();
+		perfilesUsados = new Set();
+		
+		avisoTumba = new Array();
 		//var tarjetasVigentes = [];
 		pedidosVigentes = 0;
 		 
@@ -171,13 +192,6 @@ class Game extends Phaser.Scene {
 		mapaActual = mapa;
 		GenerarMundo(this, mapa);
 		
-		/*
-		var particles = this.add.particles('mesa');
-		emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 0.05, end: 0 }
-        });
-		*/
 		var posInicialX, posInicialY;
 		switch(mapa){
 			case "Nivel1":
@@ -196,6 +210,8 @@ class Game extends Phaser.Scene {
 		this.jugador = new Jugador({scene: this, x: posInicialX, y: posInicialY, key: 'anim_andar'});
 		
 		
+		GenerarParticulas(this);
+		
 		GenerarCamara(this, this.jugador);
 		//this.resizeCamera();
 		//GenerarMesaPaquetes(this);
@@ -205,10 +221,6 @@ class Game extends Phaser.Scene {
 		
 		//genPedidos.on('pointerdown', () => RecogerPedido(this, arrayPedidosPorRecoger[0]));
 
-		/*
-		emitter.startFollow(jugadores[0].sprite, 0, jugadores[0].sprite.body.height / 4);
-		emitter.stop();
-		*/
 		
 		InicializarCursores(this, this.jugador);
 		
@@ -222,35 +234,34 @@ class Game extends Phaser.Scene {
 			  faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
 			});
 		}
+		var tumba0 = resto.findByIndex(tilesTumba[0][0]);
+		var tumba1 = resto.findByIndex(tilesTumba[1][0]);
+		var tumba2 = resto.findByIndex(tilesTumba[2][0]);
+		var tumba3 = resto.findByIndex(tilesTumba[3][0]);
+		
+		avisoTumba.push(this.add.image(tumba0.pixelX + 1.5 * tileSize, tumba0.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false));
+		avisoTumba.push(this.add.image(tumba1.pixelX + 1.5 * tileSize, tumba1.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false));
+		avisoTumba.push(this.add.image(tumba2.pixelX + 1.5 * tileSize, tumba2.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false));
+		avisoTumba.push(this.add.image(tumba3.pixelX + 1.5 * tileSize, tumba3.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false));
+		
+		for(var i = 0; i < comienzoPedidos; i++){
+			GenerarPedido(this.jugador, this);
+		}
 		
 		tablonInventario = this.add.image(width / 2, height - 57, 'interfazInventario').setScrollFactor(0,0);
-		generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
-		recuperacionTumba = this.time.addEvent({ delay: 30000, callback: RecuperarTumba, callbackScope: this, loop: true });
+		generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
 		puntuacion = this.add.text(width - 100, height - 60, puntuacionTotal).setScrollFactor(0,0);
 		if(mapa != "tutorial"){
 			this.initialTime = 500;
 
-			tiempo = this.add.text(width / 2 - 16, height - 60, formatTime(this.initialTime)).setScrollFactor(0,0);
+			tiempo = this.add.text(width / 2 - 16, height - 60, formatTime(this.initialTime)).setScrollFactor(0,0).setVisible(true);
 
 			// Each 1000 ms call onEvent
 			timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
 			
 		}
 		
-		var tumba0 = resto.findByIndex(109);
-		var tumba1 = resto.findByIndex(136);
-		var tumba2 = resto.findByIndex(165);
-		var tumba3 = resto.findByIndex(140);
 		
-		var avisoTumba0 = this.add.image(tumba0.pixelX + 1.5 * tileSize, tumba0.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false);
-		arrayIMGPedidos.push(avisoTumba0);
-		var avisoTumba1 = this.add.image(tumba1.pixelX + 1.5 * tileSize, tumba1.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false);
-		arrayIMGPedidos.push(avisoTumba1);
-		var avisoTumba2 = this.add.image(tumba2.pixelX + 1.5 * tileSize, tumba2.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false);
-		arrayIMGPedidos.push(avisoTumba2);
-		var avisoTumba3 = this.add.image(tumba3.pixelX + 1.5 * tileSize, tumba3.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false);
-		arrayIMGPedidos.push(avisoTumba3);
-
 	}
 	
     update(time, delta){
@@ -288,6 +299,7 @@ function onEvent ()
 		seHaJugado = true;
 		var puntuacionFinal = puntuacionTotal;
 		this.jugador.PararSonidos();
+		this.textures.remove('Anillo');
         this.scene.start("Results", puntuacionFinal);
 	}
 }

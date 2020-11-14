@@ -3,8 +3,8 @@ function GenerarMundo(that, mapa){
 	map = that.make.tilemap({ key: mapa });
 	// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
 	// Phaser's cache (i.e. the name you used in preload)
-	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 32, 32, 0, 0);
-	const fondos = map.addTilesetImage("spritesheet_fondos", "fondos", 32, 32, 0, 0);
+	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 32, 32, 1, 2);
+	const fondos = map.addTilesetImage("spritesheet_fondos", "fondos", 32, 32, 1, 2);
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
 	fondo = map.createStaticLayer("Fondo", [tileset, fondos], 0, 0);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
@@ -22,7 +22,350 @@ function GenerarMundo(that, mapa){
 	
 
 	iluminacion.depth = 50;
+	suelo.depth = 3;
 	suelo.setCollisionByProperty({ collides: true });
+}
+
+function GenerarParticulas(that){
+	var vela0 = fondo.findByIndex(4312 + 540);
+	that.particulasVela = that.add.particles('llamita')
+	
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 2000,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela0.pixelX + tileSize - 2,
+		y: vela0.pixelY
+	});
+	
+	var vela1 = fondo.findByIndex(4313 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 1900,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela1.pixelX + 10,
+		y: vela1.pixelY + 7
+	});
+	
+	var vela2 = fondo.findByIndex(4314 + 540);
+	if(!suelo.getTileAtWorldXY(vela2.pixelX, vela2.pixelY)){
+		that.particulasVela.createEmitter({
+			speed: 5,
+			angle: {min: 180, max: 360},
+			lifespan: 10000,
+			frequency: 1500,
+			maxParticles: 0,
+			scale: { start: 1, end: 0 },
+			x: vela2.pixelX + 12,
+			y: vela2.pixelY
+		});
+	}
+	
+	var vela3 = fondo.findByIndex(276 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 2200,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela3.pixelX + tileSize / 2,
+		y: vela3.pixelY + tileSize / 2 - 2
+	});
+	
+	var vela4 = fondo.findByIndex(278 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 2000,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela4.pixelX + 5,
+		y: vela4.pixelY + tileSize / 2 - 2
+	});
+	
+	var vela5 = fondo.findByIndex(294 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 1800,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela5.pixelX + 6,
+		y: vela5.pixelY + tileSize / 2 - 2
+	});
+	
+	var vela6 = fondo.findByIndex(295 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 2300,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela6.pixelX + tileSize - 5,
+		y: vela6.pixelY + tileSize / 2 - 2
+	});
+	
+	var vela7 = fondo.findByIndex(2807 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 1700,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela7.pixelX + 10,	
+		y: vela7.pixelY + tileSize - 4
+	});
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 2100,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela7.pixelX + tileSize - 2,
+		y: vela7.pixelY + tileSize / 2 + 2
+	});
+	
+	var vela9 = fondo.findByIndex(2818 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 1800,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela9.pixelX + tileSize - 4,
+		y: vela9.pixelY + tileSize - 3
+	});
+	
+	var vela10 = fondo.findByIndex(2820 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 1900,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela10.pixelX + tileSize / 2 - 2,
+		y: vela10.pixelY + tileSize / 2 + 2
+	});
+	
+	var vela11 = fondo.findByIndex(5312 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 2000,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela11.pixelX + tileSize - 6,
+		y: vela11.pixelY + 10
+	});
+	
+	var vela12 = fondo.findByIndex(5314 + 540);
+	that.particulasVela.createEmitter({
+		speed: 5,
+		angle: {min: 180, max: 360},
+		lifespan: 10000,
+		frequency: 2200,
+		maxParticles: 0,
+		scale: { start: 1, end: 0 },
+		x: vela12.pixelX + tileSize / 2 - 2,
+		y: vela12.pixelY + tileSize / 2 - 5
+	});
+	
+	
+	that.particulasLuz = that.add.particles('luz1')
+	var luzInvernadero1 = iluminacion.findByIndex(1882 + 540);
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 20000,
+		frequency: 4000,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzInvernadero1.pixelX, max: luzInvernadero1.pixelX + tileSize * 14},
+		y: {min: luzInvernadero1.pixelY, max: luzInvernadero1.pixelY + tileSize * 7}
+	});
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 10000,
+		frequency: 2500,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzInvernadero1.pixelX, max: luzInvernadero1.pixelX + tileSize * 14},
+		y: {min: luzInvernadero1.pixelY, max: luzInvernadero1.pixelY + tileSize * 7}
+	});
+	
+	var luzInvernadero1 = iluminacion.findByIndex(1870 + 540);
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 22000,
+		frequency: 11000,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzInvernadero1.pixelX, max: luzInvernadero1.pixelX + tileSize * 7},
+		y: {min: luzInvernadero1.pixelY, max: luzInvernadero1.pixelY + tileSize * 6}
+	});
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 12000,
+		frequency: 6000,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzInvernadero1.pixelX, max: luzInvernadero1.pixelX + tileSize * 7},
+		y: {min: luzInvernadero1.pixelY, max: luzInvernadero1.pixelY + tileSize * 6}
+	});
+	
+	var luzInvernadero1 = iluminacion.findByIndex(1731 + 540);
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 21000,
+		frequency: 10500,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzInvernadero1.pixelX, max: luzInvernadero1.pixelX + tileSize * 5},
+		y: {min: luzInvernadero1.pixelY, max: luzInvernadero1.pixelY + tileSize * 8}
+	});
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 11000,
+		frequency: 5500,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzInvernadero1.pixelX, max: luzInvernadero1.pixelX + tileSize * 5},
+		y: {min: luzInvernadero1.pixelY, max: luzInvernadero1.pixelY + tileSize * 8}
+	});
+	
+	var luzJoyeria1 = iluminacion.findByIndex(2692 + 540);
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 21000,
+		frequency: 10500,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzJoyeria1.pixelX, max: luzJoyeria1.pixelX + tileSize * 2},
+		y: {min: luzJoyeria1.pixelY, max: luzJoyeria1.pixelY + tileSize * 9}
+	});
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 12000,
+		frequency: 6000,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzJoyeria1.pixelX, max: luzJoyeria1.pixelX + tileSize * 2},
+		y: {min: luzJoyeria1.pixelY, max: luzJoyeria1.pixelY + tileSize * 9}
+	});
+	
+	var luzJoyeria1 = iluminacion.findByIndex(2706 + 540);
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 22000,
+		frequency: 11000,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzJoyeria1.pixelX, max: luzJoyeria1.pixelX + tileSize * 2},
+		y: {min: luzJoyeria1.pixelY, max: luzJoyeria1.pixelY + tileSize * 9}
+	});
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 11000,
+		frequency: 55000,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzJoyeria1.pixelX, max: luzJoyeria1.pixelX + tileSize * 2},
+		y: {min: luzJoyeria1.pixelY, max: luzJoyeria1.pixelY + tileSize * 9}
+	});
+	
+	var luzJoyeria1 = iluminacion.findByIndex(2361 + 540);
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 20000,
+		frequency: 20000,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzJoyeria1.pixelX, max: luzJoyeria1.pixelX + tileSize * 4},
+		y: {min: luzJoyeria1.pixelY, max: luzJoyeria1.pixelY + tileSize * 2}
+	});
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 10000,
+		frequency: 10000,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzJoyeria1.pixelX, max: luzJoyeria1.pixelX + tileSize * 4},
+		y: {min: luzJoyeria1.pixelY, max: luzJoyeria1.pixelY + tileSize * 2}
+	});
+	
+	var luzSotano1 = iluminacion.findByIndex(7100 + 540);
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 20000,
+		frequency: 2000,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzSotano1.pixelX, max: luzJoyeria1.pixelX + tileSize * 11},
+		y: {min: luzSotano1.pixelY, max: luzJoyeria1.pixelY + tileSize * 37}
+	});
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 11000,
+		frequency: 1100,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzSotano1.pixelX, max: luzSotano1.pixelX + tileSize * 11},
+		y: {min: luzSotano1.pixelY, max: luzSotano1.pixelY + tileSize * 37}
+	});
+	var luzSotano1 = iluminacion.findByIndex(7119 + 540);
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 22000,
+		frequency: 2200,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzSotano1.pixelX, max: luzJoyeria1.pixelX + tileSize * 11},
+		y: {min: luzSotano1.pixelY, max: luzJoyeria1.pixelY + tileSize * 37}
+	});
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 12000,
+		frequency: 1200,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzSotano1.pixelX, max: luzSotano1.pixelX + tileSize * 11},
+		y: {min: luzSotano1.pixelY, max: luzSotano1.pixelY + tileSize * 37}
+	});
+	
+	var luzBiblioteca1 = iluminacion.findByIndex(1997 + 540);
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 20000,
+		frequency: 2500,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzBiblioteca1.pixelX, max: luzBiblioteca1.pixelX + tileSize * 17},
+		y: {min: luzBiblioteca1.pixelY, max: luzBiblioteca1.pixelY + tileSize * 14}
+	});
+	that.particulasLuz.createEmitter({
+		speed: {min: 1, max: 4},
+		lifespan: 11000,
+		frequency: 1375,
+		blendMode: 'ADD',
+		scale: { start: 1, end: 0.4 },
+		x: {min: luzBiblioteca1.pixelX, max: luzBiblioteca1.pixelX + tileSize * 14},
+		y: {min: luzBiblioteca1.pixelY, max: luzBiblioteca1.pixelY + tileSize * 14}
+	});
+
 }
 
 function GenerarCamara(that, jugador){

@@ -152,6 +152,18 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 			mirandoTarjetas: new MirandoTarjetas(),
 			recogerPedido: new estadoRecogerPedido()
 		}, [this.scene, this]);
+		
+		// Partículas
+		this.particulasDash = config.scene.add.particles('llamita').createEmitter({
+            speed: 75,
+            scale: { start: 1, end: 0 }
+        });
+		this.particulasDash.startFollow(this, 0, this.body.height / 4);
+		this.particulasDash.stop();
+		
+		// Profundidad (queremos que las particulas estén detrás del personaje
+		this.depth = 10;
+		this.particulasDash.depth = 5;
 	}
 	
 	update(time, delta){
