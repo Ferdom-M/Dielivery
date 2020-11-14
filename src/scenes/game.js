@@ -47,7 +47,7 @@ class Game extends Phaser.Scene {
 		this.load.off('complete');
 	}
     preload() {
-		if(!assetsCargados){
+		/*if(!assetsCargados){
 			// BARRA DE CARGA
 			var width = this.cameras.main.width;
 			var height = this.cameras.main.height;
@@ -86,7 +86,7 @@ class Game extends Phaser.Scene {
 			
 			this.sys.events.once('shutdown', this.shutdown, this);
 		}
-		
+		*/
 		
 		// CARGA
 		this.load.image('logo', 'assets/logo.png');
@@ -258,7 +258,7 @@ class Game extends Phaser.Scene {
 		generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
 		puntuacion = this.add.text(width - 100, height - 60, puntuacionTotal).setScrollFactor(0,0);
 		if(mapa != "tutorial"){
-			this.initialTime = 300;
+			this.initialTime = 4;
 
 			tiempo = this.add.text(width / 2 - 16, height - 60, formatTime(this.initialTime)).setScrollFactor(0,0).setVisible(true);
 

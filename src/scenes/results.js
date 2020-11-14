@@ -20,7 +20,7 @@ class Results extends Phaser.Scene {
 
     preload() {
 		// BARRA DE CARGA
-		var width = this.cameras.main.width;
+		/*var width = this.cameras.main.width;
 		var height = this.cameras.main.height;
 		
 		var progressBar = this.add.graphics(width / 2, height / 2);
@@ -54,7 +54,7 @@ class Results extends Phaser.Scene {
 			percentText.destroy();
 		});
 		this.sys.events.once('shutdown', this.shutdown, this);
-		
+		*/
 		
 		// CARGA
         this.load.image('fondo', 'assets/sky.jpeg');
