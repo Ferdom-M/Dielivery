@@ -237,3 +237,9 @@ idMesa.add(526);
 idMesa.add(527);
 idMesa.add(528);
 idMesa.add(529);
+
+var mapaTumbas = new Map();
+mapaTumbas.set(0, [109]); //mas a la derecha
+mapaTumbas.set(1, [163]); //mas izquierda
+mapaTumbas.set(2, [164, 165]);//centro izquierda
+mapaTumbas.set(3, [166, 167]); //centro derecha 

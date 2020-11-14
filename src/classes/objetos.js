@@ -84,6 +84,8 @@ var arrayPedidos = new Array();
 var arrayTarjetas = new Array();
 var arrayPedidosMostrados =  new Array();
 var arrayPedidosPorRecoger =  new Array();
+var arrayTumbasCooldown = new Array();
+var arrayTumbasLibres = [0, 1, 2, 3];
 //var tarjetasVigentes = [];
 var pedidosVigentes = 0;
 
@@ -97,7 +99,14 @@ const margenFinalTarjeta = margenInicialTarjeta - (tarjetaAncho * escalaTarjeta)
 const alturaTarjeta = -65;
 
 function GenerarPedido(jugador, that){
-	if(arrayPedidos.length < maxPedidos && arrayPedidosPorRecoger.length < numTumbas){
+	if(arrayPedidos.length < maxPedidos && arrayPedidosPorRecoger.length < numTumbas && arrayTumbasLibres.length > 0){
+		
+		var random = Math.floor(Math.random()*(arrayTumbasLibres.length));
+		var tumbaRandom = arrayTumbasLibres[random];
+		console.log(tumbaRandom);
+		arrayIMGPedidos[tumbaRandom].setVisible(true);
+		arrayTumbasLibres.splice(random, 1);
+
 		// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
 		var destinatario = Math.floor(Math.random() * 2) == 0;
 		
@@ -141,7 +150,7 @@ function GenerarPedido(jugador, that){
 	}
 }
 
-function RecogerPedido(that, pedido){
+function RecogerPedido(that, pedido, tumba){
 	var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
 	
 	camJugador1.ignore(tarjeta);
@@ -153,10 +162,18 @@ function RecogerPedido(that, pedido){
 	arrayPedidos.push(pedido);
 	arrayPedidosPorRecoger.splice(0, 1);
 
-	pedidosVigentes++;
+	arrayTumbasCooldown.push(tumba);
+	arrayIMGPedidos[tumba].setVisible(false);
 
+	pedidosVigentes++;
 	
-	
+}
+
+function RecuperarTumba(){
+	if(arrayTumbasCooldown.length > 0){
+		arrayTumbasLibres.push(arrayTumbasCooldown[0]);
+		arrayTumbasCooldown.shift();
+	}
 }
 
 const anguloMaximo = 9;

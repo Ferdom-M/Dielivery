@@ -14,6 +14,8 @@ var cursors;
 // Por si acaso acabamos metiendo multi local, se hará con un array del tamaño de numJugadores
 var numJugadores = 1;
 var jugadores = new Array(numJugadores);
+var recuperacionTumba;
+var arrayIMGPedidos = new Array();
 
 
 var text;
@@ -223,6 +225,7 @@ class Game extends Phaser.Scene {
 		
 		tablonInventario = this.add.image(width / 2, height - 57, 'interfazInventario').setScrollFactor(0,0);
 		generacionPedidos = this.time.addEvent({ delay: 3000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
+		recuperacionTumba = this.time.addEvent({ delay: 30000, callback: RecuperarTumba, callbackScope: this, loop: true });
 		puntuacion = this.add.text(width - 100, height - 60, puntuacionTotal).setScrollFactor(0,0);
 		if(mapa != "tutorial"){
 			this.initialTime = 500;
@@ -234,6 +237,20 @@ class Game extends Phaser.Scene {
 			
 		}
 		
+		var tumba0 = resto.findByIndex(109);
+		var tumba1 = resto.findByIndex(136);
+		var tumba2 = resto.findByIndex(165);
+		var tumba3 = resto.findByIndex(140);
+		
+		var avisoTumba0 = this.add.image(tumba0.pixelX + 1.5 * tileSize, tumba0.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false);
+		arrayIMGPedidos.push(avisoTumba0);
+		var avisoTumba1 = this.add.image(tumba1.pixelX + 1.5 * tileSize, tumba1.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false);
+		arrayIMGPedidos.push(avisoTumba1);
+		var avisoTumba2 = this.add.image(tumba2.pixelX + 1.5 * tileSize, tumba2.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false);
+		arrayIMGPedidos.push(avisoTumba2);
+		var avisoTumba3 = this.add.image(tumba3.pixelX + 1.5 * tileSize, tumba3.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false);
+		arrayIMGPedidos.push(avisoTumba3);
+
 	}
 	
     update(time, delta){
