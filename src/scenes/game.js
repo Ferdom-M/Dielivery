@@ -87,99 +87,20 @@ class Game extends Phaser.Scene {
 			this.sys.events.once('shutdown', this.shutdown, this);
 		}
 		*/
-		
-		// CARGA
-		this.load.image('logo', 'assets/logo.png');
-		this.load.image("escalera", "assets/ladder.png");
-		
-		// INTERFAZ
-		this.load.image("interfazInventario", "assets/Interfaz/Tablon interfaz partida.png");
-		this.load.image("interfazMesa", "assets/Interfaz/Tablon interfaz pedidos.png");
-		this.load.image("botonEnviarCielo", "assets/Interfaz/Botones/boton_cielo.png");
-		this.load.image("botonEnviarCielo_pulsado", "assets/Interfaz/Botones/boton_cielo_pulsado.png");
-		this.load.image("botonEnviarInfierno", "assets/Interfaz/Botones/boton_infierno.png");
-		this.load.image("botonEnviarInfierno_pulsado", "assets/Interfaz/Botones/boton_infierno_pulsado.png");
-		this.load.image("botonEnviarBasura", "assets/Interfaz/Botones/basura.png");
-		this.load.image("botonEnviarBasura_pulsado", "assets/Interfaz/Botones/basura_pulsado.png");
-		
-
-		//ICONOS DE OBJETOS PARA INVENTARIO
-		this.load.image("Anillo", "assets/Sprites Objetos/Icono Anillo.png");
-		this.load.image("Bandera 1", "assets/Sprites Objetos/Icono Bandera 1.png");
-		this.load.image("Bandera 2", "assets/Sprites Objetos/Icono Bandera 2.png");
-		this.load.image("Botella Orujo", "assets/Sprites Objetos/Icono Botella Orujo.png");
-		this.load.image("Botella Ron", "assets/Sprites Objetos/Icono Botella Ron.png");
-		this.load.image("Botella Vino", "assets/Sprites Objetos/Icono Botella Vino.png");
-		this.load.image("Botella Whisky", "assets/Sprites Objetos/Icono Botella Whisky.png");
-		this.load.image("Carta Abierta", "assets/Sprites Objetos/Icono Carta Abierta.png");
-		this.load.image("Carta Sellada", "assets/Sprites Objetos/Icono Carta Sellada.png");
-		this.load.image("Collar Oro", "assets/Sprites Objetos/Icono Collar Oro.png");
-		this.load.image("Collar Perlas", "assets/Sprites Objetos/Icono Collar Perlas.png");
-		this.load.image("Foto Familiar", "assets/Sprites Objetos/Icono Foto Familiar.png");
-		this.load.image("Foto Personal", "assets/Sprites Objetos/Icono Foto Personal.png");
-		this.load.image("Margarita", "assets/Sprites Objetos/Icono Margarita.png");
-		this.load.image("Osito Nuevo", "assets/Sprites Objetos/Icono Osito Nuevo.png");
-		this.load.image("Osito Viejo", "assets/Sprites Objetos/Icono Osito Viejo.png");
-		this.load.image("Pendiente", "assets/Sprites Objetos/Icono Pendientes.png");
-		this.load.image("Rosa", "assets/Sprites Objetos/Icono Rosa.png");
-		this.load.image("Tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
-		this.load.image("Violeta", "assets/Sprites Objetos/Icono Violeta.png");
-		
-		// TARJETAS
-		this.load.image("cielo", "assets/Interfaz/Cielo.png");
-		this.load.image("infierno", "assets/Interfaz/Infierno.png");
-		
-		// Sonidos
-		this.load.audio('s_pasos', 'assets/Sonidos/s_pasos.wav');
-		this.load.audio('s_pasosMojados', 'assets/Sonidos/s_pasosMojado.wav');
-		this.load.audio('s_botellas', 'assets/Sonidos/s_botellas.wav');
-		this.load.audio('s_carta', 'assets/Sonidos/s_carta.wav');
-		this.load.audio('s_flores', 'assets/Sonidos/s_flores.wav');
-		this.load.audio('s_joyero', 'assets/Sonidos/s_joyero.wav');
-		this.load.audio('s_extTarjeta', 'assets/Sonidos/s_extTarjeta.wav');
-		this.load.audio('s_guarTarjeta', 'assets/Sonidos/s_guarTarjeta.wav');
-		this.load.audio('s_baulRecuerdos', 'assets/Sonidos/s_baulRecuerdos.wav');
-		this.load.audio('s_dash', 'assets/Sonidos/s_dash.wav');
-		this.load.audio('s_escalera', 'assets/Sonidos/s_escalera.wav');
-		this.load.audio('s_salto', 'assets/Sonidos/s_salto.wav');
-		
-		
-		// MAPAS
-		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
-		this.load.tilemapTiledJSON("Nivel2", "assets/Mapas/plataformeodimensionado.json");
-		this.load.tilemapTiledJSON("Nivel3", "assets/Mapas/intermedio.json");
-		
-		// ANIMACIONES
-		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
-		//this.load.spritesheet('anim_saltar', 'assets/Sprites Personajes/Spritesheet Salto.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_InicioSalto', 'assets/Sprites Personajes/Spritesheet Inicio Salto.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_Idle', 'assets/Sprites Personajes/Spritesheet Idle.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_CaidaSalto', 'assets/Sprites Personajes/Spritesheet Caida Salto.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_AterrizajeSalto', 'assets/Sprites Personajes/Spritesheet Aterrizaje Salto.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_Dash', 'assets/Sprites Personajes/Spritesheet Dash.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_Trepar', 'assets/Sprites Personajes/Spritesheet Trepar Nuevo.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_Dano', 'assets/Sprites Personajes/Spritesheet Dano.png', {frameWidth: 32, frameHeight: 64});
-		this.load.spritesheet('anim_Pared', 'assets/Sprites Personajes/Spritesheet Pared.png', {frameWidth: 32, frameHeight: 64});
-		
-		// PARTICULAS
-		this.load.image("llamita", "assets/llamita.png");
-		this.load.image("luz1", "assets/luz1.png");
-		
-        this.load.image('pausa', 'assets/Fondo_pausa.png');
-        this.load.image('pausaSprite', 'assets/pausa.png');
-		
-		this.load.image("tiles", "assets/Mapas/Spritesheets/s-extruded.png");
-		this.load.image("fondos", "assets/Mapas/Spritesheets/f-extruded.png");
-		
-		for (var i = 0;  i < arrayNombres.length; i++){
-			this.load.image("perfil" + i, "assets/Perfiles/perfil" + i + ".jpg");
+		if(!enPc){
+			this.load.plugin('rexvirtualjoystickplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js', true);
 		}
-
-
     }
 
     create (mapa)
     {
+		this.anims.create({
+			key: 'bocadilloAnim',
+			frames: this.anims.generateFrameNames('bocadillo', {start: 0, end: 4}),
+			frameRate: 1,
+			repeat: -1
+		});
+		
 		this.cameras.main.fadeIn(valorFade);
 		assetsCargados = true;
 		arrayPedidos = new Array();
@@ -216,8 +137,8 @@ class Game extends Phaser.Scene {
 		}
 		this.jugador = new Jugador({scene: this, x: posInicialX, y: posInicialY, key: 'anim_andar'});
 		
-		
 		GenerarParticulas(this);
+		
 		
 		GenerarCamara(this, this.jugador);
 		//this.resizeCamera();
@@ -246,22 +167,22 @@ class Game extends Phaser.Scene {
 		var tumba2 = resto.findByIndex(tilesTumba[2][0]);
 		var tumba3 = resto.findByIndex(tilesTumba[3][0]);
 		
-		avisoTumba.push(this.add.image(tumba0.pixelX + 1.5 * tileSize, tumba0.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false));
-		avisoTumba.push(this.add.image(tumba1.pixelX + 1.5 * tileSize, tumba1.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false));
-		avisoTumba.push(this.add.image(tumba2.pixelX + 1.5 * tileSize, tumba2.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false));
-		avisoTumba.push(this.add.image(tumba3.pixelX + 1.5 * tileSize, tumba3.pixelY - 0.5 * tileSize, 'botonEnviar').setVisible(false));
+		avisoTumba.push(this.add.sprite(tumba0.pixelX + 1.5 * tileSize, tumba0.pixelY - 0.5 * tileSize, 'bocadillo').setVisible(false).play('bocadilloAnim'));
+		avisoTumba.push(this.add.sprite(tumba1.pixelX + 1.5 * tileSize, tumba1.pixelY - 0.5 * tileSize, 'bocadillo').setVisible(false).play('bocadilloAnim'));
+		avisoTumba.push(this.add.sprite(tumba2.pixelX + 1.5 * tileSize, tumba2.pixelY - 0.5 * tileSize, 'bocadillo').setVisible(false).play('bocadilloAnim'));
+		avisoTumba.push(this.add.sprite(tumba3.pixelX + 1.5 * tileSize, tumba3.pixelY - 0.5 * tileSize, 'bocadillo').setVisible(false).play('bocadilloAnim'));
 		
 		for(var i = 0; i < comienzoPedidos; i++){
 			GenerarPedido(this.jugador, this);
 		}
 		
-		tablonInventario = this.add.image(width / 2, height - 57, 'interfazInventario').setScrollFactor(0,0);
+		tablonInventario = this.add.image(width / 2, height - 51, 'interfazInventario').setScrollFactor(0,0);
 		generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
-		puntuacion = this.add.text(width - 100, height - 60, puntuacionTotal).setScrollFactor(0,0);
+		puntuacion = this.add.text(width - 100, height - 54, puntuacionTotal).setScrollFactor(0,0);
 		if(mapa != "tutorial"){
-			this.initialTime = 4;
+			this.initialTime = 480;
 
-			tiempo = this.add.text(width / 2 - 16, height - 60, formatTime(this.initialTime)).setScrollFactor(0,0).setVisible(true);
+			tiempo = this.add.text(width / 2 - 16, height - 54, formatTime(this.initialTime)).setScrollFactor(0,0).setVisible(true);
 
 			// Each 1000 ms call onEvent
 			timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
@@ -332,7 +253,7 @@ function RepresentarInventario(that, jugador){
 
 	for(let i = 0; i < jugador.inventario.length; i++){
 		console.log(jugador.inventario[i].tipo);
-		jugador.arrayInventario.push(that.add.sprite((width / 2 - 430) + (i / (limInventario - 1)) * (350), height - 55, jugador.inventario[i].tipo).setScrollFactor(0,0));
+		jugador.arrayInventario.push(that.add.sprite((width / 2 - 400) + (i / (limInventario - 1)) * (320), height - 49, jugador.inventario[i].tipo).setScrollFactor(0,0));
 		
 		
 	}

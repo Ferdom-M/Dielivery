@@ -4,16 +4,26 @@ function GenerarMundo(that, mapa){
 	// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
 	// Phaser's cache (i.e. the name you used in preload)
 	const tileset = map.addTilesetImage("spritesheet_tiles", "tiles", 32, 32, 1, 2);
-	const fondos = map.addTilesetImage("spritesheet_fondos", "fondos", 32, 32, 1, 2);
+	const fondoCementerio = map.addTilesetImage("fondoCementerio", "fondoCementerio", 32, 32, 0, 0);
+	const luzCementerio = map.addTilesetImage("luzCementerio", "luzCementerio", 32, 32, 0, 0);
+	const fondoDesvan = map.addTilesetImage("fondoDesvan", "fondoDesvan", 32, 32, 0, 0);
+	const luzDesvan = map.addTilesetImage("luzDesvan", "luzDesvan", 32, 32, 0, 0);
+	const fondoImprenta = map.addTilesetImage("fondoImprenta", "fondoImprenta", 32, 32, 0, 0);
+	const luzImprenta = map.addTilesetImage("luzImprenta", "luzImprenta", 32, 32, 0, 0);
+	const fondoInvernadero = map.addTilesetImage("fondoInvernadero", "fondoInvernadero", 32, 32, 0, 0);
+	const luzInvernadero = map.addTilesetImage("luzInvernadero", "luzInvernadero", 32, 32, 0, 0);
+	const fondoJoyeria = map.addTilesetImage("fondoJoyeria", "fondoJoyeria", 32, 32, 0, 0);
+	const luzJoyeria = map.addTilesetImage("luzJoyeria", "luzJoyeria", 32, 32, 0, 0);
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
-	fondo = map.createStaticLayer("Fondo", [tileset, fondos], 0, 0);
+	fondo = map.createStaticLayer("Fondo", [tileset, fondoCementerio, fondoDesvan, fondoImprenta, fondoInvernadero, fondoJoyeria], 0, 0);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
 	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 	resto = map.createStaticLayer("Resto", tileset, 0, 0);
-	iluminacion = map.createStaticLayer("Iluminacion", fondos, 0, 0);
-	
+	iluminacion = map.createStaticLayer("Iluminacion", [luzCementerio, luzDesvan, luzImprenta, luzInvernadero, luzJoyeria], 0, 0);	
+	iluminacion.depth = 50;
+
 	if(mapa == "tutorial"){
-		if(that.sys.game.device.os.desktop ){
+		if(enPc){
 			cartelesPc = map.createStaticLayer("CartelesPC", tileset, 0, 0);
 		}else{
 			cartelesMovil = map.createStaticLayer("CartelesMovil", tileset, 0, 0);
@@ -21,13 +31,20 @@ function GenerarMundo(that, mapa){
 	}
 	
 
-	iluminacion.depth = 50;
 	suelo.depth = 3;
 	suelo.setCollisionByProperty({ collides: true });
 }
 
 function GenerarParticulas(that){
-	var vela0 = fondo.findByIndex(4312 + 540);
+	var tilesNormales = 540;
+	var tilesCementerio = 880;
+	var tilesDesvan = 1892;
+	var tilesLuzDesvan = 1763;
+	var tilesImprenta = 1292;
+	var tilesInvernadero = 350;
+	var tilesJoyeria = 273;
+	
+	var vela0 = fondo.findByIndex(862 + tilesNormales + tilesCementerio * 2 + tilesDesvan  + tilesLuzDesvan);
 	that.particulasVela = that.add.particles('llamita')
 	
 	that.particulasVela.createEmitter({
@@ -41,7 +58,7 @@ function GenerarParticulas(that){
 		y: vela0.pixelY
 	});
 	
-	var vela1 = fondo.findByIndex(4313 + 540);
+	var vela1 = fondo.findByIndex(863 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -53,7 +70,7 @@ function GenerarParticulas(that){
 		y: vela1.pixelY + 7
 	});
 	
-	var vela2 = fondo.findByIndex(4314 + 540);
+	var vela2 = fondo.findByIndex(864 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	if(!suelo.getTileAtWorldXY(vela2.pixelX, vela2.pixelY)){
 		that.particulasVela.createEmitter({
 			speed: 5,
@@ -67,7 +84,7 @@ function GenerarParticulas(that){
 		});
 	}
 	
-	var vela3 = fondo.findByIndex(276 + 540);
+	var vela3 = fondo.findByIndex(42 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -79,7 +96,7 @@ function GenerarParticulas(that){
 		y: vela3.pixelY + tileSize / 2 - 2
 	});
 	
-	var vela4 = fondo.findByIndex(278 + 540);
+	var vela4 = fondo.findByIndex(44 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -91,7 +108,7 @@ function GenerarParticulas(that){
 		y: vela4.pixelY + tileSize / 2 - 2
 	});
 	
-	var vela5 = fondo.findByIndex(294 + 540);
+	var vela5 = fondo.findByIndex(60 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -103,7 +120,7 @@ function GenerarParticulas(that){
 		y: vela5.pixelY + tileSize / 2 - 2
 	});
 	
-	var vela6 = fondo.findByIndex(295 + 540);
+	var vela6 = fondo.findByIndex(61 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -115,7 +132,7 @@ function GenerarParticulas(that){
 		y: vela6.pixelY + tileSize / 2 - 2
 	});
 	
-	var vela7 = fondo.findByIndex(2807 + 540);
+	var vela7 = fondo.findByIndex(563 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -137,7 +154,7 @@ function GenerarParticulas(that){
 		y: vela7.pixelY + tileSize / 2 + 2
 	});
 	
-	var vela9 = fondo.findByIndex(2818 + 540);
+	var vela9 = fondo.findByIndex(574 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -149,7 +166,7 @@ function GenerarParticulas(that){
 		y: vela9.pixelY + tileSize - 3
 	});
 	
-	var vela10 = fondo.findByIndex(2820 + 540);
+	var vela10 = fondo.findByIndex(576 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -161,7 +178,7 @@ function GenerarParticulas(that){
 		y: vela10.pixelY + tileSize / 2 + 2
 	});
 	
-	var vela11 = fondo.findByIndex(5312 + 540);
+	var vela11 = fondo.findByIndex(1058 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -173,7 +190,7 @@ function GenerarParticulas(that){
 		y: vela11.pixelY + 10
 	});
 	
-	var vela12 = fondo.findByIndex(5314 + 540);
+	var vela12 = fondo.findByIndex(1060 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan);
 	that.particulasVela.createEmitter({
 		speed: 5,
 		angle: {min: 180, max: 360},
@@ -187,7 +204,7 @@ function GenerarParticulas(that){
 	
 	
 	that.particulasLuz = that.add.particles('luz1')
-	var luzInvernadero1 = iluminacion.findByIndex(1882 + 540);
+	var luzInvernadero1 = iluminacion.findByIndex(49 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta * 2 + tilesInvernadero);
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
 		lifespan: 20000,
@@ -207,7 +224,7 @@ function GenerarParticulas(that){
 		y: {min: luzInvernadero1.pixelY, max: luzInvernadero1.pixelY + tileSize * 7}
 	});
 	
-	var luzInvernadero1 = iluminacion.findByIndex(1870 + 540);
+	var luzInvernadero1 = iluminacion.findByIndex(37 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta * 2 + tilesInvernadero);
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
 		lifespan: 22000,
@@ -227,7 +244,7 @@ function GenerarParticulas(that){
 		y: {min: luzInvernadero1.pixelY, max: luzInvernadero1.pixelY + tileSize * 6}
 	});
 	
-	var luzInvernadero1 = iluminacion.findByIndex(1731 + 540);
+	var luzInvernadero1 = iluminacion.findByIndex(29 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta * 2 + tilesInvernadero);
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
 		lifespan: 21000,
@@ -247,7 +264,7 @@ function GenerarParticulas(that){
 		y: {min: luzInvernadero1.pixelY, max: luzInvernadero1.pixelY + tileSize * 8}
 	});
 	
-	var luzJoyeria1 = iluminacion.findByIndex(2692 + 540);
+	var luzJoyeria1 = iluminacion.findByIndex(67 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta * 2 + tilesInvernadero * 2 + tilesJoyeria);
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
 		lifespan: 21000,
@@ -267,7 +284,7 @@ function GenerarParticulas(that){
 		y: {min: luzJoyeria1.pixelY, max: luzJoyeria1.pixelY + tileSize * 9}
 	});
 	
-	var luzJoyeria1 = iluminacion.findByIndex(2706 + 540);
+	var luzJoyeria1 = iluminacion.findByIndex(81 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta * 2 + tilesInvernadero * 2 + tilesJoyeria);
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
 		lifespan: 22000,
@@ -287,7 +304,7 @@ function GenerarParticulas(that){
 		y: {min: luzJoyeria1.pixelY, max: luzJoyeria1.pixelY + tileSize * 9}
 	});
 	
-	var luzJoyeria1 = iluminacion.findByIndex(2361 + 540);
+	var luzJoyeria1 = iluminacion.findByIndex(30 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta * 2 + tilesInvernadero * 2 + tilesJoyeria);
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
 		lifespan: 20000,
@@ -307,15 +324,15 @@ function GenerarParticulas(that){
 		y: {min: luzJoyeria1.pixelY, max: luzJoyeria1.pixelY + tileSize * 2}
 	});
 	
-	var luzSotano1 = iluminacion.findByIndex(7100 + 540);
+	var luzSotano1 = iluminacion.findByIndex(87 + tilesNormales + tilesCementerio * 2 + tilesDesvan);
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
 		lifespan: 20000,
 		frequency: 2000,
 		blendMode: 'ADD',
 		scale: { start: 1, end: 0.4 },
-		x: {min: luzSotano1.pixelX, max: luzJoyeria1.pixelX + tileSize * 11},
-		y: {min: luzSotano1.pixelY, max: luzJoyeria1.pixelY + tileSize * 37}
+		x: {min: luzSotano1.pixelX, max: luzSotano1.pixelX + tileSize * 11},
+		y: {min: luzSotano1.pixelY, max: luzSotano1.pixelY + tileSize * 37}
 	});
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
@@ -326,15 +343,16 @@ function GenerarParticulas(that){
 		x: {min: luzSotano1.pixelX, max: luzSotano1.pixelX + tileSize * 11},
 		y: {min: luzSotano1.pixelY, max: luzSotano1.pixelY + tileSize * 37}
 	});
-	var luzSotano1 = iluminacion.findByIndex(7119 + 540);
+	
+	var luzSotano1 = iluminacion.findByIndex(106 + tilesNormales + tilesCementerio * 2 + tilesDesvan);
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
 		lifespan: 22000,
 		frequency: 2200,
 		blendMode: 'ADD',
 		scale: { start: 1, end: 0.4 },
-		x: {min: luzSotano1.pixelX, max: luzJoyeria1.pixelX + tileSize * 11},
-		y: {min: luzSotano1.pixelY, max: luzJoyeria1.pixelY + tileSize * 37}
+		x: {min: luzSotano1.pixelX, max: luzSotano1.pixelX + tileSize * 11},
+		y: {min: luzSotano1.pixelY, max: luzSotano1.pixelY + tileSize * 37}
 	});
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
@@ -346,7 +364,7 @@ function GenerarParticulas(that){
 		y: {min: luzSotano1.pixelY, max: luzSotano1.pixelY + tileSize * 37}
 	});
 	
-	var luzBiblioteca1 = iluminacion.findByIndex(1997 + 540);
+	var luzBiblioteca1 = iluminacion.findByIndex(389 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta);
 	that.particulasLuz.createEmitter({
 		speed: {min: 1, max: 4},
 		lifespan: 20000,
@@ -375,7 +393,9 @@ function GenerarCamara(that, jugador){
 	camJugador1.startFollow(jugador);
 	
 	var camInterfaz = that.cameras.add(0, 0, width, height, false, "interfaz");
-	camInterfaz.ignore([jugador, fondo, suelo, objetos, resto, iluminacion]);
+	//camInterfaz.ignore([jugador, fondo, suelo, objetos, resto, iluminacion]);
+	camInterfaz.ignore([jugador, fondo, suelo, objetos, resto]);
+
 	// Cámara dos jugadores
 	/*
 	that.cameras.resize(width / 2, height);
@@ -391,7 +411,7 @@ function GenerarCamara(that, jugador){
 
 function InicializarCursores(that, jugador){
 	// Guardar cursores
-	if(that.sys.game.device.os.desktop ){
+	if(enPc){
 		cursors = that.input.keyboard.addKeys(
 			{
 				left: Phaser.Input.Keyboard.KeyCodes.A,
@@ -506,7 +526,10 @@ function InicializarCursores(that, jugador){
 		cursors.pausa.on('down', function() {
 			jugador.PararSonidos();
 			jugador.ResetearControl();
-			
+			for(var i = 0; i < arrayTarjetas.length; i++){
+				arrayTarjetas[i].setVisible(false);
+			}
+		
 			this.scene.pause();
             this.scene.launch('Pausa');
 		}, that);
@@ -543,15 +566,16 @@ function InicializarCursores(that, jugador){
 		
 		that.zonaSwipe = that.add.rectangle(width / 4 * 3, height / 2, width / 2, height).setInteractive({ draggable: true }).setScrollFactor(0,0);
 		that.zonaTarjetas = that.add.rectangle(width / 2, 25, width, 50).setInteractive().setScrollFactor(0,0);
-		that.base = that.add.circle(0, 0, 100, 000000);
-		that.thumb = that.add.circle(0, 0, 50, 111111);
+		that.base = that.add.circle(0, 0, 200);
+		that.thumb = that.add.image(0, 0, 'joystick');
+		that.botonAccion = that.add.image(width - 75, height - 204, 'botonAccion').setInteractive().setScrollFactor(0,0);
 		
-		that.joyStick = that.plugins.get('rexVirtualJoystick').add(that, {
+		that.joyStick = that.plugins.get('rexvirtualjoystickplugin').add(that, {
 			//x: (that.sys.game.canvas.width - ((that.sys.game.canvas.width/that.sys.game.canvas.height) * 540)) / 2 + 150,
 			//y: (that.sys.game.canvas.height - 540) / 2 + 390,
 			x: 150,
-			y: height - 154,
-			radius: 100,
+			y: height - 204,
+			radius: 75,
 			base: that.base,
 			thumb: that.thumb,
 			fixed: true
@@ -562,8 +586,9 @@ function InicializarCursores(that, jugador){
 			
 		});
 		
-		that.zonaSwipe.depth = 100;
-		that.zonaTarjetas.depth = 100;
+		that.zonaSwipe.depth = 99;
+		that.zonaTarjetas.depth = 99;
+		that.botonAccion.depth = 100;
 		that.base.depth = 100;
 		that.thumb.depth = 100;
 		
@@ -661,6 +686,16 @@ function InicializarCursores(that, jugador){
 			jugador.tarjetas = false;
 		}    
 		);
+		
+		that.botonAccion.on('pointerdown', function () {
+			jugador.accion = true;
+		}, that);
+		that.botonAccion.on('pointerout', function () {	
+			jugador.accion = false;
+		}, that);
+		that.botonAccion.on('pointerup', function () {	
+			jugador.accion = false;
+		}, that);
 	}
 	
 }

@@ -73,6 +73,9 @@ class Preload extends Phaser.Scene {
 		this.load.image("botonEnviarInfierno_pulsado", "assets/Interfaz/Botones/boton_infierno_pulsado.png");
 		this.load.image("botonEnviarBasura", "assets/Interfaz/Botones/basura.png");
 		this.load.image("botonEnviarBasura_pulsado", "assets/Interfaz/Botones/basura_pulsado.png");
+		this.load.image("baseJoystick", "assets/Interfaz/Botones/joystick_base.png");
+		this.load.image("joystick", "assets/Interfaz/Botones/joystick.png");
+		this.load.image("botonAccion", "assets/Interfaz/Botones/boton_accion.png");
 		
 		//ICONOS DE OBJETOS PARA INVENTARIO
 		this.load.image("Anillo", "assets/Sprites Objetos/Icono Anillo.png");
@@ -96,6 +99,9 @@ class Preload extends Phaser.Scene {
 		this.load.image("Tulipan", "assets/Sprites Objetos/Icono Tulipan.png");
 		this.load.image("Violeta", "assets/Sprites Objetos/Icono Violeta.png");
 		
+		// ANIMACION PEDIDO TUMBA
+		this.load.spritesheet('bocadillo', 'assets/Sprites Objetos/Bocadillo Tumba.png', {frameWidth: 32, frameHeight: 32});
+		
 		// SONIDOS
 		this.load.audio('s_pasos', 'assets/Sonidos/s_pasos.wav');
 		this.load.audio('s_pasosMojados', 'assets/Sonidos/s_pasosMojado.wav');
@@ -117,7 +123,16 @@ class Preload extends Phaser.Scene {
 		
 		// SPRITESHEETS
 		this.load.image("tiles", "assets/Mapas/Spritesheets/s-extruded.png");
-		this.load.image("fondos", "assets/Mapas/Spritesheets/f-extruded.png");
+		this.load.image("fondoCementerio", "assets/Fondos/cementerio.jpg");
+		this.load.image("luzCementerio", "assets/Fondos/luz_cementerio.png");
+		this.load.image("fondoDesvan", "assets/Fondos/desvan.jpg");
+		this.load.image("luzDesvan", "assets/Fondos/luz_desvan.png");
+		this.load.image("fondoImprenta", "assets/Fondos/imprenta.jpg");
+		this.load.image("luzImprenta", "assets/Fondos/luz_imprenta.png");
+		this.load.image("fondoInvernadero", "assets/Fondos/invernadero.jpg");
+		this.load.image("luzInvernadero", "assets/Fondos/luz_invernadero.png");
+		this.load.image("fondoJoyeria", "assets/Fondos/joyeria.jpg");
+		this.load.image("luzJoyeria", "assets/Fondos/luz_joyeria.png");
 		
 		// ANIMACIONES
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});
@@ -139,9 +154,15 @@ class Preload extends Phaser.Scene {
 		for (var i = 0;  i < arrayNombres.length; i++){
 			this.load.image("perfil" + i, "assets/Perfiles/perfil" + i + ".jpg");
 		}
+		
     }
 	
     create() {
+		if(this.sys.game.device.os.desktop){
+			enPc = true;
+		}else{
+			enPc = false;
+		}
 		this.scene.start('Mainmenu');
     }
 

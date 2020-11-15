@@ -13,7 +13,13 @@ class Mesa extends State{
 		jugador.enMesa = true;
         
         BorrarInventario(scene, jugador);
-
+		if(!enPc){
+			scene.zonaSwipe.setVisible(false);
+			scene.zonaTarjetas.setVisible(false);
+			scene.base.setVisible(false);
+			scene.thumb.setVisible(false);
+		}
+		
         jugador.body.velocity.x = 0;
 		
 		tablon = scene.add.image(width / 2, height / 2, 'interfazMesa').setScrollFactor(0,0);
@@ -65,7 +71,7 @@ class Mesa extends State{
 		buttBasura.on('pointerout', () => {buttBasura.setTexture('botonEnviarBasura')});
 		
 		for(var i = 0; i < arrayTarjetas.length; i++){
-			arrayTarjetas[i].setPosition(-1000, -1000);
+			arrayTarjetas[i].setVisible(false);
 		}
 		
         jugador.accion = false;
@@ -75,7 +81,13 @@ class Mesa extends State{
 		//console.log(jugador.pedidoSeleccionado);
         //cuando salir de este estado
         if(jugador.accion){
-            console.log("salir mesa");
+			if(!enPc){
+				scene.zonaSwipe.setVisible(true);
+				scene.zonaTarjetas.setVisible(true);
+				scene.base.setVisible(true);
+				scene.thumb.setVisible(true);
+			}
+	
             RepresentarInventario(scene, jugador);
             jugador.stateMachine.transition(delta, "idle");
             jugador.accion = false;

@@ -1,5 +1,4 @@
 // JavaScript source code
-import VirtualJoystickPlugin from './node_modules/phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 
 window.onload = function(){
 
@@ -26,26 +25,18 @@ window.onload = function(){
 				debug: false
 			}
 		},
-		plugins: {
-			global: [{
-				key: 'rexVirtualJoystick',
-				plugin: VirtualJoystickPlugin,
-				start: true
-			},
-			// ...
-			]
-		},
 		scene: [Preload, Mainmenu, ComoJugar, creditos, LevelSelect, Game, Pausa, Results, Ranking],
 		antialias: false,
 		pixelart: true,
 		failIfMajorPerformanceCaveat: true,
 		debug: true
 	};
-
 	
 	var game = new Phaser.Game(config);
 	window.focus();
 	
 	
 }
+
+	
 //prueba();

@@ -9,6 +9,10 @@ class Pausa extends Phaser.Scene {
 
         var PKey = this.input.keyboard.addKey('P');
         PKey.on('down', () => {
+			for(var i = 0; i < arrayTarjetas.length; i++){
+				arrayTarjetas[i].setVisible(true);
+			}
+		
 			this.scene.resume("Game");
 			this.scene.stop("Pausa");
 		}, this);

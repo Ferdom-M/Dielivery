@@ -63,9 +63,11 @@ class RecogerObjeto extends State{
 				objeto.Clone(cartaAbierta);
 				break;
 			case idFotoFamiliar.has(tileActual):
+				jugador.sCarta.play();
 				objeto.Clone(fotoFamiliar);
 				break;
 			case idFotoPersonal.has(tileActual):
+				jugador.sCarta.play();
 				objeto.Clone(fotoPersonal);
 				break;
 			case idAnillo.has(tileActual):
