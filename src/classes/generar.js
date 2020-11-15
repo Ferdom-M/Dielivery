@@ -548,7 +548,7 @@ function InicializarCursores(that, jugador){
 		that.thumb = that.add.image(0, 0, 'joystick');
 		that.botonAccion = that.add.image(width - 75, height - 204, 'botonAccion').setInteractive().setScrollFactor(0,0);
 		
-		that.joyStick = that.plugins.get('rexVirtualJoystick').add(that, {
+		that.joyStick = that.plugins.get('rexvirtualjoystickplugin').add(that, {
 			//x: (that.sys.game.canvas.width - ((that.sys.game.canvas.width/that.sys.game.canvas.height) * 540)) / 2 + 150,
 			//y: (that.sys.game.canvas.height - 540) / 2 + 390,
 			x: 150,

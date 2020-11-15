@@ -87,6 +87,9 @@ class Game extends Phaser.Scene {
 			this.sys.events.once('shutdown', this.shutdown, this);
 		}
 		*/
+		if(!enPc){
+			this.load.plugin('rexvirtualjoystickplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js', true);
+		}
     }
 
     create (mapa)

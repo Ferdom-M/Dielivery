@@ -1,5 +1,4 @@
 // JavaScript source code
-import VirtualJoystickPlugin from './node_modules/phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 
 window.onload = function(){
 
@@ -25,15 +24,6 @@ window.onload = function(){
 				gravity: { y: 1300 },
 				debug: false
 			}
-		},
-		plugins: {
-			global: [{
-				key: 'rexVirtualJoystick',
-				plugin: VirtualJoystickPlugin,
-				start: true
-			},
-			// ...
-			]
 		},
 		scene: [Preload, Mainmenu, ComoJugar, creditos, LevelSelect, Game, Pausa, Results, Ranking],
 		antialias: false,
