@@ -49,7 +49,7 @@ class Preload extends Phaser.Scene {
 		// FONDOS MENUS
 		this.load.image('fondo', 'assets/Interfaz/Fondo menu principal.jpg');
         this.load.image('tablon', 'assets/Interfaz/Tablon menu principal cartas.png');
-        this.load.image('logo', 'assets/logo.png');
+        this.load.image('logo', 'assets//Interfaz/logo.png');
         
 		// INTERFAZ JUEGO
 		this.load.image("interfazInventario", "assets/Interfaz/Tablon interfaz partida.png");
@@ -62,8 +62,9 @@ class Preload extends Phaser.Scene {
 		this.load.image("infierno4", "assets/Interfaz/Tarjetas/Infierno_4.png");
 		
 		// PAUSA
-        this.load.image('pausa', 'assets/Fondo_pausa.png');
-        this.load.image('pausaSprite', 'assets/pausa.png');
+        this.load.image('fondoPausa', 'assets/Fondo_pausa.png');
+        this.load.image('tablonPausa', 'assets/Interfaz/Tablon pausa.png');
+		
 		
 		// BOTONES
         this.load.image('1', 'assets/Interfaz/Botones/1.png');
@@ -71,10 +72,6 @@ class Preload extends Phaser.Scene {
         this.load.image('3', 'assets/Interfaz/Botones/3.png');
         this.load.image('volver', 'assets/Interfaz/Botones/volver.png');
         this.load.image('volver_pulsado', 'assets/Interfaz/Botones/volver_pulsado.png');
-		this.load.image("botonEnviarCielo", "assets/Interfaz/Botones/boton_cielo.png");
-		this.load.image("botonEnviarCielo_pulsado", "assets/Interfaz/Botones/boton_cielo_pulsado.png");
-		this.load.image("botonEnviarInfierno", "assets/Interfaz/Botones/boton_infierno.png");
-		this.load.image("botonEnviarInfierno_pulsado", "assets/Interfaz/Botones/boton_infierno_pulsado.png");
 		this.load.image("botonEnviarBasura", "assets/Interfaz/Botones/basura.png");
 		this.load.image("botonEnviarBasura_pulsado", "assets/Interfaz/Botones/basura_pulsado.png");
 		this.load.image("baseJoystick", "assets/Interfaz/Botones/joystick_base.png");

@@ -573,7 +573,8 @@ function InicializarCursores(that, jugador){
 			for(var i = 0; i < arrayTarjetas.length; i++){
 				arrayTarjetas[i].setVisible(false);
 			}
-		
+			
+			that.input.keyboard.resetKeys()
 			this.scene.pause();
             this.scene.launch('Pausa');
 		}, that);
@@ -609,6 +610,7 @@ function InicializarCursores(that, jugador){
 		that.zonaFondo = that.add.rectangle(width / 2, height / 2, width, height).setInteractive().setScrollFactor(0,0);
 		
 		that.zonaSwipe = that.add.rectangle(width / 4 * 3, height / 2, width / 2, height).setInteractive({ draggable: true }).setScrollFactor(0,0);
+		that.zonaMoverTarjetas = that.add.rectangle(width / 2, height / 2, width, 400).setInteractive({ draggable: true }).setScrollFactor(0,0).setVisible(false);
 		that.zonaTarjetas = that.add.rectangle(width / 2, 25, width, 50).setInteractive().setScrollFactor(0,0);
 		that.base = that.add.circle(0, 0, 200);
 		that.thumb = that.add.image(0, 0, 'joystick');
@@ -631,6 +633,7 @@ function InicializarCursores(that, jugador){
 		});
 		
 		that.zonaSwipe.depth = 99;
+		that.zonaMoverTarjetas.depth = 99;
 		that.zonaTarjetas.depth = 99;
 		that.botonAccion.depth = 100;
 		that.base.depth = 100;

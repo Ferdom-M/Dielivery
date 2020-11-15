@@ -1,15 +1,17 @@
 // JavaScript source code
-const separacionBotones = 90;
-const jugarPosX = width / 2 + 5;
-const jugarPosY = 270;
-const comoJugarPosX = width / 2 + 5;
+const separacionBotones = 97;
+const jugarPosX = width / 2 + 7;
+const jugarPosY = 240;
+const comoJugarPosX = width / 2 + 7;
 const comoJugarPosY = jugarPosY + separacionBotones;
-const creditosPosX = width / 2 + 5;
+const creditosPosX = width / 2 + 7;
 const creditosPosY = comoJugarPosY + separacionBotones;
 const volverPosX = 57;
 const volverPosY = 57;
 const idiomaPosX = width - 75;
 const idiomaPosY = height - 75
+const logoPosX = width / 2;
+const logoPosY = 110
 
 var seHaJugado = false;
 
@@ -72,23 +74,43 @@ class Mainmenu extends Phaser.Scene {
 		// SENSIBLE A IDIOMA
 		// ESPAÑOL
 		if(idioma.includes("es")){
-			this.load.image('jugar', 'assets/Interfaz/Botones/jugar.png');
-			this.load.image('jugar_pulsado', 'assets/Interfaz/Botones/jugar_pulsado.png');;
-			this.load.image('creditos', 'assets/Interfaz/Botones/creditos.png');
-			this.load.image('creditos_pulsado', 'assets/Interfaz/Botones/creditos_pulsado.png');
-			this.load.image('ranking', 'assets/Interfaz/Botones/empleado.png');
-			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/empleado_pulsado.png');
-			this.load.image('idioma', 'assets/Interfaz/Botones/idioma_espanol.png');
+			this.load.image('jugar', 'assets/Interfaz/Botones/Espanol/jugar.png');
+			this.load.image('jugar_pulsado', 'assets/Interfaz/Botones/Espanol/jugar_pulsado.png');;
+			this.load.image('creditos', 'assets/Interfaz/Botones/Espanol/creditos.png');
+			this.load.image('creditos_pulsado', 'assets/Interfaz/Botones/Espanol/creditos_pulsado.png');
+			this.load.image('ranking', 'assets/Interfaz/Botones/Espanol/empleado.png');
+			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/Espanol/empleado_pulsado.png');
+			this.load.image('idioma', 'assets/Interfaz/Botones/Espanol/idioma.png');
+			
+			this.load.image("botonEnviarCielo", "assets/Interfaz/Botones/Espanol/boton_cielo.png");
+			this.load.image("botonEnviarCielo_pulsado", "assets/Interfaz/Botones/Espanol/boton_cielo_pulsado.png");
+			this.load.image("botonEnviarInfierno", "assets/Interfaz/Botones/Espanol/boton_infierno.png");
+			this.load.image("botonEnviarInfierno_pulsado", "assets/Interfaz/Botones/Espanol/boton_infierno_pulsado.png");
+			this.load.image("menu", "assets/Interfaz/Botones/Espanol/menu.png");
+			this.load.image("menu_pulsado", "assets/Interfaz/Botones/Espanol/menu_pulsado.png");
+			this.load.image("reanudar", "assets/Interfaz/Botones/Espanol/reanudar.png");
+			this.load.image("reanudar_pulsado", "assets/Interfaz/Botones/Espanol/reanudar_pulsado.png");
+			this.load.image("pausa", "assets/Interfaz/Botones/Espanol/pausa.png");
 		}
         else{
 			// INGLES
-			this.load.image('jugar', 'assets/Interfaz/Botones/play.png');
-			this.load.image('jugar_pulsado', 'assets/Interfaz/Botones/play_pulsado.png');;
-			this.load.image('creditos', 'assets/Interfaz/Botones/credits.png');
-			this.load.image('creditos_pulsado', 'assets/Interfaz/Botones/credits_pulsado.png');
-			this.load.image('ranking', 'assets/Interfaz/Botones/employee.png');
-			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/employee_pulsado.png');
-			this.load.image('idioma', 'assets/Interfaz/Botones/idioma_ingles.png');
+			this.load.image('jugar', 'assets/Interfaz/Botones/Ingles/jugar.png');
+			this.load.image('jugar_pulsado', 'assets/Interfaz/Botones/Ingles/jugar_pulsado.png');;
+			this.load.image('creditos', 'assets/Interfaz/Botones/Ingles/creditos.png');
+			this.load.image('creditos_pulsado', 'assets/Interfaz/Botones/Ingles/creditos_pulsado.png');
+			this.load.image('ranking', 'assets/Interfaz/Botones/Ingles/empleado.png');
+			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/Ingles/empleado_pulsado.png');
+			this.load.image('idioma', 'assets/Interfaz/Botones/Ingles/idioma.png');
+			
+			this.load.image("botonEnviarCielo", "assets/Interfaz/Botones/Ingles/boton_cielo.png");
+			this.load.image("botonEnviarCielo_pulsado", "assets/Interfaz/Botones/Ingles/boton_cielo_pulsado.png");
+			this.load.image("botonEnviarInfierno", "assets/Interfaz/Botones/Ingles/boton_infierno.png");
+			this.load.image("botonEnviarInfierno_pulsado", "assets/Interfaz/Botones/Ingles/boton_infierno_pulsado.png");
+			this.load.image("menu", "assets/Interfaz/Botones/Ingles/menu.png");
+			this.load.image("menu_pulsado", "assets/Interfaz/Botones/Ingles/menu_pulsado.png");
+			this.load.image("reanudar", "assets/Interfaz/Botones/Ingles/reanudar.png");
+			this.load.image("reanudar_pulsado", "assets/Interfaz/Botones/Ingles/reanudar_pulsado.png");
+			this.load.image("pausa", "assets/Interfaz/Botones/Ingles/pausa.png");
 		}
 		
 		
@@ -109,7 +131,7 @@ class Mainmenu extends Phaser.Scene {
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
         this.tablon = this.add.image(width / 2, height / 2, 'tablon');
-        this.add.image(300, 150, 'logo').setScale(0.4);
+        this.logo = this.add.image(logoPosX, logoPosY, 'logo');
 
         this.buttonJugar = this.add.sprite(jugarPosX, jugarPosY, 'jugar').setInteractive();
         this.buttonJugar.on('pointerdown', () => {this.buttonJugar.setTexture("jugar_pulsado");});
@@ -169,6 +191,16 @@ class Mainmenu extends Phaser.Scene {
 		this.textures.remove('creditos');
 		this.textures.remove('creditos_pulsado');
 		this.textures.remove('idioma');
+		
+		this.textures.remove("botonEnviarCielo");
+		this.textures.remove("botonEnviarCielo_pulsado");
+		this.textures.remove("botonEnviarInfierno");
+		this.textures.remove("botonEnviarInfierno_pulsado");
+		this.textures.remove("menu");
+		this.textures.remove("menu_pulsado");
+		this.textures.remove("reanudar");
+		this.textures.remove("reanudar_pulsado");
+		this.textures.remove("pausa");
 		this.scene.restart();
 	}
 	
