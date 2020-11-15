@@ -59,6 +59,10 @@ class Correr extends State{
 			jugador.stateMachine.transition(delta, 'recogerPedido');
 			return;
 		}
+		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idMesa.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index)){
+			jugador.stateMachine.transition(delta, 'mesa');
+			return;
+		}
 		if((jugador.enParedIzq && jugador.enParedIzqNormal && !suelo.getTileAtWorldXY(jugador.x-tileSize, jugador.y-tileSize) && !suelo.getTileAtWorldXY(jugador.x,jugador.y-tileSize)) || 
 		   (jugador.enParedDcha && jugador.enParedDchaNormal && !suelo.getTileAtWorldXY(jugador.x+tileSize, jugador.y-tileSize) && !suelo.getTileAtWorldXY(jugador.x, jugador.y-tileSize))){
 			jugador.sPasos.stop();

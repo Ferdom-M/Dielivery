@@ -10,10 +10,11 @@ function GenerarMundo(that, mapa){
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
 	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 	resto = map.createStaticLayer("Resto", tileset, 0, 0);
-	iluminacion = map.createStaticLayer("Iluminacion", fondos, 0, 0);
-	
+	iluminacion = map.createStaticLayer("Iluminacion", fondos, 0, 0);	
+	iluminacion.depth = 50;
+
 	if(mapa == "tutorial"){
-		if(that.sys.game.device.os.desktop ){
+		if(enPc){
 			cartelesPc = map.createStaticLayer("CartelesPC", tileset, 0, 0);
 		}else{
 			cartelesMovil = map.createStaticLayer("CartelesMovil", tileset, 0, 0);
@@ -21,7 +22,6 @@ function GenerarMundo(that, mapa){
 	}
 	
 
-	iluminacion.depth = 50;
 	suelo.depth = 3;
 	suelo.setCollisionByProperty({ collides: true });
 }
@@ -376,6 +376,7 @@ function GenerarCamara(that, jugador){
 	
 	var camInterfaz = that.cameras.add(0, 0, width, height, false, "interfaz");
 	camInterfaz.ignore([jugador, fondo, suelo, objetos, resto, iluminacion]);
+
 	// Cámara dos jugadores
 	/*
 	that.cameras.resize(width / 2, height);
@@ -391,7 +392,7 @@ function GenerarCamara(that, jugador){
 
 function InicializarCursores(that, jugador){
 	// Guardar cursores
-	if(that.sys.game.device.os.desktop ){
+	if(enPc){
 		cursors = that.input.keyboard.addKeys(
 			{
 				left: Phaser.Input.Keyboard.KeyCodes.A,
@@ -543,15 +544,16 @@ function InicializarCursores(that, jugador){
 		
 		that.zonaSwipe = that.add.rectangle(width / 4 * 3, height / 2, width / 2, height).setInteractive({ draggable: true }).setScrollFactor(0,0);
 		that.zonaTarjetas = that.add.rectangle(width / 2, 25, width, 50).setInteractive().setScrollFactor(0,0);
-		that.base = that.add.circle(0, 0, 100, 000000);
-		that.thumb = that.add.circle(0, 0, 50, 111111);
+		that.base = that.add.circle(0, 0, 200);
+		that.thumb = that.add.image(0, 0, 'joystick');
+		that.botonAccion = that.add.image(width - 75, height - 204, 'botonAccion').setInteractive().setScrollFactor(0,0);
 		
 		that.joyStick = that.plugins.get('rexVirtualJoystick').add(that, {
 			//x: (that.sys.game.canvas.width - ((that.sys.game.canvas.width/that.sys.game.canvas.height) * 540)) / 2 + 150,
 			//y: (that.sys.game.canvas.height - 540) / 2 + 390,
 			x: 150,
-			y: height - 154,
-			radius: 100,
+			y: height - 204,
+			radius: 75,
 			base: that.base,
 			thumb: that.thumb,
 			fixed: true
@@ -562,8 +564,9 @@ function InicializarCursores(that, jugador){
 			
 		});
 		
-		that.zonaSwipe.depth = 100;
-		that.zonaTarjetas.depth = 100;
+		that.zonaSwipe.depth = 99;
+		that.zonaTarjetas.depth = 99;
+		that.botonAccion.depth = 100;
 		that.base.depth = 100;
 		that.thumb.depth = 100;
 		
@@ -661,6 +664,16 @@ function InicializarCursores(that, jugador){
 			jugador.tarjetas = false;
 		}    
 		);
+		
+		that.botonAccion.on('pointerdown', function () {
+			jugador.accion = true;
+		}, that);
+		that.botonAccion.on('pointerout', function () {	
+			jugador.accion = false;
+		}, that);
+		that.botonAccion.on('pointerup', function () {	
+			jugador.accion = false;
+		}, that);
 	}
 	
 }

@@ -41,11 +41,12 @@ window.onload = function(){
 		failIfMajorPerformanceCaveat: true,
 		debug: true
 	};
-
 	
 	var game = new Phaser.Game(config);
 	window.focus();
 	
 	
 }
+
+	
 //prueba();

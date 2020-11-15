@@ -67,8 +67,6 @@ class LevelSelect extends Phaser.Scene {
 		var Nivel2PosY = height / 2;
 		var Nivel3PosX = width / 4 * 3;
 		var Nivel3PosY = height / 2;
-		var volverPosX = 200;
-		var volverPosY = 50;
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
@@ -95,7 +93,7 @@ class LevelSelect extends Phaser.Scene {
 		}
 		
 		
-		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
+		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
         this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});

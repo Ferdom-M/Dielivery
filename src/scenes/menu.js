@@ -1,13 +1,13 @@
 // JavaScript source code
 const separacionBotones = 90;
-const jugarPosX = width / 2;
+const jugarPosX = width / 2 + 5;
 const jugarPosY = 270;
-const comoJugarPosX = width / 2;
+const comoJugarPosX = width / 2 + 5;
 const comoJugarPosY = jugarPosY + separacionBotones;
-const creditosPosX = width / 2;
+const creditosPosX = width / 2 + 5;
 const creditosPosY = comoJugarPosY + separacionBotones;
-const volverPosX = 200;
-const volverPosY = 50;
+const volverPosX = 57;
+const volverPosY = 57;
 const idiomaPosX = width - 75;
 const idiomaPosY = height - 75
 

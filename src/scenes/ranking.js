@@ -59,9 +59,7 @@ class Ranking extends Phaser.Scene {
 		this.cameras.main.fadeIn(valorFade);
 		var scoreboardX = width / 4;
 		var scoreboardY = height / 4;
-		var volverPosX = 200;
-		var volverPosY = 50;
-
+		
 		this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
 		
@@ -115,7 +113,7 @@ class Ranking extends Phaser.Scene {
 
 		this.add.text(scoreboardX, scoreboardY, "Empleados del mes", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 		
-		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setScale(0.5).setInteractive();
+		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
         this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});

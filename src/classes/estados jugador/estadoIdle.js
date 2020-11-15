@@ -43,7 +43,6 @@ class Idle extends State{
 			return;
 		}
 		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idMesa.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index)){
-			console.log(fondo.getTileAtWorldXY(jugador.x, jugador.y).index);
 			jugador.stateMachine.transition(delta, 'mesa');
 			return;
 		}
