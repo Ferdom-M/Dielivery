@@ -123,7 +123,16 @@ class Preload extends Phaser.Scene {
 		
 		// SPRITESHEETS
 		this.load.image("tiles", "assets/Mapas/Spritesheets/s-extruded.png");
-		this.load.image("fondos", "assets/Mapas/Spritesheets/f-extruded.png");
+		this.load.image("fondoCementerio", "assets/Fondos/cementerio.jpg");
+		this.load.image("luzCementerio", "assets/Fondos/luz_cementerio.png");
+		this.load.image("fondoDesvan", "assets/Fondos/desvan.jpg");
+		this.load.image("luzDesvan", "assets/Fondos/luz_desvan.png");
+		this.load.image("fondoImprenta", "assets/Fondos/imprenta.jpg");
+		this.load.image("luzImprenta", "assets/Fondos/luz_imprenta.png");
+		this.load.image("fondoInvernadero", "assets/Fondos/invernadero.jpg");
+		this.load.image("luzInvernadero", "assets/Fondos/luz_invernadero.png");
+		this.load.image("fondoJoyeria", "assets/Fondos/joyeria.jpg");
+		this.load.image("luzJoyeria", "assets/Fondos/luz_joyeria.png");
 		
 		// ANIMACIONES
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});

@@ -71,7 +71,7 @@ class Mesa extends State{
 		buttBasura.on('pointerout', () => {buttBasura.setTexture('botonEnviarBasura')});
 		
 		for(var i = 0; i < arrayTarjetas.length; i++){
-			arrayTarjetas[i].setPosition(-1000, -1000);
+			arrayTarjetas[i].setVisible(false);
 		}
 		
         jugador.accion = false;
