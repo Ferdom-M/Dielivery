@@ -54,8 +54,12 @@ class Preload extends Phaser.Scene {
 		// INTERFAZ JUEGO
 		this.load.image("interfazInventario", "assets/Interfaz/Tablon interfaz partida.png");
 		this.load.image("interfazMesa", "assets/Interfaz/Tablon interfaz pedidos.png");
-		this.load.image("cielo", "assets/Interfaz/Cielo.png");
-		this.load.image("infierno", "assets/Interfaz/Infierno.png");
+		this.load.image("cielo2", "assets/Interfaz/Tarjetas/Cielo_2.png");
+		this.load.image("cielo3", "assets/Interfaz/Tarjetas/Cielo_3.png");
+		this.load.image("cielo4", "assets/Interfaz/Tarjetas/Cielo_4.png");
+		this.load.image("infierno2", "assets/Interfaz/Tarjetas/Infierno_2.png");
+		this.load.image("infierno3", "assets/Interfaz/Tarjetas/Infierno_3.png");
+		this.load.image("infierno4", "assets/Interfaz/Tarjetas/Infierno_4.png");
 		
 		// PAUSA
         this.load.image('pausa', 'assets/Fondo_pausa.png');
@@ -133,6 +137,8 @@ class Preload extends Phaser.Scene {
 		this.load.image("luzInvernadero", "assets/Fondos/luz_invernadero.png");
 		this.load.image("fondoJoyeria", "assets/Fondos/joyeria.jpg");
 		this.load.image("luzJoyeria", "assets/Fondos/luz_joyeria.png");
+		this.load.image("fondoBodega", "assets/Fondos/bodega.jpg");
+		this.load.image("luzBodega", "assets/Fondos/luz_bodega.png");
 		
 		// ANIMACIONES
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});

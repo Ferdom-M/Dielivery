@@ -86,7 +86,7 @@ class Results extends Phaser.Scene {
 		
 		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
-        this.buttonVolver.on('pointerup', () => this.checkNombre());
+        this.buttonVolver.on('pointerup', () => {this.buttonVolver.setTexture("volver"); this.checkNombre()});
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
         this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
 		
