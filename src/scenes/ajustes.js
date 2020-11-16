@@ -177,10 +177,16 @@ class Ajustes extends Phaser.Scene {
 			iluminacion: true,
 			particulas: true
 		};
+		if(enPc){
+			this.botonAlto = this.add.sprite(width / 4, height / 4, 'alto_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 4, (height / 4) * 2, 'bajo_pulsado').setInteractive();
+			this.botonMuyBajo = this.add.sprite(width / 4, (height / 4) * 3, 'muybajo_pulsado').setInteractive();
+		}else{
+			this.botonAlto = this.add.sprite(width / 2, height / 4, 'alto_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 2, (height / 4) * 2, 'bajo_pulsado').setInteractive();
+			this.botonMuyBajo = this.add.sprite(width / 2, (height / 4) * 3, 'muybajo_pulsado').setInteractive();
+		}
 		
-		this.botonAlto = this.add.sprite(width / 4, height / 4, 'alto_pulsado').setInteractive();
-		this.botonBajo = this.add.sprite(width / 4, (height / 4) * 2, 'bajo_pulsado').setInteractive();
-		this.botonMuyBajo = this.add.sprite(width / 4, (height / 4) * 3, 'muybajo_pulsado').setInteractive();
 		this.botonAlto.on('pointerdown', () => this.PulsarAlto());
 		this.botonBajo.on('pointerdown', () => this.PulsarBajo());
 		this.botonMuyBajo.on('pointerdown', () => this.PulsarMuyBajo());
