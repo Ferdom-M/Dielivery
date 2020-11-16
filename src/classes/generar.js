@@ -456,8 +456,7 @@ function GenerarCamara(that, jugador){
 function InicializarCursores(that, jugador){
 	// Guardar cursores
 	if(enPc){
-		cursors = that.input.keyboard.addKeys(
-			{
+		var controlesGuardados = JSON.parse(localStorage.getItem('controlesGuardados')) || {
 				left: Phaser.Input.Keyboard.KeyCodes.A,
 				right: Phaser.Input.Keyboard.KeyCodes.D,
 				up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -472,7 +471,9 @@ function InicializarCursores(that, jugador){
 				propiedades: Phaser.Input.Keyboard.KeyCodes.L,
 				tpMesa: Phaser.Input.Keyboard.KeyCodes.I,
 				tpCosas: Phaser.Input.Keyboard.KeyCodes.O
-			}); 
+			};
+			
+		cursors = that.input.keyboard.addKeys(controlesGuardados); 
 			// El segundo valor de entrada es enableCapture, llama a preventDefault en el navegador, 
 			// es decir, desactiva los valores predeterminados. El valor predeterminado es true. En
 			// resultados hay que desactivar esto.

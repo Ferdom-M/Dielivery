@@ -96,7 +96,7 @@ class Mesa extends State{
 			jugador.pedidoSeleccionado = undefined;
 			
 			for(var i = 0; i < arrayTarjetas.length; i++){
-				arrayTarjetas[i] = ColocarTarjeta(arrayTarjetas[i], i);
+				arrayTarjetas[i].setVisible(true);
 			}
 			
 			jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;

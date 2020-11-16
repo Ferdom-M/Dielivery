@@ -158,6 +158,11 @@ class Preload extends Phaser.Scene {
 			this.load.image("perfil" + i, "assets/Perfiles/perfil" + i + ".jpg");
 		}
 		
+		// PLUGINS
+		if(!enPc){
+			this.load.plugin('rexvirtualjoystickplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js', true);
+		}
+		this.load.plugin('rexinputtextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexinputtextplugin.min.js', true);
     }
 	
     create() {

@@ -32,7 +32,7 @@ class MirandoTarjetas extends State{
 				upX = pointer.x;
 				if(arrayTarjetas[0].x + (upX - downX) < width / 2 && arrayTarjetas[arrayTarjetas.length - 1].x + (upX - downX) > width / 2){
 					for(var i = 0; i < arrayTarjetas.length; i++){
-						arrayTarjetas[i].x += (upX - downX) / (arrayTarjetas.length - 1);
+						arrayTarjetas[i].x += (upX - downX);
 					}
 				}
 				downX = pointer.x;
@@ -58,6 +58,9 @@ class MirandoTarjetas extends State{
 				scene.thumb.setVisible(true);
 				scene.botonAccion.setVisible(true);
 				scene.zonaMoverTarjetas.setVisible(false);
+				
+				scene.zonaMoverTarjetas.off('dragstart');
+				scene.zonaMoverTarjetas.off('drag');
 			}
 		
 			jugador.stateMachine.transition(delta, 'idle');

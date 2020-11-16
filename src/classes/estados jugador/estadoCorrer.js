@@ -60,6 +60,8 @@ class Correr extends State{
 			return;
 		}
 		if(jugador.accion && resto.getTileAtWorldXY(jugador.x, jugador.y) && idMesa.has(resto.getTileAtWorldXY(jugador.x, jugador.y).index)){
+			jugador.sPasos.stop();
+			jugador.sPasosMojados.stop();
 			jugador.stateMachine.transition(delta, 'mesa');
 			return;
 		}
