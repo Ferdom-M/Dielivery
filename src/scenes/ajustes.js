@@ -178,21 +178,21 @@ class Ajustes extends Phaser.Scene {
 			particulas: true
 		};
 		
-		this.botonAlto = this.add.sprite(width / 4, height / 4, 'jugar_pulsado').setInteractive();
-		this.botonBajo = this.add.sprite(width / 4, (height / 4) * 2, 'jugar_pulsado').setInteractive();
-		this.botonMuyBajo = this.add.sprite(width / 4, (height / 4) * 3, 'jugar_pulsado').setInteractive();
+		this.botonAlto = this.add.sprite(width / 4, height / 4, 'alto_pulsado').setInteractive();
+		this.botonBajo = this.add.sprite(width / 4, (height / 4) * 2, 'bajo_pulsado').setInteractive();
+		this.botonMuyBajo = this.add.sprite(width / 4, (height / 4) * 3, 'muybajo_pulsado').setInteractive();
 		this.botonAlto.on('pointerdown', () => this.PulsarAlto());
 		this.botonBajo.on('pointerdown', () => this.PulsarBajo());
 		this.botonMuyBajo.on('pointerdown', () => this.PulsarMuyBajo());
 		
 		if(this.graficos.iluminacion){
 			if(this.graficos.particulas){
-				this.botonAlto.setTexture('jugar');
+				this.botonAlto.setTexture('alto');
 			}else{
-				this.botonBajo.setTexture('jugar');
+				this.botonBajo.setTexture('bajo');
 			}
 		}else{
-			this.botonMuyBajo.setTexture('jugar');
+			this.botonMuyBajo.setTexture('muybajo');
 		}
 		
     }
@@ -277,9 +277,9 @@ class Ajustes extends Phaser.Scene {
 	
 	PulsarAlto(){
 		if(!(this.graficos.iluminacion && this.graficos.particulas)){
-			this.botonAlto.setTexture('jugar');
-			this.botonBajo.setTexture('jugar_pulsado');
-			this.botonMuyBajo.setTexture('jugar_pulsado');
+			this.botonAlto.setTexture('alto');
+			this.botonBajo.setTexture('bajo_pulsado');
+			this.botonMuyBajo.setTexture('muybajo_pulsado');
 			this.graficos.iluminacion = true;
 			this.graficos.particulas = true;
 			localStorage.setItem('graficos', JSON.stringify(this.graficos));
@@ -287,9 +287,9 @@ class Ajustes extends Phaser.Scene {
 	}
 	PulsarBajo(){
 		if(!(this.graficos.iluminacion && !this.graficos.particulas)){
-			this.botonAlto.setTexture('jugar_pulsado');
-			this.botonBajo.setTexture('jugar');
-			this.botonMuyBajo.setTexture('jugar_pulsado');
+			this.botonAlto.setTexture('alto_pulsado');
+			this.botonBajo.setTexture('bajo');
+			this.botonMuyBajo.setTexture('muybajo_pulsado');
 			this.graficos.iluminacion = true;
 			this.graficos.particulas = false;
 			localStorage.setItem('graficos', JSON.stringify(this.graficos));
@@ -297,9 +297,9 @@ class Ajustes extends Phaser.Scene {
 	}
 	PulsarMuyBajo(){
 		if(!(!this.graficos.iluminacion && !this.graficos.particulas)){
-			this.botonAlto.setTexture('jugar_pulsado');
-			this.botonBajo.setTexture('jugar_pulsado');
-			this.botonMuyBajo.setTexture('jugar');
+			this.botonAlto.setTexture('alto_pulsado');
+			this.botonBajo.setTexture('bajo_pulsado');
+			this.botonMuyBajo.setTexture('muybajo');
 			this.graficos.iluminacion = false;
 			this.graficos.particulas = false;
 			localStorage.setItem('graficos', JSON.stringify(this.graficos));

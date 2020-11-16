@@ -81,6 +81,12 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image('ranking', 'assets/Interfaz/Botones/Espanol/empleado.png');
 			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/Espanol/empleado_pulsado.png');
 			this.load.image('idioma', 'assets/Interfaz/Botones/Espanol/idioma.png');
+			this.load.image('alto', 'assets/Interfaz/Botones/Espanol/alto.png');
+			this.load.image('alto_pulsado', 'assets/Interfaz/Botones/Espanol/alto_pulsado.png');
+			this.load.image('bajo', 'assets/Interfaz/Botones/Espanol/bajo.png');
+			this.load.image('bajo_pulsado', 'assets/Interfaz/Botones/Espanol/bajo_pulsado.png');
+			this.load.image('muybajo', 'assets/Interfaz/Botones/Espanol/muybajo.png');
+			this.load.image('muybajo_pulsado', 'assets/Interfaz/Botones/Espanol/muybajo_pulsado.png');
 			
 			this.load.image("botonEnviarCielo", "assets/Interfaz/Botones/Espanol/boton_cielo.png");
 			this.load.image("botonEnviarCielo_pulsado", "assets/Interfaz/Botones/Espanol/boton_cielo_pulsado.png");
@@ -101,7 +107,13 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image('ranking', 'assets/Interfaz/Botones/Ingles/empleado.png');
 			this.load.image('ranking_pulsado', 'assets/Interfaz/Botones/Ingles/empleado_pulsado.png');
 			this.load.image('idioma', 'assets/Interfaz/Botones/Ingles/idioma.png');
-			
+			this.load.image('alto', 'assets/Interfaz/Botones/Ingles/alto.png');
+			this.load.image('alto_pulsado', 'assets/Interfaz/Botones/Ingles/alto_pulsado.png');
+			this.load.image('bajo', 'assets/Interfaz/Botones/Ingles/bajo.png');
+			this.load.image('bajo_pulsado', 'assets/Interfaz/Botones/Ingles/bajo_pulsado.png');
+			this.load.image('muybajo', 'assets/Interfaz/Botones/Ingles/muybajo.png');
+			this.load.image('muybajo_pulsado', 'assets/Interfaz/Botones/Ingles/muybajo_pulsado.png');
+
 			this.load.image("botonEnviarCielo", "assets/Interfaz/Botones/Ingles/boton_cielo.png");
 			this.load.image("botonEnviarCielo_pulsado", "assets/Interfaz/Botones/Ingles/boton_cielo_pulsado.png");
 			this.load.image("botonEnviarInfierno", "assets/Interfaz/Botones/Ingles/boton_infierno.png");
@@ -197,6 +209,12 @@ class Mainmenu extends Phaser.Scene {
 		this.textures.remove('creditos');
 		this.textures.remove('creditos_pulsado');
 		this.textures.remove('idioma');
+		this.textures.remove('alto');
+		this.textures.remove('alto_pulsado');
+		this.textures.remove('bajo');
+		this.textures.remove('bajo_pulsado');
+		this.textures.remove('muybajo');
+		this.textures.remove('muybajo_pulsado');
 		
 		this.textures.remove("botonEnviarCielo");
 		this.textures.remove("botonEnviarCielo_pulsado");
