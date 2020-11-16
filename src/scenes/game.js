@@ -114,6 +114,7 @@ class Game extends Phaser.Scene {
 		//var tarjetasVigentes = [];
 		pedidosVigentes = 0;
 		puntuacionTotal = 0;
+		perfilesUsados.add(24);
 		 
 		this.graficos = JSON.parse(localStorage.getItem('graficos')) || {
 			iluminacion: true,
@@ -137,6 +138,10 @@ class Game extends Phaser.Scene {
 			case "Nivel3":
 				posInicialX = 1824;
 				posInicialY = 800;
+				break;
+			case "tutorial":
+				posInicialX = 6*tileSize;
+				posInicialY = 28*tileSize;
 				break;
 		}
 		this.jugador = new Jugador({scene: this, x: posInicialX, y: posInicialY, key: 'anim_andar'});
@@ -172,20 +177,31 @@ class Game extends Phaser.Scene {
 		var tumba2 = resto.findByIndex(tilesTumba[2][0]);
 		var tumba3 = resto.findByIndex(tilesTumba[3][0]);
 		
+		if(tumba0){
 		avisoTumba.push(this.add.sprite(tumba0.pixelX + 1.5 * tileSize, tumba0.pixelY - 0.5 * tileSize, 'bocadillo').setVisible(false).play('bocadilloAnim'));
+		}
+		if(tumba1){
 		avisoTumba.push(this.add.sprite(tumba1.pixelX + 1.5 * tileSize, tumba1.pixelY - 0.5 * tileSize, 'bocadillo').setVisible(false).play('bocadilloAnim'));
+		}
+		if(tumba2){
 		avisoTumba.push(this.add.sprite(tumba2.pixelX + 1.5 * tileSize, tumba2.pixelY - 0.5 * tileSize, 'bocadillo').setVisible(false).play('bocadilloAnim'));
+		}
+		if(tumba3){
 		avisoTumba.push(this.add.sprite(tumba3.pixelX + 1.5 * tileSize, tumba3.pixelY - 0.5 * tileSize, 'bocadillo').setVisible(false).play('bocadilloAnim'));
-		
-		for(var i = 0; i < comienzoPedidos; i++){
-			GenerarPedido(this.jugador, this);
 		}
 		
+		GenerarPedido(this.jugador, this, mapa);
+		
+		
 		tablonInventario = this.add.image(width / 2, height - 51, 'interfazInventario').setScrollFactor(0,0);
-		generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
 		puntuacion = this.add.text(width - 100, height - 54, puntuacionTotal).setScrollFactor(0,0);
 		if(mapa != "tutorial"){
-			this.initialTime = 5;
+			for(var i = 0; i < comienzoPedidos - 1; i++){
+				GenerarPedido(this.jugador, this);
+			}
+		
+			generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
+			this.initialTime = 480;
 
 			tiempo = this.add.text(width / 2 - 16, height - 54, formatTime(this.initialTime)).setScrollFactor(0,0).setVisible(true);
 
@@ -241,7 +257,9 @@ function onEvent ()
 }
 
 function RepresentarInventario(that, jugador){
-	tiempo.setVisible(true);
+	if(mapaActual != "tutorial"){
+		tiempo.setVisible(true);
+	}
 	puntuacion.setVisible(true);
 	puntuacion.setText(puntuacionTotal);
 	tablonInventario.setVisible(true);
@@ -267,13 +285,30 @@ function BorrarInventario(that, jugador){
 	for(var i = 0; i < jugador.arrayInventario.length; i++){
 		jugador.arrayInventario[i].destroy();
 	}
-	tiempo.setVisible(false);
+	if(mapaActual != "tutorial"){
+		tiempo.setVisible(false);
+	}
 	puntuacion.setVisible(false);
 	tablonInventario.setVisible(false);
-	
-
 }
 
+function TerminarTutorial(that, jugador){
+	BorrarInventario(that, jugador);
+	jugador.PararSonidos();
+	jugador.ResetearControl();
+	jugador.tutorialFinalizado = true;
+	for(var i = 0; i < arrayTarjetas.length; i++){
+		arrayTarjetas[i].setVisible(false);
+	}
+	that.input.keyboard.resetKeys()
+	that.time.addEvent({ delay: 1000, callback: PasarEscenaFinTutorial, callbackScope: that, loop: false })
+	
+}
+
+function PasarEscenaFinTutorial(){
+	this.scene.pause();
+	this.scene.launch("FinTutorial");
+}
 /*
 function EntrarMesa(jugador, that){
 	if(cursors.accion.isDown && !jugador.recogiendoObjeto){

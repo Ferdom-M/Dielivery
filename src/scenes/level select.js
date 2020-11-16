@@ -61,12 +61,12 @@ class LevelSelect extends Phaser.Scene {
 
     create() {
 		this.cameras.main.fadeIn(valorFade);
-		var Nivel1PosX = width / 4.25;
-		var Nivel1PosY = height / 1.3;
-		var Nivel2PosX = width / 4.25 * 2.25;
-		var Nivel2PosY = height / 1.3;
-		var Nivel3PosX = width / 4.25 * 3.5;
-		var Nivel3PosY = height / 1.3;
+		var Nivel1PosX = width / 4;
+		var Nivel1PosY = height / 2;
+		var Nivel2PosX = width / 4 * 2;
+		var Nivel2PosY = height / 2;
+		var Nivel3PosX = width / 4 * 3;
+		var Nivel3PosY = height / 2;
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
@@ -80,6 +80,12 @@ class LevelSelect extends Phaser.Scene {
         this.buttonNivel2 = this.add.sprite(Nivel2PosX, Nivel2PosY, 'mapa3_block').setInteractive();
 		this.buttonNivel3 = this.add.sprite(Nivel3PosX, Nivel3PosY, 'mapa3_block').setInteractive();
         
+		this.buttonTutorial = this.add.sprite(width / 2, height / 4, 'volver').setInteractive();
+        this.buttonTutorial.on('pointerdown', () => {this.buttonTutorial.setTexture("volver_pulsado");});
+        this.buttonTutorial.on('pointerup', () => PasarEscena(this, "Game", "tutorial"));
+        this.buttonTutorial.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonTutorial.setTexture("volver_pulsado");}});
+        this.buttonTutorial.on('pointerout', () => {this.buttonTutorial.setTexture("volver");});
+		
 		//this.buttonNivel1.on('pointerdown', () => PasarEscena(this, "Game", "Nivel1"));
 		this.buttonNivel1.on('pointerdown', () => {this.buttonNivel1.setTexture("mapa1_pulsado");});
         this.buttonNivel1.on('pointerup', () => PasarEscena(this, "Game", "Nivel1"));
@@ -99,10 +105,10 @@ class LevelSelect extends Phaser.Scene {
 		}
 		if(nivel2Jugado){
 			this.buttonNivel3.setTexture("mapa3");
-			this.buttonNivel3.on('pointerdown', () => {this.buttonNivel2.setTexture("mapa3_pulsado");});
+			this.buttonNivel3.on('pointerdown', () => {this.buttonNivel3.setTexture("mapa3_pulsado");});
 			this.buttonNivel3.on('pointerup', () => PasarEscena(this, "Game", "Nivel3"));
-			this.buttonNivel3.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonNivel2.setTexture("mapa3_pulsado");}});
-			this.buttonNivel3.on('pointerout', () => {this.buttonNivel2.setTexture("mapa3");});
+			this.buttonNivel3.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonNivel3.setTexture("mapa3_pulsado");}});
+			this.buttonNivel3.on('pointerout', () => {this.buttonNivel3.setTexture("mapa3");});
 		}
 		
 		
@@ -111,19 +117,7 @@ class LevelSelect extends Phaser.Scene {
         this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
         this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
-		
-		var FKey = this.input.keyboard.addKey('F');
 
-        FKey.on('down', function () {
-
-            if (this.scale.isFullscreen) {
-                this.scale.stopFullscreen();
-            }
-            else {
-                this.scale.startFullscreen();
-            }
-
-        }, this);
     }
 
 	

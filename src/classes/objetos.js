@@ -97,58 +97,81 @@ const margenFinalTarjeta = margenInicialTarjeta - (tarjetaAncho * escalaTarjeta)
 const alturaTarjeta = -65;
 
 
-function GenerarPedido(jugador, that){
+function GenerarPedido(jugador, that, mapa){
 	if(arrayPedidosPorRecoger.length < numTumbas){
-		// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
-		var destinatario = Math.floor(Math.random() * 2) == 0;
-		
-		// Aleatorio 2 a 4
-		var numObjetos = Math.floor(Math.random() * 3) + 2;
-		
-		// Aleatorio entre los 20 con la misma probabilidad
-		var objetosGenerados = new Array();
-		for(var i = 0; i < numObjetos; i++){
-			var objetoGenerado = Math.floor(Math.random() * arrayObjetos.length);
-			//objetosGenerados.push(arrayObjetos[objetoGenerado].tipo);
-			objetosGenerados.push(arrayObjetos[objetoGenerado]);
-			//objetosGenerados solo tiene nombres por lo que no se puede acceder a la puntuacion
-			//en compararPedidos
-		}
-		
-		var persona = Math.floor(Math.random() * arrayNombres.length);
-		while(perfilesUsados.has(persona)){
-			persona = Math.floor(Math.random() * arrayNombres.length);
-		}
-		perfilesUsados.add(persona);
-		pedido = new Pedido(0, numObjetos, objetosGenerados, destinatario, persona, pedidosVigentes);
-		//arrayPedidos.push(pedido);
-		arrayPedidosPorRecoger.push(pedido);
-		
-		// En qué tumba lo metemos?
-		var tumba = Math.floor(Math.random() * 4);
-		while(tumbaConPedidos.has(tumba)){
+		if(mapa != "tutorial"){
+			// Aleatorio 0 a 1, si es 0 será cielo, si es 1 será infierno
+			var destinatario = Math.floor(Math.random() * 2) == 0;
+			
+			// Aleatorio 2 a 4
+			var numObjetos = Math.floor(Math.random() * 3) + 2;
+			
+			// Aleatorio entre los 20 con la misma probabilidad
+			var objetosGenerados = new Array();
+			for(var i = 0; i < numObjetos; i++){
+				var objetoGenerado = Math.floor(Math.random() * arrayObjetos.length);
+				//objetosGenerados.push(arrayObjetos[objetoGenerado].tipo);
+				objetosGenerados.push(arrayObjetos[objetoGenerado]);
+				//objetosGenerados solo tiene nombres por lo que no se puede acceder a la puntuacion
+				//en compararPedidos
+			}
+			
+			var persona = Math.floor(Math.random() * arrayNombres.length);
+			while(perfilesUsados.has(persona)){
+				persona = Math.floor(Math.random() * arrayNombres.length);
+			}
+			perfilesUsados.add(persona);
+			pedido = new Pedido(0, numObjetos, objetosGenerados, destinatario, persona, pedidosVigentes);
+			//arrayPedidos.push(pedido);
+			arrayPedidosPorRecoger.push(pedido);
+			
+			// En qué tumba lo metemos?
 			var tumba = Math.floor(Math.random() * 4);
-		}
-		tumbaConPedidos.add(tumba);
-		avisoTumba[tumba].setVisible(true);
-		for(var i = 0; i < tilesTumba[tumba].length; i++){
-			idTumbasConPedidos.add(tilesTumba[tumba][i]);
-		}
-		
-		//var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
-		//tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
+			while(tumbaConPedidos.has(tumba)){
+				var tumba = Math.floor(Math.random() * 4);
+			}
+			tumbaConPedidos.add(tumba);
+			avisoTumba[tumba].setVisible(true);
+			for(var i = 0; i < tilesTumba[tumba].length; i++){
+				idTumbasConPedidos.add(tilesTumba[tumba][i]);
+			}
+			
+			//var tarjeta = that.add.sprite(1700 + arrayPedidos.length*80, 650, 'logo').setScale(0.1).setInteractive();
+			//tarjeta.on('pointerdown', () => jugador.pedidoSeleccionado = pedido);
 
-		/*var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
-		
-		camJugador1.ignore(tarjeta);
-		//camJugador2.ignore(tarjeta);
-		
-		tarjeta = ColocarTarjeta(tarjeta, arrayTarjetas.length);
-		
-		arrayTarjetas.push(tarjeta);
+			/*var tarjeta = new Tarjeta(that, 0, 0, pedido).setScrollFactor(0,0);
+			
+			camJugador1.ignore(tarjeta);
+			//camJugador2.ignore(tarjeta);
+			
+			tarjeta = ColocarTarjeta(tarjeta, arrayTarjetas.length);
+			
+			arrayTarjetas.push(tarjeta);
 
-		pedidosVigentes++;
-		*/
+			pedidosVigentes++;
+			*/
+		}else{
+			var destinatario = Math.floor(Math.random() * 2) == 0;
+			
+			// Aleatorio 2 a 4
+			var numObjetos = 3;
+			
+			// Aleatorio entre los 20 con la misma probabilidad
+			var objetosGenerados = new Array();
+			objetosGenerados.push(pelucheViejo);
+			objetosGenerados.push(vino);
+			objetosGenerados.push(cartaAbierta);
+			
+			var persona = 24;
+			pedido = new Pedido(0, numObjetos, objetosGenerados, destinatario, persona, pedidosVigentes);
+			arrayPedidosPorRecoger.push(pedido);
+			var tumba = 0;
+			avisoTumba[tumba].setVisible(true);
+			for(var i = 0; i < tilesTumba[tumba].length; i++){
+				idTumbasConPedidos.add(tilesTumba[tumba][i]);
+			}
+			
+		}
 		return pedido;
 	}
 }

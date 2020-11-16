@@ -21,6 +21,10 @@ arrayNombres.push("Serendipy Studios");
 arrayNombres.push("Laratheia");
 arrayNombres.push("Leavy");
 arrayNombres.push("JuanmCasper");
+arrayNombres.push("Bolita");
+arrayNombres.push("Nube");
+arrayNombres.push("Destinatario");
+arrayNombres.push("Dori");
 
 var arrayCausaMuerte = new Array();
 var arrayCausaMuerteEspanol = new Array();
@@ -37,7 +41,7 @@ arrayCausaMuerteEspanol.push("Murió por comer kebab mientras saltaba al hiperes
 arrayCausaMuerteEspanol.push("Broncoaspiración por vómito");
 arrayCausaMuerteEspanol.push("Murió haciendo lo que más disfrutaba, durmiendo");
 arrayCausaMuerteEspanol.push("Pintando con acuarelas metió el pincel en el té");
-arrayCausaMuerteEspanol.push("De tanto escribir se le imbuyó la mano en y terminó calcinado");
+arrayCausaMuerteEspanol.push("De tanto escribir se le imbuyó la mano en fuego y terminó calcinado");
 arrayCausaMuerteEspanol.push("Se le cortocircuitó el cerebro debido a ecuaciones diferenciales");
 arrayCausaMuerteEspanol.push("Intentó pasarse cierto shooter en Legendario");
 arrayCausaMuerteEspanol.push("Tuvo un accidente al intentar realizar un viaje en el tiempo  a Egipto");
@@ -48,6 +52,10 @@ arrayCausaMuerteEspanol.push("Intentó hacer paracaidismo sin paracaidas");
 arrayCausaMuerteEspanol.push("Murió al intentar hacer una Jojo pose y romperse en dos");
 arrayCausaMuerteEspanol.push("Murió al resbalarse y caer al mar durante una persecución tras una invocación a Cthulhu fallida");
 arrayCausaMuerteEspanol.push("El artista del juego le mató de la risa");
+arrayCausaMuerteEspanol.push("No ha muerto no os preocupéis, su dueño solo quería enseñarla");
+arrayCausaMuerteEspanol.push("Bolita le dió envidia a su dueño, así que también está aquí (tampoco está muerta, tranquilos)");
+arrayCausaMuerteEspanol.push("Se murió en un tutorial en el que era imposible morir");
+arrayCausaMuerteEspanol.push("Se tiró al agua con demasiada fuerza (pero sigue viva)");
 
 arrayCausaMuerteIngles.push("He fell down the stairs of the university cafe. Ouchie ouch");
 arrayCausaMuerteIngles.push("He suffered a stroke after playing Isaac for 453 hours in a row");
@@ -69,8 +77,12 @@ arrayCausaMuerteIngles.push("They scared to death");
 arrayCausaMuerteIngles.push("Diabetes");
 arrayCausaMuerteIngles.push("They tried parachuting without a parachute");
 arrayCausaMuerteIngles.push("She died trying to make a JoJo pose and broke in two");
-arrayCausaMuerteIngles.push("He slipped and fell to the sea during a chase after a failed Chtulhu summoning");
+arrayCausaMuerteIngles.push("He slipped and fell to the sea during a chase after a failed Cthulhu summoning");
 arrayCausaMuerteIngles.push("The game artist made him laugh until death");
+arrayCausaMuerteIngles.push("She didn't die don't worry, his owner just wanted to show her");
+arrayCausaMuerteIngles.push("Her owner got jealous from Bolita, so she's also here (not dead tho)");
+arrayCausaMuerteIngles.push("They died in a tutorial where it's impossible to die");
+arrayCausaMuerteIngles.push("She jumped into the water too hard (still alive) ha got the funny reference??");
 
 if(idioma.idioma.includes("es")){
 	arrayCausaMuerte = arrayCausaMuerteEspanol;

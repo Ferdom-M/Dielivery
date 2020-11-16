@@ -1,6 +1,6 @@
 var configTexto = {
 			fontFamily: 'Sylfaen',
-			fontSize: '18px',
+			fontSize: '16px',
 			color: '#fff',
 			stroke: '#000000',
 			strokeThickness: 2,
@@ -49,9 +49,9 @@ class Tarjeta extends Phaser.GameObjects.Container{
 		this.imagenes.push(scene.add.image(0, 0, 'persona' + pedido.persona));
 		*/
 		
-		imagenes.push(scene.add.text(-10, -104, arrayNombres[pedido.persona], configTexto).setFontStyle('bold'));
+		imagenes.push(scene.add.text(-10, -102, arrayNombres[pedido.persona], configTexto).setFontStyle('bold'));
 		imagenes.push(scene.add.text(-10, -60, arrayCausaMuerte[pedido.persona], configTexto));
-		imagenes.push(scene.add.text(-150, 30, tituloObjetos, configTexto).setFontStyle('bold').setFontSize('14px'));
+		imagenes.push(scene.add.text(-150, 31, tituloObjetos, configTexto).setFontStyle('bold').setFontSize('14px'));
 		
 		imagenes.push(scene.add.image(-95, -50, "perfil" + (pedido.persona)).setInteractive());
         super(scene, x, y, imagenes);
