@@ -185,7 +185,7 @@ class Game extends Phaser.Scene {
 		generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
 		puntuacion = this.add.text(width - 100, height - 54, puntuacionTotal).setScrollFactor(0,0);
 		if(mapa != "tutorial"){
-			this.initialTime = 480;
+			this.initialTime = 5;
 
 			tiempo = this.add.text(width / 2 - 16, height - 54, formatTime(this.initialTime)).setScrollFactor(0,0).setVisible(true);
 
