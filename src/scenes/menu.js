@@ -73,7 +73,7 @@ class Mainmenu extends Phaser.Scene {
 		
 		// SENSIBLE A IDIOMA
 		// ESPAÑOL
-		if(idioma.includes("es")){
+		if(idioma.idioma.includes("es")){
 			this.load.image('jugar', 'assets/Interfaz/Botones/Espanol/jugar.png');
 			this.load.image('jugar_pulsado', 'assets/Interfaz/Botones/Espanol/jugar_pulsado.png');;
 			this.load.image('creditos', 'assets/Interfaz/Botones/Espanol/creditos.png');
@@ -188,20 +188,22 @@ class Mainmenu extends Phaser.Scene {
 
 	CambiarIdioma(){
 		arrayCausaMuerte = new Array();
-		if(idioma.includes("es")){
-			idioma = "en";
+		if(idioma.idioma.includes("es")){
+			idioma.idioma = "en";
 			
 			arrayCausaMuerte = arrayCausaMuerteIngles;
 			// LO PONGO EN ELSE IF POR SI ACASO AÑADIMOS MÁS IDIOMAS
-		}else if(idioma.includes("en")){
-			idioma = "es";
+		}else if(idioma.idioma.includes("en")){
+			idioma.idioma = "es";
 			
 			arrayCausaMuerte = arrayCausaMuerteEspanol
 		}else{ // 
-			idioma = "es";
+			idioma.idioma = "es";
 			
 			arrayCausaMuerte = arrayCausaMuerteEspanol
 		}
+		localStorage.setItem('idioma', JSON.stringify(idioma));
+		
 		this.textures.remove('jugar');
 		this.textures.remove('jugar_pulsado');
 		this.textures.remove('ranking');

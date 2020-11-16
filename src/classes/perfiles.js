@@ -58,13 +58,13 @@ arrayCausaMuerteIngles.push("Murió por comer pito\nmientras saltaba\nal hiperes
 arrayCausaMuerteIngles.push("Broncoaspiración por\npito");
 arrayCausaMuerteIngles.push("Murió haciendo lo que\nmás disfrutaba,\npito");
 
-if(idioma.includes("es")){
+if(idioma.idioma.includes("es")){
 	arrayCausaMuerte = arrayCausaMuerteEspanol;
 	// LO PONGO EN ELSE IF POR SI ACASO AÑADIMOS MÁS IDIOMAS
-}else if(idioma.includes("en")){
+}else if(idioma.idioma.includes("en")){
 	arrayCausaMuerte = arrayCausaMuerteIngles;
 }else{ // 
-	idioma = "es";
+	idioma.idioma = "en";
 	
 	arrayCausaMuerte = arrayCausaMuerteIngles;
 }

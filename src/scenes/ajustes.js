@@ -98,7 +98,7 @@ class Ajustes extends Phaser.Scene {
 		this.tablon = this.add.image(width / 2, height / 2, 'tablonPausa').setVisible(false);
 		
 		if(enPc){
-			if(idioma.includes("es")){
+			if(idioma.idioma.includes("es")){
 				var i = 0;
 				for (var key in textoConfiguracionEspañol){
 					this.add.text(width / 2, 50 + i * separacionBotonesY, textoConfiguracionEspañol[key]);
@@ -227,7 +227,7 @@ class Ajustes extends Phaser.Scene {
 		this.tablon.setVisible(true);
 		var texto;
 		var acciones 
-		if(idioma.includes("es")){
+		if(idioma.idioma.includes("es")){
 			texto = "Pulsa la tecla para: ";
 			acciones = textoConfiguracionEspañol;
 		}else{

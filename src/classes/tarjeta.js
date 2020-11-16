@@ -18,6 +18,13 @@ class Tarjeta extends Phaser.GameObjects.Container{
 		imagenes.push(scene.add.text(-10, -100, arrayNombres[pedido.persona]));
 		imagenes.push(scene.add.text(-10, -50, arrayCausaMuerte[pedido.persona]));
 		
+		var tituloObjetos;
+		if(idioma.idioma.includes("es")){
+			tituloObjetos = "Ofrendas:"
+		}else{
+			tituloObjetos = "Offerings:";
+		}
+		imagenes.push(scene.add.text(-147, 39, tituloObjetos));
 		imagenes.push(scene.add.image(-95, -50, "perfil" + (pedido.persona)).setInteractive());
         super(scene, x, y, imagenes);
         
