@@ -21,10 +21,11 @@ function GenerarMundo(that, mapa){
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
 	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 	resto = map.createStaticLayer("Resto", tileset, 0, 0);
-	iluminacion = map.createStaticLayer("Iluminacion", [luzCementerio, luzDesvan, luzImprenta, luzInvernadero, luzJoyeria, luzBodega], 0, 0);
-	iluminacion.setBlendMode('ADD')
-	iluminacion.depth = 50;
-
+	if(that.graficos.iluminacion){
+		iluminacion = map.createStaticLayer("Iluminacion", [luzCementerio, luzDesvan, luzImprenta, luzInvernadero, luzJoyeria, luzBodega], 0, 0);
+		iluminacion.setBlendMode('ADD')
+		iluminacion.depth = 50;
+	}
 	if(mapa == "tutorial"){
 		if(enPc){
 			cartelesPc = map.createStaticLayer("CartelesPC", tileset, 0, 0);

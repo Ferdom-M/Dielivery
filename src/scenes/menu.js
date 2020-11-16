@@ -151,6 +151,12 @@ class Mainmenu extends Phaser.Scene {
         this.buttonCreditos.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonCreditos.setTexture("creditos_pulsado");}});
         this.buttonCreditos.on('pointerout', () => {this.buttonCreditos.setTexture("creditos");});
 		
+		this.buttonAjustes = this.add.sprite(volverPosX, height - volverPosY, 'volver').setInteractive();
+		this.buttonAjustes.on('pointerdown', () => {this.buttonAjustes.setTexture("volver_pulsado");});
+        this.buttonAjustes.on('pointerup', () => PasarEscena(this, "Ajustes"));
+        this.buttonAjustes.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonAjustes.setTexture("volver_pulsado");}});
+        this.buttonAjustes.on('pointerout', () => {this.buttonAjustes.setTexture("volver");});
+		
 		this.buttonIdioma = this.add.sprite(idiomaPosX, idiomaPosY, 'idioma').setInteractive();
 		this.buttonIdioma.on('pointerdown', () => this.CambiarIdioma());
 

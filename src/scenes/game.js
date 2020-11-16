@@ -113,7 +113,13 @@ class Game extends Phaser.Scene {
 		avisoTumba = new Array();
 		//var tarjetasVigentes = [];
 		pedidosVigentes = 0;
+		puntuacionTotal = 0;
 		 
+		this.graficos = JSON.parse(localStorage.getItem('graficos')) || {
+			iluminacion: true,
+			particulas: true
+		};
+		
 		//this.scale.on('resize', () => this.resizeCamera());
 		mapaActual = mapa;
 		GenerarMundo(this, mapa);
@@ -135,8 +141,9 @@ class Game extends Phaser.Scene {
 		}
 		this.jugador = new Jugador({scene: this, x: posInicialX, y: posInicialY, key: 'anim_andar'});
 		
-		GenerarParticulas(this);
-		
+		if(this.graficos.particulas){
+			GenerarParticulas(this);
+		}
 		
 		GenerarCamara(this, this.jugador);
 		//this.resizeCamera();
@@ -203,8 +210,6 @@ class Game extends Phaser.Scene {
 	}
 	shutdown (){
         this.events.off('timedEvent');
-		this.particulasLuz.destroy();
-		this.particulasVela.destroy();
     }
 }
     

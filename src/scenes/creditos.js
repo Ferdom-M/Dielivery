@@ -68,50 +68,23 @@ class creditos extends Phaser.Scene {
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
         this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
 		
-		this.tablon = this.add.image(width / 2, height / 2, 'tablonPausa').setVisible(false);
-		
-		this.botonSalto = this.add.sprite(width / 2, height / 2, 'volver').setInteractive();
-		this.botonSalto.on('pointerdown', () => {this.botonSalto.setTexture("volver_pulsado");});
-        this.botonSalto.on('pointerup', () => this.RecibirTecla('jump'));
-        this.botonSalto.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonSalto.setTexture("volver_pulsado");}});
-        this.botonSalto.on('pointerout', () => {this.botonSalto.setTexture("volver");});
+        var FKey = this.input.keyboard.addKey('F');
+
+        FKey.on('down', function () {
+
+            if (this.scale.isFullscreen) {
+                this.scale.stopFullscreen();
+            }
+            else {
+                this.scale.startFullscreen();
+            }
+
+        }, this);
     }
 
 	resizeCamera(){
 		var ratio = this.sys.game.canvas.height / 720;
 		
 		this.cameras.main.setZoom(ratio);
-	}
-	
-	RecibirTecla(accion){
-		
-		
-			
-		this.tablon.setVisible(true);
-		this.texto = this.add.text(width / 2, height / 2, "Pulsa la tecla para: " + accion);
-		this.input.keyboard.once('keydown', (eventName, event) => {
-			var controlesGuardados = JSON.parse(localStorage.getItem('controlesGuardados')) || {
-				left: Phaser.Input.Keyboard.KeyCodes.A,
-				right: Phaser.Input.Keyboard.KeyCodes.D,
-				up: Phaser.Input.Keyboard.KeyCodes.W,
-				down: Phaser.Input.Keyboard.KeyCodes.S,
-				jump: Phaser.Input.Keyboard.KeyCodes.SPACE,
-				dash: Phaser.Input.Keyboard.KeyCodes.SHIFT,
-				accion: Phaser.Input.Keyboard.KeyCodes.E,
-				inventario: Phaser.Input.Keyboard.KeyCodes.Q,
-				fullscreen: Phaser.Input.Keyboard.KeyCodes.F,
-				pausa: Phaser.Input.Keyboard.KeyCodes.P,
-				//debug
-				propiedades: Phaser.Input.Keyboard.KeyCodes.L,
-				tpMesa: Phaser.Input.Keyboard.KeyCodes.I,
-				tpCosas: Phaser.Input.Keyboard.KeyCodes.O
-			};
-			console.log(controlesGuardados);
-			controlesGuardados[accion] = eventName.keyCode;
-			
-			console.log(controlesGuardados);
-			localStorage.setItem('controlesGuardados', JSON.stringify(controlesGuardados));
-			
-		});
 	}
 }
