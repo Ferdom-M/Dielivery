@@ -154,6 +154,8 @@ class Preload extends Phaser.Scene {
 		this.load.image("luzJoyeria", "assets/Fondos/luz_joyeria.png");
 		this.load.image("fondoBodega", "assets/Fondos/bodega.jpg");
 		this.load.image("luzBodega", "assets/Fondos/luz_bodega.png");
+		this.load.image("fondoPasillo", "assets/Fondos/pasillo.jpg");
+		this.load.image("luzPasillo", "assets/Fondos/luz_pasillo.png");
 		
 		// ANIMACIONES
 		this.load.spritesheet('anim_andar', 'assets/Sprites Personajes/Spritesheet Andar.png', {frameWidth: 32, frameHeight: 64});

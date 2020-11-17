@@ -16,13 +16,15 @@ function GenerarMundo(that, mapa){
 	const luzJoyeria = map.addTilesetImage("luzJoyeria", "luzJoyeria", 32, 32, 0, 0);
 	const fondoBodega = map.addTilesetImage("fondoBodega", "fondoBodega", 32, 32, 0, 0);
 	const luzBodega = map.addTilesetImage("luzBodega", "luzBodega", 32, 32, 0, 0);
+	const fondoPasillo = map.addTilesetImage("fondoPasillo", "fondoPasillo", 32, 32, 0, 0);
+	const luzPasillo = map.addTilesetImage("luzPasillo", "luzPasillo", 32, 32, 0, 0);
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
-	fondo = map.createStaticLayer("Fondo", [tileset, fondoCementerio, fondoDesvan, fondoImprenta, fondoInvernadero, fondoJoyeria, fondoBodega], 0, 0);
+	fondo = map.createStaticLayer("Fondo", [tileset, fondoCementerio, fondoDesvan, fondoImprenta, fondoInvernadero, fondoJoyeria, fondoBodega, fondoPasillo], 0, 0);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
 	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 	resto = map.createStaticLayer("Resto", tileset, 0, 0);
 	if(that.graficos.iluminacion){
-		iluminacion = map.createStaticLayer("Iluminacion", [luzCementerio, luzDesvan, luzImprenta, luzInvernadero, luzJoyeria, luzBodega], 0, 0);
+		iluminacion = map.createStaticLayer("Iluminacion", [luzCementerio, luzDesvan, luzImprenta, luzInvernadero, luzJoyeria, luzBodega, luzPasillo], 0, 0);
 		iluminacion.setBlendMode('ADD')
 		iluminacion.depth = 50;
 	}
