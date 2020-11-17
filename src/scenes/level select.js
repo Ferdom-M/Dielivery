@@ -77,7 +77,7 @@ class LevelSelect extends Phaser.Scene {
 		this.fondo.setDisplaySize(width, height);
 
         this.buttonNivel1 = this.add.sprite(Nivel1PosX, Nivel1PosY, 'mapa1').setInteractive();
-        this.buttonNivel2 = this.add.sprite(Nivel2PosX, Nivel2PosY, 'mapa3_block').setInteractive();
+        this.buttonNivel2 = this.add.sprite(Nivel2PosX, Nivel2PosY, 'mapa2_block').setInteractive();
 		this.buttonNivel3 = this.add.sprite(Nivel3PosX, Nivel3PosY, 'mapa3_block').setInteractive();
         
 		this.buttonTutorial = this.add.sprite(width / 2, height / 4, 'volver').setInteractive();
@@ -96,11 +96,11 @@ class LevelSelect extends Phaser.Scene {
 		var nivel1Jugado = JSON.parse(localStorage.getItem('nivel1Jugado')) || false;
 		var nivel2Jugado = JSON.parse(localStorage.getItem('nivel2Jugado')) || false;
 		if(nivel1Jugado){//hay que cambiar por mapa 2 cuando este hecho
-			this.buttonNivel2.setTexture("mapa3");
-			this.buttonNivel2.on('pointerdown', () => {this.buttonNivel2.setTexture("mapa3_pulsado");});
+			this.buttonNivel2.setTexture("mapa2");
+			this.buttonNivel2.on('pointerdown', () => {this.buttonNivel2.setTexture("mapa2_pulsado");});
 			this.buttonNivel2.on('pointerup', () => PasarEscena(this, "Game", "Nivel2"));
-			this.buttonNivel2.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonNivel2.setTexture("mapa3_pulsado");}});
-			this.buttonNivel2.on('pointerout', () => {this.buttonNivel2.setTexture("mapa3");});
+			this.buttonNivel2.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonNivel2.setTexture("mapa2_pulsado");}});
+			this.buttonNivel2.on('pointerout', () => {this.buttonNivel2.setTexture("mapa2");});
 			//this.buttonNivel2.on('pointerdown', () => PasarEscena(this, "Game", "Nivel2"));
 		}
 		if(nivel2Jugado){

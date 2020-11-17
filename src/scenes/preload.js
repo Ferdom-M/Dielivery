@@ -77,9 +77,9 @@ class Preload extends Phaser.Scene {
 		// BOTONES
 		this.load.image('mapa1', 'assets/Interfaz/Botones/mapa1.png');
 		this.load.image('mapa1_pulsado', 'assets/Interfaz/Botones/mapa1_pulsado.png');
-		//this.load.image('mapa2', 'assets/Interfaz/Botones/mapa2.png');
-        //this.load.image('mapa2_pulsado', 'assets/Interfaz/Botones/mapa2_pulsado.png');
-		//this.load.image('mapa2_block', 'assets/Interfaz/Botones/mapa2_block.png');
+		this.load.image('mapa2', 'assets/Interfaz/Botones/mapa2.png');
+        this.load.image('mapa2_pulsado', 'assets/Interfaz/Botones/mapa2_pulsado.png');
+		this.load.image('mapa2_block', 'assets/Interfaz/Botones/mapa2_block.png');
 		this.load.image('mapa3', 'assets/Interfaz/Botones/mapa3.png');
         this.load.image('mapa3_pulsado', 'assets/Interfaz/Botones/mapa3_pulsado.png');
 		this.load.image('mapa3_block', 'assets/Interfaz/Botones/mapa3_block.png');
