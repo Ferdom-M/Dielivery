@@ -7,10 +7,18 @@ class Preload extends Phaser.Scene {
 		this.load.off('progress');
 		this.load.off('complete');
 	}
-    preload() {
+    preload() {	
 		// BARRA DE CARGA
 		var width = this.cameras.main.width;
 		var height = this.cameras.main.height;
+		
+		this.anims.create({
+			key: 'carga_anim',
+			frames: this.anims.generateFrameNames('carga', {start: 0, end: 11}),
+			frameRate: 15,
+			repeat: -1
+		});
+		this.animacionCarga = this.add.sprite(width / 2, height / 3, 'carga').play('carga_anim');
 		
 		var progressBar = this.add.graphics(width / 2, height / 2);
 		var progressBox = this.add.graphics(width / 2, height / 2);
