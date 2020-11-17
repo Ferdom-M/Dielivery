@@ -82,6 +82,10 @@ class Preload extends Phaser.Scene {
 		this.load.image("baseJoystick", "assets/Interfaz/Botones/joystick_base.png");
 		this.load.image("joystick", "assets/Interfaz/Botones/joystick.png");
 		this.load.image("botonAccion", "assets/Interfaz/Botones/boton_accion.png");
+		this.load.image("boton_pausa", "assets/Interfaz/Botones/pausa.png");
+		this.load.image("boton_pausa_pulsado", "assets/Interfaz/Botones/pausa_pulsado.png");
+		this.load.image("ajustes", "assets/Interfaz/Botones/ajustes.png");
+		this.load.image("ajustes_pulsado", "assets/Interfaz/Botones/ajustes_pulsado.png");
 		
 		//ICONOS DE OBJETOS PARA INVENTARIO
 		this.load.image("Anillo", "assets/Sprites Objetos/Icono Anillo.png");
@@ -164,14 +168,14 @@ class Preload extends Phaser.Scene {
 			this.load.image("perfil" + i, "assets/Perfiles/perfil" + i + ".jpg");
 		}
 		
-		if(this.sys.game.device.os.desktop){
+		if(!this.sys.game.device.os.desktop){
 			enPc = true;
 		}else{
 			enPc = false;
 		}
 		
 		// PLUGINS
-		if(!enPc){
+		if(enPc){
 			this.load.plugin('rexvirtualjoystickplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js', true);
 		}
 		this.load.plugin('rexinputtextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexinputtextplugin.min.js', true);
