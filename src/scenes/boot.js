@@ -9,6 +9,11 @@ class Boot extends Phaser.Scene {
     }
 	
     create() {
+		if(this.sys.game.device.os.desktop){
+			enPc = true;
+		}else{
+			enPc = false;
+		}
 		this.scene.start('Preload');
     }
 
