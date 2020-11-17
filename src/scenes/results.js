@@ -3,7 +3,7 @@
 
 var inputNombreX = (width/4) * 3;
 var inputNombreY = height/4;
-var nombreJugador = 'Introduce tu nombre';
+var nombreJugador = "Introduce tu nombre";
 
 
 class Results extends Phaser.Scene {
@@ -117,13 +117,17 @@ class Results extends Phaser.Scene {
 		
 		//Creamos el input text del chaval este tan majo y ponemos que cuando el texto cambie se guarde en la variable nombreJugador
         var inputText = this.add.rexInputText(inputNombreX, inputNombreY, 300, 40, {
-			id: 'inputText',
 			//placeholder: 'Introduce tu nombre',
 			placeholder: nombreJugador.toString(),
 			backgroundColor: 'blue',
         });
         inputText.on('textchange', function(inputText){
-			nombreJugador = inputText.text;
+			if(inputText.text.length > 20){
+				inputText.text = nombreJugador;
+			}else{
+				nombreJugador = inputText.text;
+			}
+			
 		}, this);
 		
 		this.fondo.on('pointerdown', () => { inputText.setBlur();});
