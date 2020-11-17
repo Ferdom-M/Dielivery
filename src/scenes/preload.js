@@ -7,10 +7,18 @@ class Preload extends Phaser.Scene {
 		this.load.off('progress');
 		this.load.off('complete');
 	}
-    preload() {
+    preload() {	
 		// BARRA DE CARGA
 		var width = this.cameras.main.width;
 		var height = this.cameras.main.height;
+		
+		this.anims.create({
+			key: 'carga_anim',
+			frames: this.anims.generateFrameNames('carga', {start: 0, end: 11}),
+			frameRate: 15,
+			repeat: -1
+		});
+		this.animacionCarga = this.add.sprite(width / 2, height / 3, 'carga').play('carga_anim');
 		
 		var progressBar = this.add.graphics(width / 2, height / 2);
 		var progressBox = this.add.graphics(width / 2, height / 2);
@@ -82,6 +90,10 @@ class Preload extends Phaser.Scene {
 		this.load.image("baseJoystick", "assets/Interfaz/Botones/joystick_base.png");
 		this.load.image("joystick", "assets/Interfaz/Botones/joystick.png");
 		this.load.image("botonAccion", "assets/Interfaz/Botones/boton_accion.png");
+		this.load.image("boton_pausa", "assets/Interfaz/Botones/pausa.png");
+		this.load.image("boton_pausa_pulsado", "assets/Interfaz/Botones/pausa_pulsado.png");
+		this.load.image("ajustes", "assets/Interfaz/Botones/ajustes.png");
+		this.load.image("ajustes_pulsado", "assets/Interfaz/Botones/ajustes_pulsado.png");
 		
 		//ICONOS DE OBJETOS PARA INVENTARIO
 		this.load.image("Anillo", "assets/Sprites Objetos/Icono Anillo.png");

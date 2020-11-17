@@ -618,6 +618,7 @@ function InicializarCursores(that, jugador){
 		that.base = that.add.circle(0, 0, 200);
 		that.thumb = that.add.image(0, 0, 'joystick');
 		that.botonAccion = that.add.image(width - 75, height - 204, 'botonAccion').setInteractive().setScrollFactor(0,0);
+		that.botonPausa = that.add.image(75, 100, 'boton_pausa').setInteractive().setScrollFactor(0,0);
 		
 		that.joyStick = that.plugins.get('rexvirtualjoystickplugin').add(that, {
 			//x: (that.sys.game.canvas.width - ((that.sys.game.canvas.width/that.sys.game.canvas.height) * 540)) / 2 + 150,
@@ -639,6 +640,7 @@ function InicializarCursores(that, jugador){
 		that.zonaMoverTarjetas.depth = 99;
 		that.zonaTarjetas.depth = 99;
 		that.botonAccion.depth = 100;
+		that.botonPausa.depth = 100;
 		that.base.depth = 100;
 		that.thumb.depth = 100;
 		
@@ -746,6 +748,23 @@ function InicializarCursores(that, jugador){
 		that.botonAccion.on('pointerup', function () {	
 			jugador.accion = false;
 		}, that);
+		
+		that.botonPausa.on('pointerdown', () => {that.botonPausa.setTexture("boton_pausa_pulsado");});
+        that.botonPausa.on('pointerup', () => {
+			that.botonPausa.setTexture("boton_pausa");
+			jugador.PararSonidos();
+			jugador.ResetearControl();
+			for(var i = 0; i < arrayTarjetas.length; i++){
+				arrayTarjetas[i].setVisible(false);
+			}
+			
+			that.scene.pause();
+            that.scene.launch('Pausa');
+		});
+        that.botonPausa.on('pointerover', () => {if(that.input.activePointer.isDown){that.botonPausa.setTexture("boton_pausa_pulsado");}});
+        that.botonPausa.on('pointerout', () => {that.botonPausa.setTexture("boton_pausa");});
+		
+		
 	}
 	
 }

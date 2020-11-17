@@ -147,7 +147,7 @@ class Game extends Phaser.Scene {
 		this.jugador = new Jugador({scene: this, x: posInicialX, y: posInicialY, key: 'anim_andar'});
 		
 		if(this.graficos.particulas){
-			GenerarParticulas(this);
+			GenerarParticulas(this, mapa);
 		}
 		
 		GenerarCamara(this, this.jugador);
