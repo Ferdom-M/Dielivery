@@ -76,20 +76,39 @@ class LevelSelect extends Phaser.Scene {
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
 
-        this.buttonNivel1 = this.add.sprite(Nivel1PosX, Nivel1PosY, '1').setScale(0.5).setInteractive();
-        this.buttonNivel2 = this.add.sprite(Nivel2PosX, Nivel2PosY, '2').setScale(0.5).setInteractive();
-		this.buttonNivel3 = this.add.sprite(Nivel3PosX, Nivel3PosY, '3').setScale(0.5).setInteractive();
+        this.buttonNivel1 = this.add.sprite(Nivel1PosX, Nivel1PosY, 'mapa1').setInteractive();
+        this.buttonNivel2 = this.add.sprite(Nivel2PosX, Nivel2PosY, 'mapa3_block').setInteractive();
+		this.buttonNivel3 = this.add.sprite(Nivel3PosX, Nivel3PosY, 'mapa3_block').setInteractive();
         
-		this.buttonNivel1.on('pointerdown', () => PasarEscena(this, "Game", "Nivel1"));
+		this.buttonTutorial = this.add.sprite(width / 2, height / 4, 'volver').setInteractive();
+        this.buttonTutorial.on('pointerdown', () => {this.buttonTutorial.setTexture("volver_pulsado");});
+        this.buttonTutorial.on('pointerup', () => PasarEscena(this, "Game", "tutorial"));
+        this.buttonTutorial.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonTutorial.setTexture("volver_pulsado");}});
+        this.buttonTutorial.on('pointerout', () => {this.buttonTutorial.setTexture("volver");});
+		
+		//this.buttonNivel1.on('pointerdown', () => PasarEscena(this, "Game", "Nivel1"));
+		this.buttonNivel1.on('pointerdown', () => {this.buttonNivel1.setTexture("mapa1_pulsado");});
+        this.buttonNivel1.on('pointerup', () => PasarEscena(this, "Game", "Nivel1"));
+        this.buttonNivel1.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonNivel1.setTexture("mapa1_pulsado");}});
+		this.buttonNivel1.on('pointerout', () => {this.buttonNivel1.setTexture("mapa1");});
 		
 		// La base para bloquear niveles si no se han jugado, se puede tambien poner el boton de nivel distinto
 		var nivel1Jugado = JSON.parse(localStorage.getItem('nivel1Jugado')) || false;
 		var nivel2Jugado = JSON.parse(localStorage.getItem('nivel2Jugado')) || false;
-		if(nivel1Jugado){
-			this.buttonNivel2.on('pointerdown', () => PasarEscena(this, "Game", "Nivel2"));
+		if(nivel1Jugado){//hay que cambiar por mapa 2 cuando este hecho
+			this.buttonNivel2.setTexture("mapa3");
+			this.buttonNivel2.on('pointerdown', () => {this.buttonNivel2.setTexture("mapa3_pulsado");});
+			this.buttonNivel2.on('pointerup', () => PasarEscena(this, "Game", "Nivel2"));
+			this.buttonNivel2.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonNivel2.setTexture("mapa3_pulsado");}});
+			this.buttonNivel2.on('pointerout', () => {this.buttonNivel2.setTexture("mapa3");});
+			//this.buttonNivel2.on('pointerdown', () => PasarEscena(this, "Game", "Nivel2"));
 		}
 		if(nivel2Jugado){
-			this.buttonNivel3.on('pointerdown', () => PasarEscena(this, "Game", "Nivel3"));
+			this.buttonNivel3.setTexture("mapa3");
+			this.buttonNivel3.on('pointerdown', () => {this.buttonNivel3.setTexture("mapa3_pulsado");});
+			this.buttonNivel3.on('pointerup', () => PasarEscena(this, "Game", "Nivel3"));
+			this.buttonNivel3.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonNivel3.setTexture("mapa3_pulsado");}});
+			this.buttonNivel3.on('pointerout', () => {this.buttonNivel3.setTexture("mapa3");});
 		}
 		
 		
@@ -98,19 +117,7 @@ class LevelSelect extends Phaser.Scene {
         this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
         this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
-		
-		var FKey = this.input.keyboard.addKey('F');
 
-        FKey.on('down', function () {
-
-            if (this.scale.isFullscreen) {
-                this.scale.stopFullscreen();
-            }
-            else {
-                this.scale.startFullscreen();
-            }
-
-        }, this);
     }
 
 	

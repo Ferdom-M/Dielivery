@@ -50,6 +50,9 @@ class Idle extends State{
 			jugador.stateMachine.transition(delta, "mirandoTarjetas");
 			return;
 		}
+		if(mapaActual == "tutorial" && puntuacionTotal != 0 && !jugador.tutorialFinalizado){
+			TerminarTutorial(scene, jugador);
+		}
 		
 
 		
