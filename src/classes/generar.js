@@ -51,7 +51,7 @@ function GenerarParticulas(that, mapa){
 	
 	if(mapa != "tutorial"){
 		var vela0 = fondo.findByIndex(862 + tilesNormales + tilesCementerio * 2 + tilesDesvan  + tilesLuzDesvan);
-		that.particulasVela = that.add.particles('llamita')
+		that.particulasVela = that.add.particles('luz2')
 		
 		that.particulasVela.createEmitter({
 			speed: 5,

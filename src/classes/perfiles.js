@@ -25,6 +25,8 @@ arrayNombres.push("Bolita");
 arrayNombres.push("Nube");
 arrayNombres.push("Destinatario");
 arrayNombres.push("Dori");
+arrayNombres.push("Hulio");
+arrayNombres.push("Ferdom-M");
 
 var arrayCausaMuerte = new Array();
 var arrayCausaMuerteEspanol = new Array();
@@ -56,6 +58,8 @@ arrayCausaMuerteEspanol.push("No ha muerto no os preocupéis, su dueño solo que
 arrayCausaMuerteEspanol.push("Bolita le dió envidia a su dueño, así que también está aquí (tampoco está muerta, tranquilos)");
 arrayCausaMuerteEspanol.push("Se murió en un tutorial en el que era imposible morir");
 arrayCausaMuerteEspanol.push("Se tiró al agua con demasiada fuerza (pero sigue viva)");
+arrayCausaMuerteEspanol.push("Se tiró al agua con demasiada fuerza (pero sigue viva)");
+arrayCausaMuerteEspanol.push("Uncaught SyntaxError: missing ) after argument list");
 
 arrayCausaMuerteIngles.push("He fell down the stairs of the university cafe. Ouchie ouch");
 arrayCausaMuerteIngles.push("He suffered a stroke after playing Isaac for 453 hours in a row");
@@ -83,6 +87,8 @@ arrayCausaMuerteIngles.push("She didn't die don't worry, his owner just wanted t
 arrayCausaMuerteIngles.push("Her owner got jealous from Bolita, so she's also here (not dead tho)");
 arrayCausaMuerteIngles.push("They died in a tutorial where it's impossible to die");
 arrayCausaMuerteIngles.push("She jumped into the water too hard (still alive) ha got the funny reference??");
+arrayCausaMuerteIngles.push("She jumped into the water too hard (still alive) ha got the funny reference??");
+arrayCausaMuerteIngles.push("Uncaught SyntaxError: missing ) after argument list");
 
 if(idioma.idioma.includes("es")){
 	arrayCausaMuerte = arrayCausaMuerteEspanol;

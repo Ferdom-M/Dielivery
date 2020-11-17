@@ -12,8 +12,7 @@ class Objeto {
 	
 	Clone(objeto){
 		this.tipo = objeto.tipo; 
-		this.puntuacion = objeto.puntuacion; 
-		this.sprite = objeto.sprite; 
+		this.puntuacion = objeto.puntuacion;
 	}
 }
 
@@ -29,33 +28,33 @@ class Pedido{
 }
 // Flores
 const tulipan = new Objeto("Tulipan", 50);
-const rosa = new Objeto("Rosa", 50);
-const violeta = new Objeto("Violeta", 50);
-const margarita = new Objeto("Margarita", 50);
+const rosa = new Objeto("Rosa", 110);
+const violeta = new Objeto("Violeta", 70);
+const margarita = new Objeto("Margarita", 90);
 
 // Bebidas
-const orujo = new Objeto("Botella Orujo", 50);
-const whisky = new Objeto("Botella Whisky", 50);
-const ron = new Objeto("Botella Ron", 50);
-const vino = new Objeto("Botella Vino", 50);
+const orujo = new Objeto("Botella Orujo", 100);
+const whisky = new Objeto("Botella Whisky", 130);
+const ron = new Objeto("Botella Ron", 170);
+const vino = new Objeto("Botella Vino", 200);
 
 // Cosas personales
-const bandera1 = new Objeto("Bandera 1", 50);
-const bandera2 = new Objeto("Bandera 2", 50);
-const pelucheViejo = new Objeto("Osito Viejo", 50);
-const pelucheNuevo = new Objeto("Osito Nuevo", 50);
+const bandera1 = new Objeto("Bandera 1", 120);
+const bandera2 = new Objeto("Bandera 2", 125);
+const pelucheViejo = new Objeto("Osito Viejo", 80);
+const pelucheNuevo = new Objeto("Osito Nuevo", 85);
 
 // Cartas 
-const cartaSello = new Objeto("Carta Sellada", 50);
-const cartaAbierta = new Objeto("Carta Abierta", 50);
+const cartaSello = new Objeto("Carta Sellada", 80);
+const cartaAbierta = new Objeto("Carta Abierta", 70);
 const fotoFamiliar = new Objeto("Foto Familiar", 50);
-const fotoPersonal = new Objeto("Foto Personal", 50);
+const fotoPersonal = new Objeto("Foto Personal", 90);
 
 // Joyas
-const anillo = new Objeto("Anillo", 50);
-const pendiente = new Objeto("Pendiente", 50);
-const collarPerlas = new Objeto("Collar Perlas", 50);
-const collarOro = new Objeto("Collar Oro", 50);
+const anillo = new Objeto("Anillo", 165);
+const pendiente = new Objeto("Pendiente", 150);
+const collarPerlas = new Objeto("Collar Perlas", 170);
+const collarOro = new Objeto("Collar Oro", 195);
 
 // Los objetos se meten en un array para sacarlos directamente con el numero generado
 var arrayObjetos = new Array();

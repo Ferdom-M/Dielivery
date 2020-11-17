@@ -68,9 +68,9 @@ class MirandoTarjetas extends State{
 		}
 		
 		if(enPc){
-			if(jugador.dirX != 0 && arrayTarjetas[0].x + jugador.dirX * 10 < width / 2 && arrayTarjetas[arrayTarjetas.length - 1].x + jugador.dirX * 10 > width / 2){
+			if(jugador.dirX != 0 && arrayTarjetas[0].x - jugador.dirX * 10 < width / 2 && arrayTarjetas[arrayTarjetas.length - 1].x - jugador.dirX * 10 > width / 2){
 				for(var i = 0; i < arrayTarjetas.length; i++){
-					arrayTarjetas[i].x += jugador.dirX * 10;
+					arrayTarjetas[i].x -= jugador.dirX * 10;
 				}
 			}
 		}

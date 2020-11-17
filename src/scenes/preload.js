@@ -168,8 +168,9 @@ class Preload extends Phaser.Scene {
 		this.load.spritesheet('anim_Pared', 'assets/Sprites Personajes/Spritesheet Pared.png', {frameWidth: 32, frameHeight: 64});
 		
 		// PARTICULAS
-		this.load.image("llamita", "assets/llamita.png");
-		this.load.image("luz1", "assets/luz1.png");
+		this.load.image("llamita", "assets/Particulas/llamita.png");
+		this.load.image("luz1", "assets/Particulas/luz1.png");
+		this.load.image("luz2", "assets/Particulas/luz2.png");
 		
 		// PERFILES
 		for (var i = 0;  i < arrayNombres.length; i++){

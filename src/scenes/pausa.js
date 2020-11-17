@@ -20,6 +20,30 @@ class Pausa extends Phaser.Scene {
         this.menu.on('pointerover', () => {if(this.input.activePointer.isDown){this.menu.setTexture("menu_pulsado");}});
         this.menu.on('pointerout', () => {this.menu.setTexture("menu");});
 		
+		var controlesGuardados = JSON.parse(localStorage.getItem('controlesGuardados')) || {
+				left: Phaser.Input.Keyboard.KeyCodes.A,
+				right: Phaser.Input.Keyboard.KeyCodes.D,
+				up: Phaser.Input.Keyboard.KeyCodes.W,
+				down: Phaser.Input.Keyboard.KeyCodes.S,
+				jump: Phaser.Input.Keyboard.KeyCodes.SPACE,
+				dash: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+				accion: Phaser.Input.Keyboard.KeyCodes.E,
+				inventario: Phaser.Input.Keyboard.KeyCodes.Q,
+				fullscreen: Phaser.Input.Keyboard.KeyCodes.F,
+				pausa: Phaser.Input.Keyboard.KeyCodes.P,
+				//debug
+				propiedades: Phaser.Input.Keyboard.KeyCodes.L,
+				tpMesa: Phaser.Input.Keyboard.KeyCodes.I,
+				tpCosas: Phaser.Input.Keyboard.KeyCodes.O
+			};
+			
+		this.cursors = this.input.keyboard.addKeys({
+			pausa: controlesGuardados.pausa
+		}); 
+		
+		this.cursors.pausa.on('down', function() {
+			this.ReanudarJuego()
+		}, this);
     }
 	
 	ReanudarJuego(){
