@@ -172,6 +172,7 @@ class Mainmenu extends Phaser.Scene {
 		this.buttonIdioma = this.add.sprite(idiomaPosX, idiomaPosY, 'idioma').setInteractive();
 		this.buttonIdioma.on('pointerdown', () => this.CambiarIdioma());
 
+		
         var FKey = this.input.keyboard.addKey('F');
         
         FKey.on('down', function () {
@@ -240,8 +241,12 @@ class Mainmenu extends Phaser.Scene {
 function PasarEscena(that, escena, nivel){
 	//this.scale.off('resize');
 	that.cameras.main.fadeOut(valorFade);
-	if(nivel == "Ranking"){
+	/*if( nivel== "Ranking"){
 		seHaJugado = false;
+	}*/
+	if(nivel == "Nivel1" || nivel == "Nivel2" || nivel == "Nivel3" || nivel == "tutorial"){
+		that.sound.stopAll();
+		that.sound.play("s_game");
 	}
     that.cameras.main.on('camerafadeoutcomplete', () => {that.scene.start(escena, nivel);});
 	

@@ -201,7 +201,7 @@ class Game extends Phaser.Scene {
 			}
 		
 			generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
-			this.initialTime = 480;
+			this.initialTime = 5;
 
 			tiempo = this.add.text(width / 2 - 16, height - 54, formatTime(this.initialTime)).setScrollFactor(0,0).setVisible(true);
 
@@ -250,6 +250,8 @@ function onEvent ()
 		seHaJugado = true;
 		var puntuacionFinal = puntuacionTotal;
 		this.jugador.PararSonidos();
+		this.sound.stopAll();
+		this.sound.play("s_menu");
 		this.cameras.main.fadeOut(valorFade);
 		
 		this.cameras.main.on('camerafadeoutcomplete', () => {this.scene.start("Results", puntuacionFinal);});
@@ -296,10 +298,13 @@ function TerminarTutorial(that, jugador){
 	BorrarInventario(that, jugador);
 	jugador.PararSonidos();
 	jugador.ResetearControl();
+	
 	jugador.tutorialFinalizado = true;
 	for(var i = 0; i < arrayTarjetas.length; i++){
 		arrayTarjetas[i].setVisible(false);
 	}
+	that.sound.stopAll();
+	that.sound.play("s_menu");
 	that.input.keyboard.resetKeys()
 	that.time.addEvent({ delay: 1000, callback: PasarEscenaFinTutorial, callbackScope: that, loop: false })
 	

@@ -133,6 +133,8 @@ class Preload extends Phaser.Scene {
 		this.load.audio('s_dash', 'assets/Sonidos/s_dash.wav');
 		this.load.audio('s_escalera', 'assets/Sonidos/s_escalera.wav');
 		this.load.audio('s_salto', 'assets/Sonidos/s_salto.wav');
+		this.load.audio('s_game', 'assets/Sonidos/s_game.mp3');
+		this.load.audio('s_menu', 'assets/Sonidos/s_menu.mp3');
 		
 		// MAPAS
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
@@ -193,6 +195,7 @@ class Preload extends Phaser.Scene {
     }
 	
     create() {
+		this.sound.play("s_menu");
 		this.scene.start('Mainmenu');
     }
 
