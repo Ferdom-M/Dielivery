@@ -122,7 +122,7 @@ class Results extends Phaser.Scene {
 			backgroundColor: 'blue',
         });
         inputText.on('textchange', function(inputText){
-			if(inputText.text.length > 20){
+			if(inputText.text.length > 10){
 				inputText.text = nombreJugador;
 			}else{
 				nombreJugador = inputText.text;
