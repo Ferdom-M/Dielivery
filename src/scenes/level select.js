@@ -61,12 +61,12 @@ class LevelSelect extends Phaser.Scene {
 
     create() {
 		this.cameras.main.fadeIn(valorFade);
-		var Nivel1PosX = width / 4;
-		var Nivel1PosY = height / 2;
-		var Nivel2PosX = width / 4 * 2;
-		var Nivel2PosY = height / 2;
-		var Nivel3PosX = width / 4 * 3;
-		var Nivel3PosY = height / 2;
+		var Nivel1PosX = width / 4.5;
+		var Nivel1PosY = height / 1.5;
+		var Nivel2PosX = width / 4.5 * 2.25;
+		var Nivel2PosY = height / 1.5;
+		var Nivel3PosX = width / 4.5 * 3.5;
+		var Nivel3PosY = height / 1.5;
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
@@ -79,12 +79,21 @@ class LevelSelect extends Phaser.Scene {
         this.buttonNivel1 = this.add.sprite(Nivel1PosX, Nivel1PosY, 'mapa1').setInteractive();
         this.buttonNivel2 = this.add.sprite(Nivel2PosX, Nivel2PosY, 'mapa2_block').setInteractive();
 		this.buttonNivel3 = this.add.sprite(Nivel3PosX, Nivel3PosY, 'mapa3_block').setInteractive();
-        
-		this.buttonTutorial = this.add.sprite(width / 2, height / 4, 'volver').setInteractive();
-        this.buttonTutorial.on('pointerdown', () => {this.buttonTutorial.setTexture("volver_pulsado");});
-        this.buttonTutorial.on('pointerup', () => PasarEscena(this, "Game", "tutorial"));
-        this.buttonTutorial.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonTutorial.setTexture("volver_pulsado");}});
-        this.buttonTutorial.on('pointerout', () => {this.buttonTutorial.setTexture("volver");});
+		
+		if(enPc){
+			this.buttonTutorial = this.add.sprite(width / 2, height / 3, 'tutorial').setInteractive();
+			this.buttonTutorial.on('pointerdown', () => {this.buttonTutorial.setTexture("tutorial_pulsado");});
+			this.buttonTutorial.on('pointerup', () => PasarEscena(this, "Game", "tutorial"));
+			this.buttonTutorial.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonTutorial.setTexture("tutorial_pulsado");}});
+			this.buttonTutorial.on('pointerout', () => {this.buttonTutorial.setTexture("tutorial");});
+		}else{
+			this.buttonTutorial = this.add.sprite(width / 2, height / 4, 'tutorial_movil').setInteractive();
+			this.buttonTutorial.on('pointerdown', () => {this.buttonTutorial.setTexture("tutorial_movil_pulsado");});
+			this.buttonTutorial.on('pointerup', () => PasarEscena(this, "Game", "tutorial"));
+			this.buttonTutorial.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonTutorial.setTexture("tutorial_movil_pulsado");}});
+			this.buttonTutorial.on('pointerout', () => {this.buttonTutorial.setTexture("tutorial_movil");});
+		}
+		
 		
 		//this.buttonNivel1.on('pointerdown', () => PasarEscena(this, "Game", "Nivel1"));
 		this.buttonNivel1.on('pointerdown', () => {this.buttonNivel1.setTexture("mapa1_pulsado");});
