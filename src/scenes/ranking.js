@@ -57,11 +57,18 @@ class Ranking extends Phaser.Scene {
 
     create() {
 		this.cameras.main.fadeIn(valorFade);
-		var scoreboardX = width / 4;
-		var scoreboardY = height / 4;
+		var scoreboardX = width / 3.5;
+		var scoreboardY = height / 3;
 		
 		this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
+		if(idioma.idioma.includes("es")){
+			this.tablon = this.add.image(width / 2, height / 2, 'tablon_puntuaciones_es');
+		}
+		else{
+			this.tablon = this.add.image(width / 2, height / 2, 'tablon_puntuaciones_en');
+		}
+		
 		
 		//Pillamos el scoreboard guardado y lo parseamos para que tenga los vamores bien y no en string, si no encuentra ningun scoreboard porque 
 		//nunca se ha jugado, se crea de 0
@@ -85,33 +92,55 @@ class Ranking extends Phaser.Scene {
 				scoreboard.scores.sort(function(a, b){
 					return a.puntuacion-b.puntuacion;
 				});
-				if(scoreboard.scores.length > 10){
+				if(scoreboard.scores.length > 20){
 					scoreboard.scores.shift();
 				}
 				scoreboard.scores = scoreboard.scores.reverse();
 			}
 			for(let i = 0; i < scoreboard.scores.length; i++){
 				var rango = i+1;
-				this.add.text(scoreboardX, scoreboardY + (rango*20), rango + 'º: ' + scoreboard.scores[i].nombre + '  ' + scoreboard.scores[i].puntuacion, 
-					{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+				if(rango <= 10){
+					this.add.text(scoreboardX, scoreboardY + (rango*20), rango + 'º: ' + scoreboard.scores[i].nombre + '  ' + scoreboard.scores[i].puntuacion, 
+						{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+				}else{
+					this.add.text(scoreboardX + 300, scoreboardY + ((rango-10)*20), rango + 'º: ' + scoreboard.scores[i].nombre + '  ' + scoreboard.scores[i].puntuacion, 
+						{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+				}
+				
 			}
 
 			localStorage.setItem('scoreboardSave', JSON.stringify(scoreboard));
 			seHaJugado = false;
 		}else{
 			if(scoreboardGuardado == false){
-				this.add.text(scoreboardX, scoreboardY + 20, "¡No hay empleado del mes!", 
+				if(idioma.idioma.includes("es")){
+					this.add.text(scoreboardX, scoreboardY + 20, "¡No hay empleado del mes!", 
 						{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+				}else{
+					this.add.text(scoreboardX, scoreboardY + 20, "There´s no employee of the month!", 
+						{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+				}
+				
 			}else{
 				for(let i = 0; i < scoreboardGuardado.scores.length; i++){
 					var rango = i+1;
-					this.add.text(scoreboardX, scoreboardY + (rango*20), rango + 'º: ' + scoreboardGuardado.scores[i].nombre + '  ' + scoreboardGuardado.scores[i].puntuacion, 
-						{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+					if(rango <= 10){
+						this.add.text(scoreboardX, scoreboardY + (rango*27), rango + 'º: ' + scoreboardGuardado.scores[i].nombre + '  ' + scoreboardGuardado.scores[i].puntuacion, 
+							{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+					}else{
+						this.add.text(scoreboardX + 300, scoreboardY + ((rango-10)*27), rango + 'º: ' + scoreboardGuardado.scores[i].nombre + '  ' + scoreboardGuardado.scores[i].puntuacion, 
+							{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+					}
 				}
 			}
 		}
 
-		this.add.text(scoreboardX, scoreboardY, "Empleados del mes", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+		/*if(idioma.idioma.includes("es")){
+			this.add.text(scoreboardX, scoreboardY, "Empleados del mes", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+		}else{
+			this.add.text(scoreboardX, scoreboardY, "Empleados del mes", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+		}*/
+		
 		
 		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
