@@ -67,6 +67,13 @@ class Results extends Phaser.Scene {
     }
 
     create(puntuacion) {
+		
+		if(idioma.idioma.includes("es")){
+			nombreJugador = "Introduce tu nombre";
+		}else{
+			nombreJugador = "Enter your name";
+		}
+
 		var configTexto = {
 				fontFamily: 'Sylfaen',
 				fontSize: '22px',
@@ -122,11 +129,7 @@ class Results extends Phaser.Scene {
 		// }  
 	};
 
-		if(idioma.idioma.includes("es")){
-			nombreJugador = "Introduce tu nombre";
-		}else{
-			nombreJugador = "Enter your name";
-		}
+		
 		
 		
 		this.cameras.main.fadeIn(valorFade);
