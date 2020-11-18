@@ -57,7 +57,8 @@ class Pausa extends Phaser.Scene {
 	
 	VolverMenu(){
 		this.cameras.main.fadeOut(valorFade);
-	
+		this.sound.stopAll();
+		this.sound.play("s_menu");
 		this.cameras.main.on('camerafadeoutcomplete', () => {this.scene.stop("Game"); this.scene.start("Mainmenu");});
 		
 	}

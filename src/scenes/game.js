@@ -303,8 +303,6 @@ function TerminarTutorial(that, jugador, pedidoCorrecto){
 	for(var i = 0; i < arrayTarjetas.length; i++){
 		arrayTarjetas[i].setVisible(false);
 	}
-	that.sound.stopAll();
-	that.sound.play("s_menu");
 	that.input.keyboard.resetKeys()
 	that.time.addEvent({ delay: 1000, callback: PasarEscenaFinTutorial, args: [pedidoCorrecto], callbackScope: that, loop: false })
 	

@@ -13,13 +13,13 @@ class FinTutorial extends Phaser.Scene {
 			if(idioma.idioma.includes("es")){
 				texto = "¡Fantástico! ¡Ahora tienes todo lo que necesitas para conseguir ser el empleado del mes! ¡Pásatelo bien en las instalaciones de Dielivery!";
 			}else{
-				texto = "";
+				texto = "Awesome! Now you got all you need to become the employee of the month! Have fun in Dielivery's facilities!";
 			}
 		}else{
 			if(idioma.idioma.includes("es")){
-				texto = "Bueno, no has enviado el pedido al sitio correcto, pero al menos esperamos que a la hora de la verdad estés más atento. ¡Pásatelo bien en las instalaciones de Dielivery!";
+				texto = "Bueno, no has completado el pedido correctamente, pero seguro que se te da mejor la próxima vez. ¡Pásatelo bien en las instalaciones de Dielivery!";
 			}else{
-				texto = "";
+				texto = "Well, you didn't make the order correctly, but you will make it better next time for sure! Have fun in Dielivery's facilities!";
 			}
 		}
 		var config = {
@@ -27,7 +27,7 @@ class FinTutorial extends Phaser.Scene {
 			fontSize: '18px',
 			color: '#fff',
 			stroke: '#000000',
-			strokeThickness: 2,
+			strokeThickness: 0.5,
 			align: 'left',  // 'left'|'center'|'right'|'justify'
 			maxLines: 0,
 			lineSpacing: 0,
@@ -62,7 +62,8 @@ class FinTutorial extends Phaser.Scene {
 	
 	VolverMenu(){
 		this.cameras.main.fadeOut(valorFade);
-	
+		this.sound.stopAll();
+		this.sound.play("s_menu");
 		this.cameras.main.on('camerafadeoutcomplete', () => {this.scene.stop("Game"); this.scene.start("Mainmenu");});
 		
 	}
