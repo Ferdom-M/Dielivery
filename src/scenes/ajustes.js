@@ -101,13 +101,13 @@ class Ajustes extends Phaser.Scene {
 			if(idioma.idioma.includes("es")){
 				var i = 0;
 				for (var key in textoConfiguracionEspañol){
-					this.add.text(width / 2, 50 + i * separacionBotonesY, textoConfiguracionEspañol[key]);
+					this.add.text(width / 2, 50 + i * separacionBotonesY, textoConfiguracionEspañol[key], configTextoMesa);
 					i++;
 				}
 			}else{
 				var i = 0;
 				for (var key in textoConfiguracionIngles){
-					this.add.text(width / 2, 50 + i * separacionBotonesY, textoConfiguracionIngles[key]);
+					this.add.text(width / 2, 50 + i * separacionBotonesY, textoConfiguracionIngles[key], configTextoMesa);
 					i++;
 				}
 			}
@@ -238,7 +238,7 @@ class Ajustes extends Phaser.Scene {
 			acciones = textoConfiguracionIngles;
 		}
 		
-		this.texto = this.add.text(width / 2, height / 2, texto + acciones[accion]);
+		this.texto = this.add.text(width / 2, height / 2, texto + acciones[accion], configTextoMesa);
 		
 		this.texto.depth = 100;
 		this.tablon.depth = 100;

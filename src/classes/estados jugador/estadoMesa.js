@@ -7,6 +7,33 @@ var tablon;
 
 var seleccionado; 
 
+var configTextoMesa = {
+	fontFamily: 'Sylfaen',
+	fontSize: '16px',
+	color: '#fff',
+	stroke: '#000000',
+	strokeThickness: 2,
+	align: 'justify',  // 'left'|'center'|'right'|'justify'
+	maxLines: 0,
+	lineSpacing: 0,
+	fixedWidth: 300,
+	fixedHeight: 92 ,
+	rtl: false,
+	testString: '|MÉqgy',
+	wordWrap: {
+		width: 300,
+		callback: null,
+		callbackScope: null,
+		useAdvancedWrap: false
+	},
+	metrics: false
+	// metrics: {
+	//     ascent: 0,
+	//     descent: 0,
+	//     fontSize: 0
+	// }
+};
+
 class Mesa extends State{
 
 	enter(delta, scene, jugador){
@@ -40,11 +67,16 @@ class Mesa extends State{
 			jugador.arrayMostrados[i].on('pointerout', this.OnPointerOut.bind(this, jugador.arrayMostrados[i], jugador.arraySeleccionados, i));
         }
 
-        textoSeleccionPedido = scene.add.text(PosX0 + 50, PosY0 + 50, "Selecciona el pedido y crea el paquete", {fontFamily: 'Georgia, Times, serif'}).setScrollFactor(0,0);
+		if(idioma.idioma.includes("es")){
+			textoSeleccionPedido = scene.add.text(PosX0 + 50, PosY0 + 50, "Selecciona el pedido y crea el paquete", configTextoMesa).setScrollFactor(0,0);
+		}else{
+			textoSeleccionPedido = scene.add.text(PosX0 + 50, PosY0 + 50, "Choose the order and makde the package", configTextoMesa).setScrollFactor(0,0);
+		}
+        
 		
 		for(var i = 0; i < arrayPedidos.length; i++){
             //Para multi: usar elemento de UI para ubicarlo en funcion del canvas de la pantalla en vez de sprite para que el otro no lo vea
-            var pedido = scene.add.text(PosX0 + 50, PosY0 + 90 + (i / (maxPedidos - 1)) * 155, arrayNombres[arrayPedidos[i].persona], {fontFamily: 'Copperplate, "Copperplate Gothic Light"', fontSize: '22px'}).setInteractive().setScrollFactor(0,0);
+            var pedido = scene.add.text(PosX0 + 50, PosY0 + 90 + (i / (maxPedidos - 1)) * 155, arrayNombres[arrayPedidos[i].persona], configTexto).setInteractive().setScrollFactor(0,0);
  
 			arrayPedidosMostrados.push(pedido);
 			

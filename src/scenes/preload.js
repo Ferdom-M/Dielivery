@@ -30,7 +30,7 @@ class Preload extends Phaser.Scene {
 			y: height / 2 - 5,
 			text: '0%',
 			style: {
-				font: '18px monospace',
+				fontFamily: 'Sylfaen',
 				fill: '#ffffff'
 			}
 		});

@@ -4,7 +4,7 @@ var configTexto = {
 			color: '#fff',
 			stroke: '#000000',
 			strokeThickness: 0.5,
-			align: 'left',  // 'left'|'center'|'right'|'justify'
+			align: 'justify',  // 'left'|'center'|'right'|'justify'
 			maxLines: 0,
 			lineSpacing: 0,
 			fixedWidth: 198,
