@@ -18,13 +18,15 @@ function GenerarMundo(that, mapa){
 	const luzBodega = map.addTilesetImage("luzBodega", "luzBodega", 32, 32, 0, 0);
 	const fondoPasillo = map.addTilesetImage("fondoPasillo", "fondoPasillo", 32, 32, 0, 0);
 	const luzPasillo = map.addTilesetImage("luzPasillo", "luzPasillo", 32, 32, 0, 0);
+	const fondoSalaCentral = map.addTilesetImage("fondoSalaCentral", "fondoSalaCentral", 32, 32, 0, 0);
+	const luzSalaCentral = map.addTilesetImage("luzSalaCentral", "luzSalaCentral", 32, 32, 0, 0);
 	// Parameters: layer name (or index) from Tiled, tileset, x, y
-	fondo = map.createStaticLayer("Fondo", [tileset, fondoCementerio, fondoDesvan, fondoImprenta, fondoInvernadero, fondoJoyeria, fondoBodega, fondoPasillo], 0, 0);
+	fondo = map.createStaticLayer("Fondo", [tileset, fondoCementerio, fondoDesvan, fondoImprenta, fondoInvernadero, fondoJoyeria, fondoBodega, fondoPasillo, fondoSalaCentral], 0, 0);
 	suelo = map.createStaticLayer("Suelo", tileset, 0, 0);
 	objetos = map.createStaticLayer("Objetos", tileset, 0, 0);
 	resto = map.createStaticLayer("Resto", tileset, 0, 0);
 	if(that.graficos.iluminacion){
-		iluminacion = map.createStaticLayer("Iluminacion", [luzCementerio, luzDesvan, luzImprenta, luzInvernadero, luzJoyeria, luzBodega, luzPasillo], 0, 0);
+		iluminacion = map.createStaticLayer("Iluminacion", [luzCementerio, luzDesvan, luzImprenta, luzInvernadero, luzJoyeria, luzBodega, luzPasillo, luzSalaCentral], 0, 0);
 		iluminacion.setBlendMode('ADD')
 		iluminacion.depth = 50;
 	}
@@ -50,6 +52,8 @@ function GenerarParticulas(that, mapa){
 	var tilesInvernadero = 350;
 	var tilesJoyeria = 273;
 	var tilesBodega = 840;
+	var tilesPasillo = 732;
+	var tilesSalaCentral = 882;
 	
 	if(mapa != "tutorial"){
 		var vela0 = fondo.findByIndex(862 + tilesNormales + tilesCementerio * 2 + tilesDesvan  + tilesLuzDesvan);
@@ -430,6 +434,63 @@ function GenerarParticulas(that, mapa){
 			scale: { start: 1, end: 0.4 },
 			x: {min: luzBodega1.pixelX, max: luzBodega1.pixelX + tileSize * 12},
 			y: {min: luzBodega1.pixelY, max: luzBodega1.pixelY + tileSize * 17}
+		});
+		var luzSalaCentral1 = iluminacion.findByIndex(14 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta * 2 + tilesInvernadero * 2 + tilesJoyeria * 2 + tilesBodega * 2 + tilesPasillo * 2 + tilesSalaCentral);
+		that.particulasLuz.createEmitter({
+			speed: {min: 1, max: 4},
+			lifespan: 22000,
+			frequency: 2200,
+			blendMode: 'ADD',
+			scale: { start: 1, end: 0.4 },
+			x: {min: luzSalaCentral1.pixelX, max: luzSalaCentral1.pixelX + tileSize * 17},
+			y: {min: luzSalaCentral1.pixelY, max: luzSalaCentral1.pixelY + tileSize * 20}
+		});
+		that.particulasLuz.createEmitter({
+			speed: {min: 1, max: 4},
+			lifespan: 12000,
+			frequency: 1200,
+			blendMode: 'ADD',
+			scale: { start: 1, end: 0.4 },
+			x: {min: luzSalaCentral1.pixelX, max: luzSalaCentral1.pixelX + tileSize * 17},
+			y: {min: luzSalaCentral1.pixelY, max: luzSalaCentral1.pixelY + tileSize * 20}
+		});
+		var luzSalaCentral1 = iluminacion.findByIndex(1 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta * 2 + tilesInvernadero * 2 + tilesJoyeria * 2 + tilesBodega * 2 + tilesPasillo * 2 + tilesSalaCentral);
+		that.particulasLuz.createEmitter({
+			speed: {min: 1, max: 4},
+			lifespan: 22000,
+			frequency: 5500,
+			blendMode: 'ADD',
+			scale: { start: 1, end: 0.4 },
+			x: {min: luzSalaCentral1.pixelX, max: luzSalaCentral1.pixelX + tileSize * 9},
+			y: {min: luzSalaCentral1.pixelY, max: luzSalaCentral1.pixelY + tileSize * 9}
+		});
+		that.particulasLuz.createEmitter({
+			speed: {min: 1, max: 4},
+			lifespan: 12000,
+			frequency: 3000,
+			blendMode: 'ADD',
+			scale: { start: 1, end: 0.4 },
+			x: {min: luzSalaCentral1.pixelX, max: luzSalaCentral1.pixelX + tileSize * 9},
+			y: {min: luzSalaCentral1.pixelY, max: luzSalaCentral1.pixelY + tileSize * 9}
+		});
+		var luzSalaCentral1 = iluminacion.findByIndex(34 + tilesNormales + tilesCementerio * 2 + tilesDesvan + tilesLuzDesvan + tilesImprenta * 2 + tilesInvernadero * 2 + tilesJoyeria * 2 + tilesBodega * 2 + tilesPasillo * 2 + tilesSalaCentral);
+		that.particulasLuz.createEmitter({
+			speed: {min: 1, max: 4},
+			lifespan: 22000,
+			frequency: 5500,
+			blendMode: 'ADD',
+			scale: { start: 1, end: 0.4 },
+			x: {min: luzSalaCentral1.pixelX, max: luzSalaCentral1.pixelX + tileSize * 8},
+			y: {min: luzSalaCentral1.pixelY, max: luzSalaCentral1.pixelY + tileSize * 17}
+		});
+		that.particulasLuz.createEmitter({
+			speed: {min: 1, max: 4},
+			lifespan: 12000,
+			frequency: 3000,
+			blendMode: 'ADD',
+			scale: { start: 1, end: 0.4 },
+			x: {min: luzSalaCentral1.pixelX, max: luzSalaCentral1.pixelX + tileSize * 8},
+			y: {min: luzSalaCentral1.pixelY, max: luzSalaCentral1.pixelY + tileSize * 17}
 		});
 	}
 }
