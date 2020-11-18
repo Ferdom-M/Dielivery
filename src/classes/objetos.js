@@ -248,6 +248,7 @@ function ColocarTarjeta(tarjeta, numTarjeta){
 function CompararPedidos(paquete, pedido, destinoElegido){
 	//var puntuacion = 0
 	var objetos = [];
+	var pedidoCorrecto = false;
 	for(var z = 0; z < pedido.objetos.length; z++){
 		objetos.push(pedido.objetos[z].tipo);
 	}
@@ -274,6 +275,7 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 		}
 		if(objetosCorrectos == pedido.objetos.length){
 			console.log("Pedido correcto");
+			pedidoCorrecto = true;
 		}else{
 			puntuacionTotal -= Math.abs((pedido.objetos.length - paquete.length) * puntuacionItemFallido);
 			//puntuacion += puntuacionItemFallido;
@@ -299,4 +301,5 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 
 	//return puntuacion;
 	console.log("Puntuacion actual: " + puntuacionTotal);
+	return pedidoCorrecto;
 }

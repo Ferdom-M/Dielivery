@@ -3,21 +3,21 @@ class FinTutorial extends Phaser.Scene {
         super("FinTutorial");
     }
 
-    create() {
+    create(correcto) {
 		console.log("pito");
         this.fondoPausa = this.add.image(width / 2, height / 2, 'fondoPausa');
 		this.tablonPausa = this.add.image(width / 2, height / 2, 'tablonPausa');
 		
 		var texto;
-		if(puntuacionTotal < 0){
+		if(correcto){
 			if(idioma.idioma.includes("es")){
-				texto = "Bueno, no has enviado el pedido al sitio correcto, pero al menos esperamos que a la hora de la verdad estés más atento. ¡Pásatelo bien en las instalaciones de Dielivery!";
+				texto = "¡Fantástico! ¡Ahora tienes todo lo que necesitas para conseguir ser el empleado del mes! ¡Pásatelo bien en las instalaciones de Dielivery!";
 			}else{
 				texto = "";
 			}
 		}else{
 			if(idioma.idioma.includes("es")){
-				texto = "¡Fantástico! ¡Ahora tienes todo lo que necesitas para conseguir ser el empleado del mes! ¡Pásatelo bien en las instalaciones de Dielivery!";
+				texto = "Bueno, no has enviado el pedido al sitio correcto, pero al menos esperamos que a la hora de la verdad estés más atento. ¡Pásatelo bien en las instalaciones de Dielivery!";
 			}else{
 				texto = "";
 			}
