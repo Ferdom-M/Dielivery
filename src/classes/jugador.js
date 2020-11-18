@@ -136,6 +136,8 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		this.sDash = config.scene.sound.add('s_dash');
 		this.sEscalera = config.scene.sound.add('s_escalera').setLoop(true);
 		this.sSalto = config.scene.sound.add('s_salto');
+		this.sPedidoCorrecto = config.scene.sound.add('s_paqueteCorrecto');
+		this.sPedidoErroneo = config.scene.sound.add('s_paqueteErroneo');
 		
 		// Máquina de estados
 		this.stateMachine = new StateMachine('idle', {
