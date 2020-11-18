@@ -9,64 +9,26 @@ class creditos extends Phaser.Scene {
 		this.load.off('progress');
 		this.load.off('complete');
 	}
+	
     preload() {
-		// BARRA DE CARGA
-		/*var width = this.cameras.main.width;
-		var height = this.cameras.main.height;
-		
-		var progressBar = this.add.graphics(width / 2, height / 2);
-		var progressBox = this.add.graphics(width / 2, height / 2);
-		progressBox.fillStyle(0x222222, 0.8);
-		progressBox.fillRect(width / 2 - 320 / 2, height / 2, 320, 50);
-		
-		var percentText = this.make.text({
-			x: width / 2,
-			y: height / 2 - 5,
-			text: '0%',
-			style: {
-				font: '18px monospace',
-				fill: '#ffffff'
-			}
-		});
-		percentText.setOrigin(0.5, 0.5);
-
-		this.load.on('progress', function (value) {
-			progressBar.clear();
-			progressBar.fillStyle(0xffffff, 1);
-			progressBar.fillRect(width / 2 - 320 / 2 + 10, height / 2 + 10, 300 * value, 30);
-
-			percentText.setText(parseInt(value * 100) + '%');
-		});
-
-
-		this.load.on('complete', function () {
-			progressBar.destroy();
-			progressBox.destroy();
-			percentText.destroy();
-		});
-		this.sys.events.once('shutdown', this.shutdown, this);
-		*/
-		
-		// CARGA
-		/*
-        this.load.image('volver', 'assets/Interfaz/Botones/volver.png');
-        this.load.image('volver_pulsado', 'assets/Interfaz/Botones/volver_pulsado.png');
-		*/
 	}
+
 	create() {
 		this.cameras.main.fadeIn(valorFade);
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
+		var medio = width / 2;
+		var offset = 180;
 		
-        this.fondo = this.add.image(width / 2, height / 2, 'fondo');
+        this.fondo = this.add.image(medio, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
-		this.tablon = this.add.image(width / 2, height / 2, 'tablonCreditos');
-		this.placa_fer = this.add.image(width / 3.45, height / 1.85, 'placa_fer');
-		this.placa_raul = this.add.image(width / 3.45, height / 1.19, 'placa_raul');
-		this.placa_leggnas = this.add.image(width / 2, height / 1.85, 'placa_leggnas');
-		this.placa_nacho = this.add.image(width / 2, height / 1.19, 'placa_nacho');
-		this.placa_nou = this.add.image(width / 1.4, height / 1.85, 'placa_nou');
-		this.placa_dvd = this.add.image(width / 1.4, height / 1.19, 'placa_dvd');
+		this.tablon = this.add.image(medio, height / 2, 'tablonCreditos');
+		this.placa_fer = this.add.image(medio - offset, height / 1.85, 'placa_fer');
+		this.placa_raul = this.add.image(medio - offset, height / 1.19, 'placa_raul');
+		this.placa_leggnas = this.add.image(medio, height / 1.85, 'placa_leggnas');
+		this.placa_nacho = this.add.image(medio, height / 1.19, 'placa_nacho');
+		this.placa_nou = this.add.image((medio) + offset, height / 1.85, 'placa_nou');
+		this.placa_dvd = this.add.image(medio + offset, height / 1.19, 'placa_dvd');
 		
         this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
