@@ -181,6 +181,15 @@ class Preload extends Phaser.Scene {
 		this.load.image("llamita", "assets/Particulas/llamita.png");
 		this.load.image("luz1", "assets/Particulas/luz1.png");
 		this.load.image("luz2", "assets/Particulas/luz2.png");
+
+		//CREDITOS
+		this.load.image("tablonCreditos", "assets/Creditos/Tablon creditos.png");
+		this.load.image("placa_dvd", "assets/Creditos/placa_dvd.png");
+		this.load.image("placa_fer", "assets/Creditos/placa_fer.png");
+		this.load.image("placa_leggnas", "assets/Creditos/placa_leggnas.png");
+		this.load.image("placa_nacho", "assets/Creditos/placa_nacho.png");
+		this.load.image("placa_nou", "assets/Creditos/placa_nou.png");
+		this.load.image("placa_raul", "assets/Creditos/placa_raul.png");
 		
 		// PERFILES
 		for (var i = 0;  i < arrayNombres.length; i++){

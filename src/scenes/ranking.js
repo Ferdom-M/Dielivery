@@ -56,8 +56,34 @@ class Ranking extends Phaser.Scene {
     }
 
     create() {
+		var configTextoRanking = {
+			fontFamily: 'Sylfaen',
+			fontSize: '22px',
+			color: '#fff',
+			stroke: '#000000',
+			strokeThickness: 0.5,
+			align: 'left',  // 'left'|'center'|'right'|'justify'
+			maxLines: 0,
+			lineSpacing: 0,
+			fixedWidth: 300,
+			fixedHeight: 92 ,
+			rtl: false,
+			testString: '|MÉqgy',
+			wordWrap: {
+				width: 300,
+				callback: null,
+				callbackScope: null,
+				useAdvancedWrap: false
+			},
+			metrics: false
+			// metrics: {
+			//     ascent: 0,
+			//     descent: 0,
+			//     fontSize: 0
+			// }
+		};
 		this.cameras.main.fadeIn(valorFade);
-		var scoreboardX = width / 3.5;
+		var scoreboardX = width / 4.2;
 		var scoreboardY = height / 3;
 		
 		this.fondo = this.add.image(width / 2, height / 2, 'fondo');
@@ -92,19 +118,19 @@ class Ranking extends Phaser.Scene {
 				scoreboard.scores.sort(function(a, b){
 					return a.puntuacion-b.puntuacion;
 				});
-				if(scoreboard.scores.length > 20){
+				if(scoreboard.scores.length > 10){
 					scoreboard.scores.shift();
 				}
 				scoreboard.scores = scoreboard.scores.reverse();
 			}
 			for(let i = 0; i < scoreboard.scores.length; i++){
 				var rango = i+1;
-				if(rango <= 10){
-					this.add.text(scoreboardX, scoreboardY + (rango*20), rango + 'º: ' + scoreboard.scores[i].nombre + '  ' + scoreboard.scores[i].puntuacion, 
-						{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+				if(rango <= 5){
+					this.add.text(scoreboardX, scoreboardY + (rango*45), rango + 'º: ' + scoreboard.scores[i].nombre + '  ' + scoreboard.scores[i].puntuacion, 
+					configTextoRanking);
 				}else{
-					this.add.text(scoreboardX + 300, scoreboardY + ((rango-10)*20), rango + 'º: ' + scoreboard.scores[i].nombre + '  ' + scoreboard.scores[i].puntuacion, 
-						{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+					this.add.text(scoreboardX + 310, scoreboardY + ((rango-5)*45), rango + 'º: ' + scoreboard.scores[i].nombre + '  ' + scoreboard.scores[i].puntuacion, 
+					configTextoRanking);
 				}
 				
 			}
@@ -115,21 +141,21 @@ class Ranking extends Phaser.Scene {
 			if(scoreboardGuardado == false){
 				if(idioma.idioma.includes("es")){
 					this.add.text(scoreboardX, scoreboardY + 20, "¡No hay empleado del mes!", 
-						{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+					configTextoRanking);
 				}else{
 					this.add.text(scoreboardX, scoreboardY + 20, "There´s no employee of the month!", 
-						{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+					configTextoRanking);
 				}
 				
 			}else{
 				for(let i = 0; i < scoreboardGuardado.scores.length; i++){
 					var rango = i+1;
-					if(rango <= 10){
-						this.add.text(scoreboardX, scoreboardY + (rango*27), rango + 'º: ' + scoreboardGuardado.scores[i].nombre + '  ' + scoreboardGuardado.scores[i].puntuacion, 
-							{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+					if(rango <= 5){
+						this.add.text(scoreboardX, scoreboardY + (rango*45), rango + 'º: ' + scoreboardGuardado.scores[i].nombre + '  ' + scoreboardGuardado.scores[i].puntuacion, 
+						configTextoRanking);
 					}else{
-						this.add.text(scoreboardX + 300, scoreboardY + ((rango-10)*27), rango + 'º: ' + scoreboardGuardado.scores[i].nombre + '  ' + scoreboardGuardado.scores[i].puntuacion, 
-							{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+						this.add.text(scoreboardX + 310, scoreboardY + ((rango-5)*45), rango + 'º: ' + scoreboardGuardado.scores[i].nombre + '  ' + scoreboardGuardado.scores[i].puntuacion, 
+						configTextoRanking);
 					}
 				}
 			}

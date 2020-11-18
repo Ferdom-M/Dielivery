@@ -3,7 +3,7 @@ var configTexto = {
 			fontSize: '16px',
 			color: '#fff',
 			stroke: '#000000',
-			strokeThickness: 2,
+			strokeThickness: 0.5,
 			align: 'left',  // 'left'|'center'|'right'|'justify'
 			maxLines: 0,
 			lineSpacing: 0,

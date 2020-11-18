@@ -60,8 +60,14 @@ class creditos extends Phaser.Scene {
 		
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
-
-
+		this.tablon = this.add.image(width / 2, height / 2, 'tablonCreditos');
+		this.placa_fer = this.add.image(width / 3.45, height / 1.85, 'placa_fer');
+		this.placa_raul = this.add.image(width / 3.45, height / 1.19, 'placa_raul');
+		this.placa_leggnas = this.add.image(width / 2, height / 1.85, 'placa_leggnas');
+		this.placa_nacho = this.add.image(width / 2, height / 1.19, 'placa_nacho');
+		this.placa_nou = this.add.image(width / 1.4, height / 1.85, 'placa_nou');
+		this.placa_dvd = this.add.image(width / 1.4, height / 1.19, 'placa_dvd');
+		
         this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
         this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
