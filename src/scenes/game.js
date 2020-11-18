@@ -201,7 +201,7 @@ class Game extends Phaser.Scene {
 			}
 		
 			generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
-			this.initialTime = 5;
+			this.initialTime = 1;
 
 			tiempo = this.add.text(width / 2 - 16, height - 54, formatTime(this.initialTime)).setScrollFactor(0,0).setVisible(true);
 

@@ -54,6 +54,8 @@ class Preload extends Phaser.Scene {
         
         
 		
+		this.load.image('cuadro_resultados', 'assets/Interfaz/Cuadro resultados.png');
+
 		// FONDOS MENUS
 		this.load.image('fondo', 'assets/Interfaz/Fondo menu principal.jpg');
         this.load.image('tablon', 'assets/Interfaz/Tablon menu principal cartas.png');
