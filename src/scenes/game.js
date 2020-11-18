@@ -294,7 +294,7 @@ function BorrarInventario(that, jugador){
 	tablonInventario.setVisible(false);
 }
 
-function TerminarTutorial(that, jugador){
+function TerminarTutorial(that, jugador, pedidoCorrecto){
 	BorrarInventario(that, jugador);
 	jugador.PararSonidos();
 	jugador.ResetearControl();
@@ -303,16 +303,14 @@ function TerminarTutorial(that, jugador){
 	for(var i = 0; i < arrayTarjetas.length; i++){
 		arrayTarjetas[i].setVisible(false);
 	}
-	that.sound.stopAll();
-	that.sound.play("s_menu");
 	that.input.keyboard.resetKeys()
-	that.time.addEvent({ delay: 1000, callback: PasarEscenaFinTutorial, callbackScope: that, loop: false })
+	that.time.addEvent({ delay: 1000, callback: PasarEscenaFinTutorial, args: [pedidoCorrecto], callbackScope: that, loop: false })
 	
 }
 
-function PasarEscenaFinTutorial(){
+function PasarEscenaFinTutorial(pedidoCorrecto){
 	this.scene.pause();
-	this.scene.launch("FinTutorial");
+	this.scene.launch("FinTutorial", pedidoCorrecto);
 }
 /*
 function EntrarMesa(jugador, that){

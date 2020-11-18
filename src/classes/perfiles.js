@@ -23,7 +23,7 @@ arrayNombres.push("Leavy");
 arrayNombres.push("JuanmCasper");
 arrayNombres.push("Bolita");
 arrayNombres.push("Nube");
-arrayNombres.push("Destinatario");
+arrayNombres.push("Bob");
 arrayNombres.push("Dori");
 arrayNombres.push("Hulio");
 arrayNombres.push("Ferdom-M");
@@ -85,7 +85,7 @@ arrayCausaMuerteIngles.push("He slipped and fell to the sea during a chase after
 arrayCausaMuerteIngles.push("The game artist made him laugh until death");
 arrayCausaMuerteIngles.push("She didn't die don't worry, his owner just wanted to show her");
 arrayCausaMuerteIngles.push("Her owner got jealous from Bolita, so she's also here (not dead tho)");
-arrayCausaMuerteIngles.push("They died in a tutorial where it's impossible to die");
+arrayCausaMuerteIngles.push("He died in a tutorial where it's impossible to die");
 arrayCausaMuerteIngles.push("She jumped into the water too hard (still alive) ha got the funny reference??");
 arrayCausaMuerteIngles.push("She jumped into the water too hard (still alive) ha got the funny reference??");
 arrayCausaMuerteIngles.push("Uncaught SyntaxError: missing ) after argument list");

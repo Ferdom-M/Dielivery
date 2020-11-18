@@ -75,6 +75,8 @@ class Mesa extends State{
 		}
 		
         jugador.accion = false;
+		this.pedidoCorrecto = false;
+		this.pedidoRealizado = false;
     }
 
 	execute(delta, scene, jugador){
@@ -87,7 +89,11 @@ class Mesa extends State{
 				scene.base.setVisible(true);
 				scene.thumb.setVisible(true);
 			}
-	
+			
+			console.log(this.pedidoRealizado);
+			if(mapaActual == "tutorial" && this.pedidoRealizado){
+				TerminarTutorial(scene, jugador, this.pedidoCorrecto);
+			}
             RepresentarInventario(scene, jugador);
             jugador.stateMachine.transition(delta, "idle");
             jugador.accion = false;
@@ -163,9 +169,11 @@ class Mesa extends State{
 	
     Enviar(delta, scene, jugador, destElegido){
         if(jugador.pedidoSeleccionado && jugador.arraySeleccionados.length > 0){
+			this.pedidoRealizado = true;
+			console.log(this.pedidoRealizado);
             var paquete = this.Eliminar(delta, scene, jugador, true);
             //hasta aqui
-            CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
+            this.pedidoCorrecto = CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
             //console.log("Puntuacion actual: " + puntuacionTotal);
             this.BorrarBotones(delta, jugador);
             this.enter(delta, scene, jugador);
