@@ -185,6 +185,20 @@ class Preload extends Phaser.Scene {
 		this.load.image("luz1", "assets/Particulas/luz1.png");
 		this.load.image("luz2", "assets/Particulas/luz2.png");
 
+		//TECLAS
+		this.load.image("atras", "assets/Teclas/atras.png");
+		this.load.image("enter", "assets/Teclas/enter.png");
+		this.load.image("espacio", "assets/Teclas/espacio.png");
+		this.load.image("flecha_abajo", "assets/Teclas/flecha_abajo.png");
+		this.load.image("flecha_arriba", "assets/Teclas/flecha_arriba.png");
+		this.load.image("flecha_derecha", "assets/Teclas/flecha_derecha.png");
+		this.load.image("flecha_izquierda", "assets/Teclas/flecha_izquierda.png");
+		this.load.image("shift", "assets/Teclas/shift.png");
+		this.load.image("tabulador", "assets/Teclas/tabulador.png");
+		this.load.image("tecla_base", "assets/Teclas/tecla_base.png");
+		this.load.image("tecla_larga_base", "assets/Teclas/tecla_larga_base.png");
+
+
 		//CREDITOS
 		this.load.image("tablonCreditos", "assets/Creditos/Tablon creditos.png");
 		this.load.image("placa_dvd", "assets/Creditos/placa_dvd.png");
