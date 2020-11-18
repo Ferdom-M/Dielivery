@@ -201,8 +201,10 @@ class Mesa extends State{
             //hasta aqui
             this.pedidoCorrecto = CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
 			if(this.pedidoCorrecto){
+				jugador.sPedidoCorrecto.play();
 				scene.marco = scene.add.image(width / 2, height / 2, 'marcoCorrecto');
 			}else{
+				jugador.sPedidoErroneo.play();
 				scene.marco = scene.add.image(width / 2, height / 2, 'marcoIncorrecto');
 			}
 			scene.marco.depth = 100;
