@@ -263,12 +263,14 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 				// Sobreescribimos ese elemento del array
 				pedido.objetos[objetos.indexOf(paquete[i])] = 0;
 				objetos[objetos.indexOf(paquete[i])] = 0;
-				objetosCorrectos += 1;
+				objetosCorrectos++;
 				//console.log("puntuacion" + paquete.objetos[pedido.objetos.indexOf(paquete[i])].puntuacion);
 				//puntuacion += 50;
 			}else{
 				console.log("fallo: " + paquete[i]);
 				puntuacionTotal += puntuacionItemFallido;
+				
+				objetosCorrectos--;
 				//puntuacion += 50;
 			}
 			

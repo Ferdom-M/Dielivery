@@ -70,6 +70,7 @@ class Preload extends Phaser.Scene {
 		this.load.image("infierno2", "assets/Interfaz/Tarjetas/Infierno_2.png");
 		this.load.image("infierno3", "assets/Interfaz/Tarjetas/Infierno_3.png");
 		this.load.image("infierno4", "assets/Interfaz/Tarjetas/Infierno_4.png");
+		this.load.image("barraCarga", "assets/Interfaz/barra_progreso.png");
 		
 		// PAUSA
         this.load.image('fondoPausa', 'assets/Fondo_pausa.png');

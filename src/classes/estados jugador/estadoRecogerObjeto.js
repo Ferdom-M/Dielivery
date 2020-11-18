@@ -92,10 +92,11 @@ class RecogerObjeto extends State{
 		
 		scene.time.delayedCall(tiempoRecogerObjeto, () => this.AgregarObjeto(delta, scene, jugador, objeto));	
 
+		this.fondoBarraCarga = scene.add.image(width / 2, height / 2 - tileSize, 'barraCarga').setScrollFactor(0,0);
+		this.fondoBarraCarga.depth = 100;
 		this.contadorBarra = 0;
 		this.barraCarga = scene.add.graphics(width / 2, height / 2);
-		this.anchoBarra = 100;
-		this.altoBarra = 10;
+
 	}
 	
 	execute(delta, scene, jugador){
@@ -103,11 +104,12 @@ class RecogerObjeto extends State{
 		
 		this.barraCarga.clear();
 		this.barraCarga.fillStyle(0xadecff, 1);
-		this.barraCarga.fillRect(width / 2 - this.anchoBarra / 2, height / 2 - this.altoBarra / 2 - tileSize, this.contadorBarra / tiempoRecogerObjeto * this.anchoBarra, this.altoBarra);
+		this.barraCarga.fillRect(width / 2 - this.fondoBarraCarga.width / 2, height / 2 - this.fondoBarraCarga.height / 2 - tileSize + 2, this.contadorBarra / tiempoRecogerObjeto * this.fondoBarraCarga.width, this.fondoBarraCarga.height - 5);
 	}
 	
 	AgregarObjeto(delta, scene, jugador, objeto){
 		this.barraCarga.destroy();
+		this.fondoBarraCarga.destroy();
 		
 		jugador.inventario.push(objeto);
 		jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
