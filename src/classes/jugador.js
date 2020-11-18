@@ -1,4 +1,5 @@
 const velJugador = 360;
+const velEscaleras = 280;
 const velEscalon = -150;
 const velDeslizandoPared = 300;
 const aceleracion = 0.4;

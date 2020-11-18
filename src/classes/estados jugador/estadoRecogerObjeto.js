@@ -90,11 +90,25 @@ class RecogerObjeto extends State{
 		
 		jugador.body.velocity.x = 0;
 		
-		scene.time.delayedCall(tiempoRecogerObjeto, () => this.AgregarObjeto(delta, scene, jugador, objeto));			
+		scene.time.delayedCall(tiempoRecogerObjeto, () => this.AgregarObjeto(delta, scene, jugador, objeto));	
+
+		this.contadorBarra = 0;
+		this.barraCarga = scene.add.graphics(width / 2, height / 2);
+		this.anchoBarra = 100;
+		this.altoBarra = 10;
+	}
+	
+	execute(delta, scene, jugador){
+		this.contadorBarra += delta;
+		
+		this.barraCarga.clear();
+		this.barraCarga.fillStyle(0xadecff, 1);
+		this.barraCarga.fillRect(width / 2 - this.anchoBarra / 2, height / 2 - this.altoBarra / 2 - tileSize, this.contadorBarra / tiempoRecogerObjeto * this.anchoBarra, this.altoBarra);
 	}
 	
 	AgregarObjeto(delta, scene, jugador, objeto){
-		console.log(objeto);
+		this.barraCarga.destroy();
+		
 		jugador.inventario.push(objeto);
 		jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
 

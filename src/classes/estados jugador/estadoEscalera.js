@@ -9,12 +9,12 @@ class Escalera extends State{
 		jugador.dashDisponible = true;
 		
 		if(jugador.dirY != 0){
-			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, jugador.dirY * jugador.velActual, aceleracion));
+			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, jugador.dirY * velEscaleras, aceleracion));
 		}else{
 			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, 0, friccionSuelo));
 		}
 		if(jugador.dirX != 0){
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirY * jugador.velActual, aceleracion));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirY * velEscaleras, aceleracion));
 		}else{
 			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionSuelo));
 		}
@@ -44,7 +44,7 @@ class Escalera extends State{
 				jugador.sEscalera.play();
 			}
 			
-			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, jugador.dirY * jugador.velActual, aceleracion));
+			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, jugador.dirY * velEscaleras, aceleracion));
 		}else{
 			jugador.setVelocityY(Phaser.Math.Linear(jugador.body.velocity.y, 0, friccionSuelo));
 		}
@@ -53,7 +53,7 @@ class Escalera extends State{
 			if(!jugador.sEscalera.isPlaying){
 				jugador.sEscalera.play();
 			}
-			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * jugador.velActual, aceleracion));
+			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, jugador.dirX * velEscaleras, aceleracion));
 		}else{
 			jugador.setVelocityX(Phaser.Math.Linear(jugador.body.velocity.x, 0, friccionSuelo));
 		}
