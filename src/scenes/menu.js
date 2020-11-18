@@ -85,8 +85,8 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image('alto_pulsado', 'assets/Interfaz/Botones/Espanol/alto_pulsado.png');
 			this.load.image('bajo', 'assets/Interfaz/Botones/Espanol/bajo.png');
 			this.load.image('bajo_pulsado', 'assets/Interfaz/Botones/Espanol/bajo_pulsado.png');
-			this.load.image('muybajo', 'assets/Interfaz/Botones/Espanol/muybajo.png');
-			this.load.image('muybajo_pulsado', 'assets/Interfaz/Botones/Espanol/muybajo_pulsado.png');
+			this.load.image('medio', 'assets/Interfaz/Botones/Espanol/medio.png');
+			this.load.image('medio_pulsado', 'assets/Interfaz/Botones/Espanol/medio_pulsado.png');
 			
 			this.load.image("botonEnviarCielo", "assets/Interfaz/Botones/Espanol/boton_cielo.png");
 			this.load.image("botonEnviarCielo_pulsado", "assets/Interfaz/Botones/Espanol/boton_cielo_pulsado.png");
@@ -111,8 +111,8 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image('alto_pulsado', 'assets/Interfaz/Botones/Ingles/alto_pulsado.png');
 			this.load.image('bajo', 'assets/Interfaz/Botones/Ingles/bajo.png');
 			this.load.image('bajo_pulsado', 'assets/Interfaz/Botones/Ingles/bajo_pulsado.png');
-			this.load.image('muybajo', 'assets/Interfaz/Botones/Ingles/muybajo.png');
-			this.load.image('muybajo_pulsado', 'assets/Interfaz/Botones/Ingles/muybajo_pulsado.png');
+			this.load.image('medio', 'assets/Interfaz/Botones/Ingles/medio.png');
+			this.load.image('medio_pulsado', 'assets/Interfaz/Botones/Ingles/medio_pulsado.png');
 
 			this.load.image("botonEnviarCielo", "assets/Interfaz/Botones/Ingles/boton_cielo.png");
 			this.load.image("botonEnviarCielo_pulsado", "assets/Interfaz/Botones/Ingles/boton_cielo_pulsado.png");
@@ -214,10 +214,11 @@ class Mainmenu extends Phaser.Scene {
 		this.textures.remove('idioma');
 		this.textures.remove('alto');
 		this.textures.remove('alto_pulsado');
+		this.textures.remove('medio');
+		this.textures.remove('medio_pulsado');
 		this.textures.remove('bajo');
 		this.textures.remove('bajo_pulsado');
-		this.textures.remove('muybajo');
-		this.textures.remove('muybajo_pulsado');
+		
 		
 		this.textures.remove("botonEnviarCielo");
 		this.textures.remove("botonEnviarCielo_pulsado");

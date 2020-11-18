@@ -179,26 +179,28 @@ class Ajustes extends Phaser.Scene {
 		};
 		if(enPc){
 			this.botonAlto = this.add.sprite(width / 4, height / 4, 'alto_pulsado').setInteractive();
-			this.botonBajo = this.add.sprite(width / 4, (height / 4) * 2, 'bajo_pulsado').setInteractive();
-			this.botonMuyBajo = this.add.sprite(width / 4, (height / 4) * 3, 'muybajo_pulsado').setInteractive();
+			this.botonMedio = this.add.sprite(width / 4, (height / 4) * 2, 'medio_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 4, (height / 4) * 3, 'bajo_pulsado').setInteractive();
+			
 		}else{
 			this.botonAlto = this.add.sprite(width / 2, height / 4, 'alto_pulsado').setInteractive();
-			this.botonBajo = this.add.sprite(width / 2, (height / 4) * 2, 'bajo_pulsado').setInteractive();
-			this.botonMuyBajo = this.add.sprite(width / 2, (height / 4) * 3, 'muybajo_pulsado').setInteractive();
+			this.botonMedio = this.add.sprite(width / 2, (height / 4) * 2, 'medio_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 2, (height / 4) * 3, 'bajo_pulsado').setInteractive();
 		}
 		
 		this.botonAlto.on('pointerdown', () => this.PulsarAlto());
+
 		this.botonBajo.on('pointerdown', () => this.PulsarBajo());
-		this.botonMuyBajo.on('pointerdown', () => this.PulsarMuyBajo());
+		this.botonMedio.on('pointerdown', () => this.PulsarMedio());
 		
 		if(this.graficos.iluminacion){
 			if(this.graficos.particulas){
 				this.botonAlto.setTexture('alto');
 			}else{
-				this.botonBajo.setTexture('bajo');
+				this.botonMedio.setTexture('medio');
 			}
 		}else{
-			this.botonMuyBajo.setTexture('muybajo');
+			this.botonBajo.setTexture('bajo');
 		}
 		
     }
@@ -221,8 +223,9 @@ class Ajustes extends Phaser.Scene {
 		this.botonFullscreen.setVisible(false);
 		this.botonPausa.setVisible(false);
 		this.botonAlto.setVisible(false);
+		this.botonMedio.setVisible(false);
 		this.botonBajo.setVisible(false);
-		this.botonMuyBajo.setVisible(false);
+		
 		
 		this.tablon.setVisible(true);
 		var texto;
@@ -273,8 +276,9 @@ class Ajustes extends Phaser.Scene {
 			this.botonFullscreen.setVisible(true);
 			this.botonPausa.setVisible(true);
 			this.botonAlto.setVisible(true);
+			this.botonMedio.setVisible(true);
 			this.botonBajo.setVisible(true);
-			this.botonMuyBajo.setVisible(true);
+			
 		
 			localStorage.setItem('controlesGuardados', JSON.stringify(controlesGuardados));
 			
@@ -284,28 +288,28 @@ class Ajustes extends Phaser.Scene {
 	PulsarAlto(){
 		if(!(this.graficos.iluminacion && this.graficos.particulas)){
 			this.botonAlto.setTexture('alto');
+			this.botonMedio.setTexture('medio_pulsado');
 			this.botonBajo.setTexture('bajo_pulsado');
-			this.botonMuyBajo.setTexture('muybajo_pulsado');
 			this.graficos.iluminacion = true;
 			this.graficos.particulas = true;
 			localStorage.setItem('graficos', JSON.stringify(this.graficos));
 		}
 	}
-	PulsarBajo(){
+	PulsarMedio(){
 		if(!(this.graficos.iluminacion && !this.graficos.particulas)){
 			this.botonAlto.setTexture('alto_pulsado');
-			this.botonBajo.setTexture('bajo');
-			this.botonMuyBajo.setTexture('muybajo_pulsado');
+			this.botonMedio.setTexture('medio');
+			this.botonBajo.setTexture('bajo_pulsado');
 			this.graficos.iluminacion = true;
 			this.graficos.particulas = false;
 			localStorage.setItem('graficos', JSON.stringify(this.graficos));
 		}
 	}
-	PulsarMuyBajo(){
+	PulsarBajo(){
 		if(!(!this.graficos.iluminacion && !this.graficos.particulas)){
 			this.botonAlto.setTexture('alto_pulsado');
-			this.botonBajo.setTexture('bajo_pulsado');
-			this.botonMuyBajo.setTexture('muybajo');
+			this.botonMedio.setTexture('medio_pulsado');
+			this.botonBajo.setTexture('bajo');
 			this.graficos.iluminacion = false;
 			this.graficos.particulas = false;
 			localStorage.setItem('graficos', JSON.stringify(this.graficos));
