@@ -70,7 +70,7 @@ class Mesa extends State{
 		if(idioma.idioma.includes("es")){
 			textoSeleccionPedido = scene.add.text(PosX0 + 50, PosY0 + 50, "Selecciona el pedido y crea el paquete", configTextoMesa).setScrollFactor(0,0);
 		}else{
-			textoSeleccionPedido = scene.add.text(PosX0 + 50, PosY0 + 50, "Choose the order and makde the package", configTextoMesa).setScrollFactor(0,0);
+			textoSeleccionPedido = scene.add.text(PosX0 + 50, PosY0 + 50, "Choose the order and make the package", configTextoMesa).setScrollFactor(0,0);
 		}
         
 		
