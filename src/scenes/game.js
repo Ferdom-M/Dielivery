@@ -310,7 +310,8 @@ function TerminarTutorial(that, jugador, pedidoCorrecto){
 
 function PasarEscenaFinTutorial(pedidoCorrecto){
 	this.scene.pause();
-	this.scene.launch("FinTutorial", pedidoCorrecto);
+	tutorialCorrecto = pedidoCorrecto;
+	this.scene.launch("FinTutorial");
 }
 /*
 function EntrarMesa(jugador, that){

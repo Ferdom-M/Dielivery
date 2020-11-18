@@ -107,8 +107,8 @@ class Mesa extends State{
 		}
 		
         jugador.accion = false;
+		
 		this.pedidoCorrecto = false;
-		this.pedidoRealizado = false;
     }
 
 	execute(delta, scene, jugador){
@@ -122,10 +122,6 @@ class Mesa extends State{
 				scene.thumb.setVisible(true);
 			}
 			
-			console.log(this.pedidoRealizado);
-			if(mapaActual == "tutorial" && this.pedidoRealizado){
-				TerminarTutorial(scene, jugador, this.pedidoCorrecto);
-			}
             RepresentarInventario(scene, jugador);
             jugador.stateMachine.transition(delta, "idle");
             jugador.accion = false;
@@ -201,17 +197,30 @@ class Mesa extends State{
 	
     Enviar(delta, scene, jugador, destElegido){
         if(jugador.pedidoSeleccionado && jugador.arraySeleccionados.length > 0){
-			this.pedidoRealizado = true;
-			console.log(this.pedidoRealizado);
             var paquete = this.Eliminar(delta, scene, jugador, true);
             //hasta aqui
             this.pedidoCorrecto = CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
+			if(this.pedidoCorrecto){
+				scene.marco = scene.add.image(width / 2, height / 2, 'marcoCorrecto');
+			}else{
+				scene.marco = scene.add.image(width / 2, height / 2, 'marcoIncorrecto');
+			}
+			scene.marco.depth = 100;
+			scene.time.addEvent({ delay: 1500, callback: this.BorrarMarco, args: [scene], callbackScope: this, loop: false });
+			if(mapaActual == "tutorial"){
+				this.BorrarBotones(delta, jugador);
+				TerminarTutorial(scene, jugador, this.pedidoCorrecto);
+			}
             //console.log("Puntuacion actual: " + puntuacionTotal);
             this.BorrarBotones(delta, jugador);
             this.enter(delta, scene, jugador);
         }
     }
-
+	
+	BorrarMarco(scene){
+		scene.marco.destroy();
+	}
+	
     Eliminar(delta, scene, jugador, enviar){
 		console.log("intento eliminar");
 		if(jugador.arraySeleccionados.length > 0){
