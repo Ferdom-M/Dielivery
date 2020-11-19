@@ -471,6 +471,7 @@ class Ajustes extends Phaser.Scene {
 		else if(array[tecla] == 18){//ALTG
 			return new Array("teclabase", "");
 		}
+		return new Array("tecla_base", String.fromCharCode(array[tecla]));
 	}
 
 	ListaTeclas(){
