@@ -256,6 +256,11 @@ class Mesa extends State{
 		if(jugador.arraySeleccionados.length > 0){
 			//console.log("Elimino");
 			var paqueteCreado = [];
+			
+			jugador.arraySeleccionados.sort(function(a, b) {
+			  return a - b;
+			});
+			
 			// Lo hacemos de final a principio porque si hacemos el splice de principio a final nos cargamos el orden despues, de esta forma no intervenimos en los demás
 			for(let a = jugador.arraySeleccionados.length - 1; a >= 0; a--){
 				//console.log(jugador.arraySeleccionados[a]);
