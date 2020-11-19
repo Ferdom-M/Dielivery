@@ -23,6 +23,41 @@ var textoConfiguracionIngles = {
 	pausa: "Pause"
 }
 
+var configTexto = {
+	fontFamily: 'Sylfaen',
+	fontSize: '22px',
+	color: '#fff',
+	stroke: '#000000',
+	strokeThickness: 1,
+	align: 'justify',  // 'left'|'center'|'right'|'justify'
+	maxLines: 0,
+	lineSpacing: 0,
+	fixedWidth: 198,
+	fixedHeight: 92 ,
+	rtl: false,
+	testString: '|MÉqgy',
+	wordWrap: {
+		width: 198,
+		callback: null,
+		callbackScope: null,
+		useAdvancedWrap: false
+	},
+	metrics: false
+	// metrics: {
+	//     ascent: 0,
+	//     descent: 0,
+	//     fontSize: 0
+	// }
+};
+
+
+var arrayTeclas = new Array();
+var arrayTeclasInternos = new Array();
+var separacionBotonesY = 45;
+var separacionBotonesX = 220;
+var separacionBotonesCambiarX = 355;
+var inicioTeclas = 62;
+
 // JavaScript source code
 class Ajustes extends Phaser.Scene {
 
@@ -80,13 +115,15 @@ class Ajustes extends Phaser.Scene {
 	create() {
 		this.cameras.main.fadeIn(valorFade);
 		
-		var separacionBotonesY = 50;
-		var separacionBotonesX = 250
+		
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
+		this.tablon_graficos = this.add.image(width / 2 - 190, height / 2 + 20, 'tablon_graficos');
+		this.tablon_teclas = this.add.image(width / 2 + 230, height / 2, 'tablon_teclas');
+		
 
 
         this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
@@ -97,80 +134,109 @@ class Ajustes extends Phaser.Scene {
 		
 		this.tablon = this.add.image(width / 2, height / 2, 'tablonPausa').setVisible(false);
 		
+		var cambiar;
+		var cambiar_pulsado;
+		var graficos;
+		var volumen;
 		if(enPc){
 			if(idioma.idioma.includes("es")){
 				var i = 0;
+				cambiar = 'cambiar';
+				graficos = 'graficos_es';
+				volumen = 'volumen_es';
+				cambiar_pulsado = 'cambiar_pulsado';
 				for (var key in textoConfiguracionEspañol){
-					this.add.text(width / 2, 50 + i * separacionBotonesY, textoConfiguracionEspañol[key], configTextoMesa);
+					this.add.text(width / 2 + 40, 52 + i * separacionBotonesY, textoConfiguracionEspañol[key], configTextoMesa);
 					i++;
 				}
 			}else{
 				var i = 0;
+				cambiar = 'cambiar_en';
+				graficos = 'graficos_en';
+				volumen = 'volumen_en';
+				cambiar_pulsado = 'cambiar_en_pulsado';
 				for (var key in textoConfiguracionIngles){
-					this.add.text(width / 2, 50 + i * separacionBotonesY, textoConfiguracionIngles[key], configTextoMesa);
+					this.add.text(width / 2 + 40, 52 + i * separacionBotonesY, textoConfiguracionIngles[key], configTextoMesa);
 					i++;
 				}
 			}
+			this.graficos = this.add.image(width / 2 - 190, height / 2 - 150, graficos.toString());
+			this.volumen = this.add.image(width / 2 - 190, height / 2 + 120, volumen.toString());
+			//var controlesGuardados = JSON.parse(localStorage.getItem('controlesGuardados'));
+			//console.log(controlesGuardados);
+
 			var i = 0;
-			this.botonIzq = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonIzq.on('pointerdown', () => {this.botonIzq.setTexture("volver_pulsado");});
-			this.botonIzq.on('pointerup', () => {this.botonIzq.setTexture("volver"); this.RecibirTecla('left');} );
-			this.botonIzq.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonIzq.setTexture("volver_pulsado");}});
-			this.botonIzq.on('pointerout', () => {this.botonIzq.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'left'))); 
+			this.botonIzq = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar.toString()).setInteractive();
+			this.botonIzq.on('pointerdown', () => {this.botonIzq.setTexture(cambiar_pulsado.toString());});
+			this.botonIzq.on('pointerup', () => {this.botonIzq.setTexture(cambiar.toString()); this.RecibirTecla('left');} );
+			this.botonIzq.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonIzq.setTexture(cambiar_pulsado);}});
+			this.botonIzq.on('pointerout', () => {this.botonIzq.setTexture(cambiar.toString());});
 			i++;
-			this.botonDcha = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonDcha.on('pointerdown', () => {this.botonDcha.setTexture("volver_pulsado");});
-			this.botonDcha.on('pointerup', () => {this.botonDcha.setTexture("volver"); this.RecibirTecla('right');});
-			this.botonDcha.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonDcha.setTexture("volver_pulsado");}});
-			this.botonDcha.on('pointerout', () => {this.botonDcha.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'right'))); 
+			this.botonDcha = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar).setInteractive();
+			this.botonDcha.on('pointerdown', () => {this.botonDcha.setTexture(cambiar_pulsado.toString());});
+			this.botonDcha.on('pointerup', () => {this.botonDcha.setTexture(cambiar); this.RecibirTecla('right');});
+			this.botonDcha.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonDcha.setTexture(cambiar_pulsado.toString());}});
+			this.botonDcha.on('pointerout', () => {this.botonDcha.setTexture(cambiar);});
 			i++;
-			this.botonArriba = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonArriba.on('pointerdown', () => {this.botonArriba.setTexture("volver_pulsado");});
-			this.botonArriba.on('pointerup', () => {this.botonArriba.setTexture("volver"); this.RecibirTecla('up');});
-			this.botonArriba.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonArriba.setTexture("volver_pulsado");}});
-			this.botonArriba.on('pointerout', () => {this.botonArriba.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'up'))); 
+			this.botonArriba = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar).setInteractive();
+			this.botonArriba.on('pointerdown', () => {this.botonArriba.setTexture(cambiar_pulsado.toString());});
+			this.botonArriba.on('pointerup', () => {this.botonArriba.setTexture(cambiar); this.RecibirTecla('up');});
+			this.botonArriba.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonArriba.setTexture(cambiar_pulsado.toString());}});
+			this.botonArriba.on('pointerout', () => {this.botonArriba.setTexture(cambiar);});
 			i++;
-			this.botonAbajo = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonAbajo.on('pointerdown', () => {this.botonAbajo.setTexture("volver_pulsado");});
-			this.botonAbajo.on('pointerup', () => {this.botonAbajo.setTexture("volver"); this.RecibirTecla('down');});
-			this.botonAbajo.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonAbajo.setTexture("volver_pulsado");}});
-			this.botonAbajo.on('pointerout', () => {this.botonAbajo.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'down'))); 
+			this.botonAbajo = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar).setInteractive();
+			this.botonAbajo.on('pointerdown', () => {this.botonAbajo.setTexture(cambiar_pulsado.toString());});
+			this.botonAbajo.on('pointerup', () => {this.botonAbajo.setTexture(cambiar); this.RecibirTecla('down');});
+			this.botonAbajo.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonAbajo.setTexture(cambiar_pulsado.toString());}});
+			this.botonAbajo.on('pointerout', () => {this.botonAbajo.setTexture(cambiar);});
 			i++;
-			this.botonSalto = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonSalto.on('pointerdown', () => {this.botonSalto.setTexture("volver_pulsado");});
-			this.botonSalto.on('pointerup', () => {this.botonSalto.setTexture("volver"); this.RecibirTecla('jump');});
-			this.botonSalto.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonSalto.setTexture("volver_pulsado");}});
-			this.botonSalto.on('pointerout', () => {this.botonSalto.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'jump'))); 
+			this.botonSalto = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar).setInteractive();
+			this.botonSalto.on('pointerdown', () => {this.botonSalto.setTexture(cambiar_pulsado.toString());});
+			this.botonSalto.on('pointerup', () => {this.botonSalto.setTexture(cambiar); this.RecibirTecla('jump');});
+			this.botonSalto.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonSalto.setTexture(cambiar_pulsado.toString());}});
+			this.botonSalto.on('pointerout', () => {this.botonSalto.setTexture(cambiar);});
 			i++;
-			this.botonDash = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonDash.on('pointerdown', () => {this.botonDash.setTexture("volver_pulsado");});
-			this.botonDash.on('pointerup', () => {this.botonDash.setTexture("volver"); this.RecibirTecla('dash');});
-			this.botonDash.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonDash.setTexture("volver_pulsado");}});
-			this.botonDash.on('pointerout', () => {this.botonDash.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'dash'))); 
+			this.botonDash = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar).setInteractive();
+			this.botonDash.on('pointerdown', () => {this.botonDash.setTexture(cambiar_pulsado.toString());});
+			this.botonDash.on('pointerup', () => {this.botonDash.setTexture(cambiar); this.RecibirTecla('dash');});
+			this.botonDash.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonDash.setTexture(cambiar_pulsado.toString());}});
+			this.botonDash.on('pointerout', () => {this.botonDash.setTexture(cambiar);});
 			i++;
-			this.botonAccion = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonAccion.on('pointerdown', () => {this.botonAccion.setTexture("volver_pulsado");});
-			this.botonAccion.on('pointerup', () => {this.botonAccion.setTexture("volver"); this.RecibirTecla('accion');});
-			this.botonAccion.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonAccion.setTexture("volver_pulsado");}});
-			this.botonAccion.on('pointerout', () => {this.botonAccion.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'accion'))); 
+			this.botonAccion = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar).setInteractive();
+			this.botonAccion.on('pointerdown', () => {this.botonAccion.setTexture(cambiar_pulsado.toString());});
+			this.botonAccion.on('pointerup', () => {this.botonAccion.setTexture(cambiar); this.RecibirTecla('accion');});
+			this.botonAccion.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonAccion.setTexture(cambiar_pulsado.toString());}});
+			this.botonAccion.on('pointerout', () => {this.botonAccion.setTexture(cambiar);});
 			i++;
-			this.botonTarjetas = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonTarjetas.on('pointerdown', () => {this.botonTarjetas.setTexture("volver_pulsado");});
-			this.botonTarjetas.on('pointerup', () => {this.botonTarjetas.setTexture("volver"); this.RecibirTecla('inventario');});
-			this.botonTarjetas.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonTarjetas.setTexture("volver_pulsado");}});
-			this.botonTarjetas.on('pointerout', () => {this.botonTarjetas.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'inventario'))); 
+			this.botonTarjetas = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar).setInteractive();
+			this.botonTarjetas.on('pointerdown', () => {this.botonTarjetas.setTexture(cambiar_pulsado.toString());});
+			this.botonTarjetas.on('pointerup', () => {this.botonTarjetas.setTexture(cambiar); this.RecibirTecla('inventario');});
+			this.botonTarjetas.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonTarjetas.setTexture(cambiar_pulsado.toString());}});
+			this.botonTarjetas.on('pointerout', () => {this.botonTarjetas.setTexture(cambiar);});
 			i++;
-			this.botonFullscreen = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonFullscreen.on('pointerdown', () => {this.botonFullscreen.setTexture("volver_pulsado");});
-			this.botonFullscreen.on('pointerup', () => {this.botonFullscreen.setTexture("volver"); this.RecibirTecla('fullscreen');});
-			this.botonFullscreen.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonFullscreen.setTexture("volver_pulsado");}});
-			this.botonFullscreen.on('pointerout', () => {this.botonFullscreen.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'fullscreen'))); 
+			this.botonFullscreen = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar).setInteractive();
+			this.botonFullscreen.on('pointerdown', () => {this.botonFullscreen.setTexture(cambiar_pulsado.toString());});
+			this.botonFullscreen.on('pointerup', () => {this.botonFullscreen.setTexture(cambiar); this.RecibirTecla('fullscreen');});
+			this.botonFullscreen.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonFullscreen.setTexture(cambiar_pulsado.toString());}});
+			this.botonFullscreen.on('pointerout', () => {this.botonFullscreen.setTexture(cambiar);});
 			i++;
-			this.botonPausa = this.add.sprite(width / 2 + separacionBotonesX, 50 + i * separacionBotonesY, 'volver').setInteractive();
-			this.botonPausa.on('pointerdown', () => {this.botonPausa.setTexture("volver_pulsado");});
-			this.botonPausa.on('pointerup', () => {this.botonPausa.setTexture("volver"); this.RecibirTecla('pausa');});
-			this.botonPausa.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonPausa.setTexture("volver_pulsado");}});
-			this.botonPausa.on('pointerout', () => {this.botonPausa.setTexture("volver");});
+			//arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX*1.5, 50 + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'pausa'))); 
+			this.botonPausa = this.add.sprite(width / 2 + separacionBotonesCambiarX, inicioTeclas + i * separacionBotonesY, cambiar).setInteractive();
+			this.botonPausa.on('pointerdown', () => {this.botonPausa.setTexture(cambiar_pulsado.toString());});
+			this.botonPausa.on('pointerup', () => {this.botonPausa.setTexture(cambiar); this.RecibirTecla('pausa');});
+			this.botonPausa.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonPausa.setTexture(cambiar_pulsado.toString());}});
+			this.botonPausa.on('pointerout', () => {this.botonPausa.setTexture(cambiar);});
+
+			this.ListaTeclas();
 		}
 		
 		this.graficos = JSON.parse(localStorage.getItem('graficos')) || {
@@ -178,14 +244,14 @@ class Ajustes extends Phaser.Scene {
 			particulas: true
 		};
 		if(enPc){
-			this.botonAlto = this.add.sprite(width / 4, height / 4, 'alto_pulsado').setInteractive();
-			this.botonMedio = this.add.sprite(width / 4, (height / 4) * 2, 'medio_pulsado').setInteractive();
-			this.botonBajo = this.add.sprite(width / 4, (height / 4) * 3, 'bajo_pulsado').setInteractive();
+			this.botonAlto = this.add.sprite(width / 2 - 190, height / 2 - 90, 'alto_pulsado').setInteractive();
+			this.botonMedio = this.add.sprite(width / 2 - 190, (height / 2) -15, 'medio_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 2 - 190, (height / 2) + 60, 'bajo_pulsado').setInteractive();
 			
 		}else{
-			this.botonAlto = this.add.sprite(width / 2, height / 4, 'alto_pulsado').setInteractive();
-			this.botonMedio = this.add.sprite(width / 2, (height / 4) * 2, 'medio_pulsado').setInteractive();
-			this.botonBajo = this.add.sprite(width / 2, (height / 4) * 3, 'bajo_pulsado').setInteractive();
+			this.botonAlto = this.add.sprite(width / 2, height / 2 - 50, 'alto_pulsado').setInteractive();
+			this.botonMedio = this.add.sprite(width / 2, (height / 2) , 'medio_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 2, (height / 2) * 3, 'bajo_pulsado').setInteractive();
 		}
 		
 		this.botonAlto.on('pointerdown', () => this.PulsarAlto());
@@ -229,7 +295,7 @@ class Ajustes extends Phaser.Scene {
 		
 		this.tablon.setVisible(true);
 		var texto;
-		var acciones 
+		var acciones; 
 		if(idioma.idioma.includes("es")){
 			texto = "Pulsa la tecla para: ";
 			acciones = textoConfiguracionEspañol;
@@ -261,7 +327,11 @@ class Ajustes extends Phaser.Scene {
 			};
 			console.log(controlesGuardados);
 			controlesGuardados[accion] = eventName.keyCode;
-			
+
+			localStorage.setItem('controlesGuardados', JSON.stringify(controlesGuardados));
+			this.ComprobarTecla(controlesGuardados, accion);
+			this.ListaTeclas();
+
 			this.tablon.setVisible(false);
 			this.texto.setVisible(false);
 			
@@ -280,7 +350,7 @@ class Ajustes extends Phaser.Scene {
 			this.botonBajo.setVisible(true);
 			
 		
-			localStorage.setItem('controlesGuardados', JSON.stringify(controlesGuardados));
+			
 			
 		});
 	}
@@ -314,5 +384,114 @@ class Ajustes extends Phaser.Scene {
 			this.graficos.particulas = false;
 			localStorage.setItem('graficos', JSON.stringify(this.graficos));
 		}
+	}
+
+	ComprobarTecla(array, tecla){
+		if(array[tecla] == 46){//delete
+			return new Array("atras");
+		}
+		else if(array[tecla] == 13){//enter
+			return new Array("enter");
+		}
+		else if(array[tecla] == 32){//space
+			return new Array("espacio");
+		}
+		else if(array[tecla] == 40){//down
+			return new Array("flecha_abajo");
+		}
+		else if(array[tecla] == 38){//up
+			return new Array("flecha_arriba");
+		}
+		else if(array[tecla] == 39){//right
+			return new Array("flecha_derecha");
+		}
+		else if(array[tecla] == 37){//left
+			return new Array("flecha_izquierda");
+		}
+		else if(array[tecla] == 16){//shift
+			return new Array("shift");
+		}
+		else if(array[tecla] == 9){//tab
+			return new Array("tabulador");
+		}
+		else if(array[tecla]>= 65 && array[tecla]<= 90){//letras
+			return new Array("tecla_base", String.fromCharCode(array[tecla]));
+		}
+		else if(array[tecla]>= 49 && array[tecla]<= 57){//numeros
+			return new Array("tecla_base", String.fromCharCode(array[tecla]));
+		}
+		else if(array[tecla] == 18){//alt
+			return new Array("tecla_larga_base", "ALT");
+		}
+		else if(array[tecla] == 17){//ctrl
+			return new Array("tecla_larga_base", "CTRL");
+		}
+		else if(array[tecla] == 20){//block mayus
+			return new Array("tecla_larga_base", "CAPS");
+		}
+		
+	}
+
+	ListaTeclas(){
+		for(let j = 0; j < arrayTeclas.length; j++){
+			arrayTeclas[j].destroy();
+		}
+		for(let j = 0; j < arrayTeclasInternos.length; j++){
+			arrayTeclasInternos[j].destroy();
+		}
+		arrayTeclas = new Array();
+		arrayTeclasInternos = new Array();
+		var controlesGuardados = JSON.parse(localStorage.getItem('controlesGuardados'));
+		var i = 0;
+		
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'left')[0]));
+		if(this.ComprobarTecla(controlesGuardados, 'left').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'left')[1], configTexto));
+		} 
+		i++;
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'right')[0]));
+		if(this.ComprobarTecla(controlesGuardados, 'right').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'right')[1], configTexto))
+		} 
+		i++;
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'up')[0])); 
+		if(this.ComprobarTecla(controlesGuardados, 'up').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'up')[1], configTexto))
+		} 
+		i++;
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'down')[0])); 
+		if(this.ComprobarTecla(controlesGuardados, 'down').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'down')[1], configTexto))
+		} 
+		i++;
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'jump')[0])); 
+		if(this.ComprobarTecla(controlesGuardados, 'jump').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'jump')[1], configTexto))
+		} 
+		i++;
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'dash')[0]));
+		if(this.ComprobarTecla(controlesGuardados, 'dash').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'dash')[1], configTexto))
+		} 
+		i++;
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'accion')[0]));
+		if(this.ComprobarTecla(controlesGuardados, 'accion').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'accion')[1], configTexto))
+		} 
+		i++;
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'inventario')[0])); 
+		if(this.ComprobarTecla(controlesGuardados, 'inventario').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'inventario')[1], configTexto))
+		} 
+		i++;
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'fullscreen')[0]));
+		if(this.ComprobarTecla(controlesGuardados, 'fullscreen').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'fullscreen')[1], configTexto))
+		} 
+		i++;
+		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'pausa')[0])); 
+		if(this.ComprobarTecla(controlesGuardados, 'pausa').length > 1){
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'pausa')[1], configTexto))
+		} 
 	}
 }

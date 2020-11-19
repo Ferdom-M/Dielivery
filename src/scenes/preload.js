@@ -78,6 +78,13 @@ class Preload extends Phaser.Scene {
         this.load.image('fondoPausa', 'assets/Fondo_pausa.png');
         this.load.image('tablonPausa', 'assets/Interfaz/Tablon pausa.png');
 		
+		// AJUSTES
+		this.load.image('tablon_graficos', 'assets/Interfaz/Tablon ajustes graficos.png');
+		this.load.image('tablon_teclas', 'assets/Interfaz/Tablon teclas.png');
+		this.load.image('graficos_es', 'assets/Interfaz/Botones/Espanol/graficos.png');
+		this.load.image('volumen_es', 'assets/Interfaz/Botones/Espanol/volumen.png');
+		this.load.image('graficos_en', 'assets/Interfaz/Botones/Ingles/graficos.png');
+		this.load.image('volumen_en', 'assets/Interfaz/Botones/Ingles/volumen.png');
 		
 		// BOTONES
 		this.load.image('mapa1', 'assets/Interfaz/Botones/mapa1.png');
@@ -201,6 +208,10 @@ class Preload extends Phaser.Scene {
 		this.load.image("tabulador", "assets/Teclas/tabulador.png");
 		this.load.image("tecla_base", "assets/Teclas/tecla_base.png");
 		this.load.image("tecla_larga_base", "assets/Teclas/tecla_larga_base.png");
+		this.load.image("cambiar", "assets/Interfaz/Teclas/cambiar.png");
+		this.load.image("cambiar_pulsado", "assets/Interfaz/Teclas/cambiar_pulsado.png");
+		this.load.image("cambiar_en", "assets/Interfaz/Teclas/cambiar_en.png");
+		this.load.image("cambiar_en_pulsado", "assets/Interfaz/Teclas/cambiar_en_pulsado.png");
 
 
 		//CREDITOS
