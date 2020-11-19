@@ -88,7 +88,6 @@ var teclasIntY = 11;
 var teclasIntX = 7;
 var teclasGrandesX = 0;
 var desplazamientoGrandesX = 9;
-var volumenGuardado = 0.5;
 // JavaScript source code
 class Ajustes extends Phaser.Scene {
 
@@ -145,7 +144,6 @@ class Ajustes extends Phaser.Scene {
 	}
 	create() {
 		this.cameras.main.fadeIn(valorFade);
-		volumenGuardado = JSON.parse(localStorage.getItem('volumen'));
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		

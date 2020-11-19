@@ -13,7 +13,8 @@ const ajustesPosY = 195;
 const idiomaPosX = width - 75;
 const idiomaPosY = height - 75
 const logoPosX = width / 2;
-const logoPosY = 110
+const logoPosY = 110;
+var volumenGuardado = 0.5;
 
 var seHaJugado = false;
 
@@ -142,6 +143,12 @@ class Mainmenu extends Phaser.Scene {
 	
     create() {
 		this.cameras.main.fadeIn(valorFade);
+		if(volumenGuardado = JSON.parse(localStorage.getItem('volumen'))){
+			volumenGuardado = JSON.parse(localStorage.getItem('volumen'));
+		}else{
+			volumenGuardado = 0.5;
+			localStorage.setItem('volumen', JSON.stringify(volumenGuardado));
+		}
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
