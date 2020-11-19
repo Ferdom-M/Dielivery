@@ -69,7 +69,7 @@ arrayCausaMuerteEspanol.push("Uncaught SyntaxError: missing ) after argument lis
 arrayCausaMuerteEspanol.push("Le cayó una tableta digitalizadora gigante del cielo y le aplastó la cabeza");
 arrayCausaMuerteEspanol.push("Un programador le mató por equivocarse de capa... Múltiples veces");
 arrayCausaMuerteEspanol.push("No pudo con la presión de tener que hacer el triple de trabajo que se esperaba");
-arrayCausaMuerteEspanol.push("Queria comprobar si un flipflop te salva de la muerte. No lo hace");
+arrayCausaMuerteEspanol.push("Quería comprobar si un flipflop te salva de la muerte. No lo hace");
 arrayCausaMuerteEspanol.push("Murió de amor a la programación");
 arrayCausaMuerteEspanol.push("Perdió la promo a master y se le quitaron las ganas de vivir");
 arrayCausaMuerteEspanol.push("Se cansó de esperar al Cyberpunk");
