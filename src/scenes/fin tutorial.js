@@ -10,7 +10,6 @@ class FinTutorial extends Phaser.Scene {
 		this.tablonPausa = this.add.image(width / 2, height / 2, 'tablonPausa');
 		
 		var texto;
-		console.log(tutorialCorrecto);
 		if(tutorialCorrecto){
 			if(idioma.idioma.includes("es")){
 				texto = "¡Fantástico! ¡Ahora tienes todo lo que necesitas para conseguir ser el empleado del mes! ¡Pásatelo bien en las instalaciones de Dielivery!";
@@ -53,7 +52,6 @@ class FinTutorial extends Phaser.Scene {
 		
 		this.textoFinal = this.add.text(width / 2 - 149, height / 2 - 150, texto, config);
 		
-		console.log(this.textoFinal);
 		
         this.menu = this.add.image(width / 2, height / 2 + separacionBotones, 'menu').setInteractive();
 		this.menu.on('pointerdown', () => {this.menu.setTexture("menu_pulsado");});

@@ -252,13 +252,10 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 	for(var z = 0; z < pedido.objetos.length; z++){
 		objetos.push(pedido.objetos[z].tipo);
 	}
-	console.log("Score previo: " + puntuacionTotal);
 	if(destinoElegido == pedido.destinatario){
 		var objetosCorrectos = 0;
 		for (var i = 0; i < paquete.length; i++){
 			if(objetos.includes(paquete[i])){
-				console.log("contengo: " + paquete[i]);
-				console.log("Sumo: " + pedido.objetos[objetos.indexOf(paquete[i])].puntuacion);
 				puntuacionTotal += pedido.objetos[objetos.indexOf(paquete[i])].puntuacion;
 				// Sobreescribimos ese elemento del array
 				pedido.objetos[objetos.indexOf(paquete[i])] = 0;
@@ -267,7 +264,6 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 				//console.log("puntuacion" + paquete.objetos[pedido.objetos.indexOf(paquete[i])].puntuacion);
 				//puntuacion += 50;
 			}else{
-				console.log("fallo: " + paquete[i]);
 				puntuacionTotal += puntuacionItemFallido;
 				
 				objetosCorrectos--;
@@ -276,14 +272,12 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 			
 		}
 		if(objetosCorrectos == pedido.objetos.length){
-			console.log("Pedido correcto");
 			pedidoCorrecto = true;
 		}else{
 			puntuacionTotal -= Math.abs((pedido.objetos.length - paquete.length) * puntuacionItemFallido);
 			//puntuacion += puntuacionItemFallido;
 		}
 	}else{
-		console.log("Pedido fallido por destino");
 		puntuacionTotal += puntuacionDestinatarioFallido;
 	}
 
@@ -302,6 +296,5 @@ function CompararPedidos(paquete, pedido, destinoElegido){
 	//Insertar bucle de vaciado de inventario(actualmente en ClickObjeto de estadoMesa) 
 
 	//return puntuacion;
-	console.log("Puntuacion actual: " + puntuacionTotal);
 	return pedidoCorrecto;
 }

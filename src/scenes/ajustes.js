@@ -479,12 +479,7 @@ class Ajustes extends Phaser.Scene {
 				inventario: Phaser.Input.Keyboard.KeyCodes.Q,
 				fullscreen: Phaser.Input.Keyboard.KeyCodes.F,
 				pausa: Phaser.Input.Keyboard.KeyCodes.P,
-				//debug
-				propiedades: Phaser.Input.Keyboard.KeyCodes.L,
-				tpMesa: Phaser.Input.Keyboard.KeyCodes.I,
-				tpCosas: Phaser.Input.Keyboard.KeyCodes.O
 			};
-			console.log(controlesGuardados);
 			controlesGuardados[accion] = eventName.keyCode;
 
 			localStorage.setItem('controlesGuardados', JSON.stringify(controlesGuardados));

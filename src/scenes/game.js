@@ -271,7 +271,6 @@ function RepresentarInventario(that, jugador){
 	
 
 	for(let i = 0; i < jugador.inventario.length; i++){
-		console.log(jugador.inventario[i].tipo);
 		jugador.arrayInventario.push(that.add.sprite((width / 2 - 400) + (i / (limInventario - 1)) * (320), height - 49, jugador.inventario[i].tipo).setScrollFactor(0,0));
 		
 		
