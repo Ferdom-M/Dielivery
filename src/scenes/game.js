@@ -187,7 +187,7 @@ class Game extends Phaser.Scene {
 		if(idioma.idioma.includes("es")){
 			puntuacion = this.add.text(width - 260, height - 65, "Puntuación: " + puntuacionTotal, configTextoInterfaz).setScrollFactor(0,0);
 		}else{
-			puntuacion = this.add.text(width - 260, height - 65, "Score: " + puntuacionTotal, configTextoInterfaz).setScrollFactor(0,0);
+			puntuacion = this.add.text(width / 2 - 220, height - 65, "Score: " + puntuacionTotal, configTextoInterfaz).setScrollFactor(0,0);
 		}
 		if(mapa != "tutorial"){
 			for(var i = 0; i < comienzoPedidos - 1; i++){
