@@ -172,19 +172,6 @@ class Results extends Phaser.Scene {
 			localStorage.setItem('nivel2Jugado', JSON.stringify(nivel2Jugado));
 		}
 		
-		/*var FKey = this.input.keyboard.addKey('F');
-
-        FKey.on('down', function () {
-			if(!flipflop){
-				if (this.scale.isFullscreen) {
-					this.scale.stopFullscreen();
-				}
-				else {
-					this.scale.startFullscreen();
-				}
-			}
-		}, this);*/
-		
 		//Creamos el input text del chaval este tan majo y ponemos que cuando el texto cambie se guarde en la variable nombreJugador
         var inputText = this.add.rexInputText(inputNombreX, inputNombreY, 300, 40, configTexto2);
         inputText.on('textchange', function(inputText){

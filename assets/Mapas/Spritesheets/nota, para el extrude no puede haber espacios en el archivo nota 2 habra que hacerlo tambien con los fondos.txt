@@ -1,6 +1,0 @@
-Aqui dentro dejo el codigo necesario
-tile-extruder --tileWidth 32 --tileHeight 32 --input s.png --output s-extruded.png
-
-tile-extruder --tileWidth 32 --tileHeight 32 --input f.png --output f-extruded.png
-
-recuerda llamar a spritesheet definitiva s.png y fondos f.png, que no admite espacios

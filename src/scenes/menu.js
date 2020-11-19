@@ -186,20 +186,6 @@ class Mainmenu extends Phaser.Scene {
 		
 		this.buttonIdioma = this.add.sprite(width / 2 + ajustesPosX, height/ 2 + ajustesPosY, 'idioma').setInteractive();
 		this.buttonIdioma.on('pointerdown', () => this.CambiarIdioma());
-
-		
-        var FKey = this.input.keyboard.addKey('F');
-        
-        FKey.on('down', function () {
-                if (this.scale.isFullscreen) {
-                    this.scale.stopFullscreen();
-                }
-                else {
-                    this.scale.startFullscreen();
-                }
-        }, this);
-        
-
     }
 
 	CambiarIdioma(){

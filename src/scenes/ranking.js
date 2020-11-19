@@ -173,19 +173,6 @@ class Ranking extends Phaser.Scene {
         this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
         this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
-		
-		var FKey = this.input.keyboard.addKey('F');
-
-        FKey.on('down', function () {
-
-            if (this.scale.isFullscreen) {
-                this.scale.stopFullscreen();
-            }
-            else {
-                this.scale.startFullscreen();
-            }
-
-        }, this);
     }
 
 	
