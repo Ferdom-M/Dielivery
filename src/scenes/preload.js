@@ -87,6 +87,9 @@ class Preload extends Phaser.Scene {
 		this.load.image('volumen_es', 'assets/Interfaz/Botones/Espanol/volumen.png');
 		this.load.image('graficos_en', 'assets/Interfaz/Botones/Ingles/graficos.png');
 		this.load.image('volumen_en', 'assets/Interfaz/Botones/Ingles/volumen.png');
+		this.load.image('barra_volumen', 'assets/Interfaz/Barra volumen.png');
+		this.load.image('boton_volumen', 'assets/Interfaz/Botones/boton_volumen.png');
+
 		
 		// BOTONES
 		this.load.image('mapa1', 'assets/Interfaz/Botones/mapa1.png');
@@ -237,6 +240,7 @@ class Preload extends Phaser.Scene {
 			this.load.plugin('rexvirtualjoystickplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js', true);
 		}
 		this.load.plugin('rexinputtextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexinputtextplugin.min.js', true);
+		this.load.plugin('rexsliderplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexsliderplugin.min.js', true);
     }
 	
     create() {

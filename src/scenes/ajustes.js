@@ -88,7 +88,7 @@ var teclasIntY = 11;
 var teclasIntX = 7;
 var teclasGrandesX = 0;
 var desplazamientoGrandesX = 9;
-
+var volumenGuardado = 0.5 ;
 // JavaScript source code
 class Ajustes extends Phaser.Scene {
 
@@ -155,9 +155,10 @@ class Ajustes extends Phaser.Scene {
 		//this.tablon_teclas = this.add.image(width / 2 + 230, height / 2, 'tablon_teclas');
 		this.tablon_ajustes = this.add.image(width / 2 , height / 2, 'tablon_ajustes');
 		//this.tablon_ajustes.setDisplaySize(width, height);
-
+		
 
         
+
 		
 		if(idioma.idioma.includes("es")){
 			graficos = 'graficos_es';
@@ -168,6 +169,23 @@ class Ajustes extends Phaser.Scene {
 		}
 		this.graficos = this.add.image(width / 2 - 215, height / 2 - 110, graficos.toString());
 		this.volumen = this.add.image(width / 2 - 215, height / 2 + 150, volumen.toString());
+		this.barra_volumen = this.add.image(width / 2 - 215, height / 2 + 190, 'barra_volumen');
+		this.boton_volumen = this.add.image(width / 2 - 430 * volumenGuardado, height / 2 + 200, 'boton_volumen');
+        this.boton_volumen.slider = this.plugins.get('rexsliderplugin').add(this.boton_volumen, {
+            endPoints: [{
+                    x: width / 2 - 329,
+                    y: this.boton_volumen.y
+                },
+                {
+                    x: width / 2 - 101,
+                    y: this.boton_volumen.y
+                }
+            ],
+            value: volumenGuardado
+		});
+		/*this.boton_volumen.slider.on('valuechange', function(newValue, prevValue){
+			this.sound.volume = newValue;
+		});*/
 		
 		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
@@ -310,7 +328,12 @@ class Ajustes extends Phaser.Scene {
 			this.botonBajo.setTexture('bajo');
 		}
 		
-    }
+	}
+	
+	update(){
+		volumenGuardado	 = this.boton_volumen.slider.value;
+		this.sound.volume = volumenGuardado;
+	}
 
 	resizeCamera(){
 		var ratio = this.sys.game.canvas.height / 720;
