@@ -152,6 +152,8 @@ class Game extends Phaser.Scene {
 		
 		this.input.gamepad.start();
 		
+		hayMarco = false;
+		
 		if(debug){
 			const debugGraphics = this.add.graphics().setAlpha(0.75);
 			suelo.renderDebug(debugGraphics, {
