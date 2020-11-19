@@ -1,15 +1,18 @@
+var tutorialCorrecto = false;
+
 class FinTutorial extends Phaser.Scene {
     constructor() {
         super("FinTutorial");
     }
 
-    create(correcto) {
+    create() {
 		console.log("pito");
         this.fondoPausa = this.add.image(width / 2, height / 2, 'fondoPausa');
 		this.tablonPausa = this.add.image(width / 2, height / 2, 'tablonPausa');
 		
 		var texto;
-		if(correcto){
+		console.log(tutorialCorrecto);
+		if(tutorialCorrecto){
 			if(idioma.idioma.includes("es")){
 				texto = "¡Fantástico! ¡Ahora tienes todo lo que necesitas para conseguir ser el empleado del mes! ¡Pásatelo bien en las instalaciones de Dielivery!";
 			}else{

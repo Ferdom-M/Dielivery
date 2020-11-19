@@ -2,7 +2,7 @@
 
 var inputNombreX = (width/2);
 var inputNombreY = height/1.58;
-var nombreJugador = "Introduce tu nombre";
+var nombreJugador;
 
 
 class Results extends Phaser.Scene {
@@ -67,6 +67,13 @@ class Results extends Phaser.Scene {
     }
 
     create(puntuacion) {
+		
+		if(idioma.idioma.includes("es")){
+			nombreJugador = "Introduce tu nombre";
+		}else{
+			nombreJugador = "Enter your name";
+		}
+
 		var configTexto = {
 				fontFamily: 'Sylfaen',
 				fontSize: '22px',
@@ -123,6 +130,8 @@ class Results extends Phaser.Scene {
 	};
 
 		
+		
+		
 		this.cameras.main.fadeIn(valorFade);
 		//console.log(mapaActual);
 		var puntuacionPosX = width / 7;
@@ -140,7 +149,6 @@ class Results extends Phaser.Scene {
 		
 		if(idioma.idioma.includes("es")){
 			this.add.text(puntuacionPosX, puntuacionPosY, "Has acabado la jornada con " + puntuacionTotal.toString() + " puntos, ¡buen trabajo!",configTexto);
-			
 		}else{
 			this.add.text(puntuacionPosX, puntuacionPosY, "You finished the day with " + puntuacionTotal.toString() + " points, nice job!", configTexto);
 		}

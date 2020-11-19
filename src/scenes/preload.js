@@ -64,6 +64,8 @@ class Preload extends Phaser.Scene {
 		// INTERFAZ JUEGO
 		this.load.image("interfazInventario", "assets/Interfaz/Tablon interfaz partida.png");
 		this.load.image("interfazMesa", "assets/Interfaz/Tablon interfaz pedidos.png");
+		this.load.image("marcoCorrecto", "assets/Interfaz/marco_acierto.png");
+		this.load.image("marcoIncorrecto", "assets/Interfaz/marco_error.png");
 		this.load.image("cielo2", "assets/Interfaz/Tarjetas/Cielo_2.png");
 		this.load.image("cielo3", "assets/Interfaz/Tarjetas/Cielo_3.png");
 		this.load.image("cielo4", "assets/Interfaz/Tarjetas/Cielo_4.png");
@@ -142,6 +144,8 @@ class Preload extends Phaser.Scene {
 		this.load.audio('s_salto', 'assets/Sonidos/s_salto.wav');
 		this.load.audio('s_game', 'assets/Sonidos/s_game.mp3');
 		this.load.audio('s_menu', 'assets/Sonidos/s_menu.mp3');
+		this.load.audio('s_paqueteCorrecto', 'assets/Sonidos/s_paqueteCorrecto.wav');
+		this.load.audio('s_paqueteErroneo', 'assets/Sonidos/s_paqueteErroneo.wav');
 		
 		// MAPAS
 		this.load.tilemapTiledJSON("Nivel1", "assets/Mapas/mapanormaldimensionado.json");
