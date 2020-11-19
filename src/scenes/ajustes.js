@@ -88,7 +88,7 @@ var teclasIntY = 11;
 var teclasIntX = 7;
 var teclasGrandesX = 0;
 var desplazamientoGrandesX = 9;
-var volumenGuardado = 0.5 ;
+var volumenGuardado = 0.5;
 // JavaScript source code
 class Ajustes extends Phaser.Scene {
 
@@ -145,7 +145,7 @@ class Ajustes extends Phaser.Scene {
 	}
 	create() {
 		this.cameras.main.fadeIn(valorFade);
-		
+		volumenGuardado = JSON.parse(localStorage.getItem('volumen'));
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
@@ -153,7 +153,8 @@ class Ajustes extends Phaser.Scene {
 		this.fondo.setDisplaySize(width, height);
 		//this.tablon_graficos = this.add.image(width / 2 - 190, height / 2 + 20, 'tablon_graficos');
 		//this.tablon_teclas = this.add.image(width / 2 + 230, height / 2, 'tablon_teclas');
-		this.tablon_ajustes = this.add.image(width / 2 , height / 2, 'tablon_ajustes');
+		
+		
 		//this.tablon_ajustes.setDisplaySize(width, height);
 		
 
@@ -167,7 +168,8 @@ class Ajustes extends Phaser.Scene {
 			graficos = 'graficos_en';
 			volumen = 'volumen_en';
 		}
-		this.graficos = this.add.image(width / 2 - 215, height / 2 - 110, graficos.toString());
+		
+		/*this.graficos = this.add.image(width / 2 - 215, height / 2 - 110, graficos.toString());
 		this.volumen = this.add.image(width / 2 - 215, height / 2 + 150, volumen.toString());
 		this.barra_volumen = this.add.image(width / 2 - 215, height / 2 + 190, 'barra_volumen');
 		this.boton_volumen = this.add.image(width / 2 - 430 * volumenGuardado, height / 2 + 200, 'boton_volumen');
@@ -182,7 +184,7 @@ class Ajustes extends Phaser.Scene {
                 }
             ],
             value: volumenGuardado
-		});
+		});*/
 		/*this.boton_volumen.slider.on('valuechange', function(newValue, prevValue){
 			this.sound.volume = newValue;
 		});*/
@@ -199,6 +201,23 @@ class Ajustes extends Phaser.Scene {
 		var graficos;
 		var volumen;
 		if(enPc){
+			this.tablon_ajustes = this.add.image(width / 2 , height / 2, 'tablon_ajustes');
+			this.graficos = this.add.image(width / 2 - 215, height / 2 - 110, graficos.toString());
+			this.volumen = this.add.image(width / 2 - 215, height / 2 + 160, volumen.toString());
+			this.barra_volumen = this.add.image(width / 2 - 215, height / 2 + 195, 'barra_volumen');
+			this.boton_volumen = this.add.image(width / 2 - 430 * volumenGuardado, height / 2 + 205, 'boton_volumen');
+			this.boton_volumen.slider = this.plugins.get('rexsliderplugin').add(this.boton_volumen, {
+				endPoints: [{
+						x: width / 2 - 329,
+						y: this.boton_volumen.y
+					},
+					{
+						x: width / 2 - 101,
+						y: this.boton_volumen.y
+					}
+				],
+				value: volumenGuardado
+			});
 			if(idioma.idioma.includes("es")){
 				var i = 0;
 				cambiar = 'cambiar';
@@ -295,23 +314,48 @@ class Ajustes extends Phaser.Scene {
 			this.botonPausa.on('pointerover', () => {if(this.input.activePointer.isDown){this.botonPausa.setTexture(cambiar_pulsado.toString());}});
 			this.botonPausa.on('pointerout', () => {this.botonPausa.setTexture(cambiar);});
 
+
+			this.botonAlto = this.add.sprite(width / 2 - 220, (height / 2) - 50, 'alto_pulsado').setInteractive();
+			this.botonMedio = this.add.sprite(width / 2 - 220, (height / 2) + 25, 'medio_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 2 - 220, (height / 2) + 100, 'bajo_pulsado').setInteractive();
+
 			this.ListaTeclas();
+		}else{
+			this.tablon_ajustes = this.add.image(width / 2 , height / 2, 'tablon_graficos');
+			this.graficos = this.add.image(width / 2, height / 2 - 160, graficos.toString());
+			this.volumen = this.add.image(width / 2, height / 2 + 115, volumen.toString());
+			this.barra_volumen = this.add.image(width / 2, height / 2 + 152, 'barra_volumen');
+			this.boton_volumen = this.add.image(width / 2 - 215 * volumenGuardado, height / 2 + 162, 'boton_volumen');
+			this.boton_volumen.slider = this.plugins.get('rexsliderplugin').add(this.boton_volumen, {
+				endPoints: [{
+						x: width / 2 - 114,
+						y: this.boton_volumen.y
+					},
+					{
+						x: width / 2 + 114,
+						y: this.boton_volumen.y
+					}
+				],
+				value: volumenGuardado
+			});
+			this.botonAlto = this.add.sprite(width / 2, (height / 2) - 100, 'alto_pulsado').setInteractive();
+			this.botonMedio = this.add.sprite(width / 2, (height / 2) - 25, 'medio_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 2, (height / 2) + 50, 'bajo_pulsado').setInteractive();
 		}
 		
 		this.graficos = JSON.parse(localStorage.getItem('graficos')) || {
 			iluminacion: true,
 			particulas: true
 		};
-		if(enPc){
-			this.botonAlto = this.add.sprite(width / 2 - 220, height / 2 - 55, 'alto_pulsado').setInteractive();
-			this.botonMedio = this.add.sprite(width / 2 - 220, (height / 2) + 20, 'medio_pulsado').setInteractive();
-			this.botonBajo = this.add.sprite(width / 2 - 220, (height / 2) + 95, 'bajo_pulsado').setInteractive();
+
+		/*if(enPc){
+			
 			
 		}else{
-			this.botonAlto = this.add.sprite(width / 2 - 220, height / 2 - 55, 'alto_pulsado').setInteractive();
-			this.botonMedio = this.add.sprite(width / 2 - 220, (height / 2) + 20, 'medio_pulsado').setInteractive();
-			this.botonBajo = this.add.sprite(width / 2 - 220, (height / 2) + 95, 'bajo_pulsado').setInteractive();
-		}
+			this.botonAlto = this.add.sprite(width / 2, (height / 2) - 55, 'alto_pulsado').setInteractive();
+			this.botonMedio = this.add.sprite(width / 2, (height / 2) + 20, 'medio_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 2, (height / 2) + 95, 'bajo_pulsado').setInteractive();
+		}*/
 		
 		this.botonAlto.on('pointerdown', () => this.PulsarAlto());
 
@@ -331,8 +375,9 @@ class Ajustes extends Phaser.Scene {
 	}
 	
 	update(){
-		volumenGuardado	 = this.boton_volumen.slider.value;
-		this.sound.volume = volumenGuardado;
+		var volumen	 = this.boton_volumen.slider.value;
+		volumenGuardado = localStorage.setItem('volumen', JSON.stringify(volumen));
+		this.sound.volume = volumen;
 	}
 
 	resizeCamera(){
@@ -563,9 +608,6 @@ class Ajustes extends Phaser.Scene {
 		}
 	}
 
-	CerrarCambioTecla(){
-
-	}
 
 	ListaTeclas(){
 		for(let j = 0; j < arrayTeclas.length; j++){
