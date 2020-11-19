@@ -36,6 +36,7 @@ var configTextoMesa = {
 	// }
 };
 
+
 class Mesa extends State{
 
 	enter(delta, scene, jugador){
@@ -112,11 +113,13 @@ class Mesa extends State{
 		
 		this.pedidoCorrecto = false;
 
+		/*
 		if(flipflop){
 			flipflop = false;
 			scene.marcoCorrecto = scene.add.image(width / 2, height / 2, 'marcoCorrecto').setVisible(false);
 			scene.marcoIncorrecto = scene.add.image(width / 2, height / 2, 'marcoIncorrecto').setVisible(false);
 		}
+		*/
 
     }
 
@@ -178,7 +181,7 @@ class Mesa extends State{
             //
             //
             jugador.arrayMostrados[objetoActual].clearTint();
-            console.log("borrar " + jugador.inventario[objetoActual].tipo);
+            //console.log("borrar " + jugador.inventario[objetoActual].tipo);
             var index = jugador.arraySeleccionados.indexOf(objetoActual);
             jugador.arraySeleccionados.splice(index, 1);
         }else{
@@ -189,7 +192,7 @@ class Mesa extends State{
     }
 	
 	SeleccionarPedido(pedido, jugador){
-		console.log(jugador.pedidoSeleccionado);
+		//console.log(jugador.pedidoSeleccionado);
 		if(jugador.pedidoSeleccionado == arrayPedidos[pedido]){
             arrayPedidosMostrados[pedido].clearTint();
 			jugador.pedidoSeleccionado = undefined;
@@ -211,10 +214,14 @@ class Mesa extends State{
             this.pedidoCorrecto = CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
 			if(this.pedidoCorrecto){
 				jugador.sPedidoCorrecto.play();
-				scene.marcoCorrecto.setVisible(true);
+				//scene.marcoCorrecto.setVisible(true);
+				scene.marcoCorrecto = scene.add.image(width / 2, height / 2, 'marcoCorrecto').setVisible(true);
+				scene.marcoIncorrecto = scene.add.image(width / 2, height / 2, 'marcoIncorrecto').setVisible(false);
 			}else{
 				jugador.sPedidoErroneo.play();
-				scene.marcoIncorrecto.setVisible(true);
+				//scene.marcoIncorrecto.setVisible(true);
+				scene.marcoCorrecto = scene.add.image(width / 2, height / 2, 'marcoCorrecto').setVisible(false);
+				scene.marcoIncorrecto = scene.add.image(width / 2, height / 2, 'marcoIncorrecto').setVisible(true);
 			}
 			scene.marcoCorrecto.depth = 100;
 			scene.marcoIncorrecto.depth = 100;
@@ -230,23 +237,26 @@ class Mesa extends State{
     }
 	
 	BorrarMarco(scene){
-		scene.marcoCorrecto.setVisible(false);
-		scene.marcoIncorrecto.setVisible(false);
+		console.log("Se ha borrado el marco");
+		//scene.marcoCorrecto.setVisible(false);
+		//scene.marcoIncorrecto.setVisible(false);
+		scene.marcoCorrecto.destroy();
+		scene.marcoIncorrecto.destroy();
 		flipflop = true;
 	}
 	
     Eliminar(delta, scene, jugador, enviar){
-		console.log("intento eliminar");
+		//console.log("intento eliminar");
 		if(jugador.arraySeleccionados.length > 0){
-			console.log("Elimino");
+			//console.log("Elimino");
 			var paqueteCreado = [];
 			// Lo hacemos de final a principio porque si hacemos el splice de principio a final nos cargamos el orden despues, de esta forma no intervenimos en los demás
 			for(let a = jugador.arraySeleccionados.length - 1; a >= 0; a--){
-				console.log(jugador.arraySeleccionados[a]);
+				//console.log(jugador.arraySeleccionados[a]);
 				paqueteCreado.push(jugador.inventario[jugador.arraySeleccionados[a]].tipo);
 				jugador.inventario.splice(jugador.arraySeleccionados[a], 1);
 			}
-			console.log("he creado el paquete: " + paqueteCreado);
+			//console.log("he creado el paquete: " + paqueteCreado);
 
 			//Esto debe ir en Comparar paquete, esta aqui provisionalmente porque
 			//Comparar paquete no va por la seleccion de pedidos
