@@ -64,6 +64,7 @@ class Preload extends Phaser.Scene {
 		// INTERFAZ JUEGO
 		this.load.image("interfazInventario", "assets/Interfaz/Tablon interfaz partida.png");
 		this.load.image("interfazMesa", "assets/Interfaz/Tablon interfaz pedidos.png");
+		this.load.image("tablonTecla", "assets/Interfaz/Tablon seleccionar tecla.png");
 		this.load.image("marcoCorrecto", "assets/Interfaz/marco_acierto.png");
 		this.load.image("marcoIncorrecto", "assets/Interfaz/marco_error.png");
 		this.load.image("cielo2", "assets/Interfaz/Tarjetas/Cielo_2.png");
@@ -111,6 +112,8 @@ class Preload extends Phaser.Scene {
 		this.load.image("boton_pausa_pulsado", "assets/Interfaz/Botones/pausa_pulsado.png");
 		this.load.image("ajustes", "assets/Interfaz/Botones/ajustes.png");
 		this.load.image("ajustes_pulsado", "assets/Interfaz/Botones/ajustes_pulsado.png");
+		this.load.image("cancelar", "assets/Interfaz/Botones/cancelar.png");
+		this.load.image("cancelar_pulsado", "assets/Interfaz/Botones/cancelar_pulsado.png");
 		
 		//ICONOS DE OBJETOS PARA INVENTARIO
 		this.load.image("Anillo", "assets/Sprites Objetos/Icono Anillo.png");

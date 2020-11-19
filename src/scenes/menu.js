@@ -8,6 +8,8 @@ const creditosPosX = width / 2 + 7;
 const creditosPosY = comoJugarPosY + separacionBotones;
 const volverPosX = 57;
 const volverPosY = 57;
+const ajustesPosX = 358;
+const ajustesPosY = 195;
 const idiomaPosX = width - 75;
 const idiomaPosY = height - 75
 const logoPosX = width / 2;
@@ -165,13 +167,13 @@ class Mainmenu extends Phaser.Scene {
         this.buttonCreditos.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonCreditos.setTexture("creditos_pulsado");}});
         this.buttonCreditos.on('pointerout', () => {this.buttonCreditos.setTexture("creditos");});
 		
-		this.buttonAjustes = this.add.sprite(volverPosX, height - volverPosY, 'ajustes').setInteractive();
+		this.buttonAjustes = this.add.sprite(width / 2 - ajustesPosX, height/ 2 + ajustesPosY, 'ajustes').setInteractive();
 		this.buttonAjustes.on('pointerdown', () => {this.buttonAjustes.setTexture("ajustes_pulsado");});
         this.buttonAjustes.on('pointerup', () => PasarEscena(this, "Ajustes"));
         this.buttonAjustes.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonAjustes.setTexture("ajustes_pulsado");}});
         this.buttonAjustes.on('pointerout', () => {this.buttonAjustes.setTexture("ajustes");});
 		
-		this.buttonIdioma = this.add.sprite(idiomaPosX, idiomaPosY, 'idioma').setInteractive();
+		this.buttonIdioma = this.add.sprite(width / 2 + ajustesPosX, height/ 2 + ajustesPosY, 'idioma').setInteractive();
 		this.buttonIdioma.on('pointerdown', () => this.CambiarIdioma());
 
 		
