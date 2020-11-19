@@ -39,19 +39,19 @@ var assetsCargados = false;
 
 var configTextoInterfaz = {
 	fontFamily: 'Sylfaen',
-	fontSize: '22px',
+	fontSize: '28px',
 	color: '#fff',
 	stroke: '#000000',
 	strokeThickness: 2,
 	align: 'justify',  // 'left'|'center'|'right'|'justify'
 	maxLines: 0,
 	lineSpacing: 0,
-	fixedWidth: 198,
+	fixedWidth: 300,
 	fixedHeight: 92 ,
 	rtl: false,
 	testString: '|MÉqgy',
 	wordWrap: {
-		width: 198,
+		width: 300,
 		callback: null,
 		callbackScope: null,
 		useAdvancedWrap: false
@@ -183,9 +183,9 @@ class Game extends Phaser.Scene {
 		
 		tablonInventario = this.add.image(width / 2, height - 51, 'interfazInventario').setScrollFactor(0,0);
 		if(idioma.idioma.includes("es")){
-			puntuacion = this.add.text(width - 200, height - 60, "Puntuacion: " + puntuacionTotal, configTextoInterfaz).setScrollFactor(0,0);
+			puntuacion = this.add.text(width - 260, height - 65, "Puntuación: " + puntuacionTotal, configTextoInterfaz).setScrollFactor(0,0);
 		}else{
-			puntuacion = this.add.text(width - 200, height - 60, "Score: " + puntuacionTotal, configTextoInterfaz).setScrollFactor(0,0);
+			puntuacion = this.add.text(width - 260, height - 65, "Score: " + puntuacionTotal, configTextoInterfaz).setScrollFactor(0,0);
 		}
 		if(mapa != "tutorial"){
 			for(var i = 0; i < comienzoPedidos - 1; i++){
@@ -195,7 +195,7 @@ class Game extends Phaser.Scene {
 			generacionPedidos = this.time.addEvent({ delay: 30000, callback: GenerarPedido, args: [this.jugador, this] ,callbackScope: this, loop: true });
 			this.initialTime = 480;
 
-			tiempo = this.add.text(width / 2 - 16, height - 60, formatTime(this.initialTime), configTextoInterfaz).setScrollFactor(0,0).setVisible(true);
+			tiempo = this.add.text(width / 2 - 16, height - 65, formatTime(this.initialTime), configTextoInterfaz).setScrollFactor(0,0).setVisible(true);
 
 			// Each 1000 ms call onEvent
 			timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
@@ -256,7 +256,7 @@ function RepresentarInventario(that, jugador){
 	}
 	puntuacion.setVisible(true);
 	if(idioma.idioma.includes("es")){
-		puntuacion.setText("Puntuacion: " + puntuacionTotal);
+		puntuacion.setText("Puntuación: " + puntuacionTotal);
 	}else{
 		puntuacion.setText("Score: " + puntuacionTotal);
 	}

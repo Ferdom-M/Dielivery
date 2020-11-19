@@ -8,6 +8,7 @@ var tablon;
 var seleccionado; 
 
 var hayMarco;
+var salidoDeMesa = false;
 
 var configTextoMesa = {
 	fontFamily: 'Sylfaen',
@@ -86,8 +87,12 @@ class Mesa extends State{
 			arrayPedidosMostrados[i].on('pointerdown', this.SeleccionarPedido.bind(this, i, jugador));
         }
 
-        buttEnviarCielo = scene.add.sprite(PosX0 + tablon.width / 2 + 75, PosY0 + 80, 'botonEnviarCielo').setInteractive();
-        buttEnviarInfierno = scene.add.sprite(PosX0 + tablon.width / 2 + 75, PosY0 + 160, 'botonEnviarInfierno').setInteractive();
+        buttEnviarCielo = scene.add.sprite(PosX0 + tablon.width / 2 + 75, PosY0 + 80, 'botonEnviarCielo');
+		buttEnviarInfierno = scene.add.sprite(PosX0 + tablon.width / 2 + 75, PosY0 + 160, 'botonEnviarInfierno');
+		if(!hayMarco){
+			buttEnviarCielo.setInteractive();
+			buttEnviarInfierno.setInteractive();
+		}
         buttBasura = scene.add.sprite(PosX0 + tablon.width / 2 + 275, PosY0 + 120, 'botonEnviarBasura').setInteractive();
         
 		buttEnviarCielo.on('pointerdown', () => {buttEnviarCielo.setTexture('botonEnviarCielo_pulsado')});
@@ -113,13 +118,7 @@ class Mesa extends State{
 		
 		this.pedidoCorrecto = false;
 
-		/*
-		if(flipflop){
-			flipflop = false;
-			scene.marcoCorrecto = scene.add.image(width / 2, height / 2, 'marcoCorrecto').setVisible(false);
-			scene.marcoIncorrecto = scene.add.image(width / 2, height / 2, 'marcoIncorrecto').setVisible(false);
-		}
-		*/
+		salidoDeMesa = false;
 
     }
 
@@ -217,12 +216,16 @@ class Mesa extends State{
 				//scene.marcoCorrecto.setVisible(true);
 				scene.marcoCorrecto = scene.add.image(width / 2, height / 2, 'marcoCorrecto').setVisible(true);
 				scene.marcoIncorrecto = scene.add.image(width / 2, height / 2, 'marcoIncorrecto').setVisible(false);
+				buttEnviarCielo.disableInteractive();
+				buttEnviarInfierno.disableInteractive();
 				hayMarco = true;
 			}else{
 				jugador.sPedidoErroneo.play();
 				//scene.marcoIncorrecto.setVisible(true);
 				scene.marcoCorrecto = scene.add.image(width / 2, height / 2, 'marcoCorrecto').setVisible(false);
 				scene.marcoIncorrecto = scene.add.image(width / 2, height / 2, 'marcoIncorrecto').setVisible(true);
+				buttEnviarCielo.disableInteractive();
+				buttEnviarInfierno.disableInteractive();
 				hayMarco = true;
 			}
 			scene.marcoCorrecto.depth = 100;
@@ -239,12 +242,13 @@ class Mesa extends State{
     }
 	
 	BorrarMarco(scene){
-		//console.log("Se ha borrado el marco");
-		//scene.marcoCorrecto.setVisible(false);
-		//scene.marcoIncorrecto.setVisible(false);
-		scene.marcoCorrecto.destroy();
-		scene.marcoIncorrecto.destroy();
-		hayMarco = false;
+		if(!salidoDeMesa){
+			buttEnviarCielo.setInteractive();
+			buttEnviarInfierno.setInteractive();
+			scene.marcoCorrecto.destroy();
+			scene.marcoIncorrecto.destroy();
+			hayMarco = false;
+		}
 	}
 	
     Eliminar(delta, scene, jugador, enviar){
@@ -282,10 +286,13 @@ class Mesa extends State{
 
     BorrarBotones(delta, jugador, quitarMarco, scene){
 		if(quitarMarco && hayMarco){
+			buttEnviarCielo.setInteractive();
+			buttEnviarInfierno.setInteractive();
 			scene.marcoCorrecto.destroy();
 			scene.marcoIncorrecto.destroy();
 			hayMarco = false;
 		}
+		salidoDeMesa = true;
 		buttEnviarCielo.off('pointerdown');
 		buttEnviarInfierno.off('pointerdown');
 		buttBasura.off('pointerdown');
