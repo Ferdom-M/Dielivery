@@ -155,6 +155,7 @@ class Preload extends Phaser.Scene {
 		this.load.audio('s_baulRecuerdos', 'assets/Sonidos/s_baulRecuerdos.wav');
 		this.load.audio('s_dash', 'assets/Sonidos/s_dash.wav');
 		this.load.audio('s_escalera', 'assets/Sonidos/s_escalera.wav');
+		this.load.audio('s_enredaderas', 'assets/Sonidos/s_enredaderas.wav');
 		this.load.audio('s_salto', 'assets/Sonidos/s_salto.wav');
 		this.load.audio('s_game', 'assets/Sonidos/s_game.mp3');
 		this.load.audio('s_menu', 'assets/Sonidos/s_menu.mp3');

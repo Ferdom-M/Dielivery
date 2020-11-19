@@ -135,6 +135,7 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		this.sBaulRecuerdos = config.scene.sound.add('s_baulRecuerdos');
 		this.sDash = config.scene.sound.add('s_dash');
 		this.sEscalera = config.scene.sound.add('s_escalera').setLoop(true);
+		this.sEnredaderas = config.scene.sound.add('s_enredaderas').setLoop(true);
 		this.sSalto = config.scene.sound.add('s_salto');
 		this.sPedidoCorrecto = config.scene.sound.add('s_paqueteCorrecto');
 		this.sPedidoErroneo = config.scene.sound.add('s_paqueteErroneo');
@@ -231,6 +232,7 @@ class Jugador extends Phaser.Physics.Arcade.Sprite{
 		this.sBaulRecuerdos.stop();
 		this.sDash.stop();
 		this.sEscalera.stop();
+		this.sEnredaderas.stop();
 		this.sSalto.stop();
 	}
 	

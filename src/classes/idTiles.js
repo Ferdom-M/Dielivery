@@ -85,6 +85,10 @@ idEscaleras.add(111);
 idEscaleras.add(137);
 idEscaleras.add(138);
 
+var idEnredaderas = new Set();
+idEnredaderas.add(137);
+idEnredaderas.add(138);
+
 
 // Objetos a recoger
 var idTulipanes = new Set();
