@@ -118,7 +118,6 @@ class Ajustes extends Phaser.Scene {
 	create() {
 		this.cameras.main.fadeIn(valorFade);
 		
-		
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		
@@ -483,7 +482,22 @@ class Ajustes extends Phaser.Scene {
 		}
 		arrayTeclas = new Array();
 		arrayTeclasInternos = new Array();
-		var controlesGuardados = JSON.parse(localStorage.getItem('controlesGuardados'));
+		var controlesGuardados = JSON.parse(localStorage.getItem('controlesGuardados')) || {
+			left: Phaser.Input.Keyboard.KeyCodes.A,
+			right: Phaser.Input.Keyboard.KeyCodes.D,
+			up: Phaser.Input.Keyboard.KeyCodes.W,
+			down: Phaser.Input.Keyboard.KeyCodes.S,
+			jump: Phaser.Input.Keyboard.KeyCodes.SPACE,
+			dash: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+			accion: Phaser.Input.Keyboard.KeyCodes.E,
+			inventario: Phaser.Input.Keyboard.KeyCodes.Q,
+			fullscreen: Phaser.Input.Keyboard.KeyCodes.F,
+			pausa: Phaser.Input.Keyboard.KeyCodes.P,
+			//debug
+			propiedades: Phaser.Input.Keyboard.KeyCodes.L,
+			tpMesa: Phaser.Input.Keyboard.KeyCodes.I,
+			tpCosas: Phaser.Input.Keyboard.KeyCodes.O
+		};
 		var i = 0;
 		
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'left')[0]));
