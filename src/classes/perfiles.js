@@ -25,8 +25,15 @@ arrayNombres.push("Bolita");
 arrayNombres.push("Nube");
 arrayNombres.push("Bob");
 arrayNombres.push("Dori");
-arrayNombres.push("Hulio");
 arrayNombres.push("Ferdom-M");
+arrayNombres.push("DVD");
+arrayNombres.push("Leggnas");
+arrayNombres.push("Nou");
+arrayNombres.push("Naco");
+arrayNombres.push("Räul");
+arrayNombres.push("El xokram tu xd");
+arrayNombres.push("Ithun");
+arrayNombres.push("Spada");
 
 var arrayCausaMuerte = new Array();
 var arrayCausaMuerteEspanol = new Array();
@@ -58,8 +65,15 @@ arrayCausaMuerteEspanol.push("No ha muerto no os preocupéis, su dueño solo que
 arrayCausaMuerteEspanol.push("Bolita le dió envidia a su dueño, así que también está aquí (tampoco está muerta, tranquilos)");
 arrayCausaMuerteEspanol.push("Se murió en un tutorial en el que era imposible morir");
 arrayCausaMuerteEspanol.push("Se tiró al agua con demasiada fuerza (pero sigue viva)");
-arrayCausaMuerteEspanol.push("Se tiró al agua con demasiada fuerza (pero sigue viva)");
 arrayCausaMuerteEspanol.push("Uncaught SyntaxError: missing ) after argument list");
+arrayCausaMuerteEspanol.push("Le cayó una tableta digitalizadora gigante del cielo y le aplastó la cabeza");
+arrayCausaMuerteEspanol.push("Un programador le mató por equivocarse de capa... Múltiples veces");
+arrayCausaMuerteEspanol.push("No pudo con la presión de tener que hacer el triple de trabajo que se esperaba");
+arrayCausaMuerteEspanol.push("Queria comprobar si un flipflop te salva de la muerte. No lo hace");
+arrayCausaMuerteEspanol.push("Murió de amor a la programación");
+arrayCausaMuerteEspanol.push("Perdió la promo a master y se le quitaron las ganas de vivir");
+arrayCausaMuerteEspanol.push("Se cansó de esperar al Cyberpunk");
+arrayCausaMuerteEspanol.push("Le entregó su espada a la persona equivocada");
 
 arrayCausaMuerteIngles.push("He fell down the stairs of the university cafe. Ouchie ouch");
 arrayCausaMuerteIngles.push("He suffered a stroke after playing Isaac for 453 hours in a row");
@@ -87,8 +101,15 @@ arrayCausaMuerteIngles.push("She didn't die don't worry, his owner just wanted t
 arrayCausaMuerteIngles.push("Her owner got jealous from Bolita, so she's also here (not dead tho)");
 arrayCausaMuerteIngles.push("He died in a tutorial where it's impossible to die");
 arrayCausaMuerteIngles.push("She jumped into the water too hard (still alive) ha got the funny reference??");
-arrayCausaMuerteIngles.push("She jumped into the water too hard (still alive) ha got the funny reference??");
 arrayCausaMuerteIngles.push("Uncaught SyntaxError: missing ) after argument list");
+arrayCausaMuerteIngles.push("A digital tablet fell on him from the sky, crushing his head");
+arrayCausaMuerteIngles.push("A programmer killed him after editing the wrong layer... Multiple times");
+arrayCausaMuerteIngles.push("She couldn't bear with the pressure of having triple work to do");
+arrayCausaMuerteIngles.push("He wanted to try if a flipflop could save your life. It doesn't");
+arrayCausaMuerteIngles.push("Died of love to programming");
+arrayCausaMuerteIngles.push("He lost the master promotion and didn't want to live anymore");
+arrayCausaMuerteIngles.push("He got tired of waiting for Cyberpunk");
+arrayCausaMuerteIngles.push("He gave his sword to the wrong person");
 
 if(idioma.idioma.includes("es")){
 	arrayCausaMuerte = arrayCausaMuerteEspanol;
