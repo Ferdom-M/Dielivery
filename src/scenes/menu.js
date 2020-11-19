@@ -98,6 +98,8 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image("menu_pulsado", "assets/Interfaz/Botones/Espanol/menu_pulsado.png");
 			this.load.image("reanudar", "assets/Interfaz/Botones/Espanol/reanudar.png");
 			this.load.image("reanudar_pulsado", "assets/Interfaz/Botones/Espanol/reanudar_pulsado.png");
+			this.load.image("continuar", "assets/Interfaz/Botones/Espanol/continuar.png");
+			this.load.image("continuar_pulsado", "assets/Interfaz/Botones/Espanol/continuar_pulsado.png");
 			this.load.image("pausa", "assets/Interfaz/Botones/Espanol/pausa.png");
 			this.load.image("tablon_puntuaciones_es", "assets/Interfaz/Botones/Espanol/tablon_puntuaciones.png");
 		}
@@ -125,6 +127,8 @@ class Mainmenu extends Phaser.Scene {
 			this.load.image("menu_pulsado", "assets/Interfaz/Botones/Ingles/menu_pulsado.png");
 			this.load.image("reanudar", "assets/Interfaz/Botones/Ingles/reanudar.png");
 			this.load.image("reanudar_pulsado", "assets/Interfaz/Botones/Ingles/reanudar_pulsado.png");
+			this.load.image("continuar", "assets/Interfaz/Botones/Ingles/continuar.png");
+			this.load.image("continuar_pulsado", "assets/Interfaz/Botones/Ingles/continuar_pulsado.png");
 			this.load.image("pausa", "assets/Interfaz/Botones/Ingles/pausa.png");
 			this.load.image("tablon_puntuaciones_en", "assets/Interfaz/Botones/Ingles/tablon_puntuaciones.png");
 		}
@@ -232,6 +236,8 @@ class Mainmenu extends Phaser.Scene {
 		this.textures.remove("menu_pulsado");
 		this.textures.remove("reanudar");
 		this.textures.remove("reanudar_pulsado");
+		this.textures.remove("continuar");
+		this.textures.remove("continuar_pulsado");
 		this.textures.remove("pausa");
 		this.scene.restart();
 	}

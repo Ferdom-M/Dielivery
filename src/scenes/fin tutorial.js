@@ -6,7 +6,6 @@ class FinTutorial extends Phaser.Scene {
     }
 
     create() {
-		console.log("pito");
         this.fondoPausa = this.add.image(width / 2, height / 2, 'fondoPausa');
 		this.tablonPausa = this.add.image(width / 2, height / 2, 'tablonPausa');
 		
@@ -31,7 +30,7 @@ class FinTutorial extends Phaser.Scene {
 			color: '#fff',
 			stroke: '#000000',
 			strokeThickness: 0.5,
-			align: 'left',  // 'left'|'center'|'right'|'justify'
+			align: 'justify',  // 'left'|'center'|'right'|'justify'
 			maxLines: 0,
 			lineSpacing: 0,
 			fixedWidth: 298,

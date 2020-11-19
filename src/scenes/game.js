@@ -82,6 +82,12 @@ class Game extends Phaser.Scene {
 		});
 		
 		this.cameras.main.fadeIn(valorFade);
+		if(mapa == "tutorial"){
+			this.cameras.main.on('camerafadeincomplete', () => {
+				this.scene.pause();
+				this.scene.launch('ComienzoTutorial');
+			});
+		}
 		assetsCargados = true;
 		arrayPedidos = new Array();
 		arrayTarjetas = new Array();

@@ -1,3 +1,5 @@
+var flipflopElRetorno = false;
+
 class RecogerObjeto extends State{
 	enter(delta, scene, jugador){
 		//console.log("Estado recoger objeto");
@@ -115,6 +117,12 @@ class RecogerObjeto extends State{
 		jugador.velActual = velJugador + (-velJugador / (2 * limInventario)) * jugador.inventario.length;
 
 		RepresentarInventario(scene, jugador);
+		if(mapaActual == "tutorial" && !flipflopElRetorno){
+			flipflopElRetorno = true
+			scene.scene.pause();
+			scene.scene.launch('MitadTutorial');
+		}
+		
 		jugador.stateMachine.transition(delta, 'idle');
 	}
 }

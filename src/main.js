@@ -25,7 +25,7 @@ window.onload = function(){
 				debug: false
 			}
 		},
-		scene: [Boot, Preload, Mainmenu, Ajustes, ComoJugar, creditos, LevelSelect, Game, Pausa, FinTutorial, Results, Ranking],
+		scene: [Boot, Preload, Mainmenu, Ajustes, ComoJugar, creditos, LevelSelect, Game, ComienzoTutorial, MitadTutorial, Pausa, FinTutorial, Results, Ranking],
 		antialias: false,
 		pixelart: true,
 		failIfMajorPerformanceCaveat: true,
