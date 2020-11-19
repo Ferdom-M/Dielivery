@@ -65,12 +65,12 @@ class Ranking extends Phaser.Scene {
 			align: 'left',  // 'left'|'center'|'right'|'justify'
 			maxLines: 0,
 			lineSpacing: 0,
-			fixedWidth: 300,
+			fixedWidth: 500,
 			fixedHeight: 92 ,
 			rtl: false,
 			testString: '|MÉqgy',
 			wordWrap: {
-				width: 300,
+				width: 500,
 				callback: null,
 				callbackScope: null,
 				useAdvancedWrap: false

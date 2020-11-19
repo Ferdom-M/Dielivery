@@ -7,6 +7,8 @@ var tablon;
 
 var seleccionado; 
 
+var flipflop = true;
+
 var configTextoMesa = {
 	fontFamily: 'Sylfaen',
 	fontSize: '16px',
@@ -109,6 +111,13 @@ class Mesa extends State{
         jugador.accion = false;
 		
 		this.pedidoCorrecto = false;
+
+		if(flipflop){
+			flipflop = false;
+			scene.marcoCorrecto = scene.add.image(width / 2, height / 2, 'marcoCorrecto').setVisible(false);
+			scene.marcoIncorrecto = scene.add.image(width / 2, height / 2, 'marcoIncorrecto').setVisible(false);
+		}
+
     }
 
 	execute(delta, scene, jugador){
@@ -138,7 +147,7 @@ class Mesa extends State{
 			
 			jugador.enMesa = false;
 			
-            this.BorrarBotones(delta, jugador);
+            this.BorrarBotones(delta, jugador, true, scene);
         }
     }
 	
@@ -202,25 +211,28 @@ class Mesa extends State{
             this.pedidoCorrecto = CompararPedidos(paquete, jugador.pedidoSeleccionado, destElegido);
 			if(this.pedidoCorrecto){
 				jugador.sPedidoCorrecto.play();
-				scene.marco = scene.add.image(width / 2, height / 2, 'marcoCorrecto');
+				scene.marcoCorrecto.setVisible(true);
 			}else{
 				jugador.sPedidoErroneo.play();
-				scene.marco = scene.add.image(width / 2, height / 2, 'marcoIncorrecto');
+				scene.marcoIncorrecto.setVisible(true);
 			}
-			scene.marco.depth = 100;
+			scene.marcoCorrecto.depth = 100;
+			scene.marcoIncorrecto.depth = 100;
 			scene.time.addEvent({ delay: 1500, callback: this.BorrarMarco, args: [scene], callbackScope: this, loop: false });
 			if(mapaActual == "tutorial"){
-				this.BorrarBotones(delta, jugador);
+				this.BorrarBotones(delta, jugador, false, scene);
 				TerminarTutorial(scene, jugador, this.pedidoCorrecto);
 			}
             //console.log("Puntuacion actual: " + puntuacionTotal);
-            this.BorrarBotones(delta, jugador);
+            this.BorrarBotones(delta, jugador, false, scene);
             this.enter(delta, scene, jugador);
         }
     }
 	
 	BorrarMarco(scene){
-		scene.marco.destroy();
+		scene.marcoCorrecto.setVisible(false);
+		scene.marcoIncorrecto.setVisible(false);
+		flipflop = true;
 	}
 	
     Eliminar(delta, scene, jugador, enviar){
@@ -247,7 +259,7 @@ class Mesa extends State{
 			jugador.arraySeleccionados.splice(0, jugador.arraySeleccionados.length);
 
 			if(!enviar){
-				this.BorrarBotones(delta, jugador);
+				this.BorrarBotones(delta, jugador, false, scene);
 				this.enter(delta, scene, jugador);
 			}
 
@@ -256,7 +268,12 @@ class Mesa extends State{
     }
 
 
-    BorrarBotones(delta, jugador){
+    BorrarBotones(delta, jugador, quitarMarco, scene){
+		if(quitarMarco){
+			scene.marcoCorrecto.destroy();
+			scene.marcoIncorrecto.destroy();
+			flipflop = true;
+		}
 		buttEnviarCielo.off('pointerdown');
 		buttEnviarInfierno.off('pointerdown');
 		buttBasura.off('pointerdown');
