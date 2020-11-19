@@ -79,6 +79,7 @@ class Preload extends Phaser.Scene {
         this.load.image('tablonPausa', 'assets/Interfaz/Tablon pausa.png');
 		
 		// AJUSTES
+		this.load.image('tablon_ajustes', 'assets/Interfaz/Tablones ajustes.png');
 		this.load.image('tablon_graficos', 'assets/Interfaz/Tablon ajustes graficos.png');
 		this.load.image('tablon_teclas', 'assets/Interfaz/Tablon teclas.png');
 		this.load.image('graficos_es', 'assets/Interfaz/Botones/Espanol/graficos.png');
@@ -197,17 +198,17 @@ class Preload extends Phaser.Scene {
 		this.load.image("luz2", "assets/Particulas/luz2.png");
 
 		//TECLAS
-		this.load.image("atras", "assets/Teclas/atras.png");
-		this.load.image("enter", "assets/Teclas/enter.png");
-		this.load.image("espacio", "assets/Teclas/espacio.png");
-		this.load.image("flecha_abajo", "assets/Teclas/flecha_abajo.png");
-		this.load.image("flecha_arriba", "assets/Teclas/flecha_arriba.png");
-		this.load.image("flecha_derecha", "assets/Teclas/flecha_derecha.png");
-		this.load.image("flecha_izquierda", "assets/Teclas/flecha_izquierda.png");
-		this.load.image("shift", "assets/Teclas/shift.png");
-		this.load.image("tabulador", "assets/Teclas/tabulador.png");
-		this.load.image("tecla_base", "assets/Teclas/tecla_base.png");
-		this.load.image("tecla_larga_base", "assets/Teclas/tecla_larga_base.png");
+		this.load.image("atras", "assets/Interfaz/Teclas/atras.png");
+		this.load.image("enter", "assets/Interfaz/Teclas/enter.png");
+		this.load.image("espacio", "assets/Interfaz/Teclas/espacio.png");
+		this.load.image("flecha_abajo", "assets/Interfaz/Teclas/flecha_abajo.png");
+		this.load.image("flecha_arriba", "assets/Interfaz/Teclas/flecha_arriba.png");
+		this.load.image("flecha_derecha", "assets/Interfaz/Teclas/flecha_derecha.png");
+		this.load.image("flecha_izquierda", "assets/Interfaz/Teclas/flecha_izquierda.png");
+		this.load.image("shift", "assets/Interfaz/Teclas/shift.png");
+		this.load.image("tabulador", "assets/Interfaz/Teclas/tabulador.png");
+		this.load.image("tecla_base", "assets/Interfaz/Teclas/tecla_base.png");
+		this.load.image("tecla_larga_base", "assets/Interfaz/Teclas/tecla_larga_base.png");
 		this.load.image("cambiar", "assets/Interfaz/Teclas/cambiar.png");
 		this.load.image("cambiar_pulsado", "assets/Interfaz/Teclas/cambiar_pulsado.png");
 		this.load.image("cambiar_en", "assets/Interfaz/Teclas/cambiar_en.png");

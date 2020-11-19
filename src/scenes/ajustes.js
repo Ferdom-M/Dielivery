@@ -25,10 +25,10 @@ var textoConfiguracionIngles = {
 
 var configTexto = {
 	fontFamily: 'Sylfaen',
-	fontSize: '22px',
-	color: '#fff',
-	stroke: '#000000',
-	strokeThickness: 1,
+	fontSize: '14px',
+	color: '#4f5051',
+	stroke: '#fff',
+	strokeThickness: 0.2,
 	align: 'justify',  // 'left'|'center'|'right'|'justify'
 	maxLines: 0,
 	lineSpacing: 0,
@@ -54,10 +54,13 @@ var configTexto = {
 var arrayTeclas = new Array();
 var arrayTeclasInternos = new Array();
 var separacionBotonesY = 45;
-var separacionBotonesX = 220;
-var separacionBotonesCambiarX = 355;
-var inicioTeclas = 62;
-
+var separacionBotonesX = 175;
+var separacionBotonesCambiarX = 305;
+var inicioTeclas = 65;
+var teclasIntY = 11;
+var teclasIntX = 7;
+var teclasGrandesX = 0;
+var desplazamientoGrandesX = 9;
 // JavaScript source code
 class Ajustes extends Phaser.Scene {
 
@@ -121,9 +124,10 @@ class Ajustes extends Phaser.Scene {
 		
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
-		this.tablon_graficos = this.add.image(width / 2 - 190, height / 2 + 20, 'tablon_graficos');
-		this.tablon_teclas = this.add.image(width / 2 + 230, height / 2, 'tablon_teclas');
-		
+		//this.tablon_graficos = this.add.image(width / 2 - 190, height / 2 + 20, 'tablon_graficos');
+		//this.tablon_teclas = this.add.image(width / 2 + 230, height / 2, 'tablon_teclas');
+		this.tablon_ajustes = this.add.image(width / 2 , height / 2, 'tablon_ajustes');
+		//this.tablon_ajustes.setDisplaySize(width, height);
 
 
         this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
@@ -146,7 +150,7 @@ class Ajustes extends Phaser.Scene {
 				volumen = 'volumen_es';
 				cambiar_pulsado = 'cambiar_pulsado';
 				for (var key in textoConfiguracionEspañol){
-					this.add.text(width / 2 + 40, 52 + i * separacionBotonesY, textoConfiguracionEspañol[key], configTextoMesa);
+					this.add.text(width / 2 - 5, 57 + i * separacionBotonesY, textoConfiguracionEspañol[key], configTextoMesa);
 					i++;
 				}
 			}else{
@@ -156,12 +160,12 @@ class Ajustes extends Phaser.Scene {
 				volumen = 'volumen_en';
 				cambiar_pulsado = 'cambiar_en_pulsado';
 				for (var key in textoConfiguracionIngles){
-					this.add.text(width / 2 + 40, 52 + i * separacionBotonesY, textoConfiguracionIngles[key], configTextoMesa);
+					this.add.text(width / 2 - 5, 57 + i * separacionBotonesY, textoConfiguracionIngles[key], configTextoMesa);
 					i++;
 				}
 			}
-			this.graficos = this.add.image(width / 2 - 190, height / 2 - 150, graficos.toString());
-			this.volumen = this.add.image(width / 2 - 190, height / 2 + 120, volumen.toString());
+			this.graficos = this.add.image(width / 2 - 215, height / 2 - 110, graficos.toString());
+			this.volumen = this.add.image(width / 2 - 215, height / 2 + 150, volumen.toString());
 			//var controlesGuardados = JSON.parse(localStorage.getItem('controlesGuardados'));
 			//console.log(controlesGuardados);
 
@@ -244,9 +248,9 @@ class Ajustes extends Phaser.Scene {
 			particulas: true
 		};
 		if(enPc){
-			this.botonAlto = this.add.sprite(width / 2 - 190, height / 2 - 90, 'alto_pulsado').setInteractive();
-			this.botonMedio = this.add.sprite(width / 2 - 190, (height / 2) -15, 'medio_pulsado').setInteractive();
-			this.botonBajo = this.add.sprite(width / 2 - 190, (height / 2) + 60, 'bajo_pulsado').setInteractive();
+			this.botonAlto = this.add.sprite(width / 2 - 220, height / 2 - 55, 'alto_pulsado').setInteractive();
+			this.botonMedio = this.add.sprite(width / 2 - 220, (height / 2) + 20, 'medio_pulsado').setInteractive();
+			this.botonBajo = this.add.sprite(width / 2 - 220, (height / 2) + 95, 'bajo_pulsado').setInteractive();
 			
 		}else{
 			this.botonAlto = this.add.sprite(width / 2, height / 2 - 50, 'alto_pulsado').setInteractive();
@@ -429,7 +433,45 @@ class Ajustes extends Phaser.Scene {
 		else if(array[tecla] == 20){//block mayus
 			return new Array("tecla_larga_base", "CAPS");
 		}
-		
+		else if(array[tecla] == 220){//º
+			return new Array("tecla_base", "º");
+		}
+		else if(array[tecla] == 186){//`
+			return new Array("tecla_base", "`");
+		}
+		else if(array[tecla] == 219){//'
+			return new Array("tecla_base", "'");
+		}
+		else if(array[tecla] == 221){//¡
+			return new Array("tecla_base", "¡");
+		}
+		else if(array[tecla] == 188){//,
+			return new Array("tecla_base", ",");
+		}
+		else if(array[tecla] == 190){//.
+			return new Array("tecla_base", ".");
+		}
+		else if(array[tecla] == 189){//-
+			return new Array("tecla_base", "-");
+		}
+		else if(array[tecla] == 222){//´
+			return new Array("tecla_base", "´");
+		}
+		else if(array[tecla] == 191){//ç
+			return new Array("tecla_base", "ç");
+		}
+		else if(array[tecla] == 187){//+
+			return new Array("tecla_base", "+");
+		}
+		else if(array[tecla] == 27){//ESC
+			return new Array("tecla_larga_base", "ESC");
+		}
+		else if(array[tecla] == 18){//ALTG
+			return new Array("tecla_larga_base", "ALTG");
+		}
+		else if(array[tecla] == 18){//ALTG
+			return new Array("teclabase", "");
+		}
 	}
 
 	ListaTeclas(){
@@ -446,52 +488,92 @@ class Ajustes extends Phaser.Scene {
 		
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'left')[0]));
 		if(this.ComprobarTecla(controlesGuardados, 'left').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'left')[1], configTexto));
+			if(this.ComprobarTecla(controlesGuardados, 'left')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'left')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'left')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'left')[1], configTexto));
+			teclasGrandesX = 0;
 		} 
 		i++;
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'right')[0]));
 		if(this.ComprobarTecla(controlesGuardados, 'right').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'right')[1], configTexto))
+			if(this.ComprobarTecla(controlesGuardados, 'right')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'right')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'right')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'right')[1], configTexto))
+			teclasGrandesX = 0;
 		} 
 		i++;
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'up')[0])); 
 		if(this.ComprobarTecla(controlesGuardados, 'up').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'up')[1], configTexto))
+			if(this.ComprobarTecla(controlesGuardados, 'up')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'up')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'up')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'up')[1], configTexto))
+			teclasGrandesX = 0;
 		} 
 		i++;
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'down')[0])); 
 		if(this.ComprobarTecla(controlesGuardados, 'down').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'down')[1], configTexto))
+			if(this.ComprobarTecla(controlesGuardados, 'down')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'down')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'down')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'down')[1], configTexto))
+			teclasGrandesX = 0;
 		} 
 		i++;
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'jump')[0])); 
 		if(this.ComprobarTecla(controlesGuardados, 'jump').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'jump')[1], configTexto))
+			if(this.ComprobarTecla(controlesGuardados, 'jump')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'ljumpeft')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'jump')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'jump')[1], configTexto))
+			teclasGrandesX = 0;
 		} 
 		i++;
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'dash')[0]));
 		if(this.ComprobarTecla(controlesGuardados, 'dash').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'dash')[1], configTexto))
+			if(this.ComprobarTecla(controlesGuardados, 'dash')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'dash')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'dash')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'dash')[1], configTexto))
+			teclasGrandesX = 0;
 		} 
 		i++;
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'accion')[0]));
 		if(this.ComprobarTecla(controlesGuardados, 'accion').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'accion')[1], configTexto))
+			if(this.ComprobarTecla(controlesGuardados, 'accion')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'accion')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'accion')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'accion')[1], configTexto))
+			teclasGrandesX = 0;
 		} 
 		i++;
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'inventario')[0])); 
 		if(this.ComprobarTecla(controlesGuardados, 'inventario').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'inventario')[1], configTexto))
+			if(this.ComprobarTecla(controlesGuardados, 'inventario')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'inventario')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'inventario')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'inventario')[1], configTexto))
+			teclasGrandesX = 0;
 		} 
 		i++;
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'fullscreen')[0]));
 		if(this.ComprobarTecla(controlesGuardados, 'fullscreen').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'fullscreen')[1], configTexto))
+			if(this.ComprobarTecla(controlesGuardados, 'fullscreen')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'fullscreen')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'fullscreen')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'fullscreen')[1], configTexto))
+			teclasGrandesX = 0;
 		} 
 		i++;
 		arrayTeclas.push(this.add.sprite(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'pausa')[0])); 
 		if(this.ComprobarTecla(controlesGuardados, 'pausa').length > 1){
-			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX, inicioTeclas + i * separacionBotonesY, this.ComprobarTecla(controlesGuardados, 'pausa')[1], configTexto))
+			if(this.ComprobarTecla(controlesGuardados, 'pausa')[1] == "CAPS" || this.ComprobarTecla(controlesGuardados, 'pausa')[1] == "ALT" || this.ComprobarTecla(controlesGuardados, 'pausa')[1] == "CTRL"){
+				teclasGrandesX = desplazamientoGrandesX;
+			}
+			arrayTeclasInternos.push(this.add.text(width / 2 + separacionBotonesX - teclasIntX - teclasGrandesX, inicioTeclas + i * separacionBotonesY - teclasIntY, this.ComprobarTecla(controlesGuardados, 'pausa')[1], configTexto))
+			teclasGrandesX = 0;
 		} 
 	}
 }
