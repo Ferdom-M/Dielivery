@@ -143,12 +143,13 @@ class Mainmenu extends Phaser.Scene {
 	
     create() {
 		this.cameras.main.fadeIn(valorFade);
-		if(volumenGuardado = JSON.parse(localStorage.getItem('volumen'))){
-			volumenGuardado = JSON.parse(localStorage.getItem('volumen'));
+		if(JSON.parse(localStorage.getItem('volumen')) != null){
+			var volumenGuardado = JSON.parse(localStorage.getItem('volumen'))
 		}else{
-			volumenGuardado = 0.5;
-			localStorage.setItem('volumen', JSON.stringify(volumenGuardado));
+			var volumenGuardado = 0.5;
+			
 		}
+		this.sound.volume = volumenGuardado;
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
 		

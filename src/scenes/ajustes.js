@@ -146,6 +146,12 @@ class Ajustes extends Phaser.Scene {
 		this.cameras.main.fadeIn(valorFade);
 		//this.resizeCamera();
 		//this.scale.on('resize', () => this.resizeCamera());
+		if(JSON.parse(localStorage.getItem('volumen')) != null){
+			var volumenGuardado = JSON.parse(localStorage.getItem('volumen'))
+		}else{
+			var volumenGuardado = 0.5;
+			
+		}
 		
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
@@ -189,7 +195,18 @@ class Ajustes extends Phaser.Scene {
 		
 		this.buttonVolver = this.add.sprite(volverPosX, volverPosY, 'volver').setInteractive();
 		this.buttonVolver.on('pointerdown', () => {this.buttonVolver.setTexture("volver_pulsado");});
-        this.buttonVolver.on('pointerup', () => PasarEscena(this, "Mainmenu"));
+        this.buttonVolver.on('pointerup', () => {
+			if(this.boton_volumen.slider.value != null){
+				var volumen = this.boton_volumen.slider.value
+			}else if(JSON.parse(localStorage.getItem('volumen')) != null){
+				var volumen = JSON.parse(localStorage.getItem('volumen'));
+				
+			}else{
+				var volumen = 0.5;
+			}
+			volumenGuardado = localStorage.setItem('volumen', JSON.stringify(volumen)); 
+			PasarEscena(this, "Mainmenu")
+		});
         this.buttonVolver.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonVolver.setTexture("volver_pulsado");}});
         this.buttonVolver.on('pointerout', () => {this.buttonVolver.setTexture("volver");});
 		
@@ -373,8 +390,15 @@ class Ajustes extends Phaser.Scene {
 	}
 	
 	update(){
-		var volumen	 = this.boton_volumen.slider.value;
-		volumenGuardado = localStorage.setItem('volumen', JSON.stringify(volumen));
+		var volumen	 = this.boton_volumen.slider.value || JSON.parse(localStorage.getItem('volumen')) || 0.5;
+		if(this.boton_volumen.slider.value != null){
+			var volumen = this.boton_volumen.slider.value
+		}else if(JSON.parse(localStorage.getItem('volumen')) != null){
+			var volumen = JSON.parse(localStorage.getItem('volumen'));
+			
+		}else{
+			var volumen = 0.5;
+		}
 		this.sound.volume = volumen;
 	}
 

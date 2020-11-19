@@ -532,10 +532,6 @@ function InicializarCursores(that, jugador){
 				inventario: Phaser.Input.Keyboard.KeyCodes.Q,
 				fullscreen: Phaser.Input.Keyboard.KeyCodes.F,
 				pausa: Phaser.Input.Keyboard.KeyCodes.P,
-				//debug
-				propiedades: Phaser.Input.Keyboard.KeyCodes.L,
-				tpMesa: Phaser.Input.Keyboard.KeyCodes.I,
-				tpCosas: Phaser.Input.Keyboard.KeyCodes.O
 			};
 			
 		cursors = that.input.keyboard.addKeys(controlesGuardados); 
@@ -645,28 +641,6 @@ function InicializarCursores(that, jugador){
             this.scene.launch('Pausa');
 		}, that);
 		
-		/*
-		/
-		/
-		/
-		*/
-		cursors.propiedades.on('down', function () {
-			console.log(jugador.arrayMostrados);
-			console.log(jugador.arraySeleccionados);
-			console.log(jugador.pedidoSeleccionado);
-			console.log(jugador.inventario);
-		}, that);
-		cursors.tpMesa.on('down', function () {
-			console.log("tpd");
-			jugador.x = 1824;
-			jugador.y = 800;
-		}, that);
-		cursors.tpCosas.on('down', function () {
-			console.log("tpd");
-			jugador.x = 1130;
-			jugador.y = 2432;
-		}, that);
-
 	}else{
 		
 		that.input.addPointer(3);
