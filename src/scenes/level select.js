@@ -87,7 +87,7 @@ class LevelSelect extends Phaser.Scene {
 			this.buttonTutorial.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonTutorial.setTexture("tutorial_pulsado");}});
 			this.buttonTutorial.on('pointerout', () => {this.buttonTutorial.setTexture("tutorial");});
 		}else{
-			this.buttonTutorial = this.add.sprite(width / 2, height / 4, 'tutorial_movil').setInteractive();
+			this.buttonTutorial = this.add.sprite(width / 2, height / 3, 'tutorial_movil').setInteractive();
 			this.buttonTutorial.on('pointerdown', () => {this.buttonTutorial.setTexture("tutorial_movil_pulsado");});
 			this.buttonTutorial.on('pointerup', () => PasarEscena(this, "Game", "tutorial"));
 			this.buttonTutorial.on('pointerover', () => {if(this.input.activePointer.isDown){this.buttonTutorial.setTexture("tutorial_movil_pulsado");}});

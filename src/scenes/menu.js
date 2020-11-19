@@ -147,7 +147,7 @@ class Mainmenu extends Phaser.Scene {
 		
 		//this.cameras.main.setZoom(ratio);
 		var flipflop = false;
-		
+		flipflopElRetorno = false;
         this.fondo = this.add.image(width / 2, height / 2, 'fondo');
 		this.fondo.setDisplaySize(width, height);
         this.tablon = this.add.image(width / 2, height / 2, 'tablon');
